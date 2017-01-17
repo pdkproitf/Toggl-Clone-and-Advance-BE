@@ -32,9 +32,38 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+#****************************************
+# => create grape api                   *
+gem 'grape'                             #
+# => create document                    *
+gem 'grape-swagger', '~> 0.26.0'        #
+# => create router                      *
+gem 'grape-swagger-rails'               #
+# => disables the security feature of   *
+# => strong_params at the model         *
+gem 'hashie-forbidden_attributes'       #
+# => Using for type of respon json      *
+gem 'grape-active_model_serializers'    #
+#****************************************
+
+#****************************************
+# => using for login                    *
+gem 'devise_token_auth'                 #
+# => using for authenticate             *
+gem 'omniauth'                          #
+# => using for get JSON  whren your API *
+# => and client on different domain     *
+gem 'rack-cors', :require => 'rack/cors'#
+#****************************************
+
+gem "factory_girl_rails"
+gem 'faker'
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  gem 'rspec-rails'
+  gem 'rspec-collection_matchers'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'email_spec'
+  gem 'pry-byebug'
 end
 
 group :development do
@@ -44,4 +73,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
