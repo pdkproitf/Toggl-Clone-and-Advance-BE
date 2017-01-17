@@ -43,7 +43,7 @@ gem 'rack-cors', :require => 'rack/cors'#
 #****************************************
 
 gem "factory_girl_rails"
-gem 'ffaker'
+gem 'faker'
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
