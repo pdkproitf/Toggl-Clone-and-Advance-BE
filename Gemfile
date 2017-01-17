@@ -42,6 +42,8 @@ gem 'grape-swagger-rails'               #
 # => disables the security feature of   *
 # => strong_params at the model         *
 gem 'hashie-forbidden_attributes'       #
+# => Using for type of respon json      *
+gem 'grape-active_model_serializers'    #
 #****************************************
 
 #****************************************

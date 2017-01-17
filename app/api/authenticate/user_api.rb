@@ -1,5 +1,5 @@
-module UserApi
-  class Data < Grape::API
+module Authenticate
+  class UserApi < Grape::API
     prefix  :api
     version 'v1', using: :accept_version_header
     #
@@ -36,7 +36,7 @@ module UserApi
             }
 
         @resource.save!
-        binding.pry
+        render @resource, serializer: UserSerializer
       end
     end
   end
