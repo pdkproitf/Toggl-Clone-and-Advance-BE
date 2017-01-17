@@ -110,3 +110,913 @@ WHERE c.contype = 'f'
   AND t3.nspname = ANY (current_schemas(false))
 ORDER BY c.conname
 [0m
+
+
+Started GET "/" for 127.0.0.1 at 2017-01-17 11:22:11 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/railties-4.2.7/lib/rails/templates/rails/welcome/index.html.erb (1.8ms)
+Completed 200 OK in 63ms (Views: 32.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:22:16 +0700
+
+ActionController::RoutingError (No route matches [GET] "/swagger"):
+  actionpack (4.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.7) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.7) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.7) lib/rails/engine.rb:518:in `call'
+  railties (4.2.7) lib/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_route.html.erb (2.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_table.html.erb (81.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (249.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (363.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (377.9ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:29:37 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+ActionController::RoutingError (No route matches [GET] "/swagger"):
+  actionpack (4.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.7) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.7) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.7) lib/rails/engine.rb:518:in `call'
+  railties (4.2.7) lib/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_route.html.erb (2.0ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_table.html.erb (8.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (9.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (47.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (410.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (426.9ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:30:20 +0700
+
+NameError (uninitialized constant GrapeSwaggerRails):
+  config/routes.rb:4:in `block in <top (required)>'
+  config/routes.rb:1:in `<top (required)>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (15.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (33.2ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:47:26 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (933.2ms)
+Completed 200 OK in 1040ms (Views: 1030.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/grape_swagger_rails/reset.self-24ac87cae6630f82c87b49d3f702ff2506240011a3fabd03befad0521945d839.css?body=1" for 127.0.0.1 at 2017-01-17 11:47:27 +0700
+
+
+Started GET "/assets/grape_swagger_rails/application.self-6768baecc7660d572236fe9189778738ff2e866ddf517e508f842299345dcc4b.css?body=1" for 127.0.0.1 at 2017-01-17 11:47:27 +0700
+
+
+Started GET "/assets/grape_swagger_rails/screen.self-00ff7982f69e4a7adb9a6f3072a589d7e1b3ab63e1dffdeeaaa4b83a7c1bbefb.css?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/jquery.slideto.min.self-4ac55a3315abf9efaddf5c91723409a73e4b3c1b070199a1cd2e1f20db687e48.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/jquery-1.8.0.min.self-e3c535f8b50572951d46f12095db2cdfceca8a39d2c9998d2029ffa7b80e94da.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/jquery.wiggle.min.self-039164bf6151e8f188c754158b768f9c6c443d0b14126bec33eb509542058465.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/jquery.ba-bbq.min.self-f391dd8d2de96e7f0e2715386a66529e16fa871e7ce872a90f0eafccd14387bf.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/marked.self-5b2fa3db4ac5ac253e64dd982bb46394fea2a3d4a7748e649fc36c9516cb1319.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/swagger-ui.min.self-661b452fe5bd14645cce77497c551f0064245af5905ff1a9fbc94eea18e0d2b4.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/lodash.min.self-1b664af2fc41fbe5fd7df49a00ad4728d94c9065e256fb90b528230306a0dd9d.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/backbone-min.self-f93750e57d169b7bf3efac8f4b0facaeac96461f62d88e96f2c604f693291e3a.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/handlebars-2.0.0.self-577cc5c45bb652f41ed7260b9f2f2bb21df8b9b4820246b773beafbcb74e05c2.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/highlight.9.1.0.pack.self-4978eb1b0ce41ff2ae70f466d29ae69607843f65539f76dc8ce0359c9361558e.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/js-yaml.min.self-9127b459b7884af489ef3c8be2cbbea2473b65fff357b5d8b2053e8da7b79b67.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/jsoneditor.min.self-b4b968ff7cedda04ebc84b7c1f37f559ca6ed3139fd77d02b359cb89f3312acc.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/object-assign-pollyfill.self-256d4e60d3c9ddaa7b5b7b98ed858e69440c4f42588e44e3cc6e6e3917bacd9c.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/swagger-oauth.self-42b98626545e006ccda50ac123186fdfa56c2a226d0d8ca91e25129113b6bd8e.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/base64.self-f235cc5e74cc23ea2e62688b0892118b7ce972464eb21d147f432d6bd96af3f4.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/assets/grape_swagger_rails/application.self-886760af898381620a8980841c646ae70e894b5292c3138e6dfd75b6904deffb.js?body=1" for 127.0.0.1 at 2017-01-17 11:47:28 +0700
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:48:42 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (208.7ms)
+Completed 200 OK in 228ms (Views: 219.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/swagger_doc.json" for 127.0.0.1 at 2017-01-17 11:48:43 +0700
+
+ActionController::RoutingError (No route matches [GET] "/swagger_doc.json"):
+  actionpack (4.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.7) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.7) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.7) lib/rails/engine.rb:518:in `call'
+  railties (4.2.7) lib/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_route.html.erb (2.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_table.html.erb (11.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (57.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (493.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (510.8ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:50:24 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (263.5ms)
+Completed 200 OK in 285ms (Views: 276.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/swagger_doc.json" for 127.0.0.1 at 2017-01-17 11:50:25 +0700
+
+ActionController::RoutingError (No route matches [GET] "/swagger_doc.json"):
+  actionpack (4.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.7) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.7) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.7) lib/rails/engine.rb:518:in `call'
+  railties (4.2.7) lib/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_table.html.erb (11.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (59.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (484.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (502.4ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 11:50:33 +0700
+
+
+Started GET "/assets/grape_swagger_rails/throbber-8ee91ceb10dcdf1c87635ff1a1ebe25818612fd9a07cb2dfca79928c3b86d9dc.gif" for 127.0.0.1 at 2017-01-17 11:50:41 +0700
+
+
+Started POST "/api/users?api_key=Sequi%20necessitatibus%20maiores%20est%20cum%20voluptate" for 127.0.0.1 at 2017-01-17 11:50:47 +0700
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:51:46 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (30.9ms)
+Completed 200 OK in 36ms (Views: 36.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/swagger_doc.json" for 127.0.0.1 at 2017-01-17 11:51:46 +0700
+
+ActionController::RoutingError (No route matches [GET] "/swagger_doc.json"):
+  actionpack (4.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.7) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.7) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.7) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.7) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.7) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.7) lib/rails/engine.rb:518:in `call'
+  railties (4.2.7) lib/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /home/code-engine-studio/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_route.html.erb (2.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_route.html.erb (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (37.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (20.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (39.1ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:51:55 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (240.1ms)
+Completed 200 OK in 261ms (Views: 251.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 11:51:55 +0700
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:51:56 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (48.6ms)
+Completed 200 OK in 53ms (Views: 52.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 11:51:56 +0700
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:51:56 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (50.8ms)
+Completed 200 OK in 56ms (Views: 55.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 11:51:56 +0700
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 11:52:30 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (237.0ms)
+Completed 200 OK in 259ms (Views: 250.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 11:52:30 +0700
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 11:56:10 +0700
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 11:57:48 +0700
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 12:06:45 +0700
+
+NoMethodError (undefined method `[]=' for nil:NilClass):
+  app/api/authenticate/user.rb:27:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (22.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (417.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (437.7ms)
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 12:06:51 +0700
+
+NoMethodError (undefined method `[]=' for nil:NilClass):
+  app/api/authenticate/user.rb:27:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (14.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (32.3ms)
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 12:07:22 +0700
+
+NoMethodError (undefined method `[]=' for nil:NilClass):
+  app/api/authenticate/user.rb:28:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (18.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (33.5ms)
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 12:40:43 +0700
+
+NoMethodError (undefined method `[]=' for nil:NilClass):
+  app/api/authenticate/user.rb:30:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (22.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (17.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (31.6ms)
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 12:41:01 +0700
+
+NoMethodError (undefined method `tokens' for nil:NilClass):
+  app/api/authenticate/user.rb:31:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (18.0ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (33.3ms)
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 12:46:43 +0700
+
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  app/api/authenticate/user.rb:10:in `new'
+  app/api/authenticate/user.rb:10:in `sign_up_params'
+  app/api/authenticate/user.rb:31:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (18.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (17.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (31.5ms)
+
+
+Started POST "/api/users?api_key=Facere%20voluptatem%20Numquam%20doloribus%20aut%20saepe%20recusandae%20Perspiciatis%20quia%20quos%20distinctio%20Optio%20et%20est" for 127.0.0.1 at 2017-01-17 12:46:54 +0700
+
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  app/api/authenticate/user.rb:10:in `new'
+  app/api/authenticate/user.rb:10:in `sign_up_params'
+  app/api/authenticate/user.rb:31:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.0ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.0ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (16.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (31.8ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 12:46:57 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (28.1ms)
+Completed 200 OK in 34ms (Views: 33.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 12:46:58 +0700
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 12:47:07 +0700
+
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  app/api/authenticate/user.rb:11:in `new'
+  app/api/authenticate/user.rb:11:in `sign_up_params'
+  app/api/authenticate/user.rb:31:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (16.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (31.6ms)
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 12:48:41 +0700
+
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  app/api/authenticate/user.rb:11:in `new'
+  app/api/authenticate/user.rb:11:in `sign_up_params'
+  app/api/authenticate/user.rb:31:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (7.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (25.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (18.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (34.6ms)
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 12:49:34 +0700
+
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  app/api/authenticate/user.rb:11:in `new'
+  app/api/authenticate/user.rb:11:in `sign_up_params'
+  app/api/authenticate/user.rb:31:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (6.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (25.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (18.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (33.6ms)
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 12:51:57 +0700
+
+NoMethodError (undefined method `tokens' for nil:NilClass):
+  app/api/authenticate/user.rb:35:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (15.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (31.9ms)
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 12:53:30 +0700
+
+NoMethodError (undefined method `tokens' for nil:NilClass):
+  app/api/authenticate/user.rb:35:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (14.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (29.0ms)
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 12:55:20 +0700
+
+NoMethodError (undefined method `tokens' for nil:NilClass):
+  app/api/authenticate/user.rb:35:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (15.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (31.1ms)
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 12:56:16 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+NoMethodError (undefined method `tokens' for nil:NilClass):
+  app/api/authenticate/user.rb:35:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (8.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (26.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (328.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (344.7ms)
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 13:04:26 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+NoMethodError (undefined method `tokens' for nil:NilClass):
+  app/api/authenticate/user.rb:33:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (8.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (26.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (382.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (398.4ms)
+
+
+Started POST "/api/users?api_key=Non%20debitis%20deserunt%20rem%20voluptate%20natus%20adipisicing%20culpa%20eaque%20ut%20pariatur%20Quis%20quod%20eligendi%20pariatur%20Laborum" for 127.0.0.1 at 2017-01-17 13:12:29 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+NoMethodError (undefined method `tokens' for nil:NilClass):
+  app/api/authenticate/user.rb:33:in `block (2 levels) in <class:User>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (10.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (28.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (345.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (365.6ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 13:54:02 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (270.6ms)
+Completed 200 OK in 291ms (Views: 283.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 13:54:03 +0700
+
+
+Started POST "/api/users?api_key=Eum%20irure%20explicabo%20Aliquid%20non" for 127.0.0.1 at 2017-01-17 13:54:06 +0700
+
+
+Started POST "/api/users?api_key=Eum%20irure%20explicabo%20Aliquid%20non" for 127.0.0.1 at 2017-01-17 13:54:47 +0700
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (36.2ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "waraxidi@hotmail.com"]]
+  [1m[35mUser Exists (0.6ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('waraxidi@hotmail.com') LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+
+ActiveRecord::RecordInvalid (Validation failed: Name can't be blank, Name is too short (minimum is 6 characters)):
+  app/api/user_api/data.rb:37:in `block (2 levels) in <class:Data>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (17.2ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (36.1ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 13:55:28 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (24.5ms)
+Completed 200 OK in 33ms (Views: 32.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 13:55:29 +0700
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 13:55:39 +0700
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+
+ActiveRecord::RecordInvalid (Validation failed: Password confirmation doesn't match Password, Name can't be blank, Name is too short (minimum is 6 characters)):
+  app/api/user_api/data.rb:38:in `block (2 levels) in <class:Data>'
+
+
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (21.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (16.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (34.2ms)
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 13:57:48 +0700
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 13:58:04 +0700
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.7ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[35mUser Exists (0.6ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 13:58:14 +0700
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 13:58:44 +0700
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 13:59:26 +0700
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 13:59:34 +0700
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 13:59:38 +0700
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("tokens", "name", "email", "encrypted_password", "uid", "created_at", "updated_at", "confirmation_token", "confirmation_sent_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["tokens", "{\"BpHDl5eYkJU0jlIKT-J9WQ\":{\"token\":\"$2a$10$O7REK7.fpFD1WXxaVxghi.kfw.VAnFgsYbq4lRtVi3M5kVMO6723W\",\"expiry\":1485845978}}"], ["name", "pozats"], ["email", "giri@yahoo.com"], ["encrypted_password", "$2a$10$AcUet.Ad4y1oaL6SQ1BAC.6l1o7vSdt3q.O2C9INlaWcFBNPm0U6a"], ["uid", "giri@yahoo.com"], ["created_at", "2017-01-17 06:59:38.933158"], ["updated_at", "2017-01-17 06:59:38.933158"], ["confirmation_token", "B9hCqywgFqgNLzjs_hWd"], ["confirmation_sent_at", "2017-01-17 06:59:38.933501"]]
+  [1m[35m (50.8ms)[0m  COMMIT
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 14:00:11 +0700
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 14:00:20 +0700
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2  [["provider", "email"], ["email", "giri"]]
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri') LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  ROLLBACK
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 14:03:09 +0700
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2  [["provider", "email"], ["email", "giri@yahoo.com"]]
+  [1m[36mUser Exists (0.6ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giri@yahoo.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+
+
+Started POST "/api/users?api_key=Irure%20eos%20voluptate%20non%20deserunt%20exercitationem%20qui%20incidunt%20consequuntur%20fugit%20magni%20ducimus%20id%20nulla%20magna%20sunt" for 127.0.0.1 at 2017-01-17 14:03:15 +0700
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2  [["provider", "email"], ["email", "giris@yahoo.com"]]
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('giris@yahoo.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("tokens", "name", "email", "encrypted_password", "uid", "created_at", "updated_at", "confirmation_token", "confirmation_sent_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"  [["tokens", "{\"a6GV8kgmbqu39mzhMjTLOA\":{\"token\":\"$2a$10$HkuYe49mIFe3.jyE8v3WeuDC1LJkXbK9sokzV29Bn/PMCVeo7yY3K\",\"expiry\":1485846195}}"], ["name", "pozats"], ["email", "giris@yahoo.com"], ["encrypted_password", "$2a$10$FhTJzGdS7De4i6emzSX0iuX7Sbly7T3RtkOYGuPnceYy/IeiywxJS"], ["uid", "giris@yahoo.com"], ["created_at", "2017-01-17 07:03:15.298798"], ["updated_at", "2017-01-17 07:03:15.298798"], ["confirmation_token", "jpaytAmrSYz8ynywT7U2"], ["confirmation_sent_at", "2017-01-17 07:03:15.299061"]]
+  [1m[36m (27.7ms)[0m  [1mCOMMIT[0m
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 14:09:34 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (196.3ms)
+Completed 200 OK in 223ms (Views: 209.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-17 14:09:35 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (25.4ms)
+Completed 200 OK in 29ms (Views: 29.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-17 14:09:35 +0700
+
+
+Started POST "/api/users?api_key=Commodi%20amet%20aperiam%20voluptatem%20pariatur%20Nisi%20fugiat%20tempor%20labore%20sit%20tempore%20minus%20iure" for 127.0.0.1 at 2017-01-17 14:09:40 +0700
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.6ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "doku@gmail.com"]]
+  [1m[35mUser Exists (0.6ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('doku@gmail.com') LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("tokens", "name", "email", "encrypted_password", "uid", "created_at", "updated_at", "confirmation_token", "confirmation_sent_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["tokens", "{\"PDyFM93GbgF7bgvbQ7qMIQ\":{\"token\":\"$2a$10$WkAaDiop.dxPLaL..osvRusjYQKmVSwwpABoW5zM4QW6V5.AQXPym\",\"expiry\":1485846581}}"], ["name", "tawanic"], ["email", "doku@gmail.com"], ["encrypted_password", "$2a$10$ylJ0gw0357Tzm0aQTwCwLeMWsashCIs.rJhx0SNcdKTOTGiNcMtsK"], ["uid", "doku@gmail.com"], ["created_at", "2017-01-17 07:09:41.071460"], ["updated_at", "2017-01-17 07:09:41.071460"], ["confirmation_token", "kxCzkcS4MKU2TzEHGrgA"], ["confirmation_sent_at", "2017-01-17 07:09:41.071941"]]
+  [1m[35m (27.0ms)[0m  COMMIT

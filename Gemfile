@@ -33,6 +33,18 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 #****************************************
+# => create grape api                   *
+gem 'grape'                             #
+# => create document                    *
+gem 'grape-swagger', '~> 0.26.0'        #
+# => create router                      *
+gem 'grape-swagger-rails'               #
+# => disables the security feature of   *
+# => strong_params at the model         *
+gem 'hashie-forbidden_attributes'       #
+#****************************************
+
+#****************************************
 # => using for login                    *
 gem 'devise_token_auth'                 #
 # => using for authenticate             *
