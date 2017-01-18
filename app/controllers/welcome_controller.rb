@@ -4,6 +4,6 @@ class WelcomeController < ApplicationController
   end
 
   def test
-    @body = params
+    @body = params["project"]
   end
 end

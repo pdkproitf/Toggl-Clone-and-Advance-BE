@@ -1,0 +1,7 @@
+{
+  "timer": {
+    "task_id": 1,
+    "start_time": "Date.now()",
+    "stop_time": "Date.now() + 1"
+  }
+}
