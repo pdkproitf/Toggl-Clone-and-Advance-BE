@@ -1,4 +1,4 @@
-# PostgreSQL. Versions 8.2 and up are supported.
+# PostgreSQL. Versions 9.1 and up are supported.
 #
 # Install the pg driver:
 #   gem install pg
@@ -19,19 +19,17 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: 5
-  username: demo01
-  password: demo01
-  
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
 development:
   <<: *default
-  database: tracker_development
+  database: timecloud_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: tracker
+  #username: timecloud
 
   # The password associated with the postgres role (username).
   #password:
@@ -59,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: tracker_test
+  database: timecloud_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -82,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: tracker_production
-  username: tracker
-  password: <%= ENV['TRACKER_DATABASE_PASSWORD'] %>
+  database: timecloud_production
+  username: timecloud
+  password: <%= ENV['TIMECLOUD_DATABASE_PASSWORD'] %>
