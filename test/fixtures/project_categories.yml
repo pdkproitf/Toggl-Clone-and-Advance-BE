@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project: one
+  category: one
+  billable: false
+
+two:
+  project: two
+  category: two
+  billable: false
