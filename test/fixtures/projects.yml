@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  client: one
+  background: MyString
+  report_permission: 
+  archived: false
+
+two:
+  name: MyString
+  client: two
+  background: MyString
+  report_permission: 
+  archived: false
