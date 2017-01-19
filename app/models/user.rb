@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-    has_many :project_user_roles
-    has_many :project_category_user
+    has_many :project_user_roles, dependent: :destroy
+    has_many :project_category_user, dependent: :destroy
     has_many :project_categories, through: :project_category_users
     has_many :projects, through: :project_user_roles
     has_many :roles, through: :project_user_roles
