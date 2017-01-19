@@ -1,11 +1,11 @@
 class CreateTimers < ActiveRecord::Migration[5.0]
-  def change
-    create_table :timers do |t|
-      t.references :task, foreign_key: true
-      t.datetime :start_time
-      t.datetime :stop_time
+    def change
+        create_table :timers do |t|
+            t.references :task, foreign_key: true, index: true
+            t.datetime :start_time
+            t.datetime :stop_time
 
-      t.timestamps
+            t.timestamps
+        end
     end
-  end
 end
