@@ -2,7 +2,7 @@ require 'grape-swagger'
 module API
     class Root < Grape::API
         format :json
-        formatter :json #, Grape::Formatter::ActiveModelSerializers
+        formatter :json , Grape::Formatter::ActiveModelSerializers
         use ApiErrorHandler
 
         mount UserApi::Registrations
