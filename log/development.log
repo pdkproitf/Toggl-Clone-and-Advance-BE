@@ -1370,3 +1370,77 @@ Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 16:54:28 +0700
 Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 16:54:53 +0700
 Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 16:55:12 +0700
 Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 16:55:27 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:18:31 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:19:25 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:19:57 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:20:36 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:22:49 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:23:59 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:24:12 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:27:26 +0700
+  
+SyntaxError (/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/project_api/projects.rb:70: syntax error, unexpected tIDENTIFIER, expecting ')'
+                  client_id: project_params[:client_id]
+                           ^
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/project_api/projects.rb:71: syntax error, unexpected ':', expecting keyword_end
+                  background: project_params[:background]
+                             ^
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/project_api/projects.rb:72: syntax error, unexpected ':', expecting keyword_end
+...             report_permission: project_params[:report_permi...
+...                               ^
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/project_api/projects.rb:73: syntax error, unexpected ')', expecting keyword_end):
+  
+app/api/project_api/projects.rb:70: syntax error, unexpected tIDENTIFIER, expecting ')'
+app/api/project_api/projects.rb:71: syntax error, unexpected ':', expecting keyword_end
+app/api/project_api/projects.rb:72: syntax error, unexpected ':', expecting keyword_end
+app/api/project_api/projects.rb:73: syntax error, unexpected ')', expecting keyword_end
+app/api/api.rb:10:in `<class:Root>'
+app/api/api.rb:3:in `<module:API>'
+app/api/api.rb:2:in `<top (required)>'
+config/routes.rb:5:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.6ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.1ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (23.9ms)
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:27:49 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:28:55 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:29:54 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:32:08 +0700
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" ORDER BY "projects"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "projects"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:40:03 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:40:16 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:40:49 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:43:16 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:43:58 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:44:28 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m

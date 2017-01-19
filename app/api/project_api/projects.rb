@@ -64,8 +64,13 @@ module ProjectApi
                 end
             end
             post '/new' do
-                @project = Project.new
-                @project.name = params[:name]
+                project_params = params['project']
+                project = Project.create!(
+                    name: project_params['name'],
+                    client_id: project_params['client_id'],
+                    background: project_params['background'],
+                    report_permission: project_params['report_permission']
+                )
             end
 
             # for test
