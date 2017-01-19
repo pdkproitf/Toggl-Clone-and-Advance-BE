@@ -1095,3 +1095,77 @@ Started POST "/api/users" for 127.0.0.1 at 2017-01-19 11:11:56 +0700
   [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "ovv52648@noicd.com"]]
   [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "ovv52648@noicd.com"], ["LIMIT", 1]]
   [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1052504927498677800);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1052504927498677800)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-19 13:44:49 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (279.6ms)
+Completed 200 OK in 297ms (Views: 286.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-19 13:44:50 +0700
+Started POST "/api/users" for 127.0.0.1 at 2017-01-19 13:45:11 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "levanlinhcube@gmail.com"]]
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/users" for 127.0.0.1 at 2017-01-19 13:45:21 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "levanlinhcube@gmail.com"]]
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "users" ("uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "name", "email", "tokens", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["uid", "levanlinhcube@gmail.com"], ["encrypted_password", "$2a$11$PSXbNVjOpzYIlbt2HWPDY.SOcNX5DpixnBqBj8Dn6DPfsK9R6ohNu"], ["confirmation_token", "_N3UaVfjfxKvayBeyT_d"], ["confirmation_sent_at", 2017-01-19 06:45:21 UTC], ["name", "cubeit"], ["email", "levanlinhcube@gmail.com"], ["tokens", "{}"], ["created_at", 2017-01-19 06:45:21 UTC], ["updated_at", 2017-01-19 06:45:21 UTC]]
+  [1m[35m (37.7ms)[0m  [1m[35mCOMMIT[0m
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb (31.4ms)
+Devise::Mailer#confirmation_instructions: processed outbound mail in 273.1ms
+Sent mail to levanlinhcube@gmail.com (8628.8ms)
+Date: Thu, 19 Jan 2017 13:45:22 +0700
+From: please-change-me-at-config-initializers-devise@example.com
+Reply-To: please-change-me-at-config-initializers-devise@example.com
+To: levanlinhcube@gmail.com
+Message-ID: <58806082112ab_e6b282aa1c25345@cogzwell.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+client-config: default
+redirect-url: http://localhost:3000/
+
+<p>Welcome levanlinhcube@gmail.com!</p>
+
+<p>You can confirm your account email through the link below: </p>
+
+<p><a href="http://localhost:3000/auth/confirmation?config=default&confirmation_token=_N3UaVfjfxKvayBeyT_d&redirect_url=http%3A%2F%2Flocalhost%3A3000%2F">Confirm my account</a></p>
+
+Started GET "/auth/confirmation?config=default&confirmation_token=_N3UaVfjfxKvayBeyT_d&redirect_url=http%3A%2F%2Flocalhost%3A3000%2F" for 127.0.0.1 at 2017-01-19 13:45:59 +0700
+Processing by DeviseTokenAuth::ConfirmationsController#show as HTML
+  Parameters: {"config"=>"default", "confirmation_token"=>"_N3UaVfjfxKvayBeyT_d", "redirect_url"=>"http://localhost:3000/"}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."confirmation_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["confirmation_token", "_N3UaVfjfxKvayBeyT_d"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "users" SET "confirmed_at" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["confirmed_at", 2017-01-19 06:45:59 UTC], ["updated_at", 2017-01-19 06:45:59 UTC], ["id", 1]]
+  [1m[35m (20.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "levanlinhcube@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "tokens" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["tokens", "{\"1tZ-nYFEapdhNSxzXMq01Q\":{\"token\":\"$2a$10$GAtzzfOtb1H8nQxdiMuYcOTqr1a3KGp8GKMQFzzqKk4W56jjl28Ae\",\"expiry\":1486017959}}"], ["updated_at", 2017-01-19 06:45:59 UTC], ["id", 1]]
+  [1m[35m (3.4ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/?account_confirmation_success=true&client_id=1tZ-nYFEapdhNSxzXMq01Q&config=default&expiry=1486017959&token=jRj3LY8lvUuypPKx2Ph45g&uid=levanlinhcube%40gmail.com
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "levanlinhcube@gmail.com"], ["id", 1], ["LIMIT", 1]]
+Completed 302 Found in 131ms (ActiveRecord: 27.1ms)
+
+
+Started GET "/?account_confirmation_success=true&client_id=1tZ-nYFEapdhNSxzXMq01Q&config=default&expiry=1486017959&token=jRj3LY8lvUuypPKx2Ph45g&uid=levanlinhcube%40gmail.com" for 127.0.0.1 at 2017-01-19 13:45:59 +0700
+Processing by WelcomeController#index as HTML
+  Parameters: {"account_confirmation_success"=>"true", "client_id"=>"1tZ-nYFEapdhNSxzXMq01Q", "config"=>"default", "expiry"=>"1486017959", "token"=>"jRj3LY8lvUuypPKx2Ph45g", "uid"=>"levanlinhcube@gmail.com"}
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 31ms (Views: 29.8ms | ActiveRecord: 0.0ms)
+
+
