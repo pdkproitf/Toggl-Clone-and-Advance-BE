@@ -6,6 +6,7 @@ module API
     use ApiErrorHandler
 
     mount UserApi::Registrations
+    mount UserApi::Sessions
     # mount Shop::ProductApi
 
     add_swagger_documentation(
