@@ -35,14 +35,17 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-#********************************
-# rails api                     *
-gem 'grape'                     #
-# create grape document         *
-gem 'grape-swagger'             #
-# create swagger router         *
-gem 'grape-swagger-rails'       #
-#********************************
+#****************************************
+# rails api                             *
+gem 'grape'                             #
+# create grape document                 *
+gem 'grape-swagger'                     #
+# create swagger router                 *
+gem 'grape-swagger-rails'               #
+# => disables the security feature of   *
+# => strong_params at the model         *
+gem 'hashie-forbidden_attributes'       #
+#****************************************
 
 #****************************************
 # => using for login                    *

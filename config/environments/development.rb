@@ -45,6 +45,21 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.delivery_method = :smtp
+    host = 'localhost:3000'
+    config.action_mailer.default_url_options = { host: host }
+    ActionMailer::Base.smtp_settings = {
+      :address        => 'smtp.gmail.com',
+      :port           => '587',
+      :authentication => :plain,
+      :user_name            => 'phucdaica.pro@gmail.com',
+      :password             => 'ijylnhyuzepsrdgi',
+      :domain         => 'gmail.com',
+      :enable_starttls_auto => true
+    }
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
