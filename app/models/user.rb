@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
-  validates :username,  presence: true, length: {minimum: 6}
+  validates :name,  presence: true, length: {minimum: 6}
   validates :email, presence: true, length: {maximum: 255},
-  format: { with: VALID_EMAIL_REGEX },
-  uniqueness: { case_sensitive: false }
+            format: { with: VALID_EMAIL_REGEX },
+            uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: {minimum: 6}, allow_nil: true
 
   before_save   :downcase_email
