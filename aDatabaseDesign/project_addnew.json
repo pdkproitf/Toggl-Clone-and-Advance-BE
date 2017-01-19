@@ -1,76 +1,69 @@
 {
-  "project": {
-    "name": "Time Cloud",
-    "client": 1,
-    "background": "#FFFFFF",
-    "report_permission": 1,
-    "member_roles": [
-      {
-        "user_id": 1,
-        "role_id": 1
-      },
-      {
-        "user_id": 2,
-        "role_id": null
-      },
-      {
-        "user_id": 3,
-        "role_id": null
-      }
-    ],
-    "category_members": {
-      "new":[
-        {
-          "category_name": "new category 1",
-          "members": [
-            {
-              "user_id": 1
+    "project": {
+        "name": "Time Cloud",
+        "client_id": 1,
+        "background": "#FFFFFF",
+        "report_permission": 1,
+        "member_roles": [{
+                "user_id": 1,
+                "role_id": 1
             },
             {
-              "user_id": 2
-            }
-          ],
-          "billable": true
-        },
-        {
-          "category_name": "new category 2",
-          "members": [
-            {
-              "user_id": 2
+                "user_id": 2,
+                "role_id": null
             },
             {
-              "user_id": 3
+                "user_id": 3,
+                "role_id": null
             }
-          ],
-          "billable": false
+        ],
+        "category_members": {
+            "existing": [{
+                    "category_id": 1,
+                    "members": [{
+                            "user_id": 1
+                        },
+                        {
+                            "user_id": 2
+                        }
+                    ],
+                    "billable": true
+                },
+                {
+                    "category_id": 2,
+                    "members": [{
+                            "user_id": 2
+                        },
+                        {
+                            "user_id": 3
+                        }
+                    ],
+                    "billable": false
+                }
+            ],
+            "new": [{
+                    "category_name": "new category 1",
+                    "members": [{
+                            "user_id": 1
+                        },
+                        {
+                            "user_id": 2
+                        }
+                    ],
+                    "billable": true
+                },
+                {
+                    "category_name": "new category 2",
+                    "members": [{
+                            "user_id": 2
+                        },
+                        {
+                            "user_id": 3
+                        }
+                    ],
+                    "billable": false
+                }
+            ]
         }
-      ],
-      "existing": [
-        {
-          "category_id": 1,
-          "members": [
-            {
-              "user_id": 1
-            },
-            {
-              "user_id": 2
-            }
-          ],
-          "billable": true
-        },
-        {
-          "category_id": 2,
-          "members": [
-            {
-              "user_id": 2
-            },
-            {
-              "user_id": 3
-            }
-          ],
-          "billable": false
-        }
-      ]
     }
-  }
 }
