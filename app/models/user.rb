@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
     has_many :project_user_roles
+    has_many :project_category_user
+    has_many :project_categories, through: :project_category_users
     # Include default devise modules.
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable,
