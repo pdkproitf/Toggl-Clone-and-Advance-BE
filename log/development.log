@@ -1444,3 +1444,42 @@ Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:44:28 +0700
   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
   [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
   [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started GET "/" for 127.0.0.1 at 2017-01-19 17:58:58 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 281ms (Views: 272.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 17:59:04 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.6ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-19 18:00:06 +0700
+  
+NameError (uninitialized constant ClientApi::Clients):
+  
+app/api/api.rb:11:in `<class:Root>'
+app/api/api.rb:3:in `<module:API>'
+app/api/api.rb:2:in `<top (required)>'
+config/routes.rb:5:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (2.3ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.9ms)
+Started GET "/swagger" for 127.0.0.1 at 2017-01-19 18:02:46 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-19 18:04:20 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (286.5ms)
+Completed 200 OK in 305ms (Views: 294.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-19 18:04:21 +0700

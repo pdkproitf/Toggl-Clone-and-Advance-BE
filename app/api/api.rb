@@ -8,6 +8,7 @@ module API
         mount UserApi::Registrations
         mount UserApi::Sessions
         mount ProjectApi::Projects
+        mount ClientApi::Clients
         # mount Shop::ProductApi
 
         add_swagger_documentation(
