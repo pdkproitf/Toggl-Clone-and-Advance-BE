@@ -1483,3 +1483,20 @@ Completed 200 OK in 305ms (Views: 294.2ms | ActiveRecord: 0.0ms)
 
 
 Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-19 18:04:21 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-19 23:04:27 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (62.5ms)
+Completed 200 OK in 76ms (Views: 71.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-19 23:04:38 +0700
+Started POST "/api/clients/new" for 127.0.0.1 at 2017-01-19 23:05:03 +0700
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "clients" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "New York Time"], ["created_at", 2017-01-19 16:05:03 UTC], ["updated_at", 2017-01-19 16:05:03 UTC]]
+  [1m[35m (12.9ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-19 23:07:14 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.7ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (40.9ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-19 16:07:14 UTC], ["updated_at", 2017-01-19 16:07:14 UTC]]
+  [1m[35m (13.6ms)[0m  [1m[35mCOMMIT[0m
