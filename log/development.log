@@ -1776,3 +1776,297 @@ Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:56:54 +0700
   [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
   [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 4], ["user_id", 3], ["role_id", 4], ["created_at", 2017-01-20 02:56:55 UTC], ["updated_at", 2017-01-20 02:56:55 UTC]]
   [1m[35m (23.0ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-20 10:36:59 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (326.1ms)
+Completed 200 OK in 344ms (Views: 334.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-20 10:37:00 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-20 10:37:52 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-20 10:38:08 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (273.6ms)
+Completed 200 OK in 293ms (Views: 283.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-20 10:38:08 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:38:12 +0700
+  [1m[36mProject Load (0.9ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:39:53 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:40:06 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mProject Load (0.5ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:41:15 +0700
+  [1m[36mProject Load (0.5ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.5ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:42:13 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:42:19 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:42:35 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:42:42 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:42:52 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:43:00 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mProject Load (1.0ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:43:57 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:44:08 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mProject Load (0.7ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:44:50 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:44:58 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:45:19 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:46:24 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mProject Load (0.5ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:46:54 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:47:03 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mProject Load (0.7ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:47:41 +0700
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 10:50:23 +0700
+  [1m[36mProject Load (0.2ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.4ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.4ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:03:11 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.5ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.4ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.4ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.6ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+Started GET "/swagger" for 127.0.0.1 at 2017-01-20 11:09:45 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (195.6ms)
+Completed 200 OK in 213ms (Views: 203.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-20 11:09:46 +0700
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:09:50 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.4ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:11:29 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "project_user_roles" ON "roles"."id" = "project_user_roles"."role_id" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 1]]
+No serializer found for resource: #<User id: 1, provider: "email", uid: "levanlinhcube@gmail.com", name: "cubeit", nickname: nil, image: nil, email: "levanlinhcube@gmail.com", created_at: "2017-01-19 06:45:21", updated_at: "2017-01-19 06:45:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "project_user_roles" ON "users"."id" = "project_user_roles"."user_id" WHERE "project_user_roles"."role_id" = $1[0m  [["role_id", 4]]
+No serializer found for resource: #<User id: 2, provider: "email", uid: "lynleva.cube.it141@gmail.com", name: "linhbk", nickname: nil, image: nil, email: "lynleva.cube.it141@gmail.com", created_at: "2017-01-20 02:37:09", updated_at: "2017-01-20 02:38:41">
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:18:47 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:18:56 +0700
+  [1m[36mProject Load (0.8ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (3.7ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+No serializer found for resource: #<ProjectUserRole id: 1, project_id: 2, user_id: 1, role_id: 1, created_at: "2017-01-20 02:43:47", updated_at: "2017-01-20 02:43:47">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (2.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+No serializer found for resource: #<ProjectUserRole id: 2, project_id: 3, user_id: 1, role_id: 1, created_at: "2017-01-20 02:46:59", updated_at: "2017-01-20 02:46:59">
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+No serializer found for resource: #<ProjectUserRole id: 5, project_id: 4, user_id: 1, role_id: 1, created_at: "2017-01-20 02:56:55", updated_at: "2017-01-20 02:56:55">
+No serializer found for resource: #<ProjectUserRole id: 1, project_id: 2, user_id: 1, role_id: 1, created_at: "2017-01-20 02:43:47", updated_at: "2017-01-20 02:43:47">
+No serializer found for resource: #<ProjectUserRole id: 2, project_id: 3, user_id: 1, role_id: 1, created_at: "2017-01-20 02:46:59", updated_at: "2017-01-20 02:46:59">
+No serializer found for resource: #<ProjectUserRole id: 5, project_id: 4, user_id: 1, role_id: 1, created_at: "2017-01-20 02:56:55", updated_at: "2017-01-20 02:56:55">
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:21:50 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:22:14 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.1ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.4ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:23:04 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.1ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.1ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (1.1ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Started POST "/api/projects/all" for 127.0.0.1 at 2017-01-20 11:26:52 +0700
+  [1m[36mProject Load (0.5ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]

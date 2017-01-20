@@ -34,6 +34,11 @@ module ProjectApi
 
         resource :projects do
             # => /api/v1/projects/
+            desc 'Get all projects'
+            post '/all' do
+                Project.all
+            end
+
             desc 'create new project'
             params do
                 requires :project, type: Hash do
@@ -83,10 +88,10 @@ module ProjectApi
                       role_id: member_roles.role_id
                     )
                   end
-                  {"project":{
-                    "project": project,
-                      "member_roles":   project.
-                }
+                #   {"project":{
+                #     "project": project,
+                #       "member_roles":   project.
+                # }
 
                   #{"list": list}
                 else
