@@ -10,13 +10,6 @@ module UserApi
         user
       end
 
-      def return_create_success
-        return {
-          status: 'success',
-          data: sign_in_token_validation
-        }
-      end
-
       def sign_in_token_validation
         data  = @resource.token_validation_response.to_h
         data.store('client', @client_id)
@@ -24,17 +17,22 @@ module UserApi
         data
       end
 
-      def return_create_error messages
+      def return_message success, status, code, data = nil
         {
-          status: 'false',
-          data:   nil,
-          errors: messages
+          success: success,
+          status: status,
+          code: code,
+          data: data
         }
       end
 
       def isExpiry?
         duration = (Time.now -  @resource.confirmation_sent_at)/(24*60*60)
-        duration >= 7
+        duration >= 7 || @resource.confirmed_at
+      end
+
+      def isConfirmed?
+        @resource.confirmed_at
       end
     end
 
@@ -49,8 +47,10 @@ module UserApi
       get '/confirmation' do
         @resource = confirmations_user
         if @resource and @resource.id
-          if isExpiry?
-            return_create_error 'Overtime Confirmations'
+          if isConfirmed?
+            return_message false, 'Confirmed', 423
+          elsif isExpiry?
+            return_message false, 'Overtime Confirmations', 423
           else
             # create client id
             @client_id  = SecureRandom.urlsafe_base64(nil, false)
@@ -63,11 +63,12 @@ module UserApi
               expiry: expiry
             }
 
+            @resource.confirmed_at = Time.now
             @resource.save!
-            return_create_success
+            return_message true, 'Sucess', 200 ,sign_in_token_validation
           end
         else
-            return_create_error 'Not found Confirmations'
+            return_message false, 'Not found Confirmations', 404
         end
       end
     end

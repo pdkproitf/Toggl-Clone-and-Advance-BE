@@ -2,18 +2,11 @@ module UserApi
   class Sessions < Grape::API
     prefix  :api
     version 'v1', using: :accept_version_header
-    #
+
     helpers do
       def sign_in_params
         user_params = params['user']
         User.find_by(email: user_params['email'])
-      end
-
-      def return_create_success
-        return {
-          status: 'success',
-          data: sign_in_token_validation
-        }
       end
 
       def sign_in_token_validation
@@ -23,38 +16,14 @@ module UserApi
         data
       end
 
-      def return_create_error_not_confirmed
-        return {
-          success: false,
-          errors: [ I18n.t("devise_token_auth.sessions.not_confirmed", email: @resource.email) ],
-          status: 401
-        }
-      end
-
-      def return_create_error_bad_credentials
-        return {
-          success: false,
-          errors: [I18n.t("devise_token_auth.sessions.bad_credentials")],
-          status: 401
-        }
-      end
-
-      def return_destroy_success
-        {
-          success: true,
-          errors: '',
-          status: 200
-        }
-        # "hoho"
-      end
-
-      def return_destroy_error
-        {
-          success: false,
-          errors: [I18n.t("devise_token_auth.sessions.user_not_found")],
-          status: 404
-        }
-        # "hihi"
+      def return_message success, status, code, data = nil
+        error! status, code
+        # {
+        #   success: success,
+        #   status: status,
+        #   code: code,
+        #   data: data
+        # }
       end
     end
 
@@ -79,11 +48,11 @@ module UserApi
             expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
           }
           @resource.save
-          return_create_success
+          return_message true, 'Create Success', 201, sign_in_token_validation
         elsif @resource and not (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
-          return_create_error_not_confirmed
+          return_message false, I18n.t("devise_token_auth.sessions.not_confirmed", email: @resource.email), 401
         else
-          return_create_error_bad_credentials
+          return_message false, I18n.t("devise_token_auth.sessions.bad_credentials"), 401
         end
       end
 
@@ -95,20 +64,21 @@ module UserApi
           requires :access_token,  type: String, desc: "access-token"
         end
       end
-      delete '/sign-out' do
+      post '/sign-out' do
         @resource = User.find_by(email: params['auth']['uid'])
         @client_id = params['auth']['client']
         @token = params['auth']['access_token']
+
         user = remove_instance_variable(:@resource) if @resource
         client_id = remove_instance_variable(:@client_id) if @client_id
         remove_instance_variable(:@token) if @token
-        # binding.pry
+
         if user and client_id and user.tokens[client_id]
           user.tokens.delete(client_id)
           user.save!
-          return_destroy_success
+          return_message true, 'Logout Success', 200
         else
-          return_destroy_error
+          return_message false, I18n.t("devise_token_auth.sessions.user_not_found"), 404
         end
       end
     end
