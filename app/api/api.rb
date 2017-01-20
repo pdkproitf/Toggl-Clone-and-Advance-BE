@@ -2,13 +2,14 @@ require 'grape-swagger'
 module API
     class Root < Grape::API
         format :json
-        formatter :json , Grape::Formatter::ActiveModelSerializers
+        formatter :json, Grape::Formatter::ActiveModelSerializers
         use ApiErrorHandler
 
         mount UserApi::Registrations
         mount UserApi::Sessions
         mount ProjectApi::Projects
         mount ClientApi::Clients
+        mount RoleApi::Roles
         # mount Shop::ProductApi
 
         add_swagger_documentation(

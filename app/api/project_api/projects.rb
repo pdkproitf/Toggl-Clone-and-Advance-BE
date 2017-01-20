@@ -71,6 +71,27 @@ module ProjectApi
                     background: project_params['background'],
                     report_permission: project_params['report_permission']
                 )
+
+                #list = []
+                member_roles_params = project_params['member_roles']
+                if member_roles_params && !member_roles_params.nil? && member_roles_params.length > 0
+                  member_roles_params.each do |member_roles|
+                    #list.push(member_roles)
+                    project.project_user_roles.create!(
+                      project_id: project.id,
+                      user_id: member_roles.user_id,
+                      role_id: member_roles.role_id
+                    )
+                  end
+                  {"project":{
+                    "project": project,
+                      "member_roles":   project.
+                }
+
+                  #{"list": list}
+                else
+                    {"hehe":"member_roles_params--->null"}
+                end
             end
 
             # for test

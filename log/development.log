@@ -1517,3 +1517,262 @@ Started POST "/api/clients/new" for 127.0.0.1 at 2017-01-19 23:26:09 +0700
   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
   [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "clients" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Facebook"], ["created_at", 2017-01-19 16:26:19 UTC], ["updated_at", 2017-01-19 16:26:19 UTC]]
   [1m[35m (25.1ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:08:33 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (31.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:09:15 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:09:52 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:10:16 +0700
+No serializer found for resource: #<Hashie::Mash role_id=1 user_id=1>
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:11:27 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:11:59 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:12:21 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:12:39 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:12:47 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:14:07 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:14:21 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:18:00 +0700
+No serializer found for resource: #<Hashie::Mash role_id=1 user_id=1>
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:18:32 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:21:37 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:27:14 +0700
+  
+SyntaxError (/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/project_api/projects.rb:83: syntax error, unexpected tIDENTIFIER, expecting ')'
+                      role_id: member_roles.role_id
+                             ^
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/project_api/projects.rb:84: syntax error, unexpected ')', expecting keyword_end
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/project_api/projects.rb:105: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+app/api/project_api/projects.rb:83: syntax error, unexpected tIDENTIFIER, expecting ')'
+app/api/project_api/projects.rb:84: syntax error, unexpected ')', expecting keyword_end
+app/api/project_api/projects.rb:105: syntax error, unexpected end-of-input, expecting keyword_end
+app/api/api.rb:10:in `<class:Root>'
+app/api/api.rb:3:in `<module:API>'
+app/api/api.rb:2:in `<top (required)>'
+config/routes.rb:5:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.5ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (56.2ms)
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:27:33 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-20 09:31:43 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (551.5ms)
+Completed 200 OK in 597ms (Views: 561.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-20 09:31:45 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-20 09:33:53 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-20 09:34:07 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (323.0ms)
+Completed 200 OK in 342ms (Views: 330.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-20 09:34:08 +0700
+Started POST "/api/roles/new" for 127.0.0.1 at 2017-01-20 09:34:47 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (47.5ms)[0m  [1m[32mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "PM"], ["created_at", 2017-01-20 02:34:47 UTC], ["updated_at", 2017-01-20 02:34:47 UTC]]
+  [1m[35m (15.5ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/roles/new" for 127.0.0.1 at 2017-01-20 09:35:11 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Master Scrum"], ["created_at", 2017-01-20 02:35:11 UTC], ["updated_at", 2017-01-20 02:35:11 UTC]]
+  [1m[35m (18.0ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/roles/new" for 127.0.0.1 at 2017-01-20 09:35:18 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "BM"], ["created_at", 2017-01-20 02:35:18 UTC], ["updated_at", 2017-01-20 02:35:18 UTC]]
+  [1m[35m (16.3ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/users" for 127.0.0.1 at 2017-01-20 09:37:09 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "lynleva.cube.it141@gmail.com"]]
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (32.6ms)[0m  [1m[32mINSERT INTO "users" ("uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "name", "email", "tokens", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["uid", "lynleva.cube.it141@gmail.com"], ["encrypted_password", "$2a$11$6PbyWydonOCeDSOgB5gK4Oscp9jNrcLSAwtRojJGneUxfHPQLfSu."], ["confirmation_token", "Ctkc9KmVZa4wSswmjmiF"], ["confirmation_sent_at", 2017-01-20 02:37:09 UTC], ["name", "linhbk"], ["email", "lynleva.cube.it141@gmail.com"], ["tokens", "{}"], ["created_at", 2017-01-20 02:37:09 UTC], ["updated_at", 2017-01-20 02:37:09 UTC]]
+  [1m[35m (19.3ms)[0m  [1m[35mCOMMIT[0m
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb (31.3ms)
+Devise::Mailer#confirmation_instructions: processed outbound mail in 738.7ms
+Sent mail to lynleva.cube.it141@gmail.com (6916.5ms)
+Date: Fri, 20 Jan 2017 09:37:10 +0700
+From: please-change-me-at-config-initializers-devise@example.com
+Reply-To: please-change-me-at-config-initializers-devise@example.com
+To: lynleva.cube.it141@gmail.com
+Message-ID: <588177d636112_42ab37c294883833@cogzwell.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+client-config: default
+redirect-url: https://timecloudbackend.herokuapp.com/
+
+<p>Welcome lynleva.cube.it141@gmail.com!</p>
+
+<p>You can confirm your account email through the link below: </p>
+
+<p><a href="http://localhost:3000/auth/confirmation?config=default&confirmation_token=Ctkc9KmVZa4wSswmjmiF&redirect_url=https%3A%2F%2Ftimecloudbackend.herokuapp.com%2F">Confirm my account</a></p>
+
+Started GET "/auth/confirmation?config=default&confirmation_token=Ctkc9KmVZa4wSswmjmiF&redirect_url=https%3A%2F%2Ftimecloudbackend.herokuapp.com%2F" for 127.0.0.1 at 2017-01-20 09:38:40 +0700
+Processing by DeviseTokenAuth::ConfirmationsController#show as HTML
+  Parameters: {"config"=>"default", "confirmation_token"=>"Ctkc9KmVZa4wSswmjmiF", "redirect_url"=>"https://timecloudbackend.herokuapp.com/"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."confirmation_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["confirmation_token", "Ctkc9KmVZa4wSswmjmiF"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "users" SET "confirmed_at" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["confirmed_at", 2017-01-20 02:38:40 UTC], ["updated_at", 2017-01-20 02:38:40 UTC], ["id", 2]]
+  [1m[35m (21.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "lynleva.cube.it141@gmail.com"], ["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "tokens" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["tokens", "{\"4LpC4IOiPPhyoRaB1GAt3A\":{\"token\":\"$2a$10$CG866cPvzzFIqdkhof5PPOL67rhyCQRK4DBcrc7TZ3ECnCf00IePu\",\"expiry\":1486089521}}"], ["updated_at", 2017-01-20 02:38:41 UTC], ["id", 2]]
+  [1m[35m (11.6ms)[0m  [1m[35mCOMMIT[0m
+Redirected to https://timecloudbackend.herokuapp.com/?account_confirmation_success=true&client_id=4LpC4IOiPPhyoRaB1GAt3A&config=default&expiry=1486089521&token=oKztJmIUmU2a-Fujo5oJ3A&uid=lynleva.cube.it141%40gmail.com
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "lynleva.cube.it141@gmail.com"], ["id", 2], ["LIMIT", 1]]
+Completed 302 Found in 148ms (ActiveRecord: 36.0ms)
+
+
+Started POST "/api/users" for 127.0.0.1 at 2017-01-20 09:39:53 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "cubesit@gmail.com"]]
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "cubesit@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/users" for 127.0.0.1 at 2017-01-20 09:40:02 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "cubesit@gmail.com"]]
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "cubesit@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" ("uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "name", "email", "tokens", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["uid", "cubesit@gmail.com"], ["encrypted_password", "$2a$11$pT9cPYqSjrqxyA0cHHG74OcLTU6IZADhhVNV.ZM4mNa5YsLJYroPe"], ["confirmation_token", "UZjHVUsrnwqzz4kipnKQ"], ["confirmation_sent_at", 2017-01-20 02:40:03 UTC], ["name", "belep141"], ["email", "cubesit@gmail.com"], ["tokens", "{}"], ["created_at", 2017-01-20 02:40:03 UTC], ["updated_at", 2017-01-20 02:40:03 UTC]]
+  [1m[35m (8.2ms)[0m  [1m[35mCOMMIT[0m
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb (1.0ms)
+Devise::Mailer#confirmation_instructions: processed outbound mail in 11.3ms
+Sent mail to cubesit@gmail.com (4132.5ms)
+Date: Fri, 20 Jan 2017 09:40:03 +0700
+From: please-change-me-at-config-initializers-devise@example.com
+Reply-To: please-change-me-at-config-initializers-devise@example.com
+To: cubesit@gmail.com
+Message-ID: <58817883f3cc_42ab37c2948839b4@cogzwell.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+client-config: default
+redirect-url: https://timecloudbackend.herokuapp.com/
+
+<p>Welcome cubesit@gmail.com!</p>
+
+<p>You can confirm your account email through the link below: </p>
+
+<p><a href="http://localhost:3000/auth/confirmation?config=default&confirmation_token=UZjHVUsrnwqzz4kipnKQ&redirect_url=https%3A%2F%2Ftimecloudbackend.herokuapp.com%2F">Confirm my account</a></p>
+
+Started GET "/auth/confirmation?config=default&confirmation_token=UZjHVUsrnwqzz4kipnKQ&redirect_url=https%3A%2F%2Ftimecloudbackend.herokuapp.com%2F" for 127.0.0.1 at 2017-01-20 09:40:11 +0700
+Processing by DeviseTokenAuth::ConfirmationsController#show as HTML
+  Parameters: {"config"=>"default", "confirmation_token"=>"UZjHVUsrnwqzz4kipnKQ", "redirect_url"=>"https://timecloudbackend.herokuapp.com/"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."confirmation_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["confirmation_token", "UZjHVUsrnwqzz4kipnKQ"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "confirmed_at" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["confirmed_at", 2017-01-20 02:40:11 UTC], ["updated_at", 2017-01-20 02:40:11 UTC], ["id", 3]]
+  [1m[35m (21.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "cubesit@gmail.com"], ["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "users" SET "tokens" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["tokens", "{\"oClWM8sIZcm2D8TvVhGfeg\":{\"token\":\"$2a$10$dV2ptrowwHnc2FgZiHWtUOT4m5bztVdBzkVz6o5m7B6Ei8ljAG1VW\",\"expiry\":1486089611}}"], ["updated_at", 2017-01-20 02:40:11 UTC], ["id", 3]]
+  [1m[35m (12.3ms)[0m  [1m[35mCOMMIT[0m
+Redirected to https://timecloudbackend.herokuapp.com/?account_confirmation_success=true&client_id=oClWM8sIZcm2D8TvVhGfeg&config=default&expiry=1486089611&token=V1-cl3YBPYwL-z7XSmezYA&uid=cubesit%40gmail.com
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "cubesit@gmail.com"], ["id", 3], ["LIMIT", 1]]
+Completed 302 Found in 128ms (ActiveRecord: 35.4ms)
+
+
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:42:07 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (15.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/clients/new" for 127.0.0.1 at 2017-01-20 09:42:56 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (12.7ms)[0m  [1m[32mINSERT INTO "clients" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Code Engine Studio"], ["created_at", 2017-01-20 02:42:56 UTC], ["updated_at", 2017-01-20 02:42:56 UTC]]
+  [1m[35m (17.2ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:43:04 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (1.8ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (91.7ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-20 02:43:04 UTC], ["updated_at", 2017-01-20 02:43:04 UTC]]
+  [1m[35m (33.9ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:43:37 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-20 02:43:47 UTC], ["updated_at", 2017-01-20 02:43:47 UTC]]
+  [1m[35m (17.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (18.0ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 2], ["user_id", 1], ["role_id", 1], ["created_at", 2017-01-20 02:43:47 UTC], ["updated_at", 2017-01-20 02:43:47 UTC]]
+  [1m[35m (11.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/roles/new" for 127.0.0.1 at 2017-01-20 09:46:07 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Team"], ["created_at", 2017-01-20 02:46:07 UTC], ["updated_at", 2017-01-20 02:46:07 UTC]]
+  [1m[35m (17.0ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:46:59 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-20 02:46:59 UTC], ["updated_at", 2017-01-20 02:46:59 UTC]]
+  [1m[35m (16.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 3], ["user_id", 1], ["role_id", 1], ["created_at", 2017-01-20 02:46:59 UTC], ["updated_at", 2017-01-20 02:46:59 UTC]]
+  [1m[35m (44.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 3], ["user_id", 2], ["role_id", 4], ["created_at", 2017-01-20 02:46:59 UTC], ["updated_at", 2017-01-20 02:46:59 UTC]]
+  [1m[35m (4.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 3], ["user_id", 3], ["role_id", 4], ["created_at", 2017-01-20 02:46:59 UTC], ["updated_at", 2017-01-20 02:46:59 UTC]]
+  [1m[35m (3.7ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:55:41 +0700
+  
+SyntaxError (/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/project_api/projects.rb:86: syntax error, unexpected '\n', expecting =>):
+  
+app/api/project_api/projects.rb:86: syntax error, unexpected '\n', expecting =>
+app/api/api.rb:10:in `<class:Root>'
+app/api/api.rb:3:in `<module:API>'
+app/api/api.rb:2:in `<top (required)>'
+config/routes.rb:5:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.0ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.9ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (28.2ms)
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:56:40 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 09:56:54 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-20 02:56:54 UTC], ["updated_at", 2017-01-20 02:56:54 UTC]]
+  [1m[35m (35.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 4], ["user_id", 1], ["role_id", 1], ["created_at", 2017-01-20 02:56:55 UTC], ["updated_at", 2017-01-20 02:56:55 UTC]]
+  [1m[35m (3.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 4], ["user_id", 2], ["role_id", 4], ["created_at", 2017-01-20 02:56:55 UTC], ["updated_at", 2017-01-20 02:56:55 UTC]]
+  [1m[35m (296.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 4], ["user_id", 3], ["role_id", 4], ["created_at", 2017-01-20 02:56:55 UTC], ["updated_at", 2017-01-20 02:56:55 UTC]]
+  [1m[35m (23.0ms)[0m  [1m[35mCOMMIT[0m
