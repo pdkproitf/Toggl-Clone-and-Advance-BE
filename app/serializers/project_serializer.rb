@@ -4,6 +4,7 @@ class ProjectSerializer < ActiveModel::Serializer
     attributes :id, :name, :background, :report_permission, :archived
     has_one :client
     has_many :project_user_roles
+    has_many :project_categories
 
     ## Using serializer from app/serializers/profile_serializer.rb
     # has_one :profile
