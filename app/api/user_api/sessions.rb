@@ -17,13 +17,12 @@ module UserApi
       end
 
       def return_message success, status, code, data = nil
-        error! status, code
-        # {
-        #   success: success,
-        #   status: status,
-        #   code: code,
-        #   data: data
-        # }
+        {
+          success: success,
+          status: status,
+          code: code,
+          data: data
+        }
       end
     end
 
@@ -50,9 +49,9 @@ module UserApi
           @resource.save
           return_message true, 'Create Success', 201, sign_in_token_validation
         elsif @resource and not (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
-          return_message false, I18n.t("devise_token_auth.sessions.not_confirmed", email: @resource.email), 401
+          error!(I18n.t("devise_token_auth.sessions.not_confirmed", email: @resource.email), 500)
         else
-          return_message false, I18n.t("devise_token_auth.sessions.bad_credentials"), 401
+          error!(I18n.t("devise_token_auth.sessions.bad_credentials"), 500)
         end
       end
 
@@ -78,7 +77,7 @@ module UserApi
           user.save!
           return_message true, 'Logout Success', 200
         else
-          return_message false, I18n.t("devise_token_auth.sessions.user_not_found"), 404
+          error!(I18n.t("devise_token_auth.sessions.user_not_found"), 404)
         end
       end
     end

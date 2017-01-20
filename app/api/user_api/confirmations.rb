@@ -48,9 +48,9 @@ module UserApi
         @resource = confirmations_user
         if @resource and @resource.id
           if isConfirmed?
-            return_message false, 'Confirmed', 423
+            error!('Confirmed', 423)
           elsif isExpiry?
-            return_message false, 'Overtime Confirmations', 423
+            error!('Overtime Confirmations', 423)
           else
             # create client id
             @client_id  = SecureRandom.urlsafe_base64(nil, false)
@@ -68,7 +68,7 @@ module UserApi
             return_message true, 'Sucess', 200 ,sign_in_token_validation
           end
         else
-            return_message false, 'Not found Confirmations', 404
+            error!('Not found Confirmations', 404)
         end
       end
     end
