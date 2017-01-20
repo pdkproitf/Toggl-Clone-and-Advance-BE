@@ -4,31 +4,7 @@ module ProjectApi
         version 'v1', using: :accept_version_header
         #
         helpers do
-            def sign_up_params
-                user_params = params['user']
-                user = User.new(
-                    name: user_params['name'],
-                    email: user_params['email'],
-                    password: user_params['password'],
-                    password_confirmation: user_params['password_confirmation']
-                )
-                user
-            end
-
-            def render_create_success
-                {
-                    status: 'success',
-                    data:   @resource
-                }
-            end
-
-            def render_create_error
-                {
-                    status: 'error',
-                    data:    @resource,
-                    errors: '',
-                    code: 422
-                }
+            def something
             end
         end
 
@@ -37,6 +13,14 @@ module ProjectApi
             desc 'Get all projects'
             post '/all' do
                 Project.all
+            end
+
+            desc 'Get a project by id'
+            params do
+                requires :id, type: String, desc: 'Project ID'
+            end
+            get ':id' do
+              Project.where(id: params[:id]).first!
             end
 
             desc 'create new project'
@@ -77,37 +61,19 @@ module ProjectApi
                     report_permission: project_params['report_permission']
                 )
 
-                #list = []
                 member_roles_params = project_params['member_roles']
                 if member_roles_params && !member_roles_params.nil? && member_roles_params.length > 0
                   member_roles_params.each do |member_roles|
-                    #list.push(member_roles)
                     project.project_user_roles.create!(
                       project_id: project.id,
                       user_id: member_roles.user_id,
                       role_id: member_roles.role_id
                     )
                   end
-                #   {"project":{
-                #     "project": project,
-                #       "member_roles":   project.
-                # }
-
-                  #{"list": list}
+                  project
                 else
-                    {"hehe":"member_roles_params--->null"}
+                    {"error":"try again!"}
                 end
-            end
-
-            # for test
-            params do
-                requires :test, type: Array do
-                    requires :int, type: Integer
-                    requires :ints, type: Integer
-                end
-            end
-            post '/test' do
-                params[:test]
             end
         end
     end

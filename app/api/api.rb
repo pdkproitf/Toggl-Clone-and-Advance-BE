@@ -10,7 +10,7 @@ module API
         mount ProjectApi::Projects
         mount ClientApi::Clients
         mount RoleApi::Roles
-        # mount Shop::ProductApi
+        mount CategoryApi::Categories
 
         add_swagger_documentation(
             api_version: 'v1',
