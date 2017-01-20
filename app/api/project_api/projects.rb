@@ -4,7 +4,8 @@ module ProjectApi
         version 'v1', using: :accept_version_header
         #
         helpers do
-            def something
+            def project_category_user_create(project_category_id, user_id)
+                ProjectCategoryUser.create!(project_category_id: project_category_id, user_id: user_id)
             end
         end
 
@@ -20,7 +21,7 @@ module ProjectApi
                 requires :id, type: String, desc: 'Project ID'
             end
             get ':id' do
-              Project.where(id: params[:id]).first!
+                Project.where(id: params[:id]).first!
             end
 
             desc 'create new project'
@@ -61,19 +62,51 @@ module ProjectApi
                     report_permission: project_params['report_permission']
                 )
 
+                # Add member role
                 member_roles_params = project_params['member_roles']
-                if member_roles_params && !member_roles_params.nil? && member_roles_params.length > 0
-                  member_roles_params.each do |member_roles|
-                    project.project_user_roles.create!(
-                      project_id: project.id,
-                      user_id: member_roles.user_id,
-                      role_id: member_roles.role_id
-                    )
-                  end
-                  project
-                else
-                    {"error":"try again!"}
+                if member_roles_params && !member_roles_params.nil? && !member_roles_params.empty?
+                    member_roles_params.each do |member_roles|
+                        project.project_user_roles.create!(
+                            project_id: project.id,
+                            user_id: member_roles.user_id,
+                            role_id: member_roles.role_id
+                        )
+                    end
                 end
+
+                # Add project category
+                # For existing categories
+                existingList = project_params['category_members']['existing']
+                if existingList && !existingList.nil? && !existingList.empty?
+                    existingList.each do |existing|
+                        project_category = project.project_categories.create!(
+                            project_id: project.id,
+                            category_id: existing.category_id,
+                            billable: existing.billable
+                        )
+                        existing['members'].each do |member|
+                            project_category_user_create(project_category.id, member.user_id)
+                        end
+                    end
+                end
+
+                # For new categories
+                newList = project_params['category_members']['new']
+                if newList && !newList.nil? && !newList.empty?
+                    newList.each do |new_cate|
+                        category = Category.create!(name: new_cate['category_name'])
+                        project_category = project.project_categories.create!(
+                            project_id: project.id,
+                            category_id: category.id,
+                            billable: new_cate.billable
+                        )
+                        new_cate['members'].each do |member|
+                            project_category_user_create(project_category.id, member.user_id)
+                        end
+                    end
+                end
+
+                project
             end
         end
     end

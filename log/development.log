@@ -2229,3 +2229,192 @@ Started POST "/api/categories/all" for 127.0.0.1 at 2017-01-20 12:05:43 +0700
   [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT "categories".* FROM "categories"[0m
 Started POST "/api/categories/all" for 127.0.0.1 at 2017-01-20 12:05:47 +0700
   [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT "categories".* FROM "categories"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" IS NULL[0m  [["provider", "email"]]
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "conbuomxinh@gmail.com"]]
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "conbuomxinh@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "conbuomxinh@gmail.com"]]
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "conbuomxinh@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "conbuomxinh@gmail.com"]]
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "conbuomxinh@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "name", "email", "tokens", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["uid", "conbuomxinh@gmail.com"], ["encrypted_password", "$2a$11$krTazmDIr3n5mqJurLnpx.F6lEbcf19lEGCsZIc.yWQxrBGkUrBT2"], ["confirmation_token", "Wpgiy_4mCo79pSmZw9-p"], ["confirmation_sent_at", 2017-01-20 07:06:30 UTC], ["name", "Cubeit"], ["email", "conbuomxinh@gmail.com"], ["tokens", "{}"], ["created_at", 2017-01-20 07:06:30 UTC], ["updated_at", 2017-01-20 07:06:30 UTC]]
+  [1m[35m (16.0ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:30:40 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:30:53 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Machine Learning"], ["client_id", 1], ["background", "#000000"], ["report_permission", 1], ["created_at", 2017-01-20 07:30:53 UTC], ["updated_at", 2017-01-20 07:30:53 UTC]]
+  [1m[35m (13.8ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:32:24 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:32:33 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Machine Learning"], ["client_id", 1], ["background", "#000000"], ["report_permission", 1], ["created_at", 2017-01-20 07:32:33 UTC], ["updated_at", 2017-01-20 07:32:33 UTC]]
+  [1m[35m (14.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 9], ["user_id", 1], ["role_id", 1], ["created_at", 2017-01-20 07:32:33 UTC], ["updated_at", 2017-01-20 07:32:33 UTC]]
+  [1m[35m (5.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 9], ["user_id", 2], ["role_id", 4], ["created_at", 2017-01-20 07:32:33 UTC], ["updated_at", 2017-01-20 07:32:33 UTC]]
+  [1m[35m (4.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 9], ["user_id", 3], ["role_id", 4], ["created_at", 2017-01-20 07:32:33 UTC], ["updated_at", 2017-01-20 07:32:33 UTC]]
+  [1m[35m (3.7ms)[0m  [1m[35mCOMMIT[0m
+No serializer found for resource: #<Hashie::Mash billable=true category_id=1 members=#<Hashie::Array [#<Hashie::Mash user_id=1>, #<Hashie::Mash user_id=2>]>>
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:33:27 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:33:36 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:44:03 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:44:15 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Machine Learning"], ["client_id", 1], ["background", "#000000"], ["report_permission", 1], ["created_at", 2017-01-20 07:44:15 UTC], ["updated_at", 2017-01-20 07:44:15 UTC]]
+  [1m[35m (12.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.5ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 10], ["user_id", 1], ["role_id", 1], ["created_at", 2017-01-20 07:44:15 UTC], ["updated_at", 2017-01-20 07:44:15 UTC]]
+  [1m[35m (13.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 10], ["user_id", 2], ["role_id", 4], ["created_at", 2017-01-20 07:44:15 UTC], ["updated_at", 2017-01-20 07:44:15 UTC]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 10], ["user_id", 3], ["role_id", 4], ["created_at", 2017-01-20 07:44:15 UTC], ["updated_at", 2017-01-20 07:44:15 UTC]]
+  [1m[35m (4.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (32.8ms)[0m  [1m[32mINSERT INTO "project_categories" ("project_id", "category_id", "billable", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 10], ["category_id", 1], ["billable", true], ["created_at", 2017-01-20 07:44:15 UTC], ["updated_at", 2017-01-20 07:44:15 UTC]]
+  [1m[35m (23.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (40.4ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 1], ["user_id", 1], ["created_at", 2017-01-20 07:44:15 UTC], ["updated_at", 2017-01-20 07:44:15 UTC]]
+  [1m[35m (15.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 1], ["user_id", 2], ["created_at", 2017-01-20 07:44:16 UTC], ["updated_at", 2017-01-20 07:44:16 UTC]]
+  [1m[35m (4.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_categories" ("project_id", "category_id", "billable", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 10], ["category_id", 2], ["billable", false], ["created_at", 2017-01-20 07:44:16 UTC], ["updated_at", 2017-01-20 07:44:16 UTC]]
+  [1m[35m (4.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 2], ["user_id", 2], ["created_at", 2017-01-20 07:44:16 UTC], ["updated_at", 2017-01-20 07:44:16 UTC]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 2], ["user_id", 3], ["created_at", 2017-01-20 07:44:16 UTC], ["updated_at", 2017-01-20 07:44:16 UTC]]
+  [1m[35m (4.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 10]]
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:54:22 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-20 14:54:32 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Machine Learning"], ["client_id", 1], ["background", "#000000"], ["report_permission", 1], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (13.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (2.3ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 11], ["user_id", 1], ["role_id", 1], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (24.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 11], ["user_id", 2], ["role_id", 4], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (10.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "project_user_roles" ("project_id", "user_id", "role_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 11], ["user_id", 3], ["role_id", 4], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (12.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "project_categories" ("project_id", "category_id", "billable", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 11], ["category_id", 1], ["billable", true], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (8.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 3], ["user_id", 1], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (11.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 3], ["user_id", 2], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (3.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_categories" ("project_id", "category_id", "billable", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 11], ["category_id", 2], ["billable", false], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (5.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 4], ["user_id", 2], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (3.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 4], ["user_id", 3], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "categories" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "new category 1"], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (8.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_categories" ("project_id", "category_id", "billable", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 11], ["category_id", 3], ["billable", true], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 5], ["user_id", 1], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (3.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 5], ["user_id", 2], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "categories" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "new category 2"], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (7.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "project_categories" ("project_id", "category_id", "billable", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 11], ["category_id", 4], ["billable", false], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 6], ["user_id", 2], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (5.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "project_category_users" ("project_category_id", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["project_category_id", 6], ["user_id", 3], ["created_at", 2017-01-20 07:54:33 UTC], ["updated_at", 2017-01-20 07:54:33 UTC]]
+  [1m[35m (2.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 11]]
