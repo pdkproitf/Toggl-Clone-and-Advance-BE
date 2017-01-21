@@ -120,7 +120,6 @@ module ProjectApi
                 end
 
                 project
-                # {"data": "tuc"}
             end # End of project add new
 
             desc 'Delete a project'

@@ -36,6 +36,15 @@ module CategoryApi
                 )
                 category
             end
+
+            desc 'Delete a category'
+            params do
+                requires :id, type: String, desc: 'Category ID'
+            end
+            delete ':id' do
+                category = Category.find(params[:id])
+                category.destroy
+            end
         end
     end
 end
