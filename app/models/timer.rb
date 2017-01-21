@@ -1,3 +1,3 @@
 class Timer < ApplicationRecord
-  belongs_to :task
+    belongs_to :task, optional: true
 end

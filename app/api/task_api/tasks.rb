@@ -18,7 +18,7 @@ module TaskApi
             post '/new' do
                 task_params = params['task']
                 begin
-                    task = Task.create(
+                    task = Task.create!(
                         name: task_params['name'],
                         project_category_user_id: task_params['project_category_user_id']
                     )

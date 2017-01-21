@@ -12,6 +12,7 @@ module API
         mount RoleApi::Roles
         mount CategoryApi::Categories
         mount TaskApi::Tasks
+        mount TimerApi::Timers
 
         add_swagger_documentation(
             api_version: 'v1',
