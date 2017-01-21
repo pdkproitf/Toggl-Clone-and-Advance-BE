@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170119041338) do
+ActiveRecord::Schema.define(version: 20170121130046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,9 +69,9 @@ ActiveRecord::Schema.define(version: 20170119041338) do
     t.integer  "client_id"
     t.string   "background"
     t.integer  "report_permission"
-    t.boolean  "archived"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.boolean  "is_archived",       default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.index ["client_id"], name: "index_projects_on_client_id", using: :btree
   end
 
@@ -83,10 +83,10 @@ ActiveRecord::Schema.define(version: 20170119041338) do
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name"
-    t.integer  "project_category_users_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.index ["project_category_users_id"], name: "index_tasks_on_project_category_users_id", using: :btree
+    t.integer  "project_category_user_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["project_category_user_id"], name: "index_tasks_on_project_category_user_id", using: :btree
   end
 
   create_table "timers", force: :cascade do |t|
@@ -134,6 +134,6 @@ ActiveRecord::Schema.define(version: 20170119041338) do
   add_foreign_key "project_user_roles", "roles"
   add_foreign_key "project_user_roles", "users"
   add_foreign_key "projects", "clients"
-  add_foreign_key "tasks", "project_category_users", column: "project_category_users_id"
+  add_foreign_key "tasks", "project_category_users"
   add_foreign_key "timers", "tasks"
 end

@@ -5,7 +5,7 @@ class CreateProjects < ActiveRecord::Migration[5.0]
             t.references :client, foreign_key: true, index: true
             t.string :background
             t.integer :report_permission
-            t.boolean :archived
+            t.boolean :is_archived, :default => false
 
             t.timestamps
         end
