@@ -5276,3 +5276,55 @@ Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-21 22:47:17 +0700
   [1m[36mCategory Load (0.6ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
   [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
   [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 22:48:52 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 22:48:52 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (1685.4ms)
+Completed 200 OK in 1811ms (Views: 1732.6ms | ActiveRecord: 0.0ms)
+
+
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (1506.4ms)
+Completed 200 OK in 1804ms (Views: 1733.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-21 22:48:55 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 22:51:57 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (88.5ms)
+Completed 200 OK in 101ms (Views: 97.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-21 22:52:08 +0700
+Started GET "/api/categories/all" for 127.0.0.1 at 2017-01-21 22:52:19 +0700
+  [1m[36mCategory Load (1.6ms)[0m  [1m[34mSELECT "categories".* FROM "categories"[0m
+Started POST "/api/categories/new" for 127.0.0.1 at 2017-01-21 22:52:31 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Exists (9.5ms)[0m  [1m[34mSELECT  1 AS one FROM "categories" WHERE "categories"."name" = $1 LIMIT $2[0m  [["name", "Design"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/categories/new" for 127.0.0.1 at 2017-01-21 22:52:45 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Exists (1.2ms)[0m  [1m[34mSELECT  1 AS one FROM "categories" WHERE "categories"."name" = $1 LIMIT $2[0m  [["name", "Desig"], ["LIMIT", 1]]
+  [1m[35m (0.9ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/categories/new" for 127.0.0.1 at 2017-01-21 22:52:51 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Exists (1.4ms)[0m  [1m[34mSELECT  1 AS one FROM "categories" WHERE "categories"."name" = $1 LIMIT $2[0m  [["name", "Design"], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/categories/new" for 127.0.0.1 at 2017-01-21 22:52:54 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Exists (2.5ms)[0m  [1m[34mSELECT  1 AS one FROM "categories" WHERE "categories"."name" = $1 LIMIT $2[0m  [["name", "Designs"], ["LIMIT", 1]]
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "categories" ("name", "default", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Designs"], ["default", true], ["created_at", 2017-01-21 15:52:54 UTC], ["updated_at", 2017-01-21 15:52:54 UTC]]
+  [1m[35m (35.1ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/categories/new" for 127.0.0.1 at 2017-01-21 22:54:27 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "categories" WHERE "categories"."name" = $1 LIMIT $2[0m  [["name", "Desig"], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "categories" ("name", "default", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Desig"], ["default", true], ["created_at", 2017-01-21 15:54:27 UTC], ["updated_at", 2017-01-21 15:54:27 UTC]]
+  [1m[35m (26.2ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/clients/new" for 127.0.0.1 at 2017-01-21 22:54:57 +0700
+  [1m[35m (1.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "clients" WHERE "clients"."name" = $1 LIMIT $2[0m  [["name", "fff"], ["LIMIT", 1]]
+  [1m[35mSQL (10.4ms)[0m  [1m[32mINSERT INTO "clients" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "fff"], ["created_at", 2017-01-21 15:54:57 UTC], ["updated_at", 2017-01-21 15:54:57 UTC]]
+  [1m[35m (14.0ms)[0m  [1m[35mCOMMIT[0m
