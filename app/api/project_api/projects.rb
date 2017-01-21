@@ -63,8 +63,10 @@ module ProjectApi
                 )
 
                 # Add member role
-                member_roles_params = project_params['member_roles']
-                if member_roles_params && !member_roles_params.nil? && !member_roles_params.empty?
+                if project_params['member_roles']
+                  member_roles_params = project_params['member_roles']
+                end
+                if member_roles_params
                     member_roles_params.each do |member_roles|
                         project.project_user_roles.create!(
                             project_id: project.id,
@@ -76,8 +78,11 @@ module ProjectApi
 
                 # Add project category
                 # For existing categories
-                existingList = project_params['category_members']['existing']
-                if existingList && !existingList.nil? && !existingList.empty?
+                if project_params['category_members'] &&
+                   project_params['category_members']['existing']
+                  existingList = project_params['category_members']['existing']
+                end
+                if existingList
                     existingList.each do |existing|
                         project_category = project.project_categories.create!(
                             project_id: project.id,
@@ -91,8 +96,11 @@ module ProjectApi
                 end
 
                 # For new categories
-                newList = project_params['category_members']['new']
-                if newList && !newList.nil? && !newList.empty?
+                if project_params['category_members']&&
+                   project_params['category_members']['new']
+                   newList = project_params['category_members']['new']
+                end
+                if newList
                     newList.each do |new_cate|
                         category = Category.create!(name: new_cate['category_name'])
                         project_category = project.project_categories.create!(
@@ -107,6 +115,16 @@ module ProjectApi
                 end
 
                 project
+                 #{"data": "tuc"}
+            end # End of project add new
+
+            desc 'Delete a project'
+            params do
+                requires :id, type: String, desc: 'Project ID'
+            end
+            delete ':id' do
+              project = Project.find(params[:id])
+              project.destroy
             end
         end
     end
