@@ -2894,3 +2894,72 @@ Started GET "/api/projects/11" for 127.0.0.1 at 2017-01-20 17:29:39 +0700
   [1m[36mCategory Load (0.9ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
   [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
   [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2017-01-21 17:02:20 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (55.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 737ms (Views: 687.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 17:02:25 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (241.6ms)
+Completed 200 OK in 273ms (Views: 249.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-21 17:02:26 +0700
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1052504927498677800);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RenameAchivedColumnAndMakeDefaultValueForIt (20170121102706)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (11.7ms)[0m  [1m[35mALTER TABLE "projects" RENAME COLUMN "archived" TO "is_archived"[0m
+  [1m[35m (78.0ms)[0m  [1m[35mALTER TABLE "projects" ALTER COLUMN "is_archived" SET DEFAULT 'f'[0m
+  [1m[35mSQL (9.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170121102706"]]
+  [1m[35m (25.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (13.9ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1052504927498677800)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-21 17:42:44 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (34.5ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (31.2ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-21 10:42:44 UTC], ["updated_at", 2017-01-21 10:42:44 UTC]]
+  [1m[35m (16.7ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-21 17:43:13 +0700
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-21 10:43:13 UTC], ["updated_at", 2017-01-21 10:43:13 UTC]]
+  [1m[35m (37.7ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-21 17:44:12 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-21 10:44:12 UTC], ["updated_at", 2017-01-21 10:44:12 UTC]]
+  [1m[35m (21.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Load (11.0ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/categories/new" for 127.0.0.1 at 2017-01-21 17:44:44 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (28.1ms)[0m  [1m[32mINSERT INTO "categories" ("name", "default", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Design"], ["default", true], ["created_at", 2017-01-21 10:44:44 UTC], ["updated_at", 2017-01-21 10:44:44 UTC]]
+  [1m[35m (15.1ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-21 17:44:57 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.6ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Tracker"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-21 10:44:57 UTC], ["updated_at", 2017-01-21 10:44:57 UTC]]
+  [1m[35m (66.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCategory Load (0.6ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (34.2ms)[0m  [1m[32mINSERT INTO "project_categories" ("project_id", "category_id", "billable", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["project_id", 5], ["category_id", 1], ["billable", true], ["created_at", 2017-01-21 10:44:57 UTC], ["updated_at", 2017-01-21 10:44:57 UTC]]
+  [1m[35m (12.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProjectCategory Load (0.4ms)[0m  [1m[34mSELECT  "project_categories".* FROM "project_categories" WHERE "project_categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (28.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-01-21 17:45:36 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Load (0.5ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Time Tracker"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-01-21 10:45:36 UTC], ["updated_at", 2017-01-21 10:45:36 UTC]]
+  [1m[35m (33.9ms)[0m  [1m[35mCOMMIT[0m
