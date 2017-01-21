@@ -5819,3 +5819,177 @@ Started POST "/api/timers/new" for 127.0.0.1 at 2017-01-22 02:40:45 +0700
   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
   [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "timers" ("start_time", "stop_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["start_time", 2012-04-23 18:25:00 UTC], ["stop_time", 2012-04-23 18:25:10 UTC], ["created_at", 2017-01-21 19:40:45 UTC], ["updated_at", 2017-01-21 19:40:45 UTC]]
   [1m[35m (25.6ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 02:43:06 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 02:43:06 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (826.1ms)
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (1258.6ms)
+Completed 200 OK in 841ms (Views: 835.5ms | ActiveRecord: 0.0ms)
+
+
+Completed 200 OK in 1296ms (Views: 1266.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-22 02:43:08 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 03:02:44 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (133.1ms)
+Completed 200 OK in 206ms (Views: 152.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-22 03:02:46 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 03:04:02 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 03:04:02 +0700
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (52.1ms)
+Completed 200 OK in 65ms (Views: 60.4ms | ActiveRecord: 0.0ms)
+
+
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (47.6ms)
+Completed 200 OK in 58ms (Views: 55.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-22 03:04:03 +0700
+Started GET "/api/tasks/all" for 127.0.0.1 at 2017-01-22 03:04:08 +0700
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 4]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 10]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 15]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 19]]
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 27]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 29]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 30]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 31]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 32]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:05:25 +0700
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:06:02 +0700
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:06:16 +0700
+Started POST "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:08:06 +0700
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:08:20 +0700
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:08:29 +0700
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:08:48 +0700
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:12:42 +0700
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 03:13:52 +0700
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 03:14:08 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (39.8ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Add goal"], ["created_at", 2017-01-21 20:14:08 UTC], ["updated_at", 2017-01-21 20:14:08 UTC]]
+  [1m[35m (27.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 33]]
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 03:14:25 +0700
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:19:14 +0700
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:20:09 +0700
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:20:30 +0700
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 4]]
+  [1m[35m (19.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 10]]
+  [1m[35m (7.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 15]]
+  [1m[35m (7.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 19]]
+  [1m[35m (7.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 27]]
+  [1m[35m (7.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 29]]
+  [1m[35m (7.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 30]]
+  [1m[35m (7.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 31]]
+  [1m[35m (6.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 32]]
+  [1m[35m (7.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Home page"], ["updated_at", 2017-01-21 20:20:30 UTC], ["id", 33]]
+  [1m[35m (7.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTimer Load (0.8ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 4]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 10]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 15]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 19]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 27]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 29]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 30]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 31]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 32]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 33]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:21:08 +0700
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 4]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 10]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 15]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 19]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 27]]
+  [1m[36mTimer Load (1.0ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 29]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 30]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 31]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 32]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 33]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:22:11 +0700
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:23:12 +0700
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:23:22 +0700
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:23:43 +0700
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Marketing page"], ["updated_at", 2017-01-21 20:23:43 UTC], ["id", 2]]
+  [1m[35m (38.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
