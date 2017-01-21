@@ -11,6 +11,7 @@ module API
         mount ClientApi::Clients
         mount RoleApi::Roles
         mount CategoryApi::Categories
+        mount TaskApi::Tasks
 
         add_swagger_documentation(
             api_version: 'v1',

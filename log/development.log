@@ -5328,3 +5328,225 @@ Started POST "/api/clients/new" for 127.0.0.1 at 2017-01-21 22:54:57 +0700
   [1m[36mClient Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "clients" WHERE "clients"."name" = $1 LIMIT $2[0m  [["name", "fff"], ["LIMIT", 1]]
   [1m[35mSQL (10.4ms)[0m  [1m[32mINSERT INTO "clients" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "fff"], ["created_at", 2017-01-21 15:54:57 UTC], ["updated_at", 2017-01-21 15:54:57 UTC]]
   [1m[35m (14.0ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 23:24:42 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (320.2ms)
+Completed 200 OK in 387ms (Views: 329.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-21 23:24:45 +0700
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:28:13 +0700
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:29:30 +0700
+  
+SyntaxError (/home/cube/RubyOnRails/2017-spring-time-tracker-website-back/app/api/task_api/tasks.rb:22: syntax error, unexpected tIDENTIFIER, expecting ')'
+...       project_category_user_id: task_params['project_catego...
+...                               ^
+/home/cube/RubyOnRails/2017-spring-time-tracker-website-back/app/api/task_api/tasks.rb:23: syntax error, unexpected ')', expecting keyword_end):
+  
+app/api/task_api/tasks.rb:22: syntax error, unexpected tIDENTIFIER, expecting ')'
+app/api/task_api/tasks.rb:23: syntax error, unexpected ')', expecting keyword_end
+app/api/api.rb:14:in `<class:Root>'
+app/api/api.rb:3:in `<module:API>'
+app/api/api.rb:2:in `<top (required)>'
+config/routes.rb:5:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (9.4ms)
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.9ms)
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.8ms)
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (60.0ms)
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:31:19 +0700
+  
+ActionController::RoutingError (No route matches [POST] "/api/tasks/new"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (51.3ms)
+  Rendered collection of /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [26 times] (157.6ms)
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (112.1ms)
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (412.9ms)
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:33:08 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:36:50 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (98.0ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Home page"], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:37:00 UTC], ["updated_at", 2017-01-21 16:37:00 UTC]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:37:52 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Home page"], ["created_at", 2017-01-21 16:37:53 UTC], ["updated_at", 2017-01-21 16:37:53 UTC]]
+  [1m[35m (32.2ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:39:04 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Home page"], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:39:04 UTC], ["updated_at", 2017-01-21 16:39:04 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 23:39:16 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 23:39:16 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (1656.3ms)
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (1661.4ms)
+Completed 200 OK in 1834ms (Views: 1789.2ms | ActiveRecord: 0.0ms)
+
+
+Completed 200 OK in 1761ms (Views: 1756.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-21 23:39:18 +0700
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:39:36 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Marketing page"], ["created_at", 2017-01-21 16:39:36 UTC], ["updated_at", 2017-01-21 16:39:36 UTC]]
+  [1m[35m (23.0ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:39:51 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.3ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Marketing page"], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:39:51 UTC], ["updated_at", 2017-01-21 16:39:51 UTC]]
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:40:33 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:41:25 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:41:27 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:41:36 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Marketing page"], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:41:36 UTC], ["updated_at", 2017-01-21 16:41:36 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:43:40 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Marketing page"], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:43:40 UTC], ["updated_at", 2017-01-21 16:43:40 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:43:42 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Marketing page"], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:43:42 UTC], ["updated_at", 2017-01-21 16:43:42 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:43:43 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Marketing page"], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:43:43 UTC], ["updated_at", 2017-01-21 16:43:43 UTC]]
+  [1m[35m (1.0ms)[0m  [1m[31mROLLBACK[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 23:44:07 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+Started GET "/swagger" for 127.0.0.1 at 2017-01-21 23:44:07 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (706.1ms)
+Completed 200 OK in 741ms (Views: 721.5ms | ActiveRecord: 0.0ms)
+
+
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (355.7ms)
+Completed 200 OK in 371ms (Views: 366.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-21 23:44:08 +0700
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:44:35 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Add time "], ["created_at", 2017-01-21 16:44:35 UTC], ["updated_at", 2017-01-21 16:44:35 UTC]]
+  [1m[35m (26.3ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:44:44 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.9ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:44:44 UTC], ["updated_at", 2017-01-21 16:44:44 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:46:29 +0700
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:47:11 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.2ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:47:11 UTC], ["updated_at", 2017-01-21 16:47:11 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:51:03 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:51:03 UTC], ["updated_at", 2017-01-21 16:51:03 UTC]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:51:05 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:51:05 UTC], ["updated_at", 2017-01-21 16:51:05 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:51:08 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Add time "], ["created_at", 2017-01-21 16:51:08 UTC], ["updated_at", 2017-01-21 16:51:08 UTC]]
+  [1m[35m (22.8ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:51:19 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.2ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:51:19 UTC], ["updated_at", 2017-01-21 16:51:19 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:57:46 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:57:46 UTC], ["updated_at", 2017-01-21 16:57:46 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:58:15 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:58:15 UTC], ["updated_at", 2017-01-21 16:58:15 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:58:29 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Add time "], ["created_at", 2017-01-21 16:58:29 UTC], ["updated_at", 2017-01-21 16:58:29 UTC]]
+  [1m[35m (25.2ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-21 23:59:46 +0700
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 16:59:46 UTC], ["updated_at", 2017-01-21 16:59:46 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:01:53 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 17:01:53 UTC], ["updated_at", 2017-01-21 17:01:53 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:03:27 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 17:03:27 UTC], ["updated_at", 2017-01-21 17:03:27 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:03:44 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 17:03:44 UTC], ["updated_at", 2017-01-21 17:03:44 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:06:06 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 17:06:06 UTC], ["updated_at", 2017-01-21 17:06:06 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:06:21 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.1ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 1], ["created_at", 2017-01-21 17:06:21 UTC], ["updated_at", 2017-01-21 17:06:21 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:06:25 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (42.6ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Add time "], ["project_category_user_id", 11], ["created_at", 2017-01-21 17:06:25 UTC], ["updated_at", 2017-01-21 17:06:25 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:06:28 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Add time "], ["created_at", 2017-01-21 17:06:28 UTC], ["updated_at", 2017-01-21 17:06:28 UTC]]
+  [1m[35m (34.3ms)[0m  [1m[35mCOMMIT[0m
