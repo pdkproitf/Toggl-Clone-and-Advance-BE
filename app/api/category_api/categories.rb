@@ -9,7 +9,7 @@ module CategoryApi
         resource :categories do
             # => /api/v1/categories/
             desc 'Get all categories'
-            post '/all' do
+            get '/all' do
                 Category.all
             end
 
