@@ -5550,3 +5550,27 @@ Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:06:28 +0700
   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
   [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Add time "], ["created_at", 2017-01-21 17:06:28 UTC], ["updated_at", 2017-01-21 17:06:28 UTC]]
   [1m[35m (34.3ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 00:12:19 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 00:12:20 +0700
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (242.4ms)
+Completed 200 OK in 278ms (Views: 252.5ms | ActiveRecord: 0.0ms)
+
+
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (68.1ms)
+Completed 200 OK in 81ms (Views: 77.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-22 00:12:22 +0700
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:12:27 +0700
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:14:24 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Home page"], ["project_category_user_id", 1], ["created_at", 2017-01-21 17:14:24 UTC], ["updated_at", 2017-01-21 17:14:24 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/tasks/new" for 127.0.0.1 at 2017-01-22 00:14:51 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "tasks" ("created_at", "updated_at") VALUES ($1, $2) RETURNING "id"[0m  [["created_at", 2017-01-21 17:14:51 UTC], ["updated_at", 2017-01-21 17:14:51 UTC]]
+  [1m[35m (25.4ms)[0m  [1m[35mCOMMIT[0m
