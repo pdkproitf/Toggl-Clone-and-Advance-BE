@@ -5993,3 +5993,94 @@ Started PUT "/api/tasks/2" for 127.0.0.1 at 2017-01-22 03:23:43 +0700
   [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "tasks" SET "name" = $1, "updated_at" = $2 WHERE "tasks"."id" = $3[0m  [["name", "Marketing page"], ["updated_at", 2017-01-21 20:23:43 UTC], ["id", 2]]
   [1m[35m (38.4ms)[0m  [1m[35mCOMMIT[0m
   [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 03:41:30 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 03:41:31 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (305.5ms)
+Completed 200 OK in 358ms (Views: 318.3ms | ActiveRecord: 0.0ms)
+
+
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (49.3ms)
+Completed 200 OK in 60ms (Views: 56.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-22 03:41:34 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:41:46 +0700
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:44:16 +0700
+  [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:44:23 +0700
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:44:26 +0700
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:44:28 +0700
+  [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:44:29 +0700
+  [1m[36mTimer Load (0.7ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:44:31 +0700
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:45:45 +0700
+  [1m[36mTimer Load (0.7ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/tasks/all" for 127.0.0.1 at 2017-01-22 03:46:04 +0700
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 4]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 10]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 15]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 19]]
+  [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 27]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 29]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 30]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 31]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 32]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 33]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:46:15 +0700
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:47:08 +0700
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+No serializer found for resource: #<Timer id: 2, task_id: nil, start_time: "2012-04-23 18:25:00", stop_time: "2012-04-23 18:25:10", created_at: "2017-01-21 19:40:45", updated_at: "2017-01-21 19:40:45">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:47:34 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:48:38 +0700
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:49:11 +0700
+  [1m[36mTimer Load (1.7ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:49:13 +0700
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:49:14 +0700
+  [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:49:14 +0700
+  [1m[36mTimer Load (0.7ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:49:35 +0700
+  [1m[36mTimer Load (0.8ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 03:49:55 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (922.1ms)
+Completed 200 OK in 975ms (Views: 943.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-22 03:49:57 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-01-22 03:50:02 +0700
+  [1m[36mTimer Load (0.8ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-01-22 03:52:24 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/cube/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (54.3ms)
+Completed 200 OK in 65ms (Views: 61.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-01-22 03:52:35 +0700
