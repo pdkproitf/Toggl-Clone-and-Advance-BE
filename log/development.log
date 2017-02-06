@@ -6101,3 +6101,279 @@ FOREIGN KEY ("user_id")
   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
   [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(1052504927498677800)[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-02-06 09:30:46 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (30.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (5.0.1) lib/active_record/migration.rb:573:in `check_pending!'
+activerecord (5.0.1) lib/active_record/migration.rb:549:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/callbacks.rb:38:in `block in call'
+activesupport (5.0.1) lib/active_support/callbacks.rb:97:in `__run_callbacks__'
+activesupport (5.0.1) lib/active_support/callbacks.rb:750:in `_run_call_callbacks'
+activesupport (5.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (2.4ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.2ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (56.9ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1052504927498677800);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RenameReferenceColumnInTask (20170121130046)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (46.6ms)[0m  [1m[35mALTER TABLE "tasks" RENAME COLUMN "project_category_users_id" TO "project_category_user_id"[0m
+  [1m[35m (51.7ms)[0m  [1m[35mALTER INDEX "index_tasks_on_project_category_users_id" RENAME TO "index_tasks_on_project_category_user_id"[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170121130046"]]
+  [1m[35m (18.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUserRefToProjects (20170122055718)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (48.5ms)[0m  [1m[35mALTER TABLE "projects" ADD "user_id" integer[0m
+  [1m[35m (175.4ms)[0m  [1m[35mCREATE  INDEX  "index_projects_on_user_id" ON "projects"  ("user_id")[0m
+  [1m[35m (220.5ms)[0m  [1m[35mALTER TABLE "projects" ADD CONSTRAINT "fk_rails_b872a6760a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170122055718"]]
+  [1m[35m (38.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (32.9ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1052504927498677800)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-02-06 09:31:18 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (465.2ms)
+Completed 200 OK in 507ms (Views: 473.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-02-06 09:31:19 +0700
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 09:31:30 +0700
+  [1m[36mProject Load (0.7ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (40.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.9ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mProjectCategory Load (25.9ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mProjectCategory Load (0.4ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mProjectCategory Load (0.5ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mProjectCategory Load (0.4ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mProjectCategory Load (7.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 11]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 09:33:07 +0700
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.1ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 11]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 09:34:23 +0700
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.1ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mProjectCategory Load (0.4ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mCACHE (0.1ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[36mRole Load (80.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (10.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCategory Load (31.0ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.4ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 09:35:51 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.1ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.1ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.1ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mProjectCategory Load (0.1ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[36mProjectCategory Load (0.5ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 11]]
