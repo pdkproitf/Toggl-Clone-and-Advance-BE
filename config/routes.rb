@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   post "test", to: "welcome#test"
   mount API::Root => '/'
   mount GrapeSwaggerRails::Engine => '/swagger'
+  delete 'sig', to: 'welcome#temp'
 end

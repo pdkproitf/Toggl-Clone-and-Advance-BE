@@ -1,6 +1,9 @@
 class WelcomeController < ApplicationController
-    def index
-        @header = request.headers['token']
+    def temp
+      respond_to do |format|
+        format.json {  render json: {'te' => 'teafd'} }
+      end
+        # @header = request.headers['token']
     end
 
     def test

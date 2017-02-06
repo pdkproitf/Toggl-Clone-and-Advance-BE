@@ -23,5 +23,5 @@ module API
                 title: 'TRACKING TIME API'
             }
         )
-    end
+  end
 end
