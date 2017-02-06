@@ -6377,3 +6377,221 @@ Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 09:35:51 +0700
   [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
   [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 11]]
   [1m[36mProjectCategory Load (0.5ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 11]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 09:42:53 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mProject Load (0.6ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1052504927498677800);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1052504927498677800)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 09:43:24 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mProject Load (0.6ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+  [1m[36mClient Load (1.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mProjectCategory Load (0.4ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.4ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 4]]
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 5]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 8]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.2ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 9]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.3ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mProjectCategory Load (0.2ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 10]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectUserRole Load (0.5ms)[0m  [1m[34mSELECT "project_user_roles".* FROM "project_user_roles" WHERE "project_user_roles"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[36mProjectCategory Load (0.3ms)[0m  [1m[34mSELECT "project_categories".* FROM "project_categories" WHERE "project_categories"."project_id" = $1[0m  [["project_id", 11]]
+  [1m[35m (127.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying PRIMARY KEY)[0m
+  [1m[35m (95.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1052504927498677800);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateClients (20170119022029)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (95.0ms)[0m  [1m[35mCREATE TABLE "clients" ("id" serial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119022029"]]
+  [1m[35m (14.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateRoles (20170119022047)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (88.0ms)[0m  [1m[35mCREATE TABLE "roles" ("id" serial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119022047"]]
+  [1m[35m (8.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCategories (20170119022223)
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (98.9ms)[0m  [1m[35mCREATE TABLE "categories" ("id" serial primary key, "name" character varying, "default" boolean, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119022223"]]
+  [1m[35m (8.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCompanies (20170119022422)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (87.8ms)[0m  [1m[35mCREATE TABLE "companies" ("id" serial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119022422"]]
+  [1m[35m (7.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProjects (20170119022907)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (102.1ms)[0m  [1m[35mCREATE TABLE "projects" ("id" serial primary key, "name" character varying, "client_id" integer, "background" character varying, "report_permission" integer, "is_archived" boolean DEFAULT 'f', "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_8d9657cec3"
+FOREIGN KEY ("client_id")
+  REFERENCES "clients" ("id")
+)[0m
+  [1m[35m (41.2ms)[0m  [1m[35mCREATE  INDEX  "index_projects_on_client_id" ON "projects"  ("client_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119022907"]]
+  [1m[35m (16.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseTokenAuthCreateUsers (20170119023643)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (89.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "provider" character varying DEFAULT 'email' NOT NULL, "uid" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" timestamp, "last_sign_in_at" timestamp, "current_sign_in_ip" character varying, "last_sign_in_ip" character varying, "confirmation_token" character varying, "confirmed_at" timestamp, "confirmation_sent_at" timestamp, "unconfirmed_email" character varying, "name" character varying, "nickname" character varying, "image" character varying, "email" character varying, "tokens" json, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (64.1ms)[0m  [1m[35mCREATE  INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (42.4ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_uid_and_provider" ON "users"  ("uid", "provider")[0m
+  [1m[35m (53.2ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119023643"]]
+  [1m[35m (14.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProjectCategories (20170119023856)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (49.3ms)[0m  [1m[35mCREATE TABLE "project_categories" ("id" serial primary key, "project_id" integer, "category_id" integer, "billable" boolean, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_f326f1b6e3"
+FOREIGN KEY ("project_id")
+  REFERENCES "projects" ("id")
+, CONSTRAINT "fk_rails_affd733397"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+)[0m
+  [1m[35m (53.0ms)[0m  [1m[35mCREATE  INDEX  "index_project_categories_on_project_id" ON "project_categories"  ("project_id")[0m
+  [1m[35m (31.7ms)[0m  [1m[35mCREATE  INDEX  "index_project_categories_on_category_id" ON "project_categories"  ("category_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119023856"]]
+  [1m[35m (14.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProjectUserRoles (20170119033859)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (50.1ms)[0m  [1m[35mCREATE TABLE "project_user_roles" ("id" serial primary key, "project_id" integer, "user_id" integer, "role_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_8f8a4c958f"
+FOREIGN KEY ("project_id")
+  REFERENCES "projects" ("id")
+, CONSTRAINT "fk_rails_aec6a9dd0e"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_63e209aeb5"
+FOREIGN KEY ("role_id")
+  REFERENCES "roles" ("id")
+)[0m
+  [1m[35m (41.0ms)[0m  [1m[35mCREATE  INDEX  "index_project_user_roles_on_project_id" ON "project_user_roles"  ("project_id")[0m
+  [1m[35m (57.5ms)[0m  [1m[35mCREATE  INDEX  "index_project_user_roles_on_user_id" ON "project_user_roles"  ("user_id")[0m
+  [1m[35m (60.5ms)[0m  [1m[35mCREATE  INDEX  "index_project_user_roles_on_role_id" ON "project_user_roles"  ("role_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119033859"]]
+  [1m[35m (13.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProjectCategoryUsers (20170119034906)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (50.5ms)[0m  [1m[35mCREATE TABLE "project_category_users" ("id" serial primary key, "project_category_id" integer, "user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_91a73317a2"
+FOREIGN KEY ("project_category_id")
+  REFERENCES "project_categories" ("id")
+, CONSTRAINT "fk_rails_c93b39026c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (41.4ms)[0m  [1m[35mCREATE  INDEX  "index_project_category_users_on_project_category_id" ON "project_category_users"  ("project_category_id")[0m
+  [1m[35m (56.4ms)[0m  [1m[35mCREATE  INDEX  "index_project_category_users_on_user_id" ON "project_category_users"  ("user_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119034906"]]
+  [1m[35m (9.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTasks (20170119041025)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (96.3ms)[0m  [1m[35mCREATE TABLE "tasks" ("id" serial primary key, "name" character varying, "project_category_users_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_b296eca630"
+FOREIGN KEY ("project_category_users_id")
+  REFERENCES "project_category_users" ("id")
+)[0m
+  [1m[35m (41.9ms)[0m  [1m[35mCREATE  INDEX  "index_tasks_on_project_category_users_id" ON "tasks"  ("project_category_users_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119041025"]]
+  [1m[35m (11.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTimers (20170119041338)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (64.2ms)[0m  [1m[35mCREATE TABLE "timers" ("id" serial primary key, "task_id" integer, "start_time" timestamp, "stop_time" timestamp, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_8ec48dc15f"
+FOREIGN KEY ("task_id")
+  REFERENCES "tasks" ("id")
+)[0m
+  [1m[35m (39.9ms)[0m  [1m[35mCREATE  INDEX  "index_timers_on_task_id" ON "timers"  ("task_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170119041338"]]
+  [1m[35m (10.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RenameReferenceColumnInTask (20170121130046)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "tasks" RENAME COLUMN "project_category_users_id" TO "project_category_user_id"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER INDEX "index_tasks_on_project_category_users_id" RENAME TO "index_tasks_on_project_category_user_id"[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170121130046"]]
+  [1m[35m (3.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUserRefToProjects (20170122055718)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "projects" ADD "user_id" integer[0m
+  [1m[35m (51.0ms)[0m  [1m[35mCREATE  INDEX  "index_projects_on_user_id" ON "projects"  ("user_id")[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "projects" ADD CONSTRAINT "fk_rails_b872a6760a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170122055718"]]
+  [1m[35m (8.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", 2017-02-06 02:46:27 UTC], ["updated_at", 2017-02-06 02:46:27 UTC]]
+  [1m[35m (10.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(1052504927498677800)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 09:46:46 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mProject Load (0.5ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+Started POST "/api/clients/new" for 127.0.0.1 at 2017-02-06 09:47:19 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mClient Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "clients" WHERE "clients"."name" = $1 LIMIT $2[0m  [["name", "Facebook"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "clients" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Facebook"], ["created_at", 2017-02-06 02:47:19 UTC], ["updated_at", 2017-02-06 02:47:19 UTC]]
+  [1m[35m (19.8ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-02-06 09:48:14 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProject Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "projects" WHERE "projects"."name" = $1 LIMIT $2[0m  [["name", "Time Cloud"], ["LIMIT", 1]]
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 09:50:40 +0700
+  [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m

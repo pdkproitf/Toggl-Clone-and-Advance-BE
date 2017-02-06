@@ -16,7 +16,7 @@ module TimerApi
             desc 'create new timer'
             params do
                 requires :timer, type: Hash do
-                    optional :task_id, type: Integer, desc: 'Timer ID'
+                    requires :task_id, type: Integer, desc: 'Timer ID'
                     requires :start_time, type: DateTime, desc: 'Start time'
                     requires :stop_time, type: DateTime, desc: 'Stop time'
                 end

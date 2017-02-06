@@ -69,9 +69,9 @@ ActiveRecord::Schema.define(version: 20170122055718) do
     t.integer  "client_id"
     t.string   "background"
     t.integer  "report_permission"
-    t.boolean  "archived"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.boolean  "is_archived",       default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "user_id"
     t.index ["client_id"], name: "index_projects_on_client_id", using: :btree
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree

@@ -17,7 +17,7 @@ module TaskApi
             params do
                 requires :task, type: Hash do
                     optional :name, type: String, desc: 'Task name'
-                    optional :project_category_user_id, type: Integer, desc: 'Project category user ID'
+                    requires :project_category_user_id, type: Integer, desc: 'Project category user ID'
                 end
             end
             post '/new' do
