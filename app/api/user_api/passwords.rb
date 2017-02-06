@@ -87,7 +87,6 @@ module UserApi
         end
         put '/password' do
           get_user_confirmation_token
-          binding.pry
           unless @resource
             return return_message 'Unauthorized'
           end

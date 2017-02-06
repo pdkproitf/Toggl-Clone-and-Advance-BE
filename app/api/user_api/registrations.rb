@@ -7,7 +7,8 @@ module UserApi
       def sign_up_params
         user_params = params['user']
         user = User.new(
-        name: user_params['name'],
+        first_name: user_params['first_name'],
+        last_name: user_params['last_name'],
         email: user_params['email'],
         password: user_params['password'],
         password_confirmation: user_params['password_confirmation']
@@ -15,7 +16,7 @@ module UserApi
         user
       end
 
-      def return_message success, status, code, data = nil
+      def return_message status, data = nil
         {
           status: status,
           data: data
@@ -28,7 +29,8 @@ module UserApi
       desc 'create new user' # , entity: Entities::ProductWithRoot
       params do
         requires :user, type: Hash do
-          requires :name, type: String, desc: 'User Name'
+          requires :first_name, type: String, desc: 'First Name'
+          requires :last_name, type: String, desc: 'Last Name'
           requires :email, type: String, desc: "User's Email"
           requires :password, type: String, desc: 'password'
           requires :password_confirmation, type: String, desc: 'password_confirmation'
@@ -55,7 +57,7 @@ module UserApi
             @resource.send_confirmation_instructions(client_config: params[:config_name],
             redirect_url: @redirect_url)
           end
-          return return_messag 'Success', @resource
+          return return_message 'Success', @resource
         end
       end
     end

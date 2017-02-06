@@ -16,7 +16,7 @@ module UserApi
         data
       end
 
-      def return_message success, status, code, data = nil
+      def return_message status, data = nil
         {
           status: status,
           data: data
