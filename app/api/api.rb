@@ -16,7 +16,7 @@ module API
         unless @current_user.nil?
           return @current_user if @current_user.valid_token?(token, client_id)
         end
-        
+
         @current_user = nil
       end
     end

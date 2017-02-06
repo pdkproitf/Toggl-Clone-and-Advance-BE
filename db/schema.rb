@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< 337ffd52c1988ff4e98e4762f51c837b308ed397
-ActiveRecord::Schema.define(version: 20170121130046) do
-=======
 ActiveRecord::Schema.define(version: 20170206033039) do
->>>>>>> update tokens: json to -> tokens: jsonb
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
