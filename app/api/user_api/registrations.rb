@@ -38,9 +38,8 @@ module UserApi
       end
       post '/' do
         @resource = sign_up_params
-        # binding.pry
         @resource.provider = 'email'
-        @redirect_url = 'https://timecloudbackend.herokuapp.com/'
+        @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
         if @resource.save!
           if @resource.confirmed?
             # email auth has been bypassed, authenticate user
