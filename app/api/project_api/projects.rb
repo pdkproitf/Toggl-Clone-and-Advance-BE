@@ -21,6 +21,10 @@ module ProjectApi
         end
 
         resource :projects do
+          before do
+            error!("401 Unauthorized", 401) unless authenticated!
+          end
+
             # => /api/v1/projects/
             desc 'Get all projects'
             get '/all' do
