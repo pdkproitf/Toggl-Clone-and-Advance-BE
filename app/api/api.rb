@@ -7,14 +7,13 @@ module API
 
     helpers do
       def authenticated!
-        binding.pry
         error!("401 Unauthorized", 401) unless current_user
       end
 
       def current_user
-        email = request.headers['uid']
-        client_id = request.headers['client']
-        token = request.headers['access_token']
+        email = request.headers['Uid']
+        client_id = request.headers['Client']
+        token = request.headers['Access-Token']
 
         @current_user = User.find_by_email(email)
 
