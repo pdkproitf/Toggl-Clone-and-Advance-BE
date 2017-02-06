@@ -17,9 +17,7 @@ module UserApi
 
       def return_message success, status, code, data = nil
         {
-          success: success,
           status: status,
-          code: code,
           data: data
         }
       end
@@ -57,7 +55,7 @@ module UserApi
             @resource.send_confirmation_instructions(client_config: params[:config_name],
             redirect_url: @redirect_url)
           end
-          return return_message true, 'Success', 201, @resource
+          return return_messag 'Success', @resource
         end
       end
     end

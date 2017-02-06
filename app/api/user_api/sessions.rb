@@ -18,9 +18,7 @@ module UserApi
 
       def return_message success, status, code, data = nil
         {
-          success: success,
           status: status,
-          code: code,
           data: data
         }
       end
@@ -47,7 +45,7 @@ module UserApi
             expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
           }
           @resource.save
-          return_message true, 'Create Success', 201, sign_in_token_validation
+          return_message 'Create Success', sign_in_token_validation
         elsif @resource and not (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
           error!(I18n.t("devise_token_auth.sessions.not_confirmed", email: @resource.email), 500)
         else
@@ -75,7 +73,7 @@ module UserApi
         if user and client_id and user.tokens[client_id]
           user.tokens.delete(client_id)
           user.save!
-          return_message true, 'Logout Success', 200
+          return_message 'Logout Success'
         else
           error!(I18n.t("devise_token_auth.sessions.user_not_found"), 404)
         end
