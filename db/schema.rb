@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< 337ffd52c1988ff4e98e4762f51c837b308ed397
 ActiveRecord::Schema.define(version: 20170121130046) do
+=======
+ActiveRecord::Schema.define(version: 20170206033039) do
+>>>>>>> update tokens: json to -> tokens: jsonb
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,7 +122,7 @@ ActiveRecord::Schema.define(version: 20170121130046) do
     t.string   "nickname"
     t.string   "image"
     t.string   "email"
-    t.json     "tokens"
+    t.jsonb    "tokens"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.index ["email"], name: "index_users_on_email", using: :btree
