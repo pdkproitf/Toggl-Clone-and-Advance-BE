@@ -4,13 +4,6 @@ module UserApi
     version 'v1', using: :accept_version_header
     #
     helpers do
-      def sign_in_token_validation
-        data  = @resource.token_validation_response.to_h
-        data.store('client', @client_id)
-        data.store('token', @token)
-        data
-      end
-
       def return_message status, data = nil
         {
           status: status,
@@ -19,7 +12,7 @@ module UserApi
       end
 
       def get_user_confirmation_token
-        confirmation_token = request.headers["confirmation_token"]
+        confirmation_token = request.headers["Confirmation-Token"]
         confirmation_token = params["user"]["confirmation_token"] unless confirmation_token
         @resource = User.find_by_confirmation_token(confirmation_token)
       end
@@ -60,7 +53,11 @@ module UserApi
         @email = params[:user][:email].downcase
 
         @resource = User.find_by_email(@email)
-        @resource.allow_password_change = true
+
+        unless @resource
+          return return_message 'Not found!'
+        end
+
         @resource.save!
         if @resource
           @resource.send_reset_password_instructions({
@@ -80,16 +77,17 @@ module UserApi
           end
         end
 
-        desc "forgot password" #, entity: Entities::ProductWithRoot
+        desc "forgot password"
         params do
           requires :user, type: Hash do
-            requires :confirmation_token,  type: String, desc: "confirmation_token"
+            optional :confirmation_token,  type: String, desc: "confirmation_token"
             requires :password,  type: String, desc: "password"
             requires :password_confirmation,  type: String, desc: "password_confirmation"
           end
         end
         put '/password' do
           get_user_confirmation_token
+          binding.pry
           unless @resource
             return return_message 'Unauthorized'
           end
@@ -100,7 +98,6 @@ module UserApi
           end
 
           if @resource.send(resource_update_method, params["user"])
-            @resource.confirmation_token = nil
             @resource.allow_password_change = false
 
             @resource.save!

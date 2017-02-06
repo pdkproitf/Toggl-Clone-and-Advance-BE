@@ -7,6 +7,7 @@ module API
 
     helpers do
       def authenticated!
+        binding.pry
         error!("401 Unauthorized", 401) unless current_user
       end
 
@@ -26,7 +27,6 @@ module API
     end
 
     mount UserApi::Registrations
-    mount UserApi::Confirmations
     mount UserApi::Sessions
     mount UserApi::Passwords
 
