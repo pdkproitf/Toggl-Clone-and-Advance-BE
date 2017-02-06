@@ -7,6 +7,10 @@ module API
 
     helpers do
       def authenticated!
+        error!("401 Unauthorized", 401) unless current_user
+      end
+
+      def current_user
         email = request.headers['uid']
         client_id = request.headers['client']
         token = request.headers['access_token']
@@ -16,7 +20,7 @@ module API
         unless @current_user.nil?
           return @current_user if @current_user.valid_token?(token, client_id)
         end
-        
+
         @current_user = nil
       end
     end
