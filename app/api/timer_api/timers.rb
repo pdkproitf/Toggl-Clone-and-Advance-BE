@@ -10,29 +10,36 @@ module TimerApi
             # => /api/v1/timers/
             desc 'Get all timers'
             get '/all' do
-                Timer.all
+                user = User.find(1)
+            {"data": user.project_category_users}
             end
 
             desc 'create new timer'
             params do
                 requires :timer, type: Hash do
-                    requires :task_id, type: Integer, desc: 'Timer ID'
+                    optional :task_id, type: Integer, desc: 'Timer ID'
                     requires :start_time, type: DateTime, desc: 'Start time'
                     requires :stop_time, type: DateTime, desc: 'Stop time'
                 end
             end
             post '/new' do
                 timer_params = params['timer']
-                begin
-                    timer = Timer.create!(
-                        task_id: timer_params['task_id'],
-                        start_time: timer_params['start_time'],
-                        stop_time: timer_params['stop_time']
+                if timer_params['task_id'] && !timer_params['task_id'].nil?
+                    task_id_param = timer_params['task_id']
+                else
+                    pcu = ProjectCategoryUser.create!(
+                        user_id: 1
                     )
-                rescue => e
-                    { error: 'Task must exist' }
+                    task = Task.create!(
+                        project_category_user_id: pcu.id
+                    )
+                    task_id_param = task.id
                 end
-                # task
+                timer = Timer.create!(
+                    task_id: task_id_param,
+                    start_time: timer_params['start_time'],
+                    stop_time: timer_params['stop_time']
+                )
             end
 
             desc 'edit a timer'

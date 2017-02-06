@@ -6595,3 +6595,221 @@ Started POST "/api/projects/new" for 127.0.0.1 at 2017-02-06 09:48:14 +0700
   [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
 Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 09:50:40 +0700
   [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started POST "/api/users" for 127.0.0.1 at 2017-02-06 10:47:15 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "levanlinhcube@gmail.com"]]
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "users" ("uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "name", "email", "tokens", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["uid", "levanlinhcube@gmail.com"], ["encrypted_password", "$2a$11$yggm6oAZYFjX//a.wh3AKeHjJcRswL9x6PB1InmyGk59VBnE.q8GC"], ["confirmation_token", "6HTTFJbypb9njmjMhZi3"], ["confirmation_sent_at", 2017-02-06 03:47:16 UTC], ["name", "cubeit"], ["email", "levanlinhcube@gmail.com"], ["tokens", "{}"], ["created_at", 2017-02-06 03:47:16 UTC], ["updated_at", 2017-02-06 03:47:16 UTC]]
+  [1m[35m (25.7ms)[0m  [1m[35mCOMMIT[0m
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb (31.5ms)
+Devise::Mailer#confirmation_instructions: processed outbound mail in 686.8ms
+Sent mail to levanlinhcube@gmail.com (7171.5ms)
+Date: Mon, 06 Feb 2017 10:47:16 +0700
+From: please-change-me-at-config-initializers-devise@example.com
+Reply-To: please-change-me-at-config-initializers-devise@example.com
+To: levanlinhcube@gmail.com
+Message-ID: <5897f1c4c8ea3_49b431c3f4c41242@cogzwell.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+client-config: default
+redirect-url: https://timecloudbackend.herokuapp.com/
+
+<p>Welcome levanlinhcube@gmail.com!</p>
+
+<p>You can confirm your account email through the link below: </p>
+
+<p><a href="http://localhost:3000/auth/confirmation?config=default&confirmation_token=6HTTFJbypb9njmjMhZi3&redirect_url=https%3A%2F%2Ftimecloudbackend.herokuapp.com%2F">Confirm my account</a></p>
+
+Started GET "/auth/confirmation?config=default&confirmation_token=6HTTFJbypb9njmjMhZi3&redirect_url=https%3A%2F%2Ftimecloudbackend.herokuapp.com%2F" for 127.0.0.1 at 2017-02-06 10:48:19 +0700
+Processing by DeviseTokenAuth::ConfirmationsController#show as HTML
+  Parameters: {"config"=>"default", "confirmation_token"=>"6HTTFJbypb9njmjMhZi3", "redirect_url"=>"https://timecloudbackend.herokuapp.com/"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."confirmation_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["confirmation_token", "6HTTFJbypb9njmjMhZi3"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "users" SET "confirmed_at" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["confirmed_at", 2017-02-06 03:48:20 UTC], ["updated_at", 2017-02-06 03:48:20 UTC], ["id", 1]]
+  [1m[35m (23.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "levanlinhcube@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "tokens" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["tokens", "{\"fT_sV-audKiAc_VLlsnutQ\":{\"token\":\"$2a$10$uGFGiBWdc1yJ23TX14.R7uNjSvQyAxPEOQIE.AdvvwFLNBst/uZau\",\"expiry\":1487562500}}"], ["updated_at", 2017-02-06 03:48:20 UTC], ["id", 1]]
+  [1m[35m (9.9ms)[0m  [1m[35mCOMMIT[0m
+Redirected to https://timecloudbackend.herokuapp.com/?account_confirmation_success=true&client_id=fT_sV-audKiAc_VLlsnutQ&config=default&expiry=1487562500&token=_IToKdXEWErqaTgqT5aBOw&uid=levanlinhcube%40gmail.com
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "levanlinhcube@gmail.com"], ["id", 1], ["LIMIT", 1]]
+Completed 302 Found in 159ms (ActiveRecord: 35.9ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-02-06 10:48:56 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (197.3ms)
+Completed 200 OK in 206ms (Views: 202.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-02-06 10:48:56 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 10:49:03 +0700
+  [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+Started POST "/api/timers/new" for 127.0.0.1 at 2017-02-06 10:49:49 +0700
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "project_category_users" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 1], ["created_at", 2017-02-06 03:49:49 UTC], ["updated_at", 2017-02-06 03:49:49 UTC]]
+  [1m[35m (9.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "tasks" ("project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["project_category_user_id", 1], ["created_at", 2017-02-06 03:49:49 UTC], ["updated_at", 2017-02-06 03:49:49 UTC]]
+  [1m[35m (7.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "timers" ("task_id", "start_time", "stop_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["task_id", 1], ["start_time", 2017-02-06 10:50:00 UTC], ["stop_time", 2017-02-06 10:50:30 UTC], ["created_at", 2017-02-06 03:49:49 UTC], ["updated_at", 2017-02-06 03:49:49 UTC]]
+  [1m[35m (8.3ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 10:55:23 +0700
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 10:58:33 +0700
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-06 11:13:49 +0700
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:17:46 +0700
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:20:22 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:20:37 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:21:10 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:21:32 +0700
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers"[0m
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:22:00 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:24:45 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+No serializer found for resource: #<ProjectCategoryUser id: 1, project_category_id: nil, user_id: 1, created_at: "2017-02-06 03:49:49", updated_at: "2017-02-06 03:49:49">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:32:18 +0700
+  
+SyntaxError (/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/timer_api/timers.rb:14: syntax error, unexpected ':', expecting =>
+                {"data" : user.project_category_users}
+                         ^
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/timer_api/timers.rb:14: syntax error, unexpected '}', expecting keyword_end
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/timer_api/timers.rb:69: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+app/api/timer_api/timers.rb:14: syntax error, unexpected ':', expecting =>
+app/api/timer_api/timers.rb:14: syntax error, unexpected '}', expecting keyword_end
+app/api/timer_api/timers.rb:69: syntax error, unexpected end-of-input, expecting keyword_end
+app/api/api.rb:15:in `<class:Root>'
+app/api/api.rb:3:in `<module:API>'
+app/api/api.rb:2:in `<top (required)>'
+config/routes.rb:5:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.7ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (22.9ms)
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:32:55 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:33:33 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:33:49 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+No serializer found for resource: #<ProjectCategoryUser id: 1, project_category_id: nil, user_id: 1, created_at: "2017-02-06 03:49:49", updated_at: "2017-02-06 03:49:49">
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:34:26 +0700
+  
+SyntaxError (/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/timer_api/timers.rb:14: syntax error, unexpected ':', expecting =>
+                {"data" : user.project_category_users }
+                         ^
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/timer_api/timers.rb:14: syntax error, unexpected '}', expecting keyword_end
+/home/code-engine-studio/RubyOnRails/2017-spring-time-tracker-website-back/app/api/timer_api/timers.rb:69: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+app/api/timer_api/timers.rb:14: syntax error, unexpected ':', expecting =>
+app/api/timer_api/timers.rb:14: syntax error, unexpected '}', expecting keyword_end
+app/api/timer_api/timers.rb:69: syntax error, unexpected end-of-input, expecting keyword_end
+app/api/api.rb:15:in `<class:Root>'
+app/api/api.rb:3:in `<module:API>'
+app/api/api.rb:2:in `<top (required)>'
+config/routes.rb:5:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.9ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (29.2ms)
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:34:48 +0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/timers/all"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+rack-cors (0.4.0) lib/rack/cors.rb:80:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.3ms)
+  Rendered collection of /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [26 times] (58.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (33.0ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (9.3ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (190.6ms)
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:35:34 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:36:00 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:36:19 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:39:59 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:41:28 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:41:41 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.5ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:42:12 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:42:45 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:42:55 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.4ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:43:10 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:52:40 +0700
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.5ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]

@@ -3,5 +3,4 @@ class TaskSerializer < ActiveModel::Serializer
 
     attributes :id, :name
     has_one :project_category_users
-    has_many :timers
 end
