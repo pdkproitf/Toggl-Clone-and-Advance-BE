@@ -11,7 +11,19 @@ module TimerApi
             desc 'Get all timers'
             get '/all' do
                 user = User.find(1)
-            {"data": user.project_category_users}
+                pcu_list = user.project_category_users
+                timer_list = [];
+                pcu_list.each do |pcu|
+                  task_list = pcu.tasks
+                  task_list.each do |task|
+                    timers = task.timers
+                    timers.each do |timer|
+                      timer = TimerSerializer.new(timer)
+                        timer_list.push(timer)
+                    end
+                  end
+                end
+            {"data": timer_list}
             end
 
             desc 'create new timer'

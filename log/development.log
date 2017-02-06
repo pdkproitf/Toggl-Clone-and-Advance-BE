@@ -6813,3 +6813,280 @@ Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:43:10 +0700
 Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 11:52:40 +0700
   [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
   [1m[36mProjectCategoryUser Load (0.5ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/" for 127.0.0.1 at 2017-02-06 13:44:29 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 377ms (Views: 365.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/swagger" for 127.0.0.1 at 2017-02-06 13:44:34 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (55.9ms)
+Completed 200 OK in 62ms (Views: 60.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-02-06 13:44:35 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 13:44:43 +0700
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started POST "/api/timers/new" for 127.0.0.1 at 2017-02-06 13:45:10 +0700
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "project_category_users" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 1], ["created_at", 2017-02-06 06:45:10 UTC], ["updated_at", 2017-02-06 06:45:10 UTC]]
+  [1m[35m (12.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "tasks" ("project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["project_category_user_id", 2], ["created_at", 2017-02-06 06:45:10 UTC], ["updated_at", 2017-02-06 06:45:10 UTC]]
+  [1m[35m (9.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "timers" ("task_id", "start_time", "stop_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["task_id", 2], ["start_time", 2017-02-06 10:50:00 UTC], ["stop_time", 2017-02-06 10:50:30 UTC], ["created_at", 2017-02-06 06:45:10 UTC], ["updated_at", 2017-02-06 06:45:10 UTC]]
+  [1m[35m (4.8ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 13:45:24 +0700
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.6ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/" for 127.0.0.1 at 2017-02-06 14:44:51 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-02-06 14:45:02 +0700
+Processing by WelcomeController#index as HTML
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 19ms (Views: 18.1ms | ActiveRecord: 0.0ms)
+
+
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (25.6ms)
+Completed 200 OK in 32ms (Views: 29.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-02-06 14:45:02 +0700
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:45:11 +0700
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.8ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:45:30 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:45:38 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:46:30 +0700
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:46:39 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:46:54 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.5ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:53:12 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.4ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+Started POST "/api/timers/new" for 127.0.0.1 at 2017-02-06 14:55:25 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "timers" ("task_id", "start_time", "stop_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["task_id", 1], ["start_time", 2017-02-06 10:50:00 UTC], ["stop_time", 2017-02-06 10:50:30 UTC], ["created_at", 2017-02-06 07:55:25 UTC], ["updated_at", 2017-02-06 07:55:25 UTC]]
+  [1m[35m (12.2ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:55:32 +0700
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.5ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:55:38 +0700
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.7ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:56:00 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:56:08 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+Started POST "/api/timers/new" for 127.0.0.1 at 2017-02-06 14:56:38 +0700
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "project_category_users" ("user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["user_id", 1], ["created_at", 2017-02-06 07:56:38 UTC], ["updated_at", 2017-02-06 07:56:38 UTC]]
+  [1m[35m (14.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "tasks" ("project_category_user_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["project_category_user_id", 3], ["created_at", 2017-02-06 07:56:38 UTC], ["updated_at", 2017-02-06 07:56:38 UTC]]
+  [1m[35m (6.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "timers" ("task_id", "start_time", "stop_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["task_id", 3], ["start_time", 2017-02-06 10:50:00 UTC], ["stop_time", 2017-02-06 10:50:30 UTC], ["created_at", 2017-02-06 07:56:38 UTC], ["updated_at", 2017-02-06 07:56:38 UTC]]
+  [1m[35m (6.5ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 14:56:43 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.7ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTask Load (0.1ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:06:50 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:09:53 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.4ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[35m (1.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:09:59 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.6ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:10:38 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:14:03 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:38 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:40 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.1ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:41 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.5ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.3ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:57 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.1ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:58 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:58 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.5ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:59 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.1ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.1ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:59 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.5ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.4ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.1ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:21:59 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.6ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:22:15 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.8ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.8ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:22:50 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.2ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:22:51 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.4ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.1ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
+Started GET "/api/timers/all" for 127.0.0.1 at 2017-02-06 15:23:45 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProjectCategoryUser Load (0.3ms)[0m  [1m[34mSELECT "project_category_users".* FROM "project_category_users" WHERE "project_category_users"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 1]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 1]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 2]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 2]]
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."project_category_user_id" = $1[0m  [["project_category_user_id", 3]]
+  [1m[36mTimer Load (0.2ms)[0m  [1m[34mSELECT "timers".* FROM "timers" WHERE "timers"."task_id" = $1[0m  [["task_id", 3]]
