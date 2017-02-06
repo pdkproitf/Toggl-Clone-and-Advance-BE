@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170206033039) do
+ActiveRecord::Schema.define(version: 20170206095722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,9 +69,9 @@ ActiveRecord::Schema.define(version: 20170206033039) do
     t.integer  "client_id"
     t.string   "background"
     t.integer  "report_permission"
-    t.boolean  "is_archived",       default: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.boolean  "archived"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.index ["client_id"], name: "index_projects_on_client_id", using: :btree
   end
 
@@ -114,8 +114,8 @@ ActiveRecord::Schema.define(version: 20170206033039) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "name"
-    t.string   "nickname"
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "image"
     t.string   "email"
     t.jsonb    "tokens"
