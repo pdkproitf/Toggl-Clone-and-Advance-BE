@@ -1,10 +1,11 @@
 class ProjectSerializer < ActiveModel::Serializer
     include Rails.application.routes.url_helpers
 
-    attributes :id, :name, :background, :report_permission, :is_archived
+    # attributes :id, :name, :background, :report_permission, :is_archived
+    attributes :id, :name, :background
     has_one :client
-    has_many :project_user_roles
-    has_many :project_categories
+    # has_many :project_user_roles
+    # has_many :project_categories
 
     ## Using serializer from app/serializers/profile_serializer.rb
     # has_one :profile
