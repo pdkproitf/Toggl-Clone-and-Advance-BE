@@ -4,7 +4,6 @@ module ClientApi
         version 'v1', using: :accept_version_header
         #
         helpers do
-
         end
 
         resource :clients do
@@ -16,8 +15,10 @@ module ClientApi
                 end
             end
             post '/new' do
+                authenticated!
+
                 client_params = params['client']
-                client = Client.create!(
+                client = @current_user.clients.create!(
                     name: client_params['name']
                 )
                 client

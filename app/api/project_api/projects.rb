@@ -132,9 +132,8 @@ module ProjectApi
             end
             delete ':id' do
                 authenticated!
-                project = @current_user.projects
-                'hehe'
-                # project.destroy
+                project = @current_user.projects.where(id: params[:id]).first!
+                project.destroy
             end
         end
     end

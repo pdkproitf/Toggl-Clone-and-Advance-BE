@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
     has_many :roles, through: :project_user_roles
     has_many :employers, class_name: 'Membership', foreign_key: 'employer_id'
     has_many :employees, class_name: 'Membership', foreign_key: 'employee_id'
+    has_many :clients, dependent: :destroy
 
     # Include default devise modules.
     devise :database_authenticatable, :registerable,
