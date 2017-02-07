@@ -4,31 +4,19 @@ module ProjectApi
         version 'v1', using: :accept_version_header
         #
         helpers do
-            def sign_up_params
-                user_params = params['user']
-                user = User.new(
-                    name: user_params['name'],
-                    email: user_params['email'],
-                    password: user_params['password'],
-                    password_confirmation: user_params['password_confirmation']
+            def project_category_user_create(project_category_id, user_id)
+                ProjectCategoryUser.create!(
+                    project_category_id: project_category_id,
+                    user_id: user_id
                 )
-                user
             end
 
-            def render_create_success
-                {
-                    status: 'success',
-                    data:   @resource
-                }
-            end
-
-            def render_create_error
-                {
-                    status: 'error',
-                    data:    @resource,
-                    errors: '',
-                    code: 422
-                }
+            def project_category_create(project_id, category_id, billable)
+                ProjectCategory.create!(
+                    project_id: project_id,
+                    category_id: category_id,
+                    billable: billable
+                )
             end
         end
 
@@ -36,9 +24,15 @@ module ProjectApi
             # => /api/v1/projects/
             desc 'Get all projects'
             get '/all' do
-                authenticated!
-                @current_user.projects
-                # project = @current_user.projects
+                Project.all
+            end
+
+            desc 'Get a project by id'
+            params do
+                requires :id, type: String, desc: 'Project ID'
+            end
+            get ':id' do
+                Project.where(id: params[:id]).first!
             end
 
             desc 'create new project'
@@ -71,20 +65,70 @@ module ProjectApi
                 end
             end
             post '/new' do
-                authenticated!
                 project_params = params['project']
-                project = @current_user.projects.create!(
+                project = Project.create!(
                     name: project_params['name'],
                     client_id: project_params['client_id'],
                     background: project_params['background'],
                     report_permission: project_params['report_permission']
                 )
-            end
 
-            # for test
-            post '/test' do
-                # authenticated!
-                # @current_user
+                # Add member role (option)
+                if project_params['member_roles']
+                    member_roles_params = project_params['member_roles']
+                    member_roles_params.each do |member_roles|
+                        project.project_user_roles.create!(
+                            project_id: project.id,
+                            user_id: member_roles.user_id,
+                            role_id: member_roles.role_id
+                        )
+                    end
+                end
+
+                # Add project category (option)
+                if project_params['category_members']
+                    # For existing categories
+                    if project_params['category_members']['existing']
+                        existingList = project_params['category_members']['existing']
+                        existingList.each do |existing|
+                            project_category = project_category_create(
+                                project.id,
+                                existing.category_id,
+                                existing.billable
+                            )
+                            existing['members'].each do |member|
+                                project_category_user_create(project_category.id, member.user_id)
+                            end
+                        end
+                    end
+
+                    # For new categories
+                    if project_params['category_members']['new']
+                        newList = project_params['category_members']['new']
+                        newList.each do |new_cate|
+                            category = Category.create!(name: new_cate['category_name'])
+                            project_category = project_category_create(
+                                project.id,
+                                category.id,
+                                new_cate.billable
+                            )
+                            new_cate['members'].each do |member|
+                                project_category_user_create(project_category.id, member.user_id)
+                            end
+                        end
+                    end
+                end
+
+                project
+            end # End of project add new
+
+            desc 'Delete a project'
+            params do
+                requires :id, type: String, desc: 'Project ID'
+            end
+            delete ':id' do
+                project = Project.find(params[:id])
+                project.destroy
             end
         end
     end

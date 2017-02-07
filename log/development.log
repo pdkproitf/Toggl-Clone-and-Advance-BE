@@ -531,3 +531,12 @@ Started GET "/api/users/employees" for 127.0.0.1 at 2017-02-07 10:27:00 +0700
 Started GET "/api/users/employees" for 127.0.0.1 at 2017-02-07 10:27:08 +0700
   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
   [1m[36mMembership Load (0.3ms)[0m  [1m[34mSELECT "memberships".* FROM "memberships" WHERE "memberships"."employer_id" = $1[0m  [["employer_id", 1]]
+Started GET "/swagger" for 127.0.0.1 at 2017-02-07 10:45:39 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (508.5ms)
+Completed 200 OK in 532ms (Views: 518.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-02-07 10:45:40 +0700
