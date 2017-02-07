@@ -400,3 +400,94 @@ Migrating to CreateMemberships (20170207024045)
   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
   [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1052504927498677800)[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started GET "/swagger" for 127.0.0.1 at 2017-02-07 09:59:53 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (505.2ms)
+Completed 200 OK in 559ms (Views: 523.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-02-07 09:59:54 +0700
+Started GET "/swagger" for 127.0.0.1 at 2017-02-07 10:00:44 +0700
+Processing by GrapeSwaggerRails::ApplicationController#index as HTML
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/grape-swagger-rails-0.3.0/app/views/grape_swagger_rails/application/index.html.erb (32.2ms)
+Completed 200 OK in 38ms (Views: 36.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-02-07 10:00:55 +0700
+Started GET "/api/memberships/all" for 127.0.0.1 at 2017-02-07 10:01:01 +0700
+  [1m[36mMembership Load (0.4ms)[0m  [1m[34mSELECT "memberships".* FROM "memberships"[0m
+Started POST "/api/memberships/new" for 127.0.0.1 at 2017-02-07 10:01:11 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (55.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "memberships" ("employer_id", "employee_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["employer_id", 1], ["employee_id", 1], ["created_at", 2017-02-07 03:01:11 UTC], ["updated_at", 2017-02-07 03:01:11 UTC]]
+  [1m[35m (20.9ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/memberships/all" for 127.0.0.1 at 2017-02-07 10:01:18 +0700
+  [1m[36mMembership Load (0.3ms)[0m  [1m[34mSELECT "memberships".* FROM "memberships"[0m
+Started POST "/api/memberships/new" for 127.0.0.1 at 2017-02-07 10:01:28 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/users" for 127.0.0.1 at 2017-02-07 10:02:35 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = $1 AND "users"."email" = $2[0m  [["provider", "email"], ["email", "lynleva.cube.it141@gmail.com"]]
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (21.4ms)[0m  [1m[32mINSERT INTO "users" ("uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "name", "email", "tokens", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["uid", "lynleva.cube.it141@gmail.com"], ["encrypted_password", "$2a$11$05FBGpo/TXmh8ycbOC61kevE.hu2up1gWe/4Horw9ykoBI/7CAZTS"], ["confirmation_token", "xTMK_KEzzobxpmUgKvzp"], ["confirmation_sent_at", 2017-02-07 03:02:35 UTC], ["name", "linhbk"], ["email", "lynleva.cube.it141@gmail.com"], ["tokens", "{}"], ["created_at", 2017-02-07 03:02:35 UTC], ["updated_at", 2017-02-07 03:02:35 UTC]]
+  [1m[35m (12.0ms)[0m  [1m[35mCOMMIT[0m
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/devise_token_auth-0.1.39/app/views/devise/mailer/confirmation_instructions.html.erb (28.5ms)
+Devise::Mailer#confirmation_instructions: processed outbound mail in 307.3ms
+Sent mail to lynleva.cube.it141@gmail.com (6255.3ms)
+Date: Tue, 07 Feb 2017 10:02:36 +0700
+From: please-change-me-at-config-initializers-devise@example.com
+Reply-To: please-change-me-at-config-initializers-devise@example.com
+To: lynleva.cube.it141@gmail.com
+Message-ID: <589938cc1e65f_3ad52ee413c7871@cogzwell.mail>
+Subject: Confirmation instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+client-config: default
+redirect-url: https://spring-time-tracker.herokuapp.com/
+
+<p>Welcome lynleva.cube.it141@gmail.com!</p>
+
+<p>You can confirm your account email through the link below: </p>
+
+<p><a href="http://localhost:3000/auth/confirmation?config=default&confirmation_token=xTMK_KEzzobxpmUgKvzp&redirect_url=https%3A%2F%2Fspring-time-tracker.herokuapp.com%2F">Confirm my account</a></p>
+
+Started GET "/auth/confirmation?config=default&confirmation_token=xTMK_KEzzobxpmUgKvzp&redirect_url=https%3A%2F%2Fspring-time-tracker.herokuapp.com%2F" for 127.0.0.1 at 2017-02-07 10:02:53 +0700
+Processing by DeviseTokenAuth::ConfirmationsController#show as HTML
+  Parameters: {"config"=>"default", "confirmation_token"=>"xTMK_KEzzobxpmUgKvzp", "redirect_url"=>"https://spring-time-tracker.herokuapp.com/"}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."confirmation_token" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["confirmation_token", "xTMK_KEzzobxpmUgKvzp"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "users" SET "confirmed_at" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["confirmed_at", 2017-02-07 03:02:54 UTC], ["updated_at", 2017-02-07 03:02:54 UTC], ["id", 2]]
+  [1m[35m (16.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "lynleva.cube.it141@gmail.com"], ["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "users" SET "tokens" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["tokens", "{\"9rQpTPITsKNwFabSFrst2A\":{\"token\":\"$2a$10$hYi6Y4erhdUJbBh/Shbl9umczFrk4OmjLCVJp8hdEl.VlT1UKxEAO\",\"expiry\":1487646174}}"], ["updated_at", 2017-02-07 03:02:54 UTC], ["id", 2]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+Redirected to https://spring-time-tracker.herokuapp.com/?account_confirmation_success=true&client_id=9rQpTPITsKNwFabSFrst2A&config=default&expiry=1487646174&token=6quysKaPdFlfcyfR-CfmZw&uid=lynleva.cube.it141%40gmail.com
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "lynleva.cube.it141@gmail.com"], ["id", 2], ["LIMIT", 1]]
+Completed 302 Found in 138ms (ActiveRecord: 27.3ms)
+
+
+Started POST "/api/memberships/new" for 127.0.0.1 at 2017-02-07 10:03:29 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "memberships" ("employer_id", "employee_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["employer_id", 1], ["employee_id", 2], ["created_at", 2017-02-07 03:03:29 UTC], ["updated_at", 2017-02-07 03:03:29 UTC]]
+  [1m[35m (20.7ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/memberships/all" for 127.0.0.1 at 2017-02-07 10:04:04 +0700
+  [1m[36mMembership Load (0.4ms)[0m  [1m[34mSELECT "memberships".* FROM "memberships"[0m
+Started POST "/api/memberships/new" for 127.0.0.1 at 2017-02-07 10:05:20 +0700
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "memberships" ("employer_id", "employee_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["employer_id", 2], ["employee_id", 1], ["created_at", 2017-02-07 03:05:20 UTC], ["updated_at", 2017-02-07 03:05:20 UTC]]
+  [1m[35m (23.2ms)[0m  [1m[35mCOMMIT[0m
