@@ -65,8 +65,10 @@ module ProjectApi
                 end
             end
             post '/new' do
+                authenticated!
+
                 project_params = params['project']
-                project = Project.create!(
+                project = @current_user.projects.create!(
                     name: project_params['name'],
                     client_id: project_params['client_id'],
                     background: project_params['background'],

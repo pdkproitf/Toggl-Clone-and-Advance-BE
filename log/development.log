@@ -540,3 +540,44 @@ Completed 200 OK in 532ms (Views: 518.2ms | ActiveRecord: 0.0ms)
 
 
 Started GET "/api/v1/swagger_doc.json" for 127.0.0.1 at 2017-02-07 10:45:40 +0700
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-02-07 10:56:30 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProject Exists (61.6ms)[0m  [1m[34mSELECT  1 AS one FROM "projects" WHERE "projects"."name" = $1 LIMIT $2[0m  [["name", "Time Cloud"], ["LIMIT", 1]]
+  [1m[36mClient Load (16.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-02-07 10:56:51 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProject Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "projects" WHERE "projects"."name" = $1 LIMIT $2[0m  [["name", "Time Cloud"], ["LIMIT", 1]]
+  [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-02-07 10:57:39 +0700
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProject Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "projects" WHERE "projects"."name" = $1 LIMIT $2[0m  [["name", "Time Cloud"], ["LIMIT", 1]]
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (22.4ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "Time Cloud"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-02-07 03:57:49 UTC], ["updated_at", 2017-02-07 03:57:49 UTC], ["user_id", 1]]
+  [1m[35m (28.6ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/users/sign-in" for 127.0.0.1 at 2017-02-07 11:00:42 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND ("users"."id" != $2) LIMIT $3[0m  [["email", "lynleva.cube.it141@gmail.com"], ["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "users" SET "tokens" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["tokens", "{\"9rQpTPITsKNwFabSFrst2A\":{\"token\":\"$2a$10$hYi6Y4erhdUJbBh/Shbl9umczFrk4OmjLCVJp8hdEl.VlT1UKxEAO\",\"expiry\":1487646174},\"7M2eQ7mlNA3eRJQFu3BbvQ\":{\"token\":\"$2a$10$fyFHbXOYwNFftD8pgqpJ/eI5pRgnkQXsw474ftHS7H4JJ3DVcK0s6\",\"expiry\":1487649642}}"], ["updated_at", 2017-02-07 04:00:42 UTC], ["id", 2]]
+  [1m[35m (9.5ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-02-07 11:01:23 +0700
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProject Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "projects" WHERE "projects"."name" = $1 LIMIT $2[0m  [["name", "Time Cloud"], ["LIMIT", 1]]
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/api/projects/new" for 127.0.0.1 at 2017-02-07 11:01:40 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProject Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM "projects" WHERE "projects"."name" = $1 LIMIT $2[0m  [["name", "Machine Learning"], ["LIMIT", 1]]
+  [1m[36mClient Load (0.6ms)[0m  [1m[34mSELECT  "clients".* FROM "clients" WHERE "clients"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "projects" ("name", "client_id", "background", "report_permission", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "Machine Learning"], ["client_id", 1], ["background", "#FFFFFF"], ["report_permission", 1], ["created_at", 2017-02-07 04:01:40 UTC], ["updated_at", 2017-02-07 04:01:40 UTC], ["user_id", 2]]
+  [1m[35m (14.8ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:02:08 +0700
+  [1m[36mProject Load (0.6ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
