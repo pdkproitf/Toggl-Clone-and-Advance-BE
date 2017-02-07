@@ -33,8 +33,14 @@ module ProjectApi
         end
 
         resource :projects do
-
             # => /api/v1/projects/
+            desc 'Get all projects'
+            get '/all' do
+                authenticated!
+                @current_user.projects
+                # project = @current_user.projects
+            end
+
             desc 'create new project'
             params do
                 requires :project, type: Hash do
@@ -65,8 +71,9 @@ module ProjectApi
                 end
             end
             post '/new' do
+                authenticated!
                 project_params = params['project']
-                project = Project.create!(
+                project = @current_user.projects.create!(
                     name: project_params['name'],
                     client_id: project_params['client_id'],
                     background: project_params['background'],
@@ -75,14 +82,9 @@ module ProjectApi
             end
 
             # for test
-            params do
-                requires :test, type: Array do
-                    requires :int, type: Integer
-                    requires :ints, type: Integer
-                end
-            end
             post '/test' do
-                params[:test]
+                # authenticated!
+                # @current_user
             end
         end
     end
