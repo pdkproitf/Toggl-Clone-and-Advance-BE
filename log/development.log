@@ -581,3 +581,8 @@ Started POST "/api/projects/new" for 127.0.0.1 at 2017-02-07 11:01:40 +0700
   [1m[35m (14.8ms)[0m  [1m[35mCOMMIT[0m
 Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:02:08 +0700
   [1m[36mProject Load (0.6ms)[0m  [1m[34mSELECT "projects".* FROM "projects"[0m
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:04:46 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:05:01 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects" WHERE "projects"."user_id" = $1[0m  [["user_id", 1]]

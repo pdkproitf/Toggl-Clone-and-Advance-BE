@@ -24,7 +24,8 @@ module ProjectApi
             # => /api/v1/projects/
             desc 'Get all projects'
             get '/all' do
-                Project.all
+                authenticated!
+                @current_user.projects
             end
 
             desc 'Get a project by id'
