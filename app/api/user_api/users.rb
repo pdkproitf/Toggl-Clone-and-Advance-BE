@@ -8,8 +8,7 @@ module UserApi
             desc 'Get all employees'
             get '/employees' do
                 authenticated!
-                employer_list = @current_user.employers
-                employer_list.employee
+                @current_user.employers
             end
         end
     end
