@@ -812,3 +812,31 @@ Started DELETE "/api/clients/4" for 127.0.0.1 at 2017-02-07 11:48:14 +0700
 Started GET "/api/clients/all" for 127.0.0.1 at 2017-02-07 11:48:18 +0700
   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
   [1m[36mClient Load (0.4ms)[0m  [1m[34mSELECT "clients".* FROM "clients" WHERE "clients"."user_id" = $1[0m  [["user_id", 2]]
+Started GET "/api/clients/all" for 127.0.0.1 at 2017-02-07 11:50:14 +0700
+  
+ArgumentError (wrong number of arguments (given 1, expected 2)):
+  
+app/api/api.rb:5:in `<class:Root>'
+app/api/api.rb:3:in `<module:API>'
+app/api/api.rb:2:in `<top (required)>'
+config/routes.rb:5:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.5ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.9ms)
+  Rendering /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (3.4ms)
+  Rendered /home/code-engine-studio/.rvm/gems/ruby-2.3.1/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (34.2ms)
+Started GET "/api/clients/all" for 127.0.0.1 at 2017-02-07 11:50:53 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT "clients".* FROM "clients" WHERE "clients"."user_id" = $1[0m  [["user_id", 2]]
+Started GET "/api/clients/all" for 127.0.0.1 at 2017-02-07 11:51:24 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+Started GET "/api/clients/all" for 127.0.0.1 at 2017-02-07 11:51:38 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[36mClient Load (0.3ms)[0m  [1m[34mSELECT "clients".* FROM "clients" WHERE "clients"."user_id" = $1[0m  [["user_id", 2]]
+Started GET "/api/clients/all" for 127.0.0.1 at 2017-02-07 11:52:25 +0700
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[36mClient Load (0.2ms)[0m  [1m[34mSELECT "clients".* FROM "clients" WHERE "clients"."user_id" = $1[0m  [["user_id", 2]]
