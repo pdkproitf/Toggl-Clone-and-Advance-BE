@@ -26,7 +26,6 @@ module API
         end
 
         mount UserApi::Registrations
-        mount UserApi::Confirmations
         mount UserApi::Sessions
         mount UserApi::Passwords
         mount UserApi::Users
