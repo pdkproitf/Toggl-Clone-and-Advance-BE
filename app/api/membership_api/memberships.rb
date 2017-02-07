@@ -16,15 +16,16 @@ module MembershipApi
             desc 'create new membership'
             params do
                 requires :membership, type: Hash do
-                    requires :employee_id, type: Integer, desc: 'Employee ID'
+                    requires :email, type: String, desc: 'Employee ID'
                 end
             end
             post '/new' do
                 authenticated!
                 membership_params = params['membership']
+                employee = User.find_by(email: membership_params['email'])
                 membership = Membership.create!(
                     employer_id: @current_user.id,
-                    employee_id: membership_params['employee_id']
+                    employee_id: employee.id
                 )
                 membership
             end
