@@ -11,9 +11,9 @@ module API
       end
 
       def current_user
-        email = request.headers['uid']
-        client_id = request.headers['client']
-        token = request.headers['access_token']
+        email = request.headers['Uid']
+        client_id = request.headers['Client']
+        token = request.headers['Access-Token']
 
         @current_user = User.find_by_email(email)
 
@@ -26,7 +26,6 @@ module API
     end
 
     mount UserApi::Registrations
-    mount UserApi::Confirmations
     mount UserApi::Sessions
     mount UserApi::Passwords
 
