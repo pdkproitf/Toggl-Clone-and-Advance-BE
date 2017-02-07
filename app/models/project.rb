@@ -1,5 +1,6 @@
 class Project < ApplicationRecord
     validates :name, presence: true, uniqueness: true
+    belongs_to :user
     belongs_to :client
     has_many :project_categories, dependent: :destroy
     has_many :categories, through: :project_categories

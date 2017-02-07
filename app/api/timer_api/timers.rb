@@ -10,7 +10,20 @@ module TimerApi
             # => /api/v1/timers/
             desc 'Get all timers'
             get '/all' do
-                Timer.all
+                user = User.find(1)
+                pcu_list = user.project_category_users
+                timer_list = [];
+                pcu_list.each do |pcu|
+                  task_list = pcu.tasks
+                  task_list.each do |task|
+                    timers = task.timers
+                    timers.each do |timer|
+                      timer = TimerSerializer.new(timer)
+                        timer_list.push(timer)
+                    end
+                  end
+                end
+            {"data": timer_list}
             end
 
             desc 'create new timer'
@@ -23,16 +36,22 @@ module TimerApi
             end
             post '/new' do
                 timer_params = params['timer']
-                begin
-                    timer = Timer.create!(
-                        task_id: timer_params['task_id'],
-                        start_time: timer_params['start_time'],
-                        stop_time: timer_params['stop_time']
+                if timer_params['task_id'] && !timer_params['task_id'].nil?
+                    task_id_param = timer_params['task_id']
+                else
+                    pcu = ProjectCategoryUser.create!(
+                        user_id: 1
                     )
-                rescue => e
-                    { error: 'Task must exist' }
+                    task = Task.create!(
+                        project_category_user_id: pcu.id
+                    )
+                    task_id_param = task.id
                 end
-                # task
+                timer = Timer.create!(
+                    task_id: task_id_param,
+                    start_time: timer_params['start_time'],
+                    stop_time: timer_params['stop_time']
+                )
             end
 
             desc 'edit a timer'
