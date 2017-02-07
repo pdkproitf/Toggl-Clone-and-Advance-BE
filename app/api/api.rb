@@ -29,6 +29,7 @@ module API
         mount UserApi::Confirmations
         mount UserApi::Sessions
         mount UserApi::Passwords
+        mount UserApi::Users
 
         mount ProjectApi::Projects
         mount ClientApi::Clients
