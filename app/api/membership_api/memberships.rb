@@ -28,6 +28,16 @@ module MembershipApi
                 )
                 membership
             end
+
+            desc 'Delete a employee'
+            params do
+                requires :id, type: String, desc: 'Employee ID'
+            end
+            delete ':id' do
+                authenticated!
+                employee = @current_user.employers.where(employee_id: params[:id]).first!
+                employee.destroy
+            end
         end
     end
 end
