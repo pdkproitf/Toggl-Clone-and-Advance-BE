@@ -586,3 +586,65 @@ Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:04:46 +0700
 Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:05:01 +0700
   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
   [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects" WHERE "projects"."user_id" = $1[0m  [["user_id", 1]]
+Started DELETE "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:08:14 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+Started DELETE "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:08:49 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 LIMIT $3[0m  [["user_id", 1], ["id", 1], ["LIMIT", 1]]
+Started DELETE "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:09:08 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 LIMIT $3[0m  [["user_id", 1], ["id", 1], ["LIMIT", 1]]
+Started DELETE "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:09:27 +0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.7ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 LIMIT $3[0m  [["user_id", 1], ["id", 1], ["LIMIT", 1]]
+Started DELETE "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:09:39 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.coms"], ["LIMIT", 1]]
+Started DELETE "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:09:43 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 LIMIT $3[0m  [["user_id", 1], ["id", 1], ["LIMIT", 1]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:09:59 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.2ms)[0m  [1m[34mSELECT "projects".* FROM "projects" WHERE "projects"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:10:13 +0700
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT "projects".* FROM "projects" WHERE "projects"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:10:40 +0700
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT "projects".* FROM "projects" WHERE "projects"."user_id" = $1[0m  [["user_id", 1]]
+Started DELETE "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:10:55 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+Started DELETE "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:11:08 +0700
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+Started GET "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:11:35 +0700
+  [1m[36mProject Load (0.6ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."id" = $1 ORDER BY "projects"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/projects/4" for 127.0.0.1 at 2017-02-07 11:11:51 +0700
+  [1m[36mProject Load (0.7ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."id" = $1 ORDER BY "projects"."id" ASC LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+Started GET "/api/projects/2" for 127.0.0.1 at 2017-02-07 11:11:57 +0700
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."id" = $1 ORDER BY "projects"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Started GET "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:12:03 +0700
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."id" = $1 ORDER BY "projects"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:13:19 +0700
+Started GET "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:13:41 +0700
+Started GET "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:13:56 +0700
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."id" = $1 ORDER BY "projects"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:16:04 +0700
+Started GET "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:16:18 +0700
+Started GET "/api/projects/all" for 127.0.0.1 at 2017-02-07 11:16:46 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.2ms)[0m  [1m[34mSELECT "projects".* FROM "projects" WHERE "projects"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/api/projects/1" for 127.0.0.1 at 2017-02-07 11:17:12 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.7ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 ORDER BY "projects"."id" ASC LIMIT $3[0m  [["user_id", 1], ["id", 1], ["LIMIT", 1]]
+Started GET "/api/projects/2" for 127.0.0.1 at 2017-02-07 11:17:18 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 ORDER BY "projects"."id" ASC LIMIT $3[0m  [["user_id", 1], ["id", 2], ["LIMIT", 1]]
+Started GET "/api/projects/4" for 127.0.0.1 at 2017-02-07 11:17:51 +0700
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.3ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 ORDER BY "projects"."id" ASC LIMIT $3[0m  [["user_id", 1], ["id", 4], ["LIMIT", 1]]
+Started GET "/api/projects/5" for 127.0.0.1 at 2017-02-07 11:18:04 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "levanlinhcube@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.5ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 ORDER BY "projects"."id" ASC LIMIT $3[0m  [["user_id", 1], ["id", 5], ["LIMIT", 1]]
+Started GET "/api/projects/5" for 127.0.0.1 at 2017-02-07 11:18:30 +0700
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "lynleva.cube.it141@gmail.com"], ["LIMIT", 1]]
+  [1m[36mProject Load (0.4ms)[0m  [1m[34mSELECT  "projects".* FROM "projects" WHERE "projects"."user_id" = $1 AND "projects"."id" = $2 ORDER BY "projects"."id" ASC LIMIT $3[0m  [["user_id", 2], ["id", 5], ["LIMIT", 1]]

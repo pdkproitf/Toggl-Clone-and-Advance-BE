@@ -33,7 +33,8 @@ module ProjectApi
                 requires :id, type: String, desc: 'Project ID'
             end
             get ':id' do
-                Project.where(id: params[:id]).first!
+                authenticated!
+                @current_user.projects.where(id: params[:id]).first!
             end
 
             desc 'create new project'
@@ -130,8 +131,10 @@ module ProjectApi
                 requires :id, type: String, desc: 'Project ID'
             end
             delete ':id' do
-                project = Project.find(params[:id])
-                project.destroy
+                authenticated!
+                project = @current_user.projects
+                'hehe'
+                # project.destroy
             end
         end
     end
