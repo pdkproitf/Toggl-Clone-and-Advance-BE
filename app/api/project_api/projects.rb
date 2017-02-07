@@ -30,7 +30,23 @@ module ProjectApi
             desc 'Get all projects'
             get '/all' do
                 authenticated!
-                @current_user.projects
+                project_list = @current_user.projects
+
+                list = []
+                project_list.each do |project|
+                  member_list = []
+                  project.project_user_roles.each do |member|
+                      member_list.push(member.user)
+                  end
+
+                  item = {
+                    "info": ProjectSerializer.new(project),
+                    "tracked_time": project.get_tracked_time,
+                    "member": member_list
+                  }
+                  list.push(item)
+                end
+                {data: list}
             end
 
             desc 'Get a project by id'
@@ -45,11 +61,11 @@ module ProjectApi
                     member_list.push(member.user)
                 end
 
-                { "data": {
-                  "project": ProjectSerializer.new(project),
+                {
+                  "info": ProjectSerializer.new(project),
                   "tracked_time": project.get_tracked_time,
                   "member": member_list
-                } }
+                }
             end
 
             desc 'create new project'
