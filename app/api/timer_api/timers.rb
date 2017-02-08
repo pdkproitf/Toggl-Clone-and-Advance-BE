@@ -10,8 +10,8 @@ module TimerApi
             # => /api/v1/timers/
             desc 'Get all timers'
             get '/all' do
-                user = User.find(1)
-                pcu_list = user.project_category_users
+                authenticated!
+                pcu_list = @current_user.project_category_users
                 timer_list = [];
                 pcu_list.each do |pcu|
                   task_list = pcu.tasks
@@ -35,23 +35,34 @@ module TimerApi
                 end
             end
             post '/new' do
+              authenticated!
                 timer_params = params['timer']
                 if timer_params['task_id'] && !timer_params['task_id'].nil?
+                  # Check task_id belong to current user
+                  if Task.find(timer_params['task_id']).project_category_user.user_id == @current_user.id
                     task_id_param = timer_params['task_id']
+                  end
                 else
                     pcu = ProjectCategoryUser.create!(
-                        user_id: 1
+                        user_id: @current_user.id
                     )
                     task = Task.create!(
                         project_category_user_id: pcu.id
                     )
                     task_id_param = task.id
                 end
-                timer = Timer.create!(
-                    task_id: task_id_param,
-                    start_time: timer_params['start_time'],
-                    stop_time: timer_params['stop_time']
-                )
+                if task_id_param
+                  timer = Timer.create!(
+                      task_id: task_id_param,
+                      start_time: timer_params['start_time'],
+                      stop_time: timer_params['stop_time']
+                  )
+                else
+                  status 400
+                  {
+                    "error": "Validation failed: Task must exist"
+                  }
+                end
             end
 
             desc 'edit a timer'
@@ -63,18 +74,21 @@ module TimerApi
                 end
             end
             put ':id' do
+              authenticated!
                 timer_params = params['timer']
                 timer = Timer.find(params['id'])
-                begin
-                    timer.update(
-                        task_id: timer_params['task_id'],
-                        start_time: timer_params['start_time'],
-                        stop_time: timer_params['stop_time']
-                    )
-                rescue => e
-                    { error: 'Task must exist' }
+                if timer.task.project_category_user.user_id == @current_user.id
+                  begin
+                      timer.update(
+                          task_id: timer_params['task_id'],
+                          start_time: timer_params['start_time'],
+                          stop_time: timer_params['stop_time']
+                      )
+                  rescue => e
+                      { error: 'Task must exist' }
+                  end
+                  timer
                 end
-                task
             end
         end
     end
