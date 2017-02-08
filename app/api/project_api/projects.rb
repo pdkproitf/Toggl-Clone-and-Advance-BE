@@ -75,17 +75,13 @@ module ProjectApi
                         old_pcu_project_category_id = pcu.project_category_id
                       end
 
+                      # For data
                       item = Hash.new
                       item.merge!(ProjectCategoryUserSerializer.new(pcu).attributes)
                       item[:tracked_time] = pcu.get_tracked_time
                       list.push(item)
                     end
                 end
-
-                # cate_list = {}
-                # project.project_categories.each do |pc|
-                #   cate_list[pc.id] = CategorySerializer.new(pc.category)
-                # end
 
                 result = { data: list,
                   member_total: project.project_user_roles.length,
