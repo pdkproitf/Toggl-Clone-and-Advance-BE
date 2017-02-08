@@ -65,7 +65,7 @@ module ProjectApi
                     pc.project_category_users.each do |pcu|
                       # For user
                       if pcu.user_id != old_pcu_user_id
-                        user_list[pcu.user_id] = pcu.user
+                        user_list[pcu.user_id] = UserSerializer.new(pcu.user)
                         old_pcu_user_id = pcu.user_id
                       end
 
