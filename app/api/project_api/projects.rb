@@ -109,7 +109,7 @@ module ProjectApi
                             end
                             requires :billable, type: Boolean, desc: 'Billable'
                         end
-                        optional :new, type: Array, desc: 'New categories' do
+                        optional :new_one, type: Array, desc: 'New categories' do
                             requires :category_name, type: String, desc: 'New category name'
                             requires :members, type: Array, desc: 'Member' do
                                 requires :user_id, type: Integer, desc: 'User id'
@@ -123,60 +123,72 @@ module ProjectApi
                 authenticated!
 
                 project_params = params['project']
-                project = @current_user.projects.create!(
-                    name: project_params['name'],
-                    client_id: project_params['client_id'],
-                    background: project_params['background'],
-                    report_permission: project_params['report_permission']
-                )
-
-                # Add member role (option)
-                if project_params['member_roles']
-                    member_roles_params = project_params['member_roles']
-                    member_roles_params.each do |member_roles|
-                        project.project_user_roles.create!(
-                            project_id: project.id,
-                            user_id: member_roles.user_id,
-                            role_id: member_roles.role_id
-                        )
+                flag = true
+                if project_params['category_members']['new_one']
+                  newList = project_params['category_members']['new_one']
+                  newList.each do |cate|
+                    if Category.exists?(:name => cate["category_name"])
+                      flag = false
+                      break
                     end
+                  end
                 end
 
-                # Add project category (option)
-                if project_params['category_members']
-                    # For existing categories
-                    if project_params['category_members']['existing']
-                        existingList = project_params['category_members']['existing']
-                        existingList.each do |existing|
-                            project_category = project_category_create(
-                                project.id,
-                                existing.category_id,
-                                existing.billable
-                            )
-                            existing['members'].each do |member|
-                                project_category_user_create(project_category.id, member.user_id)
-                            end
-                        end
-                    end
+                if flag
+                  project = @current_user.projects.create!(
+                      name: project_params['name'],
+                      client_id: project_params['client_id'],
+                      background: project_params['background'],
+                      report_permission: project_params['report_permission']
+                  )
 
-                    # For new categories
-                    if project_params['category_members']['new']
-                        newList = project_params['category_members']['new']
+                  # Add member role (option)
+                  if project_params['member_roles']
+                      member_roles_params = project_params['member_roles']
+                      member_roles_params.each do |member_roles|
+                          project.project_user_roles.create!(
+                              project_id: project.id,
+                              user_id: member_roles.user_id,
+                              role_id: member_roles.role_id
+                          )
+                      end
+                  end
+
+                  # Add project category (option)
+                  if project_params['category_members']
+                      # For existing categories
+                      if project_params['category_members']['existing']
+                          existingList = project_params['category_members']['existing']
+                          existingList.each do |existing|
+                              project_category = project_category_create(
+                                  project.id,
+                                  existing.category_id,
+                                  existing.billable
+                              )
+                              existing['members'].each do |member|
+                                  project_category_user_create(project_category.id, member.user_id)
+                              end
+                          end
+                      end
+
+                      # For new categories
+                        newList = project_params['category_members']['new_one']
                         newList.each do |new_cate|
-                            category = Category.create!(name: new_cate['category_name'])
-                            project_category = project_category_create(
-                                project.id,
-                                category.id,
-                                new_cate.billable
-                            )
-                            new_cate['members'].each do |member|
+                              category = Category.create!(name: new_cate['category_name'])
+                              project_category = project_category_create(
+                                  project.id,
+                                  category.id,
+                                  new_cate.billable
+                              )
+                              new_cate['members'].each do |member|
                                 project_category_user_create(project_category.id, member.user_id)
-                            end
-                        end
-                    end
-                end
-
-                project
+                              end
+                          end
+                      end
+                      project
+                    else
+                      {"error": "Category name is taken"}
+                end # End of flag
             end # End of project add new
 
             desc 'Delete a project'
