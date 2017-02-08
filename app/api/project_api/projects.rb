@@ -23,9 +23,30 @@ module ProjectApi
         resource :projects do
             # => /api/v1/projects/
             desc 'Get all projects'
+            get '/test' do
+                Project.find(10).get_tracked_time
+            end
+
+            desc 'Get all projects'
             get '/all' do
                 authenticated!
-                @current_user.projects
+                project_list = @current_user.projects
+
+                list = []
+                project_list.each do |project|
+                  member_list = []
+                  project.project_user_roles.each do |member|
+                      member_list.push(member.user)
+                  end
+
+                  item = {
+                    "info": ProjectSerializer.new(project),
+                    "tracked_time": project.get_tracked_time,
+                    "member": member_list
+                  }
+                  list.push(item)
+                end
+                {data: list}
             end
 
             desc 'Get a project by id'
@@ -34,7 +55,17 @@ module ProjectApi
             end
             get ':id' do
                 authenticated!
-                @current_user.projects.where(id: params[:id]).first!
+                project = @current_user.projects.where(id: params[:id]).first!
+                member_list = []
+                project.project_user_roles.each do |member|
+                    member_list.push(member.user)
+                end
+
+                {
+                  "info": ProjectSerializer.new(project),
+                  "tracked_time": project.get_tracked_time,
+                  "member": member_list
+                }
             end
 
             desc 'create new project'
@@ -135,6 +166,8 @@ module ProjectApi
                 project = @current_user.projects.where(id: params[:id]).first!
                 project.destroy
             end
+
+
         end
     end
 end

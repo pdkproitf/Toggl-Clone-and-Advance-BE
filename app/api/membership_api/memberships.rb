@@ -7,26 +7,37 @@ module MembershipApi
         end
 
         resource :memberships do
-            # => /api/v1/projects/
-            desc 'Get all memberships'
+            desc 'Get all employees'
             get '/all' do
-                Membership.all
+                authenticated!
+                @current_user.employers
             end
 
             desc 'create new membership'
             params do
                 requires :membership, type: Hash do
-                    requires :employer_id, type: Integer, desc: 'Employer ID'
-                    requires :employee_id, type: Integer, desc: 'Employee ID'
+                    requires :email, type: String, desc: 'Employee ID'
                 end
             end
             post '/new' do
+                authenticated!
                 membership_params = params['membership']
+                employee = User.find_by(email: membership_params['email'])
                 membership = Membership.create!(
-                    employer_id: membership_params['employer_id'],
-                    employee_id: membership_params['employee_id']
+                    employer_id: @current_user.id,
+                    employee_id: employee.id
                 )
                 membership
+            end
+
+            desc 'Delete a employee'
+            params do
+                requires :id, type: String, desc: 'Employee ID'
+            end
+            delete ':id' do
+                authenticated!
+                employee = @current_user.employers.where(employee_id: params[:id]).first!
+                employee.destroy
             end
         end
     end
