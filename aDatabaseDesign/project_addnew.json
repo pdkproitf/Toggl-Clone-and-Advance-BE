@@ -41,7 +41,7 @@
                     "billable": false
                 }
             ],
-            "new": [{
+            "new_one": [{
                     "category_name": "new category 1",
                     "members": [{
                             "user_id": 1
