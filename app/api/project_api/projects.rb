@@ -56,15 +56,41 @@ module ProjectApi
             get ':id' do
                 authenticated!
                 project = @current_user.projects.where(id: params[:id]).first!
-                member_list = []
-                project.project_user_roles.each do |member|
-                    member_list.push(member.user)
+                list = []
+                user_list = {}
+                cate_list = {}
+                project.project_categories.each do |pc|
+                    old_pcu_user_id = -1
+                    old_pcu_project_category_id = -1
+                    pc.project_category_users.each do |pcu|
+                      # For user
+                      if pcu.user_id != old_pcu_user_id
+                        user_list[pcu.user_id] = pcu.user
+                        old_pcu_user_id = pcu.user_id
+                      end
+
+                      # For Category
+                      if pcu.project_category_id != old_pcu_project_category_id
+                        cate_list[pcu.project_category_id] = CategorySerializer.new(pcu.project_category.category)
+                        old_pcu_project_category_id = pcu.project_category_id
+                      end
+
+                      item = Hash.new
+                      item.merge!(ProjectCategoryUserSerializer.new(pcu).attributes)
+                      item[:tracked_time] = pcu.get_tracked_time
+                      list.push(item)
+                    end
                 end
 
-                {
-                  "info": ProjectSerializer.new(project),
-                  "tracked_time": project.get_tracked_time,
-                  "member": member_list
+                # cate_list = {}
+                # project.project_categories.each do |pc|
+                #   cate_list[pc.id] = CategorySerializer.new(pc.category)
+                # end
+
+                result = { data: list,
+                  member_total: project.project_user_roles.length,
+                  project_category: cate_list,
+                  user: user_list
                 }
             end
 
