@@ -51,6 +51,11 @@ module TimerApi
               timer_list = Timer.joins(task: :project_category_user)
               .where(project_category_users: { user_id: @current_user.id })
               .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
+
+              day_number = (to_day - from_day).to_i + 1
+              for i in 1..day_number
+                "hehe"
+              end
             end
 
             desc 'create new timer'
