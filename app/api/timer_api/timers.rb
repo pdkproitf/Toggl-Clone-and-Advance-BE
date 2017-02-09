@@ -39,6 +39,22 @@ module TimerApi
 
             desc 'create new timer'
             params do
+                requires :period, type: Hash do
+                    requires :from_day, type: Date, desc: 'From day'
+                    requires :to_day, type: Date, desc: 'To day'
+                end
+            end
+            get '/list' do
+              authenticated!
+              from_day = params[:period][:from_day]
+              to_day = params[:period][:to_day]
+              timer_list = Timer.joins(task: :project_category_user)
+              .where(project_category_users: { user_id: @current_user.id })
+              .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
+            end
+
+            desc 'create new timer'
+            params do
                 requires :timer, type: Hash do
                     optional :task_id, type: Integer, desc: 'Timer ID'
                     optional :task_name, type: String, desc: 'Task name'
