@@ -13,6 +13,11 @@ module CategoryApi
                 Category.all
             end
 
+            desc 'Get default categories'
+            get '/default' do
+                Category.where(default: true)
+            end
+
             desc 'Get a category by id'
             params do
                 requires :id, type: String, desc: 'Category ID'
