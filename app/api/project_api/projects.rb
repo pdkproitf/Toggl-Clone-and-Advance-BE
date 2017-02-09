@@ -124,7 +124,8 @@ module ProjectApi
 
                 project_params = params['project']
                 flag = true
-                if project_params['category_members']['new_one']
+
+                if project_params['category_members'] && project_params['category_members']['new_one']
                   newList = project_params['category_members']['new_one']
                   newList.each do |cate|
                     if Category.exists?(:name => cate["category_name"])
