@@ -173,6 +173,7 @@ module ProjectApi
                       end
 
                       # For new categories
+                      if project_params['category_members']['new_one']
                         newList = project_params['category_members']['new_one']
                         newList.each do |new_cate|
                               category = Category.create!(name: new_cate['category_name'])
@@ -185,6 +186,8 @@ module ProjectApi
                                 project_category_user_create(project_category.id, member.user_id)
                               end
                           end
+                      end
+
                       end
                       project
                     else
