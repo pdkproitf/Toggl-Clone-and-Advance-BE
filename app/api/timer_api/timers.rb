@@ -4,6 +4,17 @@ module TimerApi
         version 'v1', using: :accept_version_header
         #
         helpers do
+          # Check project_category_user_id belong to the current user
+          def is_project_category_current_user pcu_id
+            is_belong = false
+            if ProjectCategoryUser.exists? id: pcu_id
+              pcu = ProjectCategoryUser.find(pcu_id)
+              if pcu.user_id == @current_user.id
+                is_belong = true
+              end
+            end
+            is_belong
+          end
         end
 
         resource :timers do
@@ -46,31 +57,41 @@ module TimerApi
                     task_id_param = timer_params['task_id']
                   end
                 elsif timer_params['task_name'] # Have task name
-                  if timer_params['project_category_user_id']
+                  task_name = timer_params['task_name']
+                  if timer_params['project_category_user_id'] # Have project_category_user_id
                     pcu_id = timer_params['project_category_user_id']
-                    task_name = timer_params['task_name']
-                    if Task.exists?(:name => task_name, :project_category_user_id => pcu_id)
-                      task = Task.find_by(name: task_name, project_category_user_id: pcu_id)
-                    else
-                      if condition
+
+                    if is_project_category_current_user pcu_id
+                      if Task.exists?(:name => task_name, :project_category_user_id => pcu_id)
+                        task = Task.find_by(name: task_name, project_category_user_id: pcu_id)
+                      else
                         task = Task.create!(
                             name: timer_params['task_name'],
-                            project_category_user_id: timer_params['project_category_user_id']
+                            project_category_user_id: pcu_id
                         )
                       end
+                      task_id_param = task.id
                     end
-                    task_id_param = task.id
-                  else # Have not project category id
-                    if Task.exists?(:name => timer_params['task_name'], :project_category_user_id => nil)
-                      task = Task.find_by(name: timer_params['task_name'], project_category_user_id: nil)
-                    else
-                      task = Task.create!(
-                          name: timer_params['task_name']
-                      )
-                    end
+                  else # Have not project category user id
+                    pcu = ProjectCategoryUser.create!(
+                        user_id: @current_user.id
+                    )
+                    task = Task.create!(
+                        name: timer_params['task_name'],
+                        project_category_user_id: pcu.id
+                    )
                     task_id_param = task.id
                   end
-                else # Have nothing
+                else # Have not name
+                  if timer_params['project_category_user_id'] # Have project_category_user_id
+                    pcu_id = timer_params['project_category_user_id']
+                    if is_project_category_current_user pcu_id
+                      task = Task.create!(
+                          project_category_user_id: timer_params['project_category_user_id']
+                      )
+                      task_id_param = task.id
+                    end
+                  else # Have nothing
                     pcu = ProjectCategoryUser.create!(
                         user_id: @current_user.id
                     )
@@ -78,6 +99,7 @@ module TimerApi
                         project_category_user_id: pcu.id
                     )
                     task_id_param = task.id
+                  end
                 end
                 if task_id_param
                   timer = Timer.create!(
