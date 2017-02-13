@@ -50,43 +50,48 @@ module ProjectApi
             end
             get ':id' do
                 authenticated!
-                project = @current_user.projects.where(id: params[:id]).first!
-                project_hash = Hash.new
-                project_hash.merge!(ProjectSerializer.new(project).attributes)
-                project_hash[:client_name] = project.client[:name]
-                project_hash[:tracked_time] = project.get_tracked_time
+                begin
+                  project = @current_user.projects.find(params[:id])
+                  project_hash = Hash.new
+                  project_hash.merge!(ProjectSerializer.new(project).attributes)
+                  project_hash[:client_name] = project.client[:name]
+                  project_hash[:tracked_time] = project.get_tracked_time
 
-                pc_list = project.project_categories
-                list = []
-                pc_list.each do |pc|
-                  item = Hash.new
-                  item.merge!(ProjectCategorySerializer.new(pc))
-                  item.delete(:project_id)
-                  item.delete(:category_id)
-                  item[:category] = CategorySerializer.new(pc.category)
-                  item[:tracked_time] = pc.get_tracked_time
+                  pc_list = project.project_categories
+                  list = []
+                  pc_list.each do |pc|
+                    item = Hash.new
+                    item.merge!(ProjectCategorySerializer.new(pc))
+                    item.delete(:project_id)
+                    item.delete(:category_id)
+                    item[:category] = CategorySerializer.new(pc.category)
+                    item[:tracked_time] = pc.get_tracked_time
 
-                  member_list = []
-                  pc.project_category_users.each do |member|
-                    member_hash = Hash.new
-                    member_hash.merge!(ProjectCategoryUserSerializer.new(member))
-                    member_hash.delete(:id)
-                    role = ProjectUserRole.joins(:role).where(project_id: project.id, user_id: member.user.id).select("roles.id", "roles.name")
-                    user_hash = Hash.new
-                    user_hash.merge!(UserSerializer.new(member.user))
-                    user_hash[:role] = role
-                    member_hash[:user] = user_hash
-                    member_list.push(member_hash)
+                    member_list = []
+                    pc.project_category_users.each do |member|
+                      member_hash = Hash.new
+                      member_hash.merge!(ProjectCategoryUserSerializer.new(member))
+                      member_hash.delete(:id)
+                      role = ProjectUserRole.joins(:role).where(project_id: project.id, user_id: member.user.id).select("roles.id", "roles.name")
+                      user_hash = Hash.new
+                      user_hash.merge!(UserSerializer.new(member.user))
+                      user_hash[:role] = role
+                      member_hash[:user] = user_hash
+                      member_list.push(member_hash)
+                    end
+                    item[:member] = member_list
+
+                    list.push(item)
                   end
-                  item[:member] = member_list
-
-                  list.push(item)
-                end
-                {"data":{
-                  "info": project_hash,
-                  "project_category": list
+                  {"data":{
+                    "info": project_hash,
+                    "project_category": list
+                    }
                   }
-                }
+                rescue => e
+                    return error!(I18n.t("project_not_found"), 404)
+                end
+
             end
 
             desc 'create new project'
