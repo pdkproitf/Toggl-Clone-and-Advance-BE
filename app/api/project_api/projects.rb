@@ -154,7 +154,7 @@ module ProjectApi
                     end
                 end
             end
-            post '/new' do
+            post '/' do
                 authenticated!
 
                 project_params = params['project']
