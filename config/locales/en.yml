@@ -27,3 +27,4 @@ en:
   role_not_found: "Role not found"
   category_not_found: "Category not found"
   category_name_taken: "Category name was taken"
+  project_not_found: "Project not found"

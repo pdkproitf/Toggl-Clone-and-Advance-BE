@@ -306,9 +306,14 @@ module ProjectApi
             end
             delete ':id' do
                 authenticated!
-                project = @current_user.projects.where(id: params[:id]).first!
-                project.destroy
-                {"message" => "Delete project successfully"}
+                status 200
+                begin
+                  project = @current_user.projects.find(params[:id])
+                  project.destroy
+                  {"message" => "Delete project successfully"}
+                rescue => e
+                  error!(I18n.t("project_not_found"), 400)
+                end
             end
         end
     end
