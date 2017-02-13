@@ -22,11 +22,24 @@ module MembershipApi
             post '/new' do
                 authenticated!
                 membership_params = params['membership']
-                employee = User.find_by(email: membership_params['email'])
-                membership = Membership.create!(
-                    employer_id: @current_user.id,
-                    employee_id: employee.id
-                )
+                begin
+                    employee = User.find_by(email: membership_params['email'])
+                    if employee.email.eql? @current_user.email
+                        return error!(I18n.t('already_member'), 400)
+                    end
+                rescue => e
+                    return e
+                end
+
+                begin
+                    membership = Membership.create!(
+                        employer_id: @current_user.id,
+                        employee_id: employee.id
+                    )
+                rescue => e
+                    return error!(I18n.t('already_member'), 400)
+                end
+
                 membership
             end
 
