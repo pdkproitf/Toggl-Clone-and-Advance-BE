@@ -82,9 +82,10 @@ module ProjectApi
 
                   list.push(item)
                 end
-                {
-                  "project": project_hash,
+                {"data":{
+                  "info": project_hash,
                   "project_category": list
+                  }
                 }
             end
 
