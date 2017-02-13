@@ -2,7 +2,7 @@ module MembershipApi
     class Memberships < Grape::API
         prefix :api
         version 'v1', using: :accept_version_header
-        #
+        
         helpers do
         end
 
@@ -43,6 +43,7 @@ module MembershipApi
                         employer_id: @current_user.id,
                         employee_id: employee.id
                     )
+                    {"message": "Invitation was sent to "}
                 rescue => e
                     return error!(I18n.t('already_member'), 400)
                 end
