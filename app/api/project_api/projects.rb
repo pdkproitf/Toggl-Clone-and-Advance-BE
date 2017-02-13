@@ -23,12 +23,7 @@ module ProjectApi
         resource :projects do
             # => /api/v1/projects/
             desc 'Get all projects'
-            get '/test' do
-                Project.find(10).get_tracked_time
-            end
-
-            desc 'Get all projects'
-            get '/all' do
+            get '/' do
                 authenticated!
                 project_list = @current_user.projects
 
