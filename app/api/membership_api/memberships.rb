@@ -7,10 +7,17 @@ module MembershipApi
         end
 
         resource :memberships do
-            desc 'Get all employees'
-            get '/all' do
+            desc 'Get all members in team'
+            get '/' do
                 authenticated!
-                @current_user.employers
+                member_hash = {}
+                member_hash[:employer] = UserSerializer.new(@current_user)
+                employees = []
+                @current_user.employers.each do |employee|
+                    employees.push(MembershipSerializer.new(employee))
+                end
+                member_hash[:employee] = employees
+                {"data": member_hash}
             end
 
             desc 'create new membership'
