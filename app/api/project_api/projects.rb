@@ -171,6 +171,10 @@ module ProjectApi
                 is_category_name_ok = nil # Option
                 is_users_in_new_one_member = nil # Option
 
+                # Check if combination project name and client of current user exists
+                if @current_user.projects.exists?(:name => project_params["name"], :client_id => project_params["client_id"])
+                  return error!(I18n.t("project_name_client_taken"), 400)
+                end
                 # Check if client belongs to current user
                 begin
                     @current_user.clients.find(project_params['client_id'])
@@ -186,11 +190,11 @@ module ProjectApi
                   member_roles_users = []
                   member_roles.each do |mr|
                     # Check if user belongs to current user's team
-                    if !Membership.exists?(:employer => @current_user.id, :employee => mr.user_id)
+                    if mr.user_id != @current_user.id && !Membership.exists?(:employer => @current_user.id, :employee => mr.user_id)
                       return error!(I18n.t("user_not_member"), 400)
                     end
                     # Check if not nil role exists
-                    if !mr.role_id.nil? && !Membership.exists?(:id => mr.role_id)
+                    if !mr.role_id.nil? && !Role.exists?(:id => mr.role_id)
                       return error!(I18n.t("role_not_found"), 400)
                     end
 
