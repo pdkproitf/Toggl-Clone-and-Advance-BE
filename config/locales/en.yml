@@ -28,4 +28,5 @@ en:
   category_not_found: "Category not found"
   category_name_taken: "Category name was taken"
   project_not_found: "Project not found"
+  project_name_client_taken: "Combination project name and client was taken"
   already_member: "User is already a member"
