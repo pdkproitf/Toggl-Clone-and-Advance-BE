@@ -21,3 +21,11 @@
 
 en:
   hello: "Hello world"
+  client_not_found: "Client not found"
+  user_not_member: "User is not a member of team"
+  user_not_added_to_project: "User was not added to project"
+  role_not_found: "Role not found"
+  category_not_found: "Category not found"
+  category_name_taken: "Category name was taken"
+  project_not_found: "Project not found"
+  already_member: "User is already a member"

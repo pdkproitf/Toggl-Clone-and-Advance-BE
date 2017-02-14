@@ -2,15 +2,22 @@ module MembershipApi
     class Memberships < Grape::API
         prefix :api
         version 'v1', using: :accept_version_header
-        #
+        
         helpers do
         end
 
         resource :memberships do
-            desc 'Get all employees'
-            get '/all' do
+            desc 'Get all members in team'
+            get '/' do
                 authenticated!
-                @current_user.employers
+                member_hash = {}
+                member_hash[:employer] = UserSerializer.new(@current_user)
+                employees = []
+                @current_user.employers.each do |employee|
+                    employees.push(MembershipSerializer.new(employee))
+                end
+                member_hash[:employee] = employees
+                {"data": member_hash}
             end
 
             desc 'create new membership'
@@ -22,11 +29,25 @@ module MembershipApi
             post '/new' do
                 authenticated!
                 membership_params = params['membership']
-                employee = User.find_by(email: membership_params['email'])
-                membership = Membership.create!(
-                    employer_id: @current_user.id,
-                    employee_id: employee.id
-                )
+                begin
+                    employee = User.find_by(email: membership_params['email'])
+                    if employee.email.eql? @current_user.email
+                        return error!(I18n.t('already_member'), 400)
+                    end
+                rescue => e
+                    return e
+                end
+
+                begin
+                    membership = Membership.create!(
+                        employer_id: @current_user.id,
+                        employee_id: employee.id
+                    )
+                    {"message": "Invitation was sent to "}
+                rescue => e
+                    return error!(I18n.t('already_member'), 400)
+                end
+
                 membership
             end
 

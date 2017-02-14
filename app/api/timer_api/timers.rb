@@ -53,9 +53,17 @@ module TimerApi
               .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
 
               day_number = (to_day - from_day).to_i + 1
+              data = Hash.new
+              start_day = from_day
               for i in 1..day_number
-                "hehe"
+                data[start_day.to_s] = []
+                start_day = start_day + 1
               end
+
+              timer_list.each do |timer|
+                data[timer.start_time.to_date.to_s].push(TimerSerializer.new(timer))
+              end
+              data
             end
 
             desc 'create new timer'

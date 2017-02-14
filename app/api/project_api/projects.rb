@@ -23,12 +23,7 @@ module ProjectApi
         resource :projects do
             # => /api/v1/projects/
             desc 'Get all projects'
-            get '/test' do
-                Project.find(10).get_tracked_time
-            end
-
-            desc 'Get all projects'
-            get '/all' do
+            get '/' do
                 authenticated!
                 project_list = @current_user.projects
 
@@ -55,39 +50,48 @@ module ProjectApi
             end
             get ':id' do
                 authenticated!
-                project = @current_user.projects.where(id: params[:id]).first!
-                list = []
-                user_list = {}
-                cate_list = {}
-                project.project_categories.each do |pc|
-                    old_pcu_user_id = -1
-                    old_pcu_project_category_id = -1
-                    pc.project_category_users.each do |pcu|
-                      # For user
-                      if pcu.user_id != old_pcu_user_id
-                        user_list[pcu.user_id] = UserSerializer.new(pcu.user)
-                        old_pcu_user_id = pcu.user_id
-                      end
+                begin
+                  project = @current_user.projects.find(params[:id])
+                  project_hash = Hash.new
+                  project_hash.merge!(ProjectSerializer.new(project).attributes)
+                  project_hash[:client_name] = project.client[:name]
+                  project_hash[:tracked_time] = project.get_tracked_time
 
-                      # For Category
-                      if pcu.project_category_id != old_pcu_project_category_id
-                        cate_list[pcu.project_category_id] = CategorySerializer.new(pcu.project_category.category)
-                        old_pcu_project_category_id = pcu.project_category_id
-                      end
+                  pc_list = project.project_categories
+                  list = []
+                  pc_list.each do |pc|
+                    item = Hash.new
+                    item.merge!(ProjectCategorySerializer.new(pc))
+                    item.delete(:project_id)
+                    item.delete(:category_id)
+                    item[:category] = CategorySerializer.new(pc.category)
+                    item[:tracked_time] = pc.get_tracked_time
 
-                      # For data
-                      item = Hash.new
-                      item.merge!(ProjectCategoryUserSerializer.new(pcu).attributes)
-                      item[:tracked_time] = pcu.get_tracked_time
-                      list.push(item)
+                    member_list = []
+                    pc.project_category_users.each do |member|
+                      member_hash = Hash.new
+                      member_hash.merge!(ProjectCategoryUserSerializer.new(member))
+                      member_hash.delete(:id)
+                      role = ProjectUserRole.joins(:role).where(project_id: project.id, user_id: member.user.id).select("roles.id", "roles.name")
+                      user_hash = Hash.new
+                      user_hash.merge!(UserSerializer.new(member.user))
+                      user_hash[:role] = role
+                      member_hash[:user] = user_hash
+                      member_list.push(member_hash)
                     end
+                    item[:member] = member_list
+
+                    list.push(item)
+                  end
+                  {"data":{
+                    "info": project_hash,
+                    "project_category": list
+                    }
+                  }
+                rescue => e
+                    return error!(I18n.t("project_not_found"), 404)
                 end
 
-                result = { data: list,
-                  member_total: project.project_user_roles.length,
-                  project_category: cate_list,
-                  user: user_list
-                }
             end
 
             desc 'create new project'
@@ -96,7 +100,7 @@ module ProjectApi
                     requires :name, type: String, desc: 'Project name.'
                     requires :client_id, type: Integer, desc: 'Client id'
                     requires :background, type: String, desc: 'Background color'
-                    requires :report_permission, type: Integer, desc: 'Report permission'
+                    requires :report_permission, type: Integer, values: [1, 2], desc: 'Report permission'
                     optional :member_roles, type: Array, desc: 'Member roles' do
                         requires :user_id, type: Integer, desc: 'User id'
                         requires :role_id, type: Integer, desc: 'Role id'
@@ -119,80 +123,150 @@ module ProjectApi
                     end
                 end
             end
-            post '/new' do
+            post '/' do
                 authenticated!
 
                 project_params = params['project']
                 flag = true
 
-                if project_params['category_members'] && project_params['category_members']['new_one']
-                  newList = project_params['category_members']['new_one']
-                  newList.each do |cate|
-                    if Category.exists?(:name => cate["category_name"])
-                      flag = false
-                      break
+                is_client_ok = false
+                is_users_with_roles_member = nil # Option
+                is_roles_exist = nil # Option
+                is_categories_exist = nil # Option
+                is_users_in_existing_member = nil # Option
+                is_category_name_ok = nil # Option
+                is_users_in_new_one_member = nil # Option
+
+                # Check if client belongs to current user
+                begin
+                    @current_user.clients.find(project_params['client_id'])
+                    is_client_ok = true
+                rescue => e
+                    return error!(I18n.t("client_not_found"), 404)
+                end
+
+                # In member_roles, check if all users belong to current user's team
+                # and check if not nil roles exist
+                if project_params['member_roles']
+                  member_roles = project_params['member_roles']
+                  member_roles_users = []
+                  member_roles.each do |mr|
+                    # Check if user belongs to current user's team
+                    if !Membership.exists?(:employer => @current_user.id, :employee => mr.user_id)
+                      return error!(I18n.t("user_not_member"), 400)
                     end
+                    # Check if not nil role exists
+                    if !mr.role_id.nil? && !Membership.exists?(:id => mr.role_id)
+                      return error!(I18n.t("role_not_found"), 400)
+                    end
+
+                    member_roles_users.push(mr.user_id)
+                  end
+                  is_users_with_roles_member = true
+                  is_roles_exist = true
+                end
+
+                # Check category_members (member_roles must exist in advance)
+                if project_params['category_members']
+                  if member_roles_users
+                    category_members = project_params['category_members']
+                    # In existing
+                    if category_members['existing']
+                      existing = category_members['existing']
+                      existing.each do |exist|
+                        # Check if categories exist
+                        if !Category.exists?(:id => exist.category_id)
+                          return error!(I18n.t("category_not_found"), 400)
+                        end
+                        # Check if users was added to project
+                        exist.members.each do |member|
+                          if !member_roles_users.include?(member.user_id)
+                            return error!(I18n.t("user_not_added_to_project"), 400)
+                          end
+                        end
+                      end
+                      is_categories_exist = true
+                      is_users_in_existing_member = true
+                    end # End existing
+
+                    # In new_one
+                    if category_members['new_one']
+                      new_ones = category_members['new_one']
+                      new_ones.each do |new_one|
+                        # Check if categories names were taken
+                        if Category.exists?(:name => new_one.category_name)
+                          return error!(I18n.t("category_name_taken"), 400)
+                        end
+                        # Check if users was added to project
+                        new_one.members.each do |member|
+                          if !member_roles_users.include?(member.user_id)
+                            return error!(I18n.t("user_not_added_to_project"), 400)
+                          end
+                        end
+                      end
+                      is_category_name_ok = true
+                      is_users_in_new_one_member = true
+                    end
+                  else # member_roles not exist
+                    return error!(I18n.t("user_not_added_to_project"), 400)
                   end
                 end
 
-                if flag
+                # Start to create
+                # Create basic project
+                if is_client_ok
                   project = @current_user.projects.create!(
                       name: project_params['name'],
                       client_id: project_params['client_id'],
                       background: project_params['background'],
                       report_permission: project_params['report_permission']
                   )
+                end
 
-                  # Add member role (option)
-                  if project_params['member_roles']
-                      member_roles_params = project_params['member_roles']
-                      member_roles_params.each do |member_roles|
-                          project.project_user_roles.create!(
-                              project_id: project.id,
-                              user_id: member_roles.user_id,
-                              role_id: member_roles.role_id
-                          )
+                # Add member role (option)
+                if is_users_with_roles_member == true && is_roles_exist == true
+                    member_roles_params = project_params['member_roles']
+                    member_roles_params.each do |member_roles|
+                        project.project_user_roles.create!(
+                            project_id: project.id,
+                            user_id: member_roles.user_id,
+                            role_id: member_roles.role_id
+                        )
+                    end
+                end
+
+                # Add existing categories member
+                if is_categories_exist == true && is_users_in_existing_member == true
+                  existingList = project_params['category_members']['existing']
+                  existingList.each do |existing|
+                      project_category = project_category_create(
+                          project.id,
+                          existing.category_id,
+                          existing.billable
+                      )
+                      existing['members'].each do |member|
+                          project_category_user_create(project_category.id, member.user_id)
                       end
                   end
+                end
 
-                  # Add project category (option)
-                  if project_params['category_members']
-                      # For existing categories
-                      if project_params['category_members']['existing']
-                          existingList = project_params['category_members']['existing']
-                          existingList.each do |existing|
-                              project_category = project_category_create(
-                                  project.id,
-                                  existing.category_id,
-                                  existing.billable
-                              )
-                              existing['members'].each do |member|
-                                  project_category_user_create(project_category.id, member.user_id)
-                              end
-                          end
-                      end
+                # Add new categories and members
+                if is_category_name_ok = true && is_users_in_new_one_member == true
+                  newList = project_params['category_members']['new_one']
+                  newList.each do |new_cate|
+                        category = Category.create!(name: new_cate['category_name'])
+                        project_category = project_category_create(
+                            project.id,
+                            category.id,
+                            new_cate.billable
+                        )
+                        new_cate['members'].each do |member|
+                          project_category_user_create(project_category.id, member.user_id)
+                        end
+                    end
+                end
 
-                      # For new categories
-                      if project_params['category_members']['new_one']
-                        newList = project_params['category_members']['new_one']
-                        newList.each do |new_cate|
-                              category = Category.create!(name: new_cate['category_name'])
-                              project_category = project_category_create(
-                                  project.id,
-                                  category.id,
-                                  new_cate.billable
-                              )
-                              new_cate['members'].each do |member|
-                                project_category_user_create(project_category.id, member.user_id)
-                              end
-                          end
-                      end
-
-                      end
-                      project
-                    else
-                      {"error": "Category name is taken"}
-                end # End of flag
+                {"message": "Create project successfully"}
             end # End of project add new
 
             desc 'Delete a project'
@@ -201,11 +275,15 @@ module ProjectApi
             end
             delete ':id' do
                 authenticated!
-                project = @current_user.projects.where(id: params[:id]).first!
-                project.destroy
+                status 200
+                begin
+                  project = @current_user.projects.find(params[:id])
+                  project.destroy
+                  {"message" => "Delete project successfully"}
+                rescue => e
+                  error!(I18n.t("project_not_found"), 400)
+                end
             end
-
-
         end
     end
 end
