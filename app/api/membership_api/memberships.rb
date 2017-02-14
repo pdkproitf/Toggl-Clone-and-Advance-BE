@@ -11,9 +11,9 @@ module MembershipApi
             get '/' do
                 authenticated!
                 list = []
-                list.push(UserSerializer.new(@current_user))
+                list.push({"employee": UserSerializer.new(@current_user)})
                 @current_user.employers.each do |item|
-                    list.push(UserSerializer.new(item.employee))
+                    list.push({"employee": UserSerializer.new(item.employee)})
                 end
                 {"data": list}
             end
