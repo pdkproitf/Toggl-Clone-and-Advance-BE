@@ -224,7 +224,7 @@ module ProjectApi
                 end
 
                 # Add member role (option)
-                if is_users_with_roles_member == true && is_roles_exist = true
+                if is_users_with_roles_member == true && is_roles_exist == true
                     member_roles_params = project_params['member_roles']
                     member_roles_params.each do |member_roles|
                         project.project_user_roles.create!(
