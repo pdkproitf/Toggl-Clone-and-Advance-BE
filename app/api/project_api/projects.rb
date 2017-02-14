@@ -53,37 +53,28 @@ module ProjectApi
                 .where(projects: {is_archived: false})
                 .order("projects.id asc")
 
-                list = {}
+                list = []
+                project_category_id_list = []
+                project_id_list = []
                 pc_list.each do |pc|
-                  if !list.key?(pc.project_id.to_s)
-                    list[pc.project_id.to_s] = {}
-                    project = Project.find(pc.project_id)
-                    list[pc.project_id.to_s]["project_info"] = ProjectSerializer.new(project)
-                    list[pc.project_id.to_s]["category"] = []
-                  end
-                  #binding.pry
-                  # is_cate_not_exist = true
-                  # test_list = []
-                  # cates = list[pc.project_id.to_s]["category"]
-                  # cates.each do |item|
-                  #   test_list.push(item.category_id)
-                  #   # if pc.category_id == item.category_id
-                  #   #   is_cate_not_exist = false
-                  #   #   break
-                  #   # end
-                  # end
-
-                  #if is_cate_not_exist
+                  if !project_category_id_list.include?(pc.id)
+                    project_category_id_list.push(pc.id)
+                    item_hash = {}
                     category = Category.find(pc.category_id)
-                    pc_hash = {}
-                    pc_hash.merge!(pc.as_json)
-                    pc_hash.delete("created_at")
-                    pc_hash.delete("updated_at")
-                    pc_hash.delete("project_id")
-                    #pc_hash.delete("category_id")
-                    #pc_hash["category"] = CategorySerializer.new(category)
-                    list[pc.project_id.to_s]["category"].push(pc_hash)
-                  #end
+                    if !project_id_list.include?(pc.project_id)
+                      project_id_list.push(pc.project_id)
+                      project = Project.find(pc.project_id)
+                      item_hash.merge!(ProjectSerializer.new(project))
+                      item_hash["category"] = []
+                      item_hash["category"].push(CategorySerializer.new(category))
+                      list.push(item_hash)
+                    else
+                      result = list.select do |hash|
+                        hash[:id] == pc.project_id
+                      end
+                      result.first["category"].push(CategorySerializer.new(category))
+                    end
+                  end
                 end
                 {"data": list}
             end
