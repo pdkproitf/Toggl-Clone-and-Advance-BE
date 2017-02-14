@@ -22,7 +22,7 @@ module ProjectApi
 
         resource :projects do
             # => /api/v1/projects/
-            desc 'Get all projects'
+            desc 'Get all projects that I own'
             get '/' do
                 authenticated!
                 project_list = @current_user.projects
@@ -42,6 +42,50 @@ module ProjectApi
                   list.push(item)
                 end
                 {data: list}
+            end
+
+            desc 'Get all projects that I join'
+            get '/join' do
+                authenticated!
+                pcu_list = @current_user.project_category_users.where.not(project_category_id: nil)
+                pc_list = pcu_list.joins(project_category: [:project, :category])
+                .select("project_categories.*", "project_category_users.id as pcu_id")
+                .where(projects: {is_archived: false})
+                .order("projects.id asc")
+
+                list = {}
+                pc_list.each do |pc|
+                  if !list.key?(pc.project_id.to_s)
+                    list[pc.project_id.to_s] = {}
+                    project = Project.find(pc.project_id)
+                    list[pc.project_id.to_s]["project_info"] = ProjectSerializer.new(project)
+                    list[pc.project_id.to_s]["category"] = []
+                  end
+                  #binding.pry
+                  # is_cate_not_exist = true
+                  # test_list = []
+                  # cates = list[pc.project_id.to_s]["category"]
+                  # cates.each do |item|
+                  #   test_list.push(item.category_id)
+                  #   # if pc.category_id == item.category_id
+                  #   #   is_cate_not_exist = false
+                  #   #   break
+                  #   # end
+                  # end
+
+                  #if is_cate_not_exist
+                    category = Category.find(pc.category_id)
+                    pc_hash = {}
+                    pc_hash.merge!(pc.as_json)
+                    pc_hash.delete("created_at")
+                    pc_hash.delete("updated_at")
+                    pc_hash.delete("project_id")
+                    #pc_hash.delete("category_id")
+                    #pc_hash["category"] = CategorySerializer.new(category)
+                    list[pc.project_id.to_s]["category"].push(pc_hash)
+                  #end
+                end
+                {"data": list}
             end
 
             desc 'Get a project by id'
@@ -91,7 +135,6 @@ module ProjectApi
                 rescue => e
                     return error!(I18n.t("project_not_found"), 404)
                 end
-
             end
 
             desc 'create new project'
