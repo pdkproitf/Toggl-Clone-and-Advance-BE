@@ -2,7 +2,7 @@ module MembershipApi
     class Memberships < Grape::API
         prefix :api
         version 'v1', using: :accept_version_header
-        
+
         helpers do
         end
 
@@ -10,14 +10,12 @@ module MembershipApi
             desc 'Get all members in team'
             get '/' do
                 authenticated!
-                member_hash = {}
-                member_hash[:employer] = UserSerializer.new(@current_user)
-                employees = []
-                @current_user.employers.each do |employee|
-                    employees.push(MembershipSerializer.new(employee))
+                list = []
+                list.push(UserSerializer.new(@current_user))
+                @current_user.employers.each do |item|
+                    list.push(UserSerializer.new(item.employee))
                 end
-                member_hash[:employee] = employees
-                {"data": member_hash}
+                {"data": list}
             end
 
             desc 'create new membership'
