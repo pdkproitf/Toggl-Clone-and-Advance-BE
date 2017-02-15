@@ -12,4 +12,8 @@ class ProjectCategoryUser < ApplicationRecord
         end
         sum
     end
+
+    def test_return
+        'hehe'
+    end
 end
