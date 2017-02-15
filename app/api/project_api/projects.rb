@@ -114,11 +114,9 @@ module ProjectApi
                       member_hash.delete(:id)
                       member_hash.delete(:user_id)
                       role = ProjectUserRole.joins(:role).where(project_id: project.id, user_id: pcu.user.id).select("roles.id", "roles.name")
-                      user_hash = Hash.new
-                      user_hash.merge!(UserSerializer.new(pcu.user))
-                      user_hash[:role] = role
-                      user_hash[:tracked_time] = pcu.get_tracked_time
-                      member_hash[:user] = user_hash
+                      member_hash[:user] = UserSerializer.new(pcu.user)
+                      member_hash[:role] = role
+                      member_hash[:tracked_time] = pcu.get_tracked_time
                       member_list.push(member_hash)
                     end
                     item[:member] = member_list
