@@ -52,16 +52,19 @@ module TimerApi
               .where(project_category_users: { user_id: @current_user.id })
               .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
 
-              day_number = (to_day - from_day).to_i + 1
-              data = Hash.new
-              start_day = from_day
-              for i in 1..day_number
-                data[start_day.to_s] = []
-                start_day = start_day + 1
-              end
+              #timer_list = Timer.joins(task: {project_category_user: {project_category: [:project, :category]}})
+              # .where(project_category_users: { user_id: @current_user.id })
+              # .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
 
+
+              data = {}
+              date_list = []
               timer_list.each do |timer|
-                data[timer.start_time.to_date.to_s].push(TimerSerializer.new(timer))
+                if !date_list.include?(timer.start_time.to_date.to_s)
+                  date_list.push(timer.start_time.to_date.to_s)
+                  data[timer.start_time.to_date.to_s] = []
+                end
+                data[timer.start_time.to_date.to_s].push(timer)
               end
               data
             end
