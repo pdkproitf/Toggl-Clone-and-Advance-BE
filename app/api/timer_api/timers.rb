@@ -19,43 +19,25 @@ module TimerApi
 
         resource :timers do
             # => /api/v1/timers/
-            desc 'Get all timers'
-            get '/all' do
-                authenticated!
-                pcu_list = @current_user.project_category_users
-                timer_list = [];
-                pcu_list.each do |pcu|
-                  task_list = pcu.tasks
-                  task_list.each do |task|
-                    timers = task.timers
-                    timers.each do |timer|
-                      timer = TimerSerializer.new(timer)
-                        timer_list.push(timer)
-                    end
-                  end
-                end
-            {"data": timer_list}
-            end
-
-            desc 'create new timer'
+            desc 'Get all timers in period time'
             params do
                 requires :period, type: Hash do
                     requires :from_day, type: Date, desc: 'From day'
                     requires :to_day, type: Date, desc: 'To day'
                 end
             end
-            get '/list' do
+            get '/' do
               authenticated!
               from_day = params[:period][:from_day]
               to_day = params[:period][:to_day]
-              timer_list = Timer.joins(task: :project_category_user)
-              .where(project_category_users: { user_id: @current_user.id })
-              .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
-
-              #timer_list = Timer.joins(task: {project_category_user: {project_category: [:project, :category]}})
+              # timer_list = Timer.joins(task: :project_category_user)
               # .where(project_category_users: { user_id: @current_user.id })
               # .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
 
+              timer_list = Timer.left_outer_joins(task: {project_category_user: {project_category: [:project, :category]}})
+              .where(project_category_users: { user_id: @current_user.id })
+              .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
+              .select("timers.*", "projects.name")
 
               data = {}
               date_list = []
