@@ -30,3 +30,5 @@ en:
   project_not_found: "Project not found"
   project_name_client_taken: "Combination project name and client was taken"
   already_member: "User is already a member"
+  task_not_found: "Task not found"
+  not_project_category_current_user: "project_category_user is not belong to current user"
