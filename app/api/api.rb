@@ -23,6 +23,13 @@ module API
 
                 @current_user = nil
             end
+
+            def return_message status, data = nil
+              {
+                status: status,
+                data: data
+              }
+            end
         end
 
         mount UserApi::Registrations

@@ -11,3 +11,8 @@ Category.create!(name: 'Design', default: true)
 Category.create!(name: 'QA', default: true)
 Category.create!(name: 'Fixbug', default: true)
 Category.create!(name: 'Maintain', default: true)
+Role.create!(name: 'Admin')
+Role.create!(name: 'PM')
+5.times do |i|
+    Client.create(name: "Client #{i}")
+end
