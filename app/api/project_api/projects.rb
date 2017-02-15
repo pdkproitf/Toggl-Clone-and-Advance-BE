@@ -47,32 +47,37 @@ module ProjectApi
             desc 'Get all projects that I join'
             get '/join' do
                 authenticated!
-                pcu_list = @current_user.project_category_users.where.not(project_category_id: nil)
-                pc_list = pcu_list.joins(project_category: [:project, :category])
-                .select("project_categories.*", "project_category_users.id as pcu_id")
+                pcu_list = @current_user.project_category_users
+                  .where.not(project_category_id: nil)
+                  .joins(project_category: [:project, :category])
+                .select("project_categories.*", "project_category_users.id as pcuu_id")
                 .where(projects: {is_archived: false})
                 .order("projects.id asc")
 
                 list = []
                 project_category_id_list = []
                 project_id_list = []
-                pc_list.each do |pc|
-                  if !project_category_id_list.include?(pc.id)
-                    project_category_id_list.push(pc.id)
+                pcu_list.each do |pcu|
+                  if !project_category_id_list.include?(pcu.id)
+                    project_category_id_list.push(pcu.id)
                     item_hash = {}
-                    category = Category.find(pc.category_id)
-                    if !project_id_list.include?(pc.project_id)
-                      project_id_list.push(pc.project_id)
-                      project = Project.find(pc.project_id)
+                    category = Category.find(pcu.category_id)
+                    if !project_id_list.include?(pcu.project_id)
+                      project_id_list.push(pcu.project_id)
+                      project = Project.find(pcu.project_id)
                       item_hash.merge!(ProjectSerializer.new(project))
                       item_hash["category"] = []
-                      item_hash["category"].push(CategorySerializer.new(category))
+                      cat_ser = CategorySerializer.new(category).as_json
+                      cat_ser["pcu_id"] = pcu.id
+                      item_hash["category"].push(cat_ser)
                       list.push(item_hash)
                     else
                       result = list.select do |hash|
-                        hash[:id] == pc.project_id
+                        hash[:id] == pcu.project_id
                       end
-                      result.first["category"].push(CategorySerializer.new(category))
+                      cat_ser = CategorySerializer.new(category).as_json
+                      cat_ser["pcu_id"] = pcu.id
+                      result.first["category"].push(cat_ser)
                     end
                   end
                 end
@@ -92,18 +97,18 @@ module ProjectApi
                   project_hash[:client_name] = project.client[:name]
                   project_hash[:tracked_time] = project.get_tracked_time
 
-                  pc_list = project.project_categories
+                  pcu_list = project.project_categories
                   list = []
-                  pc_list.each do |pc|
+                  pcu_list.each do |pcu|
                     item = Hash.new
-                    item.merge!(ProjectCategorySerializer.new(pc))
+                    item.merge!(ProjectCategorySerializer.new(pcu))
                     item.delete(:project_id)
                     item.delete(:category_id)
-                    item[:category] = CategorySerializer.new(pc.category)
-                    item[:tracked_time] = pc.get_tracked_time
+                    item[:category] = CategorySerializer.new(pcu.category)
+                    item[:tracked_time] = pcu.get_tracked_time
 
                     member_list = []
-                    pc.project_category_users.each do |member|
+                    pcu.project_category_users.each do |member|
                       member_hash = Hash.new
                       member_hash.merge!(ProjectCategoryUserSerializer.new(member))
                       member_hash.delete(:id)
