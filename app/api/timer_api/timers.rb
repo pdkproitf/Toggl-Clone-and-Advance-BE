@@ -30,14 +30,14 @@ module TimerApi
               authenticated!
               from_day = params[:period][:from_day]
               to_day = params[:period][:to_day]
-              # timer_list = Timer.joins(task: :project_category_user)
-              # .where(project_category_users: { user_id: @current_user.id })
-              # .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
 
               timer_list = Timer.left_outer_joins(task: {project_category_user: {project_category: [:project, :category]}})
               .where(project_category_users: { user_id: @current_user.id })
               .where("timers.start_time >= ? AND timers.start_time < ?", from_day, to_day + 1)
-              .select("timers.*", "projects.name")
+              .select("timers.id", "timers.start_time", "timers.stop_time")
+              .select("tasks.id as task_id", "tasks.name as task_name", "tasks.project_category_user_id as pcu_id")
+              .select("projects.name as project_name", "categories.name as category_name")
+              .order("timers.start_time asc")
 
               data = {}
               date_list = []
