@@ -97,25 +97,27 @@ module ProjectApi
                   project_hash[:client_name] = project.client[:name]
                   project_hash[:tracked_time] = project.get_tracked_time
 
-                  pcu_list = project.project_categories
+                  pc_list = project.project_categories
                   list = []
-                  pcu_list.each do |pcu|
+                  pc_list.each do |pc|
                     item = Hash.new
-                    item.merge!(ProjectCategorySerializer.new(pcu))
+                    item.merge!(ProjectCategorySerializer.new(pc))
                     item.delete(:project_id)
                     item.delete(:category_id)
-                    item[:category] = CategorySerializer.new(pcu.category)
-                    item[:tracked_time] = pcu.get_tracked_time
+                    item[:category] = CategorySerializer.new(pc.category)
+                    item[:tracked_time] = pc.get_tracked_time
 
                     member_list = []
-                    pcu.project_category_users.each do |member|
+                    pc.project_category_users.each do |pcu|
                       member_hash = Hash.new
-                      member_hash.merge!(ProjectCategoryUserSerializer.new(member))
+                      member_hash.merge!(ProjectCategoryUserSerializer.new(pcu))
                       member_hash.delete(:id)
-                      role = ProjectUserRole.joins(:role).where(project_id: project.id, user_id: member.user.id).select("roles.id", "roles.name")
+                      member_hash.delete(:user_id)
+                      role = ProjectUserRole.joins(:role).where(project_id: project.id, user_id: pcu.user.id).select("roles.id", "roles.name")
                       user_hash = Hash.new
-                      user_hash.merge!(UserSerializer.new(member.user))
+                      user_hash.merge!(UserSerializer.new(pcu.user))
                       user_hash[:role] = role
+                      user_hash[:tracked_time] = pcu.get_tracked_time
                       member_hash[:user] = user_hash
                       member_list.push(member_hash)
                     end
