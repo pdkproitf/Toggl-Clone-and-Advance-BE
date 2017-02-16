@@ -6,15 +6,15 @@ module TimerApi
         helpers do
             def update_timer task
                 @timer.task_id = task.id
-                @timer.start_time = params['timer']['start_time']
-                @timer.stop_time = params['timer']['stop_time']
+                @timer.start_time = params['timer_update']['timer']['start_time']
+                @timer.stop_time = params['timer_update']['timer']['stop_time']
 
                 @timer.save!
             end
 
             def update_task task
                 task.project_category_user_id = @project_category_user.id
-                task.name = params['task']['task_name']
+                task.name = params['timer_update']['timer_update']['task']['task_name']
                 task.save!
 
                 update_timer task
@@ -38,7 +38,7 @@ module TimerApi
             end
 
             def modify_with_project
-                project = Project.find_by_id(params['project_id'])
+                project = Project.find_by_id(params['timer_update']['project_id'])
                 return return_message "Error Project Not Found for #{@current_user.email}"  unless project
                 return return_message "Error Project Not Allow for #{@current_user.email}"  unless access_to_project? project
 
@@ -46,7 +46,7 @@ module TimerApi
             end
 
             def modify_with_category project
-                category = Category.find_by_id(params['category']['category_id'])
+                category = Category.find_by_id(params['timer_update']['category']['category_id'])
                 return return_message "Category Not Found for #{@current_user.email}" unless category
                 return return_message "Category Not Allow for #{@current_user.email}" unless access_to_category_under_project? category, project
 
@@ -54,7 +54,7 @@ module TimerApi
             end
 
             def modify_with_task
-                task = Task.find_by_id(params['task']['task_id'])
+                task = Task.find_by_id(params['timer_update']['task']['task_id'])
                 return return_message "Task Not Found for #{@current_user.email}" unless Task
                 return return_message "Task Not Allow for #{@current_user.email}" unless acsess_to_task_under_pro_cate_user? task, @project_category_user
 
