@@ -96,7 +96,7 @@ module ProjectApi
                     item[:category].push({id: pcu.pc_id, name: pcu.category_name, pcu_id: pcu.id})
                   end
                   {"data": list}
-            end
+            end # End of join
 
             desc 'Get a project by id'
             params do
