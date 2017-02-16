@@ -22,6 +22,26 @@ module ProjectApi
 
         resource :projects do
             # => /api/v1/projects/
+            desc 'For test get all members in model project'
+            params do
+                requires :id, type: String, desc: 'Project ID'
+                requires :order_by, type: String, values: ['id', 'first_name', 'last_name'], desc: 'Order by'
+            end
+            get '/test_getallmembers' do
+              project = Project.find(params[:id])
+              {"data": project.get_all_members(params[:order_by])}
+            end
+
+            desc 'For test is user joined to project in model user'
+            params do
+                requires :id, type: String, desc: 'Project ID'
+            end
+            get '/test_isjoinedproject' do
+              authenticated!
+              is_joined = @current_user.is_joined_project(params[:id])
+              {"data": is_joined}
+            end
+
             desc 'Get all projects that I own'
             get '/' do
                 authenticated!
