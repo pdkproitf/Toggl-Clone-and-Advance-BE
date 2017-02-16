@@ -18,7 +18,7 @@ module UserApi
                 end
             end
         end
-        
+
         resource :users do
             # => /api/v1/users/
             desc "forgot password" #, entity: Entities::ProductWithRoot
@@ -59,45 +59,44 @@ module UserApi
                         redirect_url: @redirect_url,
                         client_config: params[:config_name]
                         })
-
-                        if @resource.errors.empty?
-                            return return_message I18n.t("devise_token_auth.passwords.sended", email: @email), {confirmation_token: @resource.confirmation_token}
-                        else
-                            @errors = @resource.errors
-                        end
+                    if @resource.errors.empty?
+                        return return_message I18n.t("devise_token_auth.passwords.sended", email: @email), {confirmation_token: @resource.confirmation_token}
                     else
-                        return error!(I18n.t("devise_token_auth.passwords.user_not_found", email: @email), 404)
+                        @errors = @resource.errors
                     end
+                else
+                    return error!(I18n.t("devise_token_auth.passwords.user_not_found", email: @email), 404)
+                end
+            end
+
+            desc "reset password"
+            params do
+                requires :user, type: Hash do
+                    optional :confirmation_token,  type: String, desc: "confirmation_token"
+                    requires :password,  type: String, desc: "password"
+                    requires :password_confirmation,  type: String, desc: "password_confirmation"
+                end
+            end
+            put '/password' do
+                get_user_confirmation_token
+                unless @resource
+                    return return_message 'Unauthorized'
                 end
 
-                desc "reset password"
-                params do
-                    requires :user, type: Hash do
-                        optional :confirmation_token,  type: String, desc: "confirmation_token"
-                        requires :password,  type: String, desc: "password"
-                        requires :password_confirmation,  type: String, desc: "password_confirmation"
-                    end
+                # make sure account doesn't use oauth2 provider
+                unless @resource.provider == 'email'
+                    return return_message I18n.t("devise_token_auth.passwords.password_not_required", provider: @resource.provider.humanize)
                 end
-                put '/password' do
-                    get_user_confirmation_token
-                    unless @resource
-                        return return_message 'Unauthorized'
-                    end
 
-                    # make sure account doesn't use oauth2 provider
-                    unless @resource.provider == 'email'
-                        return return_message I18n.t("devise_token_auth.passwords.password_not_required", provider: @resource.provider.humanize)
-                    end
+                if @resource.send(resource_update_method, params["user"])
+                    @resource.allow_password_change = false
 
-                    if @resource.send(resource_update_method, params["user"])
-                        @resource.allow_password_change = false
-
-                        @resource.save!
-                        return return_message I18n.t("devise_token_auth.passwords.successfully_updated")
-                    else
-                        return @resource.errors.to_hash.merge(full_messages: @resource.errors.full_messages)
-                    end
+                    @resource.save!
+                    return return_message I18n.t("devise_token_auth.passwords.successfully_updated")
+                else
+                    return @resource.errors.to_hash.merge(full_messages: @resource.errors.full_messages)
                 end
             end
         end
     end
+end

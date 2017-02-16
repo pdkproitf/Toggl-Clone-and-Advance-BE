@@ -25,6 +25,8 @@ module API
             end
 
             def return_message status, data = nil
+                status 404 if status.include?('Not Found')
+                status 401 if status.include?('Not Allow')
               {
                 status: status,
                 data: data

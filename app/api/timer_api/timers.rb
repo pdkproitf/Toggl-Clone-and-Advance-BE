@@ -4,6 +4,63 @@ module TimerApi
         version 'v1', using: :accept_version_header
         #
         helpers do
+            def update_timer task
+                @timer.task_id = task.id
+                @timer.start_time = params['timer']['start_time']
+                @timer.stop_time = params['timer']['stop_time']
+
+                @timer.save!
+            end
+
+            def update_task task
+                task.project_category_user_id = @project_category_user.id
+                task.name = params['task']['task_name']
+                task.save!
+
+                update_timer task
+            end
+
+            def access_to_project? project
+                return true if @current_user.project_user_roles.find_by(project_id: project.id)
+                return false
+            end
+
+            def access_to_category_under_project? category, project
+                project_category = project.project_categories.find_by(category_id: category.id)
+                @project_category_user = @current_user.project_category_users.find_by(project_category_id: project_category.id)
+                return true if @project_category_user
+                return false
+            end
+
+            def access_to_task_under_pro_cate_user? task, pcu
+                return true if task.project_category_user_id == pcu.id
+                return false
+            end
+
+            def modify_with_project
+                project = Project.find_by_id(params['project_id'])
+                return return_message "Error Project Not Found for #{@current_user.email}"  unless project
+                return return_message "Error Project Not Allow for #{@current_user.email}"  unless access_to_project? project
+
+                return modify_with_category  project
+            end
+
+            def modify_with_category project
+                category = Category.find_by_id(params['category']['category_id'])
+                return return_message "Category Not Found for #{@current_user.email}" unless category
+                return return_message "Category Not Allow for #{@current_user.email}" unless access_to_category_under_project? category, project
+
+                return modify_with_task
+            end
+
+            def modify_with_task
+                task = Task.find_by_id(params['task']['task_id'])
+                return return_message "Task Not Found for #{@current_user.email}" unless Task
+                return return_message "Task Not Allow for #{@current_user.email}" unless acsess_to_task_under_pro_cate_user? task, @project_category_user
+
+                update_task task
+            end
+
           # Check project_category_user_id belong to the current user
           def is_project_category_current_user pcu_id
             is_belong = false
@@ -15,6 +72,7 @@ module TimerApi
             end
             is_belong
           end
+
         end
 
         resource :timers do
@@ -129,29 +187,38 @@ module TimerApi
                 end
             end
 
-            desc 'edit a timer'
+            desc 'Edit timer'
             params do
-                requires :timer, type: Hash do
-                    requires :task_id, type: Integer, desc: 'Timer ID'
-                    requires :start_time, type: DateTime, desc: 'Start time'
-                    requires :stop_time, type: DateTime, desc: 'Stop time'
+                requires :timer_update, type: Hash do
+                    requires :timer, type: Hash  do
+                        requires :start_time, type: DateTime, desc: 'Start time'
+                        requires :stop_time, type: DateTime, desc: 'Stop time'
+                    end
+
+                    optional :task, type: Hash do
+                        requires :task_id, type: Integer, desc: 'Task ID'
+                        requires :task_name, type: String, desc: 'Task Name'
+                    end
+
+                    optional :category, type: Hash do
+                        requires :category_id, type: Integer, desc: 'Category ID'
+                        requires :category_name, type: String, desc: 'Category Name'
+                    end
+
+                    requires :project_id, type: Integer, desc: 'Current Project id'
                 end
             end
             put ':id' do
-              authenticated!
-                timer_params = params['timer']
-                timer = Timer.find(params['id'])
-                if timer.task.project_category_user.user_id == @current_user.id
-                  begin
-                      timer.update(
-                          task_id: timer_params['task_id'],
-                          start_time: timer_params['start_time'],
-                          stop_time: timer_params['stop_time']
-                      )
-                  rescue => e
-                      { error: 'Task must exist' }
-                  end
-                  timer
+                authenticated!
+
+                @timer = Timer.find(params['id'])
+                begin
+                    return return_message "Error Not Allow for #{@current_user.email}" unless @timer.task.project_category_user.user_id == @current_user.id
+                    @project_category_user = @timer.task.project_category_user
+                    return modify_with_project
+                rescue e
+                    p e
+                    return_message "Error Not Found Timer for #{@current_user.email}"
                 end
             end
         end
