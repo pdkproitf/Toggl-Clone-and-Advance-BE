@@ -25,10 +25,12 @@ module API
             end
 
             def return_message status, data = nil
-              {
-                status: status,
-                data: data
-              }
+                status 404 if status.include?('Not Found')
+                status 401 if status.include?('Not Allow')
+                {
+                    status: status,
+                    data: data
+                }
             end
         end
 
@@ -45,13 +47,13 @@ module API
         mount MembershipApi::Memberships
 
         add_swagger_documentation(
-            api_version: 'v1',
-            hide_doccumentation_path: false,
-            mount_path: '/api/v1/swagger_doc',
-            hide_format: true,
-            info: {
-                title: 'TRACKING TIME API'
-            }
+        api_version: 'v1',
+        hide_doccumentation_path: false,
+        mount_path: '/api/v1/swagger_doc',
+        hide_format: true,
+        info: {
+            title: 'TRACKING TIME API'
+        }
         )
     end
 end

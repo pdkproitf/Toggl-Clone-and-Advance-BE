@@ -59,7 +59,6 @@ module UserApi
                         redirect_url: @redirect_url,
                         client_config: params[:config_name]
                         })
-
                     if @resource.errors.empty?
                         return return_message I18n.t("devise_token_auth.passwords.sended", email: @email), {confirmation_token: @resource.confirmation_token}
                     else
@@ -70,34 +69,34 @@ module UserApi
                 end
             end
 
-                desc "reset password"
-                params do
-                    requires :user, type: Hash do
-                        optional :confirmation_token,  type: String, desc: "confirmation_token"
-                        requires :password,  type: String, desc: "password"
-                        requires :password_confirmation,  type: String, desc: "password_confirmation"
-                    end
+            desc "reset password"
+            params do
+                requires :user, type: Hash do
+                    optional :confirmation_token,  type: String, desc: "confirmation_token"
+                    requires :password,  type: String, desc: "password"
+                    requires :password_confirmation,  type: String, desc: "password_confirmation"
                 end
-                put '/password' do
-                    get_user_confirmation_token
-                    unless @resource
-                        return return_message 'Unauthorized'
-                    end
+            end
+            put '/password' do
+                get_user_confirmation_token
+                unless @resource
+                    return return_message 'Unauthorized'
+                end
 
-                    # make sure account doesn't use oauth2 provider
-                    unless @resource.provider == 'email'
-                        return return_message I18n.t("devise_token_auth.passwords.password_not_required", provider: @resource.provider.humanize)
-                    end
+                # make sure account doesn't use oauth2 provider
+                unless @resource.provider == 'email'
+                    return return_message I18n.t("devise_token_auth.passwords.password_not_required", provider: @resource.provider.humanize)
+                end
 
-                    if @resource.send(resource_update_method, params["user"])
-                        @resource.allow_password_change = false
+                if @resource.send(resource_update_method, params["user"])
+                    @resource.allow_password_change = false
 
-                        @resource.save!
-                        return return_message I18n.t("devise_token_auth.passwords.successfully_updated")
-                    else
-                        return @resource.errors.to_hash.merge(full_messages: @resource.errors.full_messages)
-                    end
+                    @resource.save!
+                    return return_message I18n.t("devise_token_auth.passwords.successfully_updated")
+                else
+                    return @resource.errors.to_hash.merge(full_messages: @resource.errors.full_messages)
                 end
             end
         end
     end
+end
