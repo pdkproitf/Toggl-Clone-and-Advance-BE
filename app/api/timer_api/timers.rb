@@ -137,7 +137,7 @@ module TimerApi
                 else
                     return error!(I18n.t('task_not_found'), 404)
                 end
-            end
+            end # End of add new
 
             desc 'edit a timer'
             params do
