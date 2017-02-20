@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220080717) do
+ActiveRecord::Schema.define(version: 20170220093743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,9 +102,9 @@ ActiveRecord::Schema.define(version: 20170220080717) do
     t.boolean  "is_archived",       default: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.integer  "user_id"
+    t.integer  "member_id"
     t.index ["client_id"], name: "index_projects_on_client_id", using: :btree
-    t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
+    t.index ["member_id"], name: "index_projects_on_member_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 20170220080717) do
   add_foreign_key "project_user_roles", "roles"
   add_foreign_key "project_user_roles", "users"
   add_foreign_key "projects", "clients"
-  add_foreign_key "projects", "users"
+  add_foreign_key "projects", "members"
   add_foreign_key "tasks", "project_category_users"
   add_foreign_key "timers", "tasks"
 end
