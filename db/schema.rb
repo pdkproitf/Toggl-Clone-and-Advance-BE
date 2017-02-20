@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220045949) do
+ActiveRecord::Schema.define(version: 20170220063228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20170220045949) do
     t.datetime "updated_at",   null: false
     t.string   "domain"
     t.integer  "overtime_max"
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_companies_on_user_id", using: :btree
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -140,6 +142,7 @@ ActiveRecord::Schema.define(version: 20170220045949) do
   end
 
   add_foreign_key "clients", "users"
+  add_foreign_key "companies", "users"
   add_foreign_key "project_categories", "categories"
   add_foreign_key "project_categories", "projects"
   add_foreign_key "project_category_users", "project_categories"
