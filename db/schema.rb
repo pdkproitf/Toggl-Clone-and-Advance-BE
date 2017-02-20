@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220064524) do
+ActiveRecord::Schema.define(version: 20170220073319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,19 @@ ActiveRecord::Schema.define(version: 20170220064524) do
     t.integer  "overtime_max"
     t.integer  "user_id"
     t.index ["user_id"], name: "index_companies_on_user_id", using: :btree
+  end
+
+  create_table "invites", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "company_id"
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.string   "token"
+    t.integer  "expiry"
+    t.boolean  "accepted"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["company_id"], name: "index_invites_on_company_id", using: :btree
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -143,6 +156,7 @@ ActiveRecord::Schema.define(version: 20170220064524) do
 
   add_foreign_key "clients", "companies"
   add_foreign_key "companies", "users"
+  add_foreign_key "invites", "companies"
   add_foreign_key "project_categories", "categories"
   add_foreign_key "project_categories", "projects"
   add_foreign_key "project_category_users", "project_categories"
