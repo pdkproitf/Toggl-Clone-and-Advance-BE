@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220073319) do
+ActiveRecord::Schema.define(version: 20170220080134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20170220073319) do
     t.index ["company_id"], name: "index_invites_on_company_id", using: :btree
   end
 
-  create_table "memberships", force: :cascade do |t|
+  create_table "members", force: :cascade do |t|
     t.integer  "employer_id"
     t.integer  "employee_id"
     t.datetime "created_at",  null: false
