@@ -1,7 +1,7 @@
 class Project < ApplicationRecord
     validates :name, presence: true
-    belongs_to :user
-    belongs_to :client
+    belongs_to :member
+    has_one :client
     has_many :project_categories, dependent: :destroy
     has_many :categories, through: :project_categories
     has_many :project_user_roles, dependent: :destroy
