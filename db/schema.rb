@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221030348) do
+ActiveRecord::Schema.define(version: 20170221031004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,13 +75,13 @@ ActiveRecord::Schema.define(version: 20170221030348) do
     t.index ["project_id"], name: "index_project_categories_on_project_id", using: :btree
   end
 
-  create_table "project_category_users", force: :cascade do |t|
+  create_table "project_category_members", force: :cascade do |t|
     t.integer  "project_category_id"
-    t.integer  "user_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.index ["project_category_id"], name: "index_project_category_users_on_project_category_id", using: :btree
-    t.index ["user_id"], name: "index_project_category_users_on_user_id", using: :btree
+    t.integer  "member_id"
+    t.index ["member_id"], name: "index_project_category_members_on_member_id", using: :btree
+    t.index ["project_category_id"], name: "index_project_category_members_on_project_category_id", using: :btree
   end
 
   create_table "project_members", force: :cascade do |t|
@@ -166,12 +166,12 @@ ActiveRecord::Schema.define(version: 20170221030348) do
   add_foreign_key "members", "users"
   add_foreign_key "project_categories", "categories"
   add_foreign_key "project_categories", "projects"
-  add_foreign_key "project_category_users", "project_categories"
-  add_foreign_key "project_category_users", "users"
+  add_foreign_key "project_category_members", "members"
+  add_foreign_key "project_category_members", "project_categories"
   add_foreign_key "project_members", "members"
   add_foreign_key "project_members", "projects"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "members"
-  add_foreign_key "tasks", "project_category_users"
+  add_foreign_key "tasks", "project_category_members", column: "project_category_user_id"
   add_foreign_key "timers", "tasks"
 end
