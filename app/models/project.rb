@@ -10,7 +10,6 @@ class Project < ApplicationRecord
     validates :name, presence: true
     validates :client_id, presence: true
     validates :member_id, presence: true
-    validates :background, presence: true
     validates_uniqueness_of :name, scope: [:client_id, :member_id]
 
     def get_tracked_time

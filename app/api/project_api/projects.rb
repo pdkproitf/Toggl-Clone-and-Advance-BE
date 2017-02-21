@@ -152,12 +152,12 @@ module ProjectApi
                  requires :project, type: Hash do
                     requires :name, type: String, desc: 'Project name.'
                     requires :client_id, type: Integer, desc: 'Client id'
-                    requires :background, type: String, desc: 'Background color'
+                    optional :background, type: String, desc: 'Background color'
                     optional :is_member_report, type: Boolean, desc: 'Allow member to run report'
-            #         optional :member_roles, type: Array, desc: 'Member roles' do
-            #             requires :user_id, type: Integer, desc: 'User id'
-            #             requires :role_id, type: Integer, desc: 'Role id'
-            #         end
+                    optional :member_roles, type: Array, desc: 'Member roles' do
+                        requires :member_id, type: Integer, desc: 'Member id'
+                        requires :is_pm, type: Boolean, desc: 'If member becomes Project Manager'
+                    end
             #         optional :category_members, type: Hash do
             #             requires :existing, type: Array, desc: 'Existing categories' do
             #                 requires :category_id, type: Integer, desc: 'Category id'
@@ -174,10 +174,11 @@ module ProjectApi
             #                 requires :billable, type: Boolean, desc: 'Billable'
             #             end
             #         end
-            #     end
+                end
             end
             post '/' do
               @current_member = Member.find(1)
+              project_params = params[:project]
 
               # Current user has to be an admin or a PM
               if @current_member.role != 1 && @current_member.role != 2
@@ -185,13 +186,37 @@ module ProjectApi
               end
 
               # Client has to belongs to the company of current user
-              if !@current_member.company.clients.exists?(params[:client_id])
+              if !@current_member.company.clients.exists?(project_params[:client_id])
                 return error!(I18n.t("client_not_found"), 400)
               end
 
-              @current_member.projects.create!(name: "Zylli", client_id: client_id)
+              # Create new project object
+              project = @current_member.projects.new
 
-              #@current_member.projects.create()
+              # If background exists
+              if project_params[:background]
+                # Validate background here
+                project.background = project_params[:background]
+              end
+
+              # If member_roles exists
+              if project_params[:member_roles]
+                # Check if member belongs to team
+                project_params[:member_roles].each do |member_role|
+                  return @current_member.company.members
+                end
+                # project_params[:member_roles]
+              end
+
+              project.name = project_params[:name]
+              project.client_id = project_params[:client_id]
+
+              if project_params[:is_member_report]
+                project.is_member_report = project_params[:is_member_report]
+              end
+
+              project.save!
+
             #     authenticated!
             #
             #     project_params = params['project']
