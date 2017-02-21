@@ -14,7 +14,7 @@ class Member < ApplicationRecord
 
     def set_default_values
         # Only set if attribute IS NOT set
-        self.role ||= 3
+        self.role ||= 3 # 1: Admin, 2: PM, 3: Staff
         self.furlough_total ||= 10
     end
 end
