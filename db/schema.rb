@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221085903) do
+ActiveRecord::Schema.define(version: 20170221100054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,8 +69,9 @@ ActiveRecord::Schema.define(version: 20170221085903) do
     t.integer  "project_id"
     t.integer  "category_id"
     t.boolean  "is_billable"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "is_archived", default: false
     t.index ["category_id"], name: "index_project_categories_on_category_id", using: :btree
     t.index ["project_id"], name: "index_project_categories_on_project_id", using: :btree
   end
@@ -86,10 +87,11 @@ ActiveRecord::Schema.define(version: 20170221085903) do
 
   create_table "project_members", force: :cascade do |t|
     t.integer  "project_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "is_pm",      default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "is_pm",       default: false
     t.integer  "member_id"
+    t.boolean  "is_archived", default: false
     t.index ["member_id"], name: "index_project_members_on_member_id", using: :btree
     t.index ["project_id"], name: "index_project_members_on_project_id", using: :btree
   end
