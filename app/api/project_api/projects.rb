@@ -203,9 +203,11 @@ module ProjectApi
               if project_params[:member_roles]
                 # Check if member belongs to team
                 project_params[:member_roles].each do |member_role|
-                  return @current_member.company.members
+                  if !@current_member.company.members.exists?(member_role[:member_id])
+                    return error!(I18n.t("not_joined_to_company"), 400)
+                  end
+                  project.project_members.new(member_id: member_role[:member_id], is_pm: member_role[:is_pm])
                 end
-                # project_params[:member_roles]
               end
 
               project.name = project_params[:name]

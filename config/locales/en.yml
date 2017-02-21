@@ -35,3 +35,4 @@ en:
   # v7
   access_denied: "Access denied"
   client_not_found: "Client not found"
+  not_joined_to_company: "Not joined to company yet"
