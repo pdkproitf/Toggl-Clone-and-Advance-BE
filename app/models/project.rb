@@ -1,5 +1,4 @@
 class Project < ApplicationRecord
-    validates :name, presence: true
     belongs_to :member
     has_one :client
     has_many :project_categories, dependent: :destroy
@@ -7,6 +6,12 @@ class Project < ApplicationRecord
     has_many :used_categories, through: :project_categories, source: :categories
     has_many :project_members, dependent: :destroy
     has_many :members, through: :project_members
+
+    validates :name, presence: true
+    validates :client_id, presence: true
+    validates :member_id, presence: true
+    validates :background, presence: true
+    validates_uniqueness_of :name, scope: [:client_id, :member_id]
 
     def get_tracked_time
         sum = 0
