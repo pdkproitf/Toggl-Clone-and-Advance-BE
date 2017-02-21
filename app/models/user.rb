@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
     has_many :members, dependent: :destroy
-    belongs_to :company, dependent: :destroy # User own his company
+    has_one :company, dependent: :destroy # User own his company
     has_many :companies, through: :members
     # has_many :member_companies, through: :members, source: :companies
 
