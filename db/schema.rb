@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221023321) do
+ActiveRecord::Schema.define(version: 20170221030348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,14 +84,14 @@ ActiveRecord::Schema.define(version: 20170221023321) do
     t.index ["user_id"], name: "index_project_category_users_on_user_id", using: :btree
   end
 
-  create_table "project_member_roles", force: :cascade do |t|
+  create_table "project_members", force: :cascade do |t|
     t.integer  "project_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.boolean  "is_pm",      default: false
     t.integer  "member_id"
-    t.index ["member_id"], name: "index_project_member_roles_on_member_id", using: :btree
-    t.index ["project_id"], name: "index_project_member_roles_on_project_id", using: :btree
+    t.index ["member_id"], name: "index_project_members_on_member_id", using: :btree
+    t.index ["project_id"], name: "index_project_members_on_project_id", using: :btree
   end
 
   create_table "projects", force: :cascade do |t|
@@ -168,8 +168,8 @@ ActiveRecord::Schema.define(version: 20170221023321) do
   add_foreign_key "project_categories", "projects"
   add_foreign_key "project_category_users", "project_categories"
   add_foreign_key "project_category_users", "users"
-  add_foreign_key "project_member_roles", "members"
-  add_foreign_key "project_member_roles", "projects"
+  add_foreign_key "project_members", "members"
+  add_foreign_key "project_members", "projects"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "members"
   add_foreign_key "tasks", "project_category_users"

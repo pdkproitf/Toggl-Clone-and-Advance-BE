@@ -5,8 +5,8 @@ class Project < ApplicationRecord
     has_many :project_categories, dependent: :destroy
     has_many :categories # Create many categories
     has_many :used_categories, through: :project_categories, source: :categories
-    has_many :project_member_roles, dependent: :destroy
-    has_many :members, through: :project_member_roles
+    has_many :project_members, dependent: :destroy
+    has_many :members, through: :project_members
 
     def get_tracked_time
         sum = 0
