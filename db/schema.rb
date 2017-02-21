@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221031004) do
+ActiveRecord::Schema.define(version: 20170221032408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,10 +115,10 @@ ActiveRecord::Schema.define(version: 20170221031004) do
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name"
-    t.integer  "project_category_user_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.index ["project_category_user_id"], name: "index_tasks_on_project_category_user_id", using: :btree
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "project_category_member_id"
+    t.index ["project_category_member_id"], name: "index_tasks_on_project_category_member_id", using: :btree
   end
 
   create_table "timers", force: :cascade do |t|
@@ -172,6 +172,6 @@ ActiveRecord::Schema.define(version: 20170221031004) do
   add_foreign_key "project_members", "projects"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "members"
-  add_foreign_key "tasks", "project_category_members", column: "project_category_user_id"
+  add_foreign_key "tasks", "project_category_members"
   add_foreign_key "timers", "tasks"
 end
