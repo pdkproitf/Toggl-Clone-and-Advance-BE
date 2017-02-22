@@ -10,94 +10,102 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207043430) do
+ActiveRecord::Schema.define(version: 20170222082054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
+    t.integer  "project_id"
+    t.boolean  "is_billable"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "is_archived", default: false
     t.string   "name"
-    t.boolean  "default"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_categories_on_project_id", using: :btree
+  end
+
+  create_table "category_members", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "member_id"
+    t.integer  "category_id"
+    t.index ["category_id"], name: "index_category_members_on_category_id", using: :btree
+    t.index ["member_id"], name: "index_category_members_on_member_id", using: :btree
   end
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
-    t.index ["user_id"], name: "index_clients_on_user_id", using: :btree
+    t.integer  "company_id"
+    t.index ["company_id"], name: "index_clients_on_company_id", using: :btree
   end
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "memberships", force: :cascade do |t|
-    t.integer  "employer_id"
-    t.integer  "employee_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "project_categories", force: :cascade do |t|
-    t.integer  "project_id"
-    t.integer  "category_id"
-    t.boolean  "billable"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["category_id"], name: "index_project_categories_on_category_id", using: :btree
-    t.index ["project_id"], name: "index_project_categories_on_project_id", using: :btree
-  end
-
-  create_table "project_category_users", force: :cascade do |t|
-    t.integer  "project_category_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "domain"
+    t.integer  "overtime_max"
     t.integer  "user_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["project_category_id"], name: "index_project_category_users_on_project_category_id", using: :btree
-    t.index ["user_id"], name: "index_project_category_users_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_companies_on_user_id", using: :btree
   end
 
-  create_table "project_user_roles", force: :cascade do |t|
-    t.integer  "project_id"
+  create_table "invites", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "company_id"
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.string   "token"
+    t.integer  "expiry"
+    t.boolean  "accepted"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["company_id"], name: "index_invites_on_company_id", using: :btree
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "company_id"
     t.integer  "user_id"
-    t.integer  "role_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_project_user_roles_on_project_id", using: :btree
-    t.index ["role_id"], name: "index_project_user_roles_on_role_id", using: :btree
-    t.index ["user_id"], name: "index_project_user_roles_on_user_id", using: :btree
+    t.integer  "role"
+    t.integer  "furlough_total"
+    t.index ["company_id"], name: "index_members_on_company_id", using: :btree
+    t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
+
+  create_table "project_members", force: :cascade do |t|
+    t.integer  "project_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "is_pm",       default: false
+    t.integer  "member_id"
+    t.boolean  "is_archived", default: false
+    t.index ["member_id"], name: "index_project_members_on_member_id", using: :btree
+    t.index ["project_id"], name: "index_project_members_on_project_id", using: :btree
   end
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.integer  "client_id"
     t.string   "background"
-    t.integer  "report_permission"
-    t.boolean  "is_archived",       default: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.integer  "user_id"
+    t.boolean  "is_member_report", default: false
+    t.boolean  "is_archived",      default: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "member_id"
     t.index ["client_id"], name: "index_projects_on_client_id", using: :btree
-    t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
-  end
-
-  create_table "roles", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_projects_on_member_id", using: :btree
   end
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name"
-    t.integer  "project_category_user_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.index ["project_category_user_id"], name: "index_tasks_on_project_category_user_id", using: :btree
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "category_member_id"
+    t.index ["category_member_id"], name: "index_tasks_on_category_member_id", using: :btree
   end
 
   create_table "timers", force: :cascade do |t|
@@ -137,16 +145,18 @@ ActiveRecord::Schema.define(version: 20170207043430) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
-  add_foreign_key "clients", "users"
-  add_foreign_key "project_categories", "categories"
-  add_foreign_key "project_categories", "projects"
-  add_foreign_key "project_category_users", "project_categories"
-  add_foreign_key "project_category_users", "users"
-  add_foreign_key "project_user_roles", "projects"
-  add_foreign_key "project_user_roles", "roles"
-  add_foreign_key "project_user_roles", "users"
+  add_foreign_key "categories", "projects"
+  add_foreign_key "category_members", "categories"
+  add_foreign_key "category_members", "members"
+  add_foreign_key "clients", "companies"
+  add_foreign_key "companies", "users"
+  add_foreign_key "invites", "companies"
+  add_foreign_key "members", "companies"
+  add_foreign_key "members", "users"
+  add_foreign_key "project_members", "members"
+  add_foreign_key "project_members", "projects"
   add_foreign_key "projects", "clients"
-  add_foreign_key "projects", "users"
-  add_foreign_key "tasks", "project_category_users"
+  add_foreign_key "projects", "members"
+  add_foreign_key "tasks", "category_members"
   add_foreign_key "timers", "tasks"
 end

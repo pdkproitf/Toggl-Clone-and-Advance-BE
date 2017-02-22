@@ -24,7 +24,7 @@ module API
                 @current_user = nil
             end
 
-            def return_message status, data = nil
+            def return_message(status, data = nil)
                 status 404 if status.include?('Not Found')
                 status 401 if status.include?('Not Allow')
                 {
@@ -40,20 +40,19 @@ module API
 
         mount ProjectApi::Projects
         mount ClientApi::Clients
-        mount RoleApi::Roles
         mount CategoryApi::Categories
         mount TaskApi::Tasks
         mount TimerApi::Timers
         mount MembershipApi::Memberships
 
         add_swagger_documentation(
-        api_version: 'v1',
-        hide_doccumentation_path: false,
-        mount_path: '/api/v1/swagger_doc',
-        hide_format: true,
-        info: {
-            title: 'TRACKING TIME API'
-        }
+            api_version: 'v1',
+            hide_doccumentation_path: false,
+            mount_path: '/api/v1/swagger_doc',
+            hide_format: true,
+            info: {
+                title: 'TRACKING TIME API'
+            }
         )
     end
 end

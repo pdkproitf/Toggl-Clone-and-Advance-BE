@@ -6,18 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Category.create!(name: 'Developement', default: true)
-Category.create!(name: 'Design', default: true)
-Category.create!(name: 'QA', default: true)
-Category.create!(name: 'Fixbug', default: true)
-Category.create!(name: 'Maintain', default: true)
-
-Role.create!(name: 'Admin')
-Role.create!(name: 'PM')
-Role.create!(name: 'Employee')
-
-
-id = 1# change id of president of company
+id = 1 # change id of president of company
 user = User.find(id)
 5.times do |i|
     Client.create(name: "Client #{i}", user_id: user.id)
@@ -28,22 +17,22 @@ clients = Client.all
 categories = Category.all
 
 # add member to company
-users.each { |employee|
+users.each do |employee|
     Membership.create!(
-    employer_id: user.id,
-    employee_id: employee.id
+        employer_id: user.id,
+        employee_id: employee.id
     )
-}
+end
 
-clients.each_with_index{|item, index|
+clients.each_with_index do |item, index|
     # create project
-    project = user.projects.create(name: "Project #{index + 10}", client_id: item.id, background: "blue", report_permission: 1)
+    project = user.projects.create(name: "Project #{index + 10}", client_id: item.id, background: 'blue', report_permission: 1)
 
     # add member to project
-    users.each { |u|
-        u.projects.create(name: "Project #{index + 10}", client_id: item.id, background: "blue", report_permission: 1)
+    users.each do |u|
+        u.projects.create(name: "Project #{index + 10}", client_id: item.id, background: 'blue', report_permission: 1)
         project.project_user_roles.create(user_id: u.id, role_id: Role.last.id)
-        categories.each{|category|
+        categories.each do |category|
             # add category to project
             project_category = project.project_categories.create(category_id: category.id)
             # choice category for user
@@ -52,6 +41,6 @@ clients.each_with_index{|item, index|
             task = project_category_user.tasks.create(name: "Task  #{index}")
             # add timer for task
             task.timers.create(start_time: Time.now, stop_time: Time.now + 1)
-        }
-    }
-}
+        end
+    end
+end

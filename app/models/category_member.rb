@@ -1,8 +1,8 @@
-class ProjectCategoryUser < ApplicationRecord
-    belongs_to :project_category, optional: true
-    belongs_to :user
+class CategoryMember < ApplicationRecord
+    belongs_to :category, optional: true
+    belongs_to :member
     has_many :tasks, dependent: :destroy
-    validates_uniqueness_of :project_category_id, scope: :user_id, if: 'project_category_id.present?'
+    validates_uniqueness_of :category_id, scope: :member_id, if: 'category_id.present?'
 
     def get_tracked_time
         sum = 0
