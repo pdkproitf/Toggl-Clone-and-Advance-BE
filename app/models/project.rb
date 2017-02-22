@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
     belongs_to :member
-    has_one :client
+    belongs_to :client
     has_many :categories, dependent: :destroy
     has_many :project_members, dependent: :destroy
     has_many :members, through: :project_members

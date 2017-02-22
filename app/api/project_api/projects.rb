@@ -65,40 +65,35 @@ module ProjectApi
             end
 
             desc 'Get all projects that I join'
-            get '/join' do
+            get '/assigned' do
               @current_member = Member.find(1)
-              {"data": @current_member.category_members}
-                # authenticated!
-                # pcu_list = @current_user.project_category_users
-                #   .where.not(project_category_id: nil)
-                #   .joins(project_category: [{project: :client} , :category])
-                #   .select("project_category_users.id")
-                #   .select("project_categories.id as pc_id")
-                #   .select("projects.id as project_id", "projects.name as project_name", "projects.background")
-                #   .select("clients.id as client_id", "clients.name as client_name")
-                #   .select("categories.name as category_name")
-                #   .where(projects: {is_archived: false})
-                #   .order("projects.id asc") # Change order if you want
-                #
-                #   list = []
-                #   project_id_list = []
-                #   pcu_list.each do |pcu|
-                #     if !project_id_list.include?(pcu.project_id)
-                #       project_id_list.push(pcu.project_id)
-                #       item = {id: pcu.project_id, name: pcu.project_name, background: pcu.background}
-                #       item[:client] = {id: pcu.client_id, name: pcu.client_name}
-                #       item[:category] = []
-                #       list.push(item)
-                #     else
-                #       item = list.select do |hash|
-                #           hash[:id] == pcu.project_id
-                #       end
-                #       item = item.first
-                #     end
-                #     item[:category].push({id: pcu.pc_id, name: pcu.category_name, pcu_id: pcu.id})
-                #   end
-                #   {"data": list}
-            end # End of join
+              assigned_categories = @current_member.category_members
+                .where.not(category_id: nil)
+                .where(projects: {is_archived: false})
+                .where(categories: {is_archived: false})
+                .where(category_members: {is_archived: false})
+                .joins(category: {project: :client})
+                .select("projects.id", "projects.name", "projects.background")
+                .select("clients.id as client_id", "clients.name as client_name")
+                .select("categories.name as category_name")
+                .select("category_members.id as cm_id")
+                .order("projects.id asc", "categories.id asc")
+
+              result = []
+              assigned_categories.each do |assigned_category|
+                item = result.find { |h| h[:id] == assigned_category[:id] }
+                if !item
+                  item = {id: assigned_category[:id], name: assigned_category[:name]}
+                  item[:background] = assigned_category[:background]
+                  item[:client] = {id: assigned_category[:client_id], name: assigned_category[:client_name]}
+                  item[:category] = []
+                  result.push(item)
+                end
+                item[:category].push({name: assigned_category[:category_name], cm_id: assigned_category[:cm_id]})
+              end
+
+              {"data": result}
+            end # End of assigned
 
             desc 'Get a project by id'
             params do

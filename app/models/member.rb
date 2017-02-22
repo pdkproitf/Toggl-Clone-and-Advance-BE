@@ -5,7 +5,7 @@ class Member < ApplicationRecord
     has_many :joined_projects, through: :project_members, source: :projects
     has_many :project_members, dependent: :destroy
     has_many :category_members, dependent: :destroy
-    has_many :assigned_categories, through: :category_members, source: :categories
+    has_many :assigned_categories, through: :category_members, source: :category
 
     validates_uniqueness_of :company_id, scope: [:user_id]
 
