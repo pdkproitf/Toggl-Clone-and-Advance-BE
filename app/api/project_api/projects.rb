@@ -66,36 +66,38 @@ module ProjectApi
 
             desc 'Get all projects that I join'
             get '/join' do
-                authenticated!
-                pcu_list = @current_user.project_category_users
-                  .where.not(project_category_id: nil)
-                  .joins(project_category: [{project: :client} , :category])
-                  .select("project_category_users.id")
-                  .select("project_categories.id as pc_id")
-                  .select("projects.id as project_id", "projects.name as project_name", "projects.background")
-                  .select("clients.id as client_id", "clients.name as client_name")
-                  .select("categories.name as category_name")
-                  .where(projects: {is_archived: false})
-                  .order("projects.id asc") # Change order if you want
-
-                  list = []
-                  project_id_list = []
-                  pcu_list.each do |pcu|
-                    if !project_id_list.include?(pcu.project_id)
-                      project_id_list.push(pcu.project_id)
-                      item = {id: pcu.project_id, name: pcu.project_name, background: pcu.background}
-                      item[:client] = {id: pcu.client_id, name: pcu.client_name}
-                      item[:category] = []
-                      list.push(item)
-                    else
-                      item = list.select do |hash|
-                          hash[:id] == pcu.project_id
-                      end
-                      item = item.first
-                    end
-                    item[:category].push({id: pcu.pc_id, name: pcu.category_name, pcu_id: pcu.id})
-                  end
-                  {"data": list}
+              @current_member = Member.find(1)
+              {"data": @current_member.category_members}
+                # authenticated!
+                # pcu_list = @current_user.project_category_users
+                #   .where.not(project_category_id: nil)
+                #   .joins(project_category: [{project: :client} , :category])
+                #   .select("project_category_users.id")
+                #   .select("project_categories.id as pc_id")
+                #   .select("projects.id as project_id", "projects.name as project_name", "projects.background")
+                #   .select("clients.id as client_id", "clients.name as client_name")
+                #   .select("categories.name as category_name")
+                #   .where(projects: {is_archived: false})
+                #   .order("projects.id asc") # Change order if you want
+                #
+                #   list = []
+                #   project_id_list = []
+                #   pcu_list.each do |pcu|
+                #     if !project_id_list.include?(pcu.project_id)
+                #       project_id_list.push(pcu.project_id)
+                #       item = {id: pcu.project_id, name: pcu.project_name, background: pcu.background}
+                #       item[:client] = {id: pcu.client_id, name: pcu.client_name}
+                #       item[:category] = []
+                #       list.push(item)
+                #     else
+                #       item = list.select do |hash|
+                #           hash[:id] == pcu.project_id
+                #       end
+                #       item = item.first
+                #     end
+                #     item[:category].push({id: pcu.pc_id, name: pcu.category_name, pcu_id: pcu.id})
+                #   end
+                #   {"data": list}
             end # End of join
 
             desc 'Get a project by id'
