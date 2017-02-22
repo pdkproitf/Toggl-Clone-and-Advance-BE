@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222064344) do
+ActiveRecord::Schema.define(version: 20170222082054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 20170222064344) do
     t.boolean  "is_archived", default: false
     t.string   "name"
     t.index ["project_id"], name: "index_categories_on_project_id", using: :btree
+  end
+
+  create_table "category_members", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "member_id"
+    t.integer  "category_id"
+    t.index ["category_id"], name: "index_category_members_on_category_id", using: :btree
+    t.index ["member_id"], name: "index_category_members_on_member_id", using: :btree
   end
 
   create_table "clients", force: :cascade do |t|
@@ -67,15 +76,6 @@ ActiveRecord::Schema.define(version: 20170222064344) do
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
 
-  create_table "project_category_members", force: :cascade do |t|
-    t.integer  "project_category_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "member_id"
-    t.index ["member_id"], name: "index_project_category_members_on_member_id", using: :btree
-    t.index ["project_category_id"], name: "index_project_category_members_on_project_category_id", using: :btree
-  end
-
   create_table "project_members", force: :cascade do |t|
     t.integer  "project_id"
     t.datetime "created_at",                  null: false
@@ -102,10 +102,10 @@ ActiveRecord::Schema.define(version: 20170222064344) do
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "project_category_member_id"
-    t.index ["project_category_member_id"], name: "index_tasks_on_project_category_member_id", using: :btree
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "category_member_id"
+    t.index ["category_member_id"], name: "index_tasks_on_category_member_id", using: :btree
   end
 
   create_table "timers", force: :cascade do |t|
@@ -146,17 +146,17 @@ ActiveRecord::Schema.define(version: 20170222064344) do
   end
 
   add_foreign_key "categories", "projects"
+  add_foreign_key "category_members", "categories"
+  add_foreign_key "category_members", "members"
   add_foreign_key "clients", "companies"
   add_foreign_key "companies", "users"
   add_foreign_key "invites", "companies"
   add_foreign_key "members", "companies"
   add_foreign_key "members", "users"
-  add_foreign_key "project_category_members", "categories", column: "project_category_id"
-  add_foreign_key "project_category_members", "members"
   add_foreign_key "project_members", "members"
   add_foreign_key "project_members", "projects"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "members"
-  add_foreign_key "tasks", "project_category_members"
+  add_foreign_key "tasks", "category_members"
   add_foreign_key "timers", "tasks"
 end
