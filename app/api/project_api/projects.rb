@@ -158,22 +158,22 @@ module ProjectApi
                         requires :member_id, type: Integer, desc: 'Member id'
                         requires :is_pm, type: Boolean, desc: 'If member becomes Project Manager'
                     end
-            #         optional :category_members, type: Hash do
-            #             requires :existing, type: Array, desc: 'Existing categories' do
-            #                 requires :category_id, type: Integer, desc: 'Category id'
-            #                 requires :members, type: Array, desc: 'Member' do
-            #                     requires :user_id, type: Integer, desc: 'User id'
-            #                 end
-            #                 requires :billable, type: Boolean, desc: 'Billable'
-            #             end
-            #             optional :new_one, type: Array, desc: 'New categories' do
-            #                 requires :category_name, type: String, desc: 'New category name'
-            #                 requires :members, type: Array, desc: 'Member' do
-            #                     requires :user_id, type: Integer, desc: 'User id'
-            #                 end
-            #                 requires :billable, type: Boolean, desc: 'Billable'
-            #             end
-            #         end
+                    optional :category_members, type: Hash do
+                        optional :existing, type: Array, desc: 'Existing categories' do
+                            requires :category_id, type: Integer, desc: 'Category id'
+                            requires :members, type: Array, desc: 'Member' do
+                                requires :member_id, type: Integer, desc: 'Member id'
+                            end
+                            requires :is_billable, type: Boolean, desc: 'Billable'
+                        end
+                        optional :new_one, type: Array, desc: 'New categories' do
+                            requires :category_name, type: String, desc: 'New category name'
+                            requires :members, type: Array, desc: 'Member' do
+                                requires :member_id, type: Integer, desc: 'Member id'
+                            end
+                            requires :is_billable, type: Boolean, desc: 'Billable'
+                        end
+                    end
                 end
             end
             post '/' do
@@ -201,13 +201,61 @@ module ProjectApi
 
               # If member_roles exists
               if project_params[:member_roles]
-                # Check if member belongs to team
                 project_params[:member_roles].each do |member_role|
+                  # Check if member belongs to team
                   if !@current_member.company.members.exists?(member_role[:member_id])
                     return error!(I18n.t("not_joined_to_company"), 400)
                   end
                   # Add member in team to project
                   project.project_members.new(member_id: member_role[:member_id], is_pm: member_role[:is_pm])
+                end
+
+                # If category_members exists
+                if project_params[:category_members]
+                  category_members = project_params[:category_members]
+                  # For existing categories
+                  if category_members[:existing]
+                    category_members[:existing].each do |category_member|
+                      # Check if categories exists
+                      if !Category.exists?(category_member[:category_id])
+                        return error!(I18n.t("category_not_found"), 400)
+                      end
+                      # Create ProjectCategory objects
+                      project_category = project.project_categories.new(
+                        category_id: category_member[:category_id],
+                        is_billable: category_member[:is_billable]
+                      )
+                      # Check if company members were added to project
+                      category_member[:members].each do |member|
+                        if !project.project_members.find { |h| h[:member_id] == member[:member_id] }
+                          return error!(I18n.t("not_added_to_project"), 400)
+                        end
+                        # Assign members to categories
+                        project_category.project_category_members.new(member_id: member[:member_id])
+                      end
+                    end
+                  end
+                  # For new categories
+                  if category_members[:new_one]
+                    category_members[:new_one].each do |category_member|
+                      # Create new categories
+                      category = project.categories.new(name: category_member[:category_name])
+                      # Create ProjectCategory objects
+                      project_category = ProjectCategory.new
+                      project_category.project = project
+                      project_category.category = category
+                      project_category.is_billable = category_member[:is_billable]          
+                      #Check if company members were added to project
+                      category_member[:members].each do |member|
+                        if !project.project_members.find { |h| h[:member_id] == member[:member_id] }
+                          return error!(I18n.t("not_added_to_project"), 400)
+                        end
+                        # Assign members to categories
+                        project_category.project_category_members.new(member_id: member[:member_id])
+                      end
+                    end
+
+                  end
                 end
               end
 
@@ -218,8 +266,9 @@ module ProjectApi
                 project.is_member_report = project_params[:is_member_report]
               end
 
+              #project.categories.new(name: "hehe")
+              project.save!
               project
-              #project.save!
 
             #     authenticated!
             #

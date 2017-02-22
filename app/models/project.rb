@@ -2,8 +2,8 @@ class Project < ApplicationRecord
     belongs_to :member
     has_one :client
     has_many :project_categories, dependent: :destroy
-    has_many :categories # Create many categories
-    has_many :used_categories, through: :project_categories, source: :categories
+    has_many :categories, dependent: :destroy # Create many categories
+    has_many :used_categories, through: :project_categories, source: :category
     has_many :project_members, dependent: :destroy
     has_many :members, through: :project_members
 
