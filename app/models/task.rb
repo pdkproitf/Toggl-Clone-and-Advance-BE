@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-    belongs_to :project_category_user, optional: true
+    belongs_to :category_member
     has_many :timers, dependent: :destroy
 
     def get_tracked_time
