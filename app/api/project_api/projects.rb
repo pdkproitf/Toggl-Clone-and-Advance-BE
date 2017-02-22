@@ -206,6 +206,7 @@ module ProjectApi
                   if !@current_member.company.members.exists?(member_role[:member_id])
                     return error!(I18n.t("not_joined_to_company"), 400)
                   end
+                  # Add member in team to project
                   project.project_members.new(member_id: member_role[:member_id], is_pm: member_role[:is_pm])
                 end
               end
@@ -217,7 +218,8 @@ module ProjectApi
                 project.is_member_report = project_params[:is_member_report]
               end
 
-              project.save!
+              project
+              #project.save!
 
             #     authenticated!
             #
