@@ -6,25 +6,29 @@ module TimerApi
         helpers do
             def update_timer task
                 @timer.task_id = task.id
-                @timer.start_time = params['timer']['start_time']
-                @timer.stop_time = params['timer']['stop_time']
+                @timer.start_time = params['timer_update']['timer']['start_time']
+                @timer.stop_time = params['timer_update']['timer']['stop_time']
 
                 @timer.save!
+
+                return_message 'Sucess', @timer
             end
 
             def update_task task
                 task.project_category_user_id = @project_category_user.id
-                task.name = params['task']['task_name']
+                task.name = params['timer_update']['task']['task_name']
                 task.save!
 
                 update_timer task
             end
 
+            # check project you be apply or project you create
             def access_to_project? project
-                return true if @current_user.project_user_roles.find_by(project_id: project.id)
+                return true if @current_user.project_user_roles.find_by(project_id: project.id)|| @current_user.projects.find_by_id(project.id)
                 return false
             end
 
+            # true if you have project_category_user of this category
             def access_to_category_under_project? category, project
                 project_category = project.project_categories.find_by(category_id: category.id)
                 @project_category_user = @current_user.project_category_users.find_by(project_category_id: project_category.id)
@@ -32,13 +36,14 @@ module TimerApi
                 return false
             end
 
+            # true if task of current_project_category_user
             def access_to_task_under_pro_cate_user? task, pcu
                 return true if task.project_category_user_id == pcu.id
                 return false
             end
 
             def modify_with_project
-                project = Project.find_by_id(params['project_id'])
+                project = Project.find_by_id(params['timer_update']['project_id'])
                 return return_message "Error Project Not Found for #{@current_user.email}"  unless project
                 return return_message "Error Project Not Allow for #{@current_user.email}"  unless access_to_project? project
 
@@ -46,7 +51,7 @@ module TimerApi
             end
 
             def modify_with_category project
-                category = Category.find_by_id(params['category']['category_id'])
+                category = Category.find_by_id(params['timer_update']['category_id'])
                 return return_message "Category Not Found for #{@current_user.email}" unless category
                 return return_message "Category Not Allow for #{@current_user.email}" unless access_to_category_under_project? category, project
 
@@ -54,9 +59,9 @@ module TimerApi
             end
 
             def modify_with_task
-                task = Task.find_by_id(params['task']['task_id'])
-                return return_message "Task Not Found for #{@current_user.email}" unless Task
-                return return_message "Task Not Allow for #{@current_user.email}" unless acsess_to_task_under_pro_cate_user? task, @project_category_user
+                task = Task.find_by_id(params['timer_update']['task']['task_id'])
+                return return_message "Task Not Found for #{@current_user.email}" unless task
+                return return_message "Task Not Allow for #{@current_user.email}" unless access_to_task_under_pro_cate_user? task, @project_category_user
 
                 update_task task
             end
@@ -220,16 +225,10 @@ module TimerApi
             end
             put ':id' do
                 authenticated!
-
                 @timer = Timer.find(params['id'])
-                begin
-                    return return_message "Error Not Allow for #{@current_user.email}" unless @timer.task.project_category_user.user_id == @current_user.id
-                    @project_category_user = @timer.task.project_category_user
-                    return modify_with_project
-                rescue e
-                    p e
-                    return_message "Error Not Found Timer for #{@current_user.email}"
-                end
+                return return_message "Error Not Allow for #{@current_user.email}" unless @timer.task.project_category_user.user_id == @current_user.id
+                @project_category_user = @timer.task.project_category_user
+                return modify_with_project
             end
 
             desc 'Delete Timer'
@@ -238,14 +237,9 @@ module TimerApi
                 status 200
 
                 @timer = Timer.find(params['id'])
-                begin
-                    return return_message "Error Not Allow for #{@current_user.email}" unless @timer.task.project_category_user.user_id == @current_user.id
-                    @timer.destroy!
-                    return_message "Success"
-                rescue e
-                    p e
-                    return_message "Error Not Found Timer for #{@current_user.email}"
-                end
+                return return_message "Error Not Allow for #{@current_user.email}" unless @timer.task.project_category_user.user_id == @current_user.id
+                @timer.destroy!
+                return_message "Success"
             end
         end
     end
