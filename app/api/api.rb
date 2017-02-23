@@ -41,9 +41,7 @@ module API
         mount ProjectApi::Projects
         mount ClientApi::Clients
         mount CategoryApi::Categories
-        mount TaskApi::Tasks
         mount TimerApi::Timers
-        mount MembershipApi::Memberships
 
         add_swagger_documentation(
             api_version: 'v1',

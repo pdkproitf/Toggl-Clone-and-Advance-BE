@@ -26,9 +26,6 @@ module ProjectApi
             end
 
             desc 'Get a project by id'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-            end
             get ':id' do
               @current_member = Member.find(3)
               projects = @current_member.get_projects.where(id: params[:id])
@@ -59,7 +56,7 @@ module ProjectApi
               end
               result[:categories] = categories
               {"data": result}
-            end
+            end # End of getting a project by ID (for details)
 
             desc 'Get all projects that I join'
             get '/assigned' do
@@ -177,9 +174,6 @@ module ProjectApi
             end # End of project add new
 
             desc 'Delete a project'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-            end
             delete ':id' do
                 authenticated!
                 status 200
