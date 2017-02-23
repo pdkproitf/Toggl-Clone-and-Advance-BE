@@ -25,6 +25,31 @@ module UserApi
                 admin = Role.create!(name: 'Admin') unless admin
                 @company.members.build(user_id: @resource.id, role_id: admin.id)
             end
+
+            def save_user
+                if @resource.save!
+                    if @resource.confirmed?
+                        # email auth has been bypassed, authenticate user
+                        @client_id = SecureRandom.urlsafe_base64(nil, false)
+                        @token = SecureRandom.urlsafe_base64(nil, false)
+
+                        @resource.tokens[@client_id] = {
+                            token: BCrypt::Password.create(@token),
+                            expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
+                        }
+                        @resource.save!
+                    else
+                        # user will require email authentication
+                        @resource.send_confirmation_instructions(client_config: params[:config_name],
+                        redirect_url: @redirect_url)
+                    end
+                    @member = create_member
+                    Member.transaction do
+                        @member.save!
+                    end
+                    return return_message 'Success', UserSerializer.new(@resource)
+                end
+            end
         end
 
         resource :users do
@@ -49,28 +74,7 @@ module UserApi
                 Company.transaction do
                     User.transaction do
                         @company.save!
-                        if @resource.save!
-                            if @resource.confirmed?
-                                # email auth has been bypassed, authenticate user
-                                @client_id = SecureRandom.urlsafe_base64(nil, false)
-                                @token = SecureRandom.urlsafe_base64(nil, false)
-
-                                @resource.tokens[@client_id] = {
-                                    token: BCrypt::Password.create(@token),
-                                    expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
-                                }
-                                @resource.save!
-                            else
-                                # user will require email authentication
-                                @resource.send_confirmation_instructions(client_config: params[:config_name],
-                                redirect_url: @redirect_url)
-                            end
-                            @member = create_member
-                            Member.transaction do
-                                @member.save!
-                            end
-                            return return_message 'Success', MembersSerializer.new(@member)
-                        end
+                        save_user
                     end
                 end
             end
