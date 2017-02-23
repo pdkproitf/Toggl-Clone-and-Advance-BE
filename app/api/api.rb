@@ -7,7 +7,7 @@ module API
 
         helpers do
             def authenticated!
-                error!('401 Unauthorized', 401) unless current_user
+                error!('401 Unauthorized', 401) unless current_member
             end
 
             def current_user
@@ -16,15 +16,15 @@ module API
                 token = request.headers['Access-Token']
 
                 current_user = User.find_by_email(email)
-                return current_user if @current_user.valid_token?(token, client_id) unless current_user.nil?
+                return current_user if current_user.valid_token?(token, client_id) unless current_user.nil?
                 current_user = nil
             end
 
             def current_member
-                token = request.headers['Company']
+                company_name = request.headers['Company']
                 user  = current_user
 
-                company = user.companies.find_by_name(params['user']['company_name'])
+                company = user.companies.find_by_name(company_name)
                 return nil unless company
 
                 @current_member =  user.members.find_by_company_id(company.id)
@@ -52,13 +52,13 @@ module API
         mount MembershipApi::Memberships
 
         add_swagger_documentation(
-            api_version: 'v1',
-            hide_doccumentation_path: false,
-            mount_path: '/api/v1/swagger_doc',
-            hide_format: true,
-            info: {
-                title: 'TRACKING TIME API'
-            }
+        api_version: 'v1',
+        hide_doccumentation_path: false,
+        mount_path: '/api/v1/swagger_doc',
+        hide_format: true,
+        info: {
+            title: 'TRACKING TIME API'
+        }
         )
     end
 end
