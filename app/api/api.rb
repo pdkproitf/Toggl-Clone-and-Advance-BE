@@ -15,13 +15,19 @@ module API
                 client_id = request.headers['Client']
                 token = request.headers['Access-Token']
 
-                @current_user = User.find_by_email(email)
+                current_user = User.find_by_email(email)
+                return current_user if @current_user.valid_token?(token, client_id) unless current_user.nil?
+                current_user = nil
+            end
 
-                unless @current_user.nil?
-                    return @current_user if @current_user.valid_token?(token, client_id)
-                end
+            def current_member
+                token = request.headers['Company']
+                user  = current_user
 
-                @current_user = nil
+                company = user.companies.find_by_name(params['user']['company_name'])
+                return nil unless company
+
+                @current_member =  user.members.find_by_company_id(company.id)
             end
 
             def return_message(status, data = nil)
