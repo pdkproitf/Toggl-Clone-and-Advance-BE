@@ -37,3 +37,4 @@ en:
   not_added_to_project: "Not added to project yet"
   project_not_found: "Project not found"
   category_not_found: "Category not found"
+  start_stop_time_error: "Start time has to be less than stop time"

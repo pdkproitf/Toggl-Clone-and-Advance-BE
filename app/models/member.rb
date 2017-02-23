@@ -12,6 +12,8 @@ class Member < ApplicationRecord
     has_many :category_members, dependent: :destroy
     has_many :assigned_categories, through: :category_members, source: :category
 
+    has_many :tasks, through: :category_members
+
     validates_uniqueness_of :company_id, scope: [:user_id]
 
     # After initialization, set default values
