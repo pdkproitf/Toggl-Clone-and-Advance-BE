@@ -6,8 +6,8 @@ class Company < ApplicationRecord
     has_many :clients
     has_many :invites
 
-    validates :name,    presence: true, uniqueness: true
+    validates :name,    presence: true, uniqueness: true, length: { minimum: 3, maximum: 100 }
     validates :domain,  presence: true, uniqueness: true,
-                        length: { minimum: 4, maximum: 30 },
+                        length: { minimum: 3, maximum: 20 },
                         format: { with: VALID_DOMAIN_REGEX }
 end
