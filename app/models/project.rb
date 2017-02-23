@@ -12,9 +12,9 @@ class Project < ApplicationRecord
 
     def get_tracked_time
         sum = 0
-        if project_categories
-            project_categories.each do |pc|
-                sum += pc.get_tracked_time
+        if categories
+            categories.each do |category|
+                sum += category.get_tracked_time
             end
         end
         sum
