@@ -2,66 +2,36 @@ module ProjectApi
     class Projects < Grape::API
         prefix :api
         version 'v1', using: :accept_version_header
-        #
-        helpers do
-            def project_category_user_create(project_category_id, user_id)
-                ProjectCategoryUser.create!(
-                    project_category_id: project_category_id,
-                    user_id: user_id
-                )
-            end
-
-            def project_category_create(project_id, category_id, billable)
-                ProjectCategory.create!(
-                    project_id: project_id,
-                    category_id: category_id,
-                    billable: billable
-                )
-            end
-        end
 
         resource :projects do
             # => /api/v1/projects/
-            desc 'For test get all members in model project'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-                requires :order_by, type: String, values: ['id', 'first_name', 'last_name'], desc: 'Order by'
-            end
-            get '/test_getallmembers' do
-              project = Project.find(params[:id])
-              {"data": project.get_all_members(params[:order_by])}
-            end
-
-            desc 'For test is user joined to project in model user'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-            end
-            get '/test_isjoinedproject' do
-              authenticated!
-              is_joined = @current_user.is_joined_project(params[:id])
-              {"data": is_joined}
-            end
-
             desc 'Get all projects that I own'
             get '/' do
-                authenticated!
-                project_list = @current_user.projects
+              @current_member = Member.find(1)
 
-                list = []
-                project_list.each do |project|
-                  member_list = []
-                  project.project_user_roles.each do |member|
-                      member_list.push(member.user)
-                  end
+              # Current user has to be an admin or a PM
+              if @current_member.role == 1 && @current_member.role == 2
+                # Get all projects of company
+                projects = @current_member.company.projects.where(is_archived: false).order("id desc")
+              else
+                # Get projects @current_member assigned pm
+                projects = @current_member.pm_projects.where(is_archived: false).order("id desc")
+              end
 
-                  item = {
-                    "info": ProjectSerializer.new(project),
-                    "tracked_time": project.get_tracked_time,
-                    "member": member_list
-                  }
-                  list.push(item)
+              result = []
+              projects.each do |project|
+                item = {}
+                item.merge!(ProjectSerializer.new(project))
+                item[:tracked_time] = project.get_tracked_time
+                members = []
+                project.members.order(:id).each do |member|
+                  members.push(UserSerializer.new(member.user))
                 end
-                {data: list}
+                item[:member] = members
+                result.push(item)
+              end
+
+              {"data": result}
             end
 
             desc 'Get all projects that I join'
@@ -77,7 +47,7 @@ module ProjectApi
                 .select("clients.id as client_id", "clients.name as client_name")
                 .select("categories.name as category_name")
                 .select("category_members.id as cm_id")
-                .order("projects.id asc", "categories.id asc")
+                .order("projects.id desc", "categories.id asc")
 
               result = []
               assigned_categories.each do |assigned_category|
