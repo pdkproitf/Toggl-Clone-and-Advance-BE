@@ -22,4 +22,15 @@ class Member < ApplicationRecord
         self.role ||= 3 # 1: Admin, 2: PM, 3: Staff
         self.furlough_total ||= 10
     end
+
+    def get_projects
+        if role == 1 && role == 2
+            # Get all projects of company
+            projects = company.projects.where(is_archived: false).order('id desc')
+        else
+            # Get projects @current_member assigned pm
+            projects = pm_projects.where(is_archived: false).order('id desc')
+        end
+        projects
+    end
 end

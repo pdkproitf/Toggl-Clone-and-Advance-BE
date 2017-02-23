@@ -30,10 +30,4 @@ class User < ActiveRecord::Base
     def downcase_email
         self.email = email.downcase
     end
-
-    public
-
-    def is_joined_project(project_id)
-        project_user_roles.exists?(project_id: project_id)
-    end
 end

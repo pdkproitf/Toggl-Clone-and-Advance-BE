@@ -7,17 +7,8 @@ module ProjectApi
             # => /api/v1/projects/
             desc 'Get all projects that I own'
             get '/' do
-              @current_member = Member.find(1)
-
-              # Current user has to be an admin or a PM
-              if @current_member.role == 1 && @current_member.role == 2
-                # Get all projects of company
-                projects = @current_member.company.projects.where(is_archived: false).order("id desc")
-              else
-                # Get projects @current_member assigned pm
-                projects = @current_member.pm_projects.where(is_archived: false).order("id desc")
-              end
-
+              @current_member = Member.find(3)
+              projects = @current_member.get_projects
               result = []
               projects.each do |project|
                 item = {}
@@ -31,6 +22,42 @@ module ProjectApi
                 result.push(item)
               end
 
+              {"data": result}
+            end
+
+            desc 'Get a project by id'
+            params do
+                requires :id, type: String, desc: 'Project ID'
+            end
+            get ':id' do
+              @current_member = Member.find(3)
+              projects = @current_member.get_projects.where(id: params[:id])
+
+              if projects.length == 0
+                return error!(I18n.t("project_not_found"), 404)
+              end
+
+              project = projects.first
+              result = {}
+              result.merge!(ProjectSerializer.new(project))
+              result[:tracked_time] = project.get_tracked_time
+              categories = []
+              project.categories.order(:id).select("id", "name").each do |category|
+                item = {}
+                item.merge!(category.as_json)
+                item[:tracked_time] = category.get_tracked_time
+                category_members = []
+                category.category_members.order(:id).each do |category_member|
+                  item2 = {}
+                  item2.merge!(UserSerializer.new(category_member.member.user))
+                  item2[:role] = category_member.member.role
+                  item2[:tracked_time] = category_member.get_tracked_time
+                  category_members.push(item2)
+                end
+                item[:members] = category_members
+                categories.push(item)
+              end
+              result[:categories] = categories
               {"data": result}
             end
 
@@ -64,55 +91,6 @@ module ProjectApi
 
               {"data": result}
             end # End of assigned
-
-            desc 'Get a project by id'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-            end
-            get ':id' do
-                authenticated!
-                begin
-                  project = @current_user.projects.find(params[:id])
-                  project_hash = Hash.new
-                  project_hash.merge!(ProjectSerializer.new(project).attributes)
-                  project_hash[:client_name] = project.client[:name]
-                  project_hash[:tracked_time] = project.get_tracked_time
-
-                  pc_list = project.project_categories
-                  list = []
-                  pc_list.each do |pc|
-                    item = Hash.new
-                    item.merge!(ProjectCategorySerializer.new(pc))
-                    item.delete(:project_id)
-                    item.delete(:category_id)
-                    item[:category] = CategorySerializer.new(pc.category)
-                    item[:tracked_time] = pc.get_tracked_time
-
-                    member_list = []
-                    pc.project_category_users.each do |pcu|
-                      member_hash = Hash.new
-                      member_hash.merge!(ProjectCategoryUserSerializer.new(pcu))
-                      member_hash.delete(:id)
-                      member_hash.delete(:user_id)
-                      role = ProjectUserRole.joins(:role).where(project_id: project.id, user_id: pcu.user.id).select("roles.id", "roles.name")
-                      member_hash[:user] = UserSerializer.new(pcu.user)
-                      member_hash[:role] = role
-                      member_hash[:tracked_time] = pcu.get_tracked_time
-                      member_list.push(member_hash)
-                    end
-                    item[:member] = member_list
-
-                    list.push(item)
-                  end
-                  {"data":{
-                    "info": project_hash,
-                    "project_category": list
-                    }
-                  }
-                rescue => e
-                    return error!(I18n.t("project_not_found"), 404)
-                end
-            end
 
             desc 'create new project'
             params do
