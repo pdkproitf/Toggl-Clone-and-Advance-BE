@@ -18,4 +18,12 @@ class Member < ApplicationRecord
         self.role ||= 3 # 1: Admin, 2: PM, 3: Staff
         self.furlough_total ||= 10
     end
+
+    def admin?
+        role.name == 'Admin'
+    end
+
+    def pm?
+        role.name == 'PM'
+    end
 end
