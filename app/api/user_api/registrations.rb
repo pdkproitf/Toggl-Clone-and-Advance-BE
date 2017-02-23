@@ -15,6 +15,14 @@ module UserApi
                 )
                 user
             end
+
+            def create_company param_company
+                Company.create!(name: param_company['company'], domain: param_company['company_name'])
+            end
+
+            def create_member
+                
+            end
         end
 
         resource :users do
@@ -27,12 +35,15 @@ module UserApi
                     requires :email, type: String, desc: "User's Email"
                     requires :password, type: String, desc: 'password'
                     requires :password_confirmation, type: String, desc: 'password_confirmation'
+                    requires :company_name, type: String, desc: 'Company Name'
                 end
             end
             post '/' do
                 @resource = sign_up_params
                 @resource.provider = 'email'
                 @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
+
+                company = create_company params['user']
                 if @resource.save!
                     if @resource.confirmed?
                         # email auth has been bypassed, authenticate user
@@ -43,7 +54,6 @@ module UserApi
                             token: BCrypt::Password.create(@token),
                             expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
                         }
-
                         @resource.save!
                     else
                         # user will require email authentication
