@@ -23,7 +23,8 @@ module API
             def current_member
                 company_name = request.headers['Company']
                 user  = current_user
-
+                return nil unless user
+                
                 company = user.companies.find_by_name(company_name)
                 return nil unless company
 
@@ -32,7 +33,7 @@ module API
 
             def return_message(status, data = nil)
                 status 404 if status.include?('Not Found')
-                status 401 if status.include?('Not Allow')
+                status 401 if status.include?('Not Allow') || status.include?('Access Denied')
                 {
                     status: status,
                     data: data
@@ -50,6 +51,7 @@ module API
         mount TaskApi::Tasks
         mount TimerApi::Timers
         mount MembershipApi::Memberships
+        mount MemberApi::Members
 
         add_swagger_documentation(
         api_version: 'v1',

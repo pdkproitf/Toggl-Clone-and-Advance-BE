@@ -7,11 +7,11 @@ module UserApi
             def sign_up_params
                 user_params = params['user']
                 user = User.new(
-                first_name: user_params['first_name'],
-                last_name: user_params['last_name'],
-                email: user_params['email'],
-                password: user_params['password'],
-                password_confirmation: user_params['password_confirmation']
+                        first_name: user_params['first_name'],
+                        last_name: user_params['last_name'],
+                        email: user_params['email'],
+                        password: user_params['password'],
+                        password_confirmation: user_params['password_confirmation']
                 )
                 user
             end
@@ -62,7 +62,9 @@ module UserApi
                     requires :email, type: String, desc: "User's Email"
                     requires :password, type: String, desc: 'password'
                     requires :password_confirmation, type: String, desc: 'password_confirmation'
-                    requires :company_name, type: String, desc: 'Company Name'
+                    optional :company_name, type: String, desc: 'Company Name'
+                    optional :invited_token, type: String, desc: "invited Token Of company"
+                    exactly_one_of :company_name, :invited_token
                 end
             end
             post '/' do
@@ -70,7 +72,15 @@ module UserApi
                 @resource.provider = 'email'
                 @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
 
-                @company = create_company params['user']
+                if params['user']['invited_token'] do
+                    invite = Invite.find_by_token(params['user']['invited_token'])
+                    return return_message 'Not Found invite' unless invite
+                    return return_message 'Invite expiry' unless invite.expiry?
+                    @company = invive.conpany
+                else
+                    @company = create_company params['user']
+                end
+
                 Company.transaction do
                     User.transaction do
                         @company.save!

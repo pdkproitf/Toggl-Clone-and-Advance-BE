@@ -42,9 +42,7 @@ module UserApi
                 requires :user, type: Hash do
                     requires :email, type: String, desc: "User's Email"
                     requires :password,  type: String, desc: "password"
-                    optional :company_name, type: String, desc: "Company Name"
-                    optional :invited_token, type: String, desc: "invited Token Of company"
-                    at_least_one_of :company_name, :invited_token
+                    requires :company_name, type: String, desc: "Company Name"
                 end
             end
             post '/sign-in' do
