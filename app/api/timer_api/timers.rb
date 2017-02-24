@@ -65,16 +65,6 @@ module TimerApi
 
                 update_task task
             end
-
-            # Check project_category_user_id belong to the current user
-            def is_project_category_current_user(pcu_id)
-                is_belong = false
-                if ProjectCategoryUser.exists? id: pcu_id
-                    pcu = ProjectCategoryUser.find(pcu_id)
-                    is_belong = true if pcu.user_id == @current_user.id
-                end
-                is_belong
-            end
         end
 
         resource :timers do
@@ -131,87 +121,46 @@ module TimerApi
                 # if task_id exists
                 if timer_params[:task_id]
                     # Check task_id belong to current member
-                    unless @current_member.tasks.exists?(timer_params[:task_id])
-                        return error!(I18n.t('task_not_found'), 404)
+                    task = @current_member.tasks.find_by_id(timer_params[:task_id])
+                    return error!(I18n.t('task_not_found'), 404) if task.nil?
+                elsif timer_params[:task_name] # if task name exists
+                    if timer_params[:category_member_id] # if category_member_id exists
+                        # if category_member does not belong to current_member
+                        task = @current_member.tasks.find_by(
+                            name: timer_params[:task_name],
+                            category_member: timer_params[:category_member_id]
+                        )
+                        if task.nil?
+                            unless @current_member.category_members.exists?(timer_params[:category_member_id])
+                                return error!(I18n.t('member_not_assigned_to_category'), 400)
+                            end
+                            task = Task.create!(
+                                name: timer_params[:name],
+                                category_member_id: timer_params[:category_member_id]
+                            )
+                        end
+                    else # category_member_id does not exist
+                        category_member = @current_member.category_members.create!
+                        task = category_member.tasks.create!(name: timer_params[:name])
+                    end
+                else # Only start_time and stop_time (maybe category_member_id exists)
+                    if timer_params[:category_member_id]
+                        unless @current_member.category_members.exists?(timer_params[:category_member_id])
+                            return error!(I18n.t('member_not_assigned_to_category'), 400)
+                        end
+                        task = Task.create!(
+                            category_member_id: timer_params[:category_member_id]
+                        )
+                    else # Only start_time and stop_time
+                        category_member = @current_member.category_members.create!
+                        task = category_member.tasks.create!
                     end
                 end
-                # authenticated!
-                # timer_params = params['timer']
-                #
-                # # If there is task_id
-                # if timer_params['task_id']
-                #     # Check task_id belong to current user
-                #     if Task.find(timer_params['task_id']).project_category_user.user_id == @current_user.id
-                #         task_id = timer_params['task_id']
-                #     else
-                #         return error!(I18n.t('task_not_found'), 404)
-                #     end
-                # elsif timer_params['task_name'] # Have task name
-                #     task_name = timer_params['task_name']
-                #     if timer_params['project_category_user_id'] # Have project_category_user_id
-                #         pcu_id = timer_params['project_category_user_id']
-                #         if is_project_category_current_user pcu_id
-                #             if Task.exists?(name: task_name, project_category_user_id: pcu_id)
-                #                 task = Task.find_by(name: task_name, project_category_user_id: pcu_id)
-                #             else
-                #                 task = Task.create!(
-                #                     name: timer_params['task_name'],
-                #                     project_category_user_id: pcu_id
-                #                 )
-                #             end
-                #             task_id = task.id
-                #         else
-                #             return error!(I18n.t('not_project_category_current_user'), 404)
-                #         end
-                #     else # Have not project_category_user_id
-                #         pcu = ProjectCategoryUser.create!(
-                #             user_id: @current_user.id
-                #         )
-                #         task = Task.create!(
-                #             name: timer_params['task_name'],
-                #             project_category_user_id: pcu.id
-                #         )
-                #         task_id = task.id
-                #     end
-                # else
-                #     if timer_params['project_category_user_id'] # Have project_category_user_id
-                #         pcu_id = timer_params['project_category_user_id']
-                #         if is_project_category_current_user pcu_id
-                #             task = Task.create!(
-                #                 project_category_user_id: timer_params['project_category_user_id']
-                #             )
-                #             task_id = task.id
-                #         else
-                #             return error!(I18n.t('not_project_category_current_user'), 404)
-                #         end
-                #     else # Have nothing
-                #         pcu = ProjectCategoryUser.create!(
-                #             user_id: @current_user.id
-                #         )
-                #         task = Task.create!(
-                #             project_category_user_id: pcu.id
-                #         )
-                #         task_id = task.id
-                #     end
-                # end
-                #
-                # if task_id
-                #     timer = Timer.create!(
-                #         task_id: task_id,
-                #         start_time: timer_params['start_time'],
-                #         stop_time: timer_params['stop_time']
-                #     )
-                #     timer_result = Timer.left_outer_joins(task: { project_category_user: { project_category: [:project, :category] } })
-                #                         .where(id: timer.id)
-                #                         .select('timers.id', 'timers.start_time', 'timers.stop_time')
-                #                         .select('tasks.id as task_id', 'tasks.name as task_name', 'tasks.project_category_user_id as pcu_id')
-                #                         .select('projects.name as project_name', 'categories.name as category_name')
-                #                         .order('timers.start_time asc')
-                #
-                #     {"data": timer_result.first.as_json}
-                # else
-                #     return error!(I18n.t('task_not_found'), 404)
-                # end
+
+                task.timers.create!(
+                    start_time: timer_params['start_time'],
+                    stop_time: timer_params['stop_time']
+                )
             end
 
             desc 'Edit timer'
