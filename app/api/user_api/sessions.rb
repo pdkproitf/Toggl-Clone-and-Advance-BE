@@ -15,6 +15,24 @@ module UserApi
                 data.store('token', @token)
                 data
             end
+
+            def data_login
+                data = MembersSerializer.new(@member).as_json
+                data.store(:user, sign_in_token_validation)
+                data
+            end
+
+            def create_client_id_and_token
+                # create client id
+                @client_id = SecureRandom.urlsafe_base64(nil, false)
+                @token     = SecureRandom.urlsafe_base64(nil, false)
+
+                @resource.tokens[@client_id] = {
+                    token: BCrypt::Password.create(@token),
+                    expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
+                }
+                @resource.save!
+            end
         end
 
         resource :users do
@@ -24,21 +42,19 @@ module UserApi
                 requires :user, type: Hash do
                     requires :email, type: String, desc: "User's Email"
                     requires :password,  type: String, desc: "password"
+                    requires :company_name, type: String, desc: "Company Name"
                 end
             end
             post '/sign-in' do
                 @resource = sign_in_params
                 if @resource and @resource.valid_password?(params['user']['password']) and (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
-                    # create client id
-                    @client_id = SecureRandom.urlsafe_base64(nil, false)
-                    @token     = SecureRandom.urlsafe_base64(nil, false)
+                    @company = @resource.companies.find_by_name(params['user']['company_name'])
+                    return return_message 'Not Found Company' unless @company
 
-                    @resource.tokens[@client_id] = {
-                        token: BCrypt::Password.create(@token),
-                        expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
-                    }
-                    @resource.save
-                    return_message 'Create Success', sign_in_token_validation
+                    @member =  @resource.members.find_by_company_id(@company.id)
+
+                    create_client_id_and_token
+                    return_message 'Create Success', data_login
                 elsif @resource and not (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
                     error!(I18n.t("devise_token_auth.sessions.not_confirmed", email: @resource.email), 500)
                 else

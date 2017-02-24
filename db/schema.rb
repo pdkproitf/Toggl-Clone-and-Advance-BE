@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222110509) do
+ActiveRecord::Schema.define(version: 20170223173749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,8 +49,6 @@ ActiveRecord::Schema.define(version: 20170222110509) do
     t.datetime "updated_at",   null: false
     t.string   "domain"
     t.integer  "overtime_max"
-    t.integer  "user_id"
-    t.index ["user_id"], name: "index_companies_on_user_id", using: :btree
   end
 
   create_table "invites", force: :cascade do |t|
@@ -59,10 +57,10 @@ ActiveRecord::Schema.define(version: 20170222110509) do
     t.integer  "sender_id"
     t.integer  "recipient_id"
     t.string   "token"
-    t.integer  "expiry"
-    t.boolean  "accepted"
+    t.boolean  "is_accepted"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.datetime "expiry"
     t.index ["company_id"], name: "index_invites_on_company_id", using: :btree
   end
 
@@ -71,9 +69,10 @@ ActiveRecord::Schema.define(version: 20170222110509) do
     t.datetime "updated_at",     null: false
     t.integer  "company_id"
     t.integer  "user_id"
-    t.integer  "role"
     t.integer  "furlough_total"
+    t.integer  "role_id"
     t.index ["company_id"], name: "index_members_on_company_id", using: :btree
+    t.index ["role_id"], name: "index_members_on_role_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
 
@@ -99,6 +98,12 @@ ActiveRecord::Schema.define(version: 20170222110509) do
     t.integer  "member_id"
     t.index ["client_id"], name: "index_projects_on_client_id", using: :btree
     t.index ["member_id"], name: "index_projects_on_member_id", using: :btree
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -150,9 +155,9 @@ ActiveRecord::Schema.define(version: 20170222110509) do
   add_foreign_key "category_members", "categories"
   add_foreign_key "category_members", "members"
   add_foreign_key "clients", "companies"
-  add_foreign_key "companies", "users"
   add_foreign_key "invites", "companies"
   add_foreign_key "members", "companies"
+  add_foreign_key "members", "roles"
   add_foreign_key "members", "users"
   add_foreign_key "project_members", "members"
   add_foreign_key "project_members", "projects"

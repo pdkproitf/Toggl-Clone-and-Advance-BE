@@ -7,7 +7,7 @@ module API
 
         helpers do
             def authenticated!
-                error!('401 Unauthorized', 401) unless current_user
+                error!('401 Unauthorized', 401) unless current_member
             end
 
             def current_user
@@ -15,18 +15,25 @@ module API
                 client_id = request.headers['Client']
                 token = request.headers['Access-Token']
 
-                @current_user = User.find_by_email(email)
+                current_user = User.find_by_email(email)
+                return current_user unless current_user.nil? || !current_user.valid_token?(token, client_id)
+                current_user = nil
+            end
 
-                unless @current_user.nil?
-                    return @current_user if @current_user.valid_token?(token, client_id)
-                end
+            def current_member
+                company_name = request.headers['Company']
+                user = current_user
+                return nil unless user
 
-                @current_user = nil
+                company = user.companies.find_by_name(company_name)
+                return nil unless company
+
+                @current_member = user.members.find_by_company_id(company.id)
             end
 
             def return_message(status, data = nil)
                 status 404 if status.include?('Not Found')
-                status 401 if status.include?('Not Allow')
+                status 401 if status.include?('Not Allow') || status.include?('Access Denied')
                 {
                     status: status,
                     data: data
@@ -42,6 +49,7 @@ module API
         mount ClientApi::Clients
         mount CategoryApi::Categories
         mount TimerApi::Timers
+        mount MemberApi::Members
 
         add_swagger_documentation(
             api_version: 'v1',

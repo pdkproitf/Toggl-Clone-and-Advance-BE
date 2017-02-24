@@ -1,7 +1,8 @@
 class Member < ApplicationRecord
     belongs_to :company
     belongs_to :user
-    has_many :projects, -> { where is_archived: false } # Create new
+    belongs_to :role
+    has_many :projects # Create new
     has_many :joined_projects, through: :project_members, source: :projects
 
     # Find projects member assigned PM
@@ -14,7 +15,7 @@ class Member < ApplicationRecord
 
     has_many :tasks, through: :category_members
 
-    validates_uniqueness_of :company_id, scope: [:user_id]
+    validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
     # After initialization, set default values
     after_initialize :set_default_values
@@ -34,5 +35,13 @@ class Member < ApplicationRecord
             projects = pm_projects.where(is_archived: false).order('id desc')
         end
         projects
+    end
+
+    def admin?
+        role.name == 'Admin'
+    end
+
+    def pm?
+        role.name == 'PM'
     end
 end
