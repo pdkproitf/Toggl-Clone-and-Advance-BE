@@ -72,7 +72,7 @@ module UserApi
                 @resource.provider = 'email'
                 @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
 
-                if params['user']['invited_token'] do
+                if params['user']['invited_token']
                     invite = Invite.find_by_token(params['user']['invited_token'])
                     return return_message 'Not Found invite' unless invite
                     return return_message 'Invite expiry' unless invite.expiry?
