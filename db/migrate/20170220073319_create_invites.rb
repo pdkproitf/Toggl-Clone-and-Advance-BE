@@ -7,7 +7,7 @@ class CreateInvites < ActiveRecord::Migration[5.0]
       t.integer :recipient_id
       t.string :token
       t.integer :expiry
-      t.boolean :accepted
+      t.boolean :is_accepted
 
       t.timestamps
     end

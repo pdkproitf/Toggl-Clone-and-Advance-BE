@@ -1,13 +1,14 @@
 class Member < ApplicationRecord
     belongs_to :company
     belongs_to :user
+    belongs_to :role
     has_many :projects # Create new
     has_many :joined_projects, through: :project_members, source: :projects
     has_many :project_members, dependent: :destroy
     has_many :category_members, dependent: :destroy
     has_many :assigned_categories, through: :category_members, source: :categories
 
-    validates_uniqueness_of :company_id, scope: [:user_id]
+    validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
     # After initialization, set default values
     after_initialize :set_default_values

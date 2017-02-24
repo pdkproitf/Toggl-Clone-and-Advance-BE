@@ -15,6 +15,41 @@ module UserApi
                 )
                 user
             end
+
+            def create_company param_company
+                Company.new(name: param_company['company_name'], domain: param_company['company_name'].slice(0,20))
+            end
+
+            def create_member
+                admin = Role.find_by_name('Admin')
+                admin = Role.create!(name: 'Admin') unless admin
+                @company.members.build(user_id: @resource.id, role_id: admin.id)
+            end
+
+            def save_user
+                if @resource.save!
+                    if @resource.confirmed?
+                        # email auth has been bypassed, authenticate user
+                        @client_id = SecureRandom.urlsafe_base64(nil, false)
+                        @token = SecureRandom.urlsafe_base64(nil, false)
+
+                        @resource.tokens[@client_id] = {
+                            token: BCrypt::Password.create(@token),
+                            expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
+                        }
+                        @resource.save!
+                    else
+                        # user will require email authentication
+                        @resource.send_confirmation_instructions(client_config: params[:config_name],
+                        redirect_url: @redirect_url)
+                    end
+                    @member = create_member
+                    Member.transaction do
+                        @member.save!
+                    end
+                    return return_message 'Success', UserSerializer.new(@resource)
+                end
+            end
         end
 
         resource :users do
@@ -27,30 +62,20 @@ module UserApi
                     requires :email, type: String, desc: "User's Email"
                     requires :password, type: String, desc: 'password'
                     requires :password_confirmation, type: String, desc: 'password_confirmation'
+                    requires :company_name, type: String, desc: 'Company Name'
                 end
             end
             post '/' do
                 @resource = sign_up_params
                 @resource.provider = 'email'
                 @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
-                if @resource.save!
-                    if @resource.confirmed?
-                        # email auth has been bypassed, authenticate user
-                        @client_id = SecureRandom.urlsafe_base64(nil, false)
-                        @token = SecureRandom.urlsafe_base64(nil, false)
 
-                        @resource.tokens[@client_id] = {
-                            token: BCrypt::Password.create(@token),
-                            expiry: (Time.now + DeviseTokenAuth.token_lifespan).to_i
-                        }
-
-                        @resource.save!
-                    else
-                        # user will require email authentication
-                        @resource.send_confirmation_instructions(client_config: params[:config_name],
-                        redirect_url: @redirect_url)
+                @company = create_company params['user']
+                Company.transaction do
+                    User.transaction do
+                        @company.save!
+                        save_user
                     end
-                    return return_message 'Success', @resource
                 end
             end
         end
