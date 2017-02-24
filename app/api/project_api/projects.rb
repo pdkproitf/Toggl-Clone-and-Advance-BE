@@ -7,7 +7,7 @@ module ProjectApi
             # => /api/v1/projects/
             desc 'Get all projects that I own'
             get '/' do
-              @current_member = Member.find(3)
+              authenticated!
               projects = @current_member.get_projects
               result = []
               projects.each do |project|
@@ -25,9 +25,40 @@ module ProjectApi
               {"data": result}
             end
 
+            desc 'Get all projects that I join'
+            get '/assigned' do
+              authenticated!
+              assigned_categories = @current_member.category_members
+                .where.not(category_id: nil)
+                .where(projects: {is_archived: false})
+                .where(categories: {is_archived: false})
+                .where(category_members: {is_archived: false})
+                .joins(category: {project: :client})
+                .select("projects.id", "projects.name", "projects.background")
+                .select("clients.id as client_id", "clients.name as client_name")
+                .select("categories.name as category_name")
+                .select("category_members.id as cm_id")
+                .order("projects.id desc", "categories.id asc")
+
+              result = []
+              assigned_categories.each do |assigned_category|
+                item = result.find { |h| h[:id] == assigned_category[:id] }
+                if !item
+                  item = {id: assigned_category[:id], name: assigned_category[:name]}
+                  item[:background] = assigned_category[:background]
+                  item[:client] = {id: assigned_category[:client_id], name: assigned_category[:client_name]}
+                  item[:category] = []
+                  result.push(item)
+                end
+                item[:category].push({name: assigned_category[:category_name], cm_id: assigned_category[:cm_id]})
+              end
+
+              {"data": result}
+            end # End of assigned
+
             desc 'Get a project by id'
             get ':id' do
-              @current_member = Member.find(3)
+              authenticated!
               projects = @current_member.get_projects.where(id: params[:id])
 
               if projects.length == 0
@@ -58,37 +89,6 @@ module ProjectApi
               {"data": result}
             end # End of getting a project by ID (for details)
 
-            desc 'Get all projects that I join'
-            get '/assigned' do
-              @current_member = Member.find(1)
-              assigned_categories = @current_member.category_members
-                .where.not(category_id: nil)
-                .where(projects: {is_archived: false})
-                .where(categories: {is_archived: false})
-                .where(category_members: {is_archived: false})
-                .joins(category: {project: :client})
-                .select("projects.id", "projects.name", "projects.background")
-                .select("clients.id as client_id", "clients.name as client_name")
-                .select("categories.name as category_name")
-                .select("category_members.id as cm_id")
-                .order("projects.id desc", "categories.id asc")
-
-              result = []
-              assigned_categories.each do |assigned_category|
-                item = result.find { |h| h[:id] == assigned_category[:id] }
-                if !item
-                  item = {id: assigned_category[:id], name: assigned_category[:name]}
-                  item[:background] = assigned_category[:background]
-                  item[:client] = {id: assigned_category[:client_id], name: assigned_category[:client_name]}
-                  item[:category] = []
-                  result.push(item)
-                end
-                item[:category].push({name: assigned_category[:category_name], cm_id: assigned_category[:cm_id]})
-              end
-
-              {"data": result}
-            end # End of assigned
-
             desc 'create new project'
             params do
                  requires :project, type: Hash do
@@ -110,11 +110,11 @@ module ProjectApi
                 end
             end
             post '/' do
-              @current_member = Member.find(1)
+              authenticated!
               project_params = params[:project]
 
               # Current user has to be an admin or a PM
-              if @current_member.role != 1 && @current_member.role != 2
+              if @current_member.role.name != "Admin" && @current_member.role.name != "PM"
                 return error!(I18n.t("access_denied"), 400)
               end
 
