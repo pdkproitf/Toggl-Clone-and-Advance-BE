@@ -1,5 +1,7 @@
 class ProjectSerializer < ActiveModel::Serializer
-    include Rails.application.routes.url_helpers
-    attributes :id, :name, :background
+    def method_name
+        object.name
+    end
+    attributes :id, :background, :method_name
     belongs_to :client
 end

@@ -27,7 +27,7 @@ class Member < ApplicationRecord
     end
 
     def get_projects
-        if role == 1 && role == 2
+        if role.name.eql?('Admin') || role.name.eql?('PM')
             # Get all projects of company
             projects = company.projects.where(is_archived: false).order('id desc')
         else

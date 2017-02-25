@@ -3,11 +3,11 @@ class Task < ApplicationRecord
     has_many :timers, dependent: :destroy
     validates :name, length: { minimum: 1 }, allow_nil: true
 
-    def get_tracked_time
+    def tracked_time
         sum = 0
         if timers
             timers.each do |timer|
-                sum += timer.get_tracked_time
+                sum += timer.tracked_time
             end
         end
         sum
