@@ -112,7 +112,7 @@ module TimerApi
                 end
             end
             post '/' do
-                @current_member = Member.find(1)
+                authenticated!
                 timer_params = params['timer']
                 if timer_params[:start_time] >= timer_params[:stop_time]
                     return error!(I18n.t('start_stop_time_error'), 400)
@@ -161,6 +161,7 @@ module TimerApi
                     start_time: timer_params['start_time'],
                     stop_time: timer_params['stop_time']
                 )
+                true
             end
 
             desc 'Edit timer'
