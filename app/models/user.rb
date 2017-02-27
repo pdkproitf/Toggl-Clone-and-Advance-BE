@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
     has_many :companies, through: :members
 
     has_many :invitations, class_name: 'Invite', foreign_key: 'recipient_id'
-    
+
     # Include default devise modules.
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable,
@@ -33,5 +33,15 @@ class User < ActiveRecord::Base
 
     def is_joined_project(project_id)
         project_user_roles.exists?(project_id: project_id)
+    end
+
+    protected
+
+    def send_devise_notification(notification, *args)
+        if new_record? || changed?
+            pending_notifications << [notification, args]
+        else
+            devise_mailer.send(notification, self, *args).deliver_later(wait: 10.seconds)
+        end
     end
 end
