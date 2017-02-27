@@ -64,20 +64,19 @@ module ProjectApi
               result.merge!(ProjectSerializer.new(project))
               result[:tracked_time] = project.get_tracked_time
               categories = []
-              project.categories.order(:id).select("id", "name").each do |category|
-                item = {}
-                item.merge!(category.as_json)
-                item[:tracked_time] = category.get_tracked_time
-                category_members = []
-                category.category_members.order(:id).each do |category_member|
-                  item2 = {}
-                  item2.merge!(UserSerializer.new(category_member.member.user))
-                  item2[:role] = category_member.member.role
-                  item2[:tracked_time] = category_member.get_tracked_time
-                  category_members.push(item2)
-                end
-                item[:members] = category_members
-                categories.push(item)
+              project.categories.each do |category|
+                # item = {}
+                # item.merge!(category.as_json)
+                # item[:tracked_time] = category.get_tracked_time
+                # category_members = []
+                # category.category_members.order(:id).each do |category_member|
+                #   item2 = {}
+                #   item2.merge!(MembersSerializer.new(category_member.member))
+                #   item2[:tracked_time] = category_member.get_tracked_time
+                #   category_members.push(item2)
+                # end
+                # item[:members] = category_members
+                categories.push(CategorySerializer.new(category))
               end
               result[:categories] = categories
               {"data": result}
