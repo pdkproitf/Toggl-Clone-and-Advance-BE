@@ -16,6 +16,11 @@ class Member < ApplicationRecord
     has_many :tasks, through: :category_members
     has_many :timers, through: :tasks
 
+    has_many :sent_invites, class_name: 'Invite', foreign_key: 'sender_id'
+
+    has_many :off_requests, class_name: 'Timeoff', foreign_key: 'sender_id'
+    has_many :off_approvers, class_name: 'Timeoff', foreign_key: 'approver_id'
+
     validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
     # After initialization, set default values

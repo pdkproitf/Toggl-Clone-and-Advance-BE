@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
     has_many :companies, through: :members
 
     has_many :invitations, class_name: 'Invite', foreign_key: 'recipient_id'
-    has_many :sent_invites, class_name: 'Invite', foreign_key: 'sender_id'
 
     # Include default devise modules.
     devise :database_authenticatable, :registerable,
@@ -28,5 +27,21 @@ class User < ActiveRecord::Base
     # Converts email to all lower-case
     def downcase_email
         self.email = email.downcase
+    end
+
+    public
+
+    def is_joined_project(project_id)
+        project_user_roles.exists?(project_id: project_id)
+    end
+
+    protected
+
+    def send_devise_notification(notification, *args)
+        if new_record? || changed?
+            pending_notifications << [notification, args]
+        else
+            devise_mailer.send(notification, self, *args).deliver_later(wait: 10.seconds)
+        end
     end
 end
