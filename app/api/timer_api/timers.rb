@@ -4,7 +4,7 @@ module TimerApi
         version 'v1', using: :accept_version_header
         #
         helpers do
-            def update_timer task
+            def update_timer(task)
                 @timer.task_id = task.id
                 @timer.start_time = params['timer_update']['timer']['start_time']
                 @timer.stop_time = params['timer_update']['timer']['stop_time']
@@ -14,7 +14,7 @@ module TimerApi
                 return_message 'Sucess', @timer
             end
 
-            def update_task task
+            def update_task(task)
                 task.project_category_user_id = @project_category_user.id
                 task.name = params['timer_update']['task']['task_name']
                 task.save!
@@ -23,23 +23,23 @@ module TimerApi
             end
 
             # check project you be apply or project you create
-            def access_to_project? project
-                return true if @current_user.project_user_roles.find_by(project_id: project.id)|| @current_user.projects.find_by_id(project.id)
-                return false
+            def access_to_project?(project)
+                return true if @current_user.project_user_roles.find_by(project_id: project.id) || @current_user.projects.find_by_id(project.id)
+                false
             end
 
             # true if you have project_category_user of this category
-            def access_to_category_under_project? category, project
+            def access_to_category_under_project?(category, project)
                 project_category = project.project_categories.find_by(category_id: category.id)
                 @project_category_user = @current_user.project_category_users.find_by(project_category_id: project_category.id)
                 return true if @project_category_user
-                return false
+                false
             end
 
             # true if task of current_project_category_user
-            def access_to_task_under_pro_cate_user? task, pcu
+            def access_to_task_under_pro_cate_user?(task, pcu)
                 return true if task.project_category_user_id == pcu.id
-                return false
+                false
             end
 
             def modify_with_project
@@ -47,15 +47,15 @@ module TimerApi
                 return return_message "Error Project Not Found for #{@current_user.email}"  unless project
                 return return_message "Error Project Not Allow for #{@current_user.email}"  unless access_to_project? project
 
-                return modify_with_category  project
+                modify_with_category  project
             end
 
-            def modify_with_category project
+            def modify_with_category(project)
                 category = Category.find_by_id(params['timer_update']['category_id'])
                 return return_message "Category Not Found for #{@current_user.email}" unless category
                 return return_message "Category Not Allow for #{@current_user.email}" unless access_to_category_under_project? category, project
 
-                return modify_with_task
+                modify_with_task
             end
 
             def modify_with_task
@@ -65,17 +65,6 @@ module TimerApi
 
                 update_task task
             end
-
-            # Check project_category_user_id belong to the current user
-            def is_project_category_current_user(pcu_id)
-                is_belong = false
-                if ProjectCategoryUser.exists? id: pcu_id
-                    pcu = ProjectCategoryUser.find(pcu_id)
-                    is_belong = true if pcu.user_id == @current_user.id
-                end
-                is_belong
-            end
-
         end
 
         resource :timers do
@@ -87,18 +76,18 @@ module TimerApi
                     requires :to_day, type: Date, desc: 'To day'
                 end
             end
-            get '/' do
+            get do
                 authenticated!
                 from_day = params[:period][:from_day]
                 to_day = params[:period][:to_day]
 
-                timer_list = Timer.left_outer_joins(task: { project_category_user: { project_category: [:project, :category] } })
-                                  .where(project_category_users: { user_id: @current_user.id })
-                                  .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
-                                  .select('timers.id', 'timers.start_time', 'timers.stop_time')
-                                  .select('tasks.id as task_id', 'tasks.name as task_name', 'tasks.project_category_user_id as pcu_id')
-                                  .select('projects.name as project_name', 'categories.name as category_name')
-                                  .order('timers.start_time asc')
+                if from_day > to_day
+                    return error!(I18n.t('from_to_day_error'), 400)
+                end
+
+                timer_list = @current_member.timers
+                                            .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
+                                            .order('start_time')
 
                 data = {}
                 date_list = []
@@ -107,7 +96,7 @@ module TimerApi
                         date_list.push(timer.start_time.to_date.to_s)
                         data[timer.start_time.to_date.to_s] = []
                     end
-                    data[timer.start_time.to_date.to_s].push(timer)
+                    data[timer.start_time.to_date.to_s].push(TimerSerializer.new(timer))
                 end
                 data
             end
@@ -117,7 +106,7 @@ module TimerApi
                 requires :timer, type: Hash do
                     optional :task_id, type: Integer, desc: 'Timer ID'
                     optional :task_name, type: String, desc: 'Task name'
-                    optional :project_category_user_id, type: Integer, desc: 'Project Category ID'
+                    optional :category_member_id, type: Integer, desc: 'Category member ID'
                     requires :start_time, type: DateTime, desc: 'Start time'
                     requires :stop_time, type: DateTime, desc: 'Stop time'
                 end
@@ -125,87 +114,60 @@ module TimerApi
             post '/' do
                 authenticated!
                 timer_params = params['timer']
+                if timer_params[:start_time] >= timer_params[:stop_time]
+                    return error!(I18n.t('start_stop_time_error'), 400)
+                end
 
-                # If there is task_id
-                if timer_params['task_id']
-                    # Check task_id belong to current user
-                    if Task.find(timer_params['task_id']).project_category_user.user_id == @current_user.id
-                        task_id = timer_params['task_id']
-                    else
-                        return error!(I18n.t('task_not_found'), 404)
-                    end
-                elsif timer_params['task_name'] # Have task name
-                    task_name = timer_params['task_name']
-                    if timer_params['project_category_user_id'] # Have project_category_user_id
-                        pcu_id = timer_params['project_category_user_id']
-                        if is_project_category_current_user pcu_id
-                            if Task.exists?(name: task_name, project_category_user_id: pcu_id)
-                                task = Task.find_by(name: task_name, project_category_user_id: pcu_id)
-                            else
-                                task = Task.create!(
-                                    name: timer_params['task_name'],
-                                    project_category_user_id: pcu_id
-                                )
+                # if task_id exists
+                if timer_params[:task_id]
+                    # Check task_id belong to current member
+                    task = @current_member.tasks.find_by_id(timer_params[:task_id])
+                    return error!(I18n.t('task_not_found'), 404) if task.nil?
+                elsif timer_params[:task_name] # if task name exists
+                    if timer_params[:category_member_id] # if category_member_id exists
+                        # if category_member does not belong to current_member
+                        task = @current_member.tasks.find_by(
+                            name: timer_params[:task_name],
+                            category_member: timer_params[:category_member_id]
+                        )
+                        if task.nil?
+                            unless @current_member.category_members.exists?(timer_params[:category_member_id])
+                                return error!(I18n.t('member_not_assigned_to_category'), 400)
                             end
-                            task_id = task.id
-                        else
-                            return error!(I18n.t('not_project_category_current_user'), 404)
-                        end
-                    else # Have not project_category_user_id
-                        pcu = ProjectCategoryUser.create!(
-                            user_id: @current_user.id
-                        )
-                        task = Task.create!(
-                            name: timer_params['task_name'],
-                            project_category_user_id: pcu.id
-                        )
-                        task_id = task.id
-                    end
-                else
-                    if timer_params['project_category_user_id'] # Have project_category_user_id
-                        pcu_id = timer_params['project_category_user_id']
-                        if is_project_category_current_user pcu_id
                             task = Task.create!(
-                                project_category_user_id: timer_params['project_category_user_id']
+                                name: timer_params[:name],
+                                category_member_id: timer_params[:category_member_id]
                             )
-                            task_id = task.id
-                        else
-                            return error!(I18n.t('not_project_category_current_user'), 404)
                         end
-                    else # Have nothing
-                        pcu = ProjectCategoryUser.create!(
-                            user_id: @current_user.id
-                        )
+                    else # category_member_id does not exist
+                        category_member = @current_member.category_members.create!
+                        task = category_member.tasks.create!(name: timer_params[:name])
+                    end
+                else # Only start_time and stop_time (maybe category_member_id exists)
+                    if timer_params[:category_member_id]
+                        unless @current_member.category_members.exists?(timer_params[:category_member_id])
+                            return error!(I18n.t('member_not_assigned_to_category'), 400)
+                        end
                         task = Task.create!(
-                            project_category_user_id: pcu.id
+                            category_member_id: timer_params[:category_member_id]
                         )
-                        task_id = task.id
+                    else # Only start_time and stop_time
+                        category_member = @current_member.category_members.create!
+                        task = category_member.tasks.create!
                     end
                 end
 
-                if task_id
-                    timer = Timer.create!(
-                        task_id: task_id,
-                        start_time: timer_params['start_time'],
-                        stop_time: timer_params['stop_time']
-                    )
-                    timer_result = Timer.left_outer_joins(task: { project_category_user: { project_category: [:project, :category] } })
-                                        .where(id: timer.id)
-                                        .select('timers.id', 'timers.start_time', 'timers.stop_time')
-                                        .select('tasks.id as task_id', 'tasks.name as task_name', 'tasks.project_category_user_id as pcu_id')
-                                        .select('projects.name as project_name', 'categories.name as category_name')
-                                        .order('timers.start_time asc')
-
-                    {"data": timer_result.first.as_json}
-                else
-                    return error!(I18n.t('task_not_found'), 404)
-                end
+                task.timers.create!(
+                    start_time: timer_params['start_time'],
+                    stop_time: timer_params['stop_time']
+                )
+                true
             end
 
             desc 'Edit timer'
             params do
                 requires :timer_update, type: Hash do
-                    requires :timer, type: Hash  do
+                    requires :timer, type: Hash do
                         requires :start_time, type: DateTime, desc: 'Start time'
                         requires :stop_time, type: DateTime, desc: 'Stop time'
                     end
@@ -239,7 +201,7 @@ module TimerApi
                 @timer = Timer.find(params['id'])
                 return return_message "Error Not Allow for #{@current_user.email}" unless @timer.task.project_category_user.user_id == @current_user.id
                 @timer.destroy!
-                return_message "Success"
+                return_message 'Success'
             end
         end
     end

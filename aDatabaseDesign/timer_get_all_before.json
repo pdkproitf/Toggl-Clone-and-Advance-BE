@@ -1,0 +1,33 @@
+{
+    "2012-04-23": [{
+            "id": 3,
+            "task_id": 1,
+            "start_time": "2012-04-23T18:25:00.511Z",
+            "stop_time": "2012-04-23T18:25:50.511Z",
+            "task_name": null,
+            "pcu_id": 1,
+            "project_name": null,
+            "category_name": null
+        },
+        {
+            "id": 2,
+            "task_id": 1,
+            "start_time": "2012-04-23T18:25:00.511Z",
+            "stop_time": "2012-04-23T18:25:50.511Z",
+            "task_name": null,
+            "pcu_id": 1,
+            "project_name": null,
+            "category_name": null
+        },
+        {
+            "id": 1,
+            "task_id": 1,
+            "start_time": "2012-04-23T18:25:00.511Z",
+            "stop_time": "2012-04-23T18:25:50.511Z",
+            "task_name": null,
+            "pcu_id": 1,
+            "project_name": null,
+            "category_name": null
+        }
+    ]
+}

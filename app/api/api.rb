@@ -16,19 +16,19 @@ module API
                 token = request.headers['Access-Token']
 
                 current_user = User.find_by_email(email)
-                return current_user if current_user.valid_token?(token, client_id) unless current_user.nil?
+                return current_user unless current_user.nil? || !current_user.valid_token?(token, client_id)
                 current_user = nil
             end
 
             def current_member
                 company_name = request.headers['Company']
-                user  = current_user
+                user = current_user
                 return nil unless user
-                
+
                 company = user.companies.find_by_name(company_name)
                 return nil unless company
 
-                @current_member =  user.members.find_by_company_id(company.id)
+                @current_member = user.members.find_by_company_id(company.id)
             end
 
             def return_message(status, data = nil)
@@ -48,19 +48,17 @@ module API
         mount ProjectApi::Projects
         mount ClientApi::Clients
         mount CategoryApi::Categories
-        mount TaskApi::Tasks
         mount TimerApi::Timers
-        mount MembershipApi::Memberships
         mount MemberApi::Members
 
         add_swagger_documentation(
-        api_version: 'v1',
-        hide_doccumentation_path: false,
-        mount_path: '/api/v1/swagger_doc',
-        hide_format: true,
-        info: {
-            title: 'TRACKING TIME API'
-        }
+            api_version: 'v1',
+            hide_doccumentation_path: false,
+            mount_path: '/api/v1/swagger_doc',
+            hide_format: true,
+            info: {
+                title: 'TRACKING TIME API'
+            }
         )
     end
 end

@@ -26,10 +26,11 @@ ActiveRecord::Schema.define(version: 20170223173749) do
   end
 
   create_table "category_members", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "member_id"
     t.integer  "category_id"
+    t.boolean  "is_archived", default: false
     t.index ["category_id"], name: "index_category_members_on_category_id", using: :btree
     t.index ["member_id"], name: "index_category_members_on_member_id", using: :btree
   end

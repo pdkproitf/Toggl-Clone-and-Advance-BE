@@ -2,152 +2,85 @@ module ProjectApi
     class Projects < Grape::API
         prefix :api
         version 'v1', using: :accept_version_header
-        #
-        helpers do
-            def project_category_user_create(project_category_id, user_id)
-                ProjectCategoryUser.create!(
-                    project_category_id: project_category_id,
-                    user_id: user_id
-                )
-            end
-
-            def project_category_create(project_id, category_id, billable)
-                ProjectCategory.create!(
-                    project_id: project_id,
-                    category_id: category_id,
-                    billable: billable
-                )
-            end
-        end
 
         resource :projects do
             # => /api/v1/projects/
-            desc 'For test get all members in model project'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-                requires :order_by, type: String, values: ['id', 'first_name', 'last_name'], desc: 'Order by'
-            end
-            get '/test_getallmembers' do
-              project = Project.find(params[:id])
-              {"data": project.get_all_members(params[:order_by])}
-            end
-
-            desc 'For test is user joined to project in model user'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-            end
-            get '/test_isjoinedproject' do
-              authenticated!
-              is_joined = @current_user.is_joined_project(params[:id])
-              {"data": is_joined}
-            end
-
             desc 'Get all projects that I own'
-            get '/' do
-                authenticated!
-                project_list = @current_user.projects
-
-                list = []
-                project_list.each do |project|
-                  member_list = []
-                  project.project_user_roles.each do |member|
-                      member_list.push(member.user)
-                  end
-
-                  item = {
-                    "info": ProjectSerializer.new(project),
-                    "tracked_time": project.get_tracked_time,
-                    "member": member_list
-                  }
-                  list.push(item)
-                end
-                {data: list}
+            get do
+              authenticated!
+              projects = @current_member.get_projects
+              #return {members: Member.all.map{|p| MembersSerializer.new(p)}}
+              #return {hehe: ProjectSerializer.new(Project.find(1))}
+              #{"data": ProjectSerializer.new(Project.find(1))}
+              list = []
+              projects.each do |project|
+                list.push(ProjectSerializer.new(project))
+              end
+              {data: list}
             end
 
             desc 'Get all projects that I join'
-            get '/join' do
-              @current_member = Member.find(1)
-              {"data": @current_member.category_members}
-                # authenticated!
-                # pcu_list = @current_user.project_category_users
-                #   .where.not(project_category_id: nil)
-                #   .joins(project_category: [{project: :client} , :category])
-                #   .select("project_category_users.id")
-                #   .select("project_categories.id as pc_id")
-                #   .select("projects.id as project_id", "projects.name as project_name", "projects.background")
-                #   .select("clients.id as client_id", "clients.name as client_name")
-                #   .select("categories.name as category_name")
-                #   .where(projects: {is_archived: false})
-                #   .order("projects.id asc") # Change order if you want
-                #
-                #   list = []
-                #   project_id_list = []
-                #   pcu_list.each do |pcu|
-                #     if !project_id_list.include?(pcu.project_id)
-                #       project_id_list.push(pcu.project_id)
-                #       item = {id: pcu.project_id, name: pcu.project_name, background: pcu.background}
-                #       item[:client] = {id: pcu.client_id, name: pcu.client_name}
-                #       item[:category] = []
-                #       list.push(item)
-                #     else
-                #       item = list.select do |hash|
-                #           hash[:id] == pcu.project_id
-                #       end
-                #       item = item.first
-                #     end
-                #     item[:category].push({id: pcu.pc_id, name: pcu.category_name, pcu_id: pcu.id})
-                #   end
-                #   {"data": list}
-            end # End of join
+            get 'assigned' do
+              authenticated!
+              assigned_categories = @current_member.category_members
+                .where.not(category_id: nil)
+                .where(projects: {is_archived: false})
+                .where(categories: {is_archived: false})
+                .where(category_members: {is_archived: false})
+                .joins(category: {project: :client})
+                .select("projects.id", "projects.name", "projects.background")
+                .select("clients.id as client_id", "clients.name as client_name")
+                .select("categories.name as category_name")
+                .select("category_members.id as cm_id")
+                .order("projects.id desc", "categories.id asc")
+
+              result = []
+              assigned_categories.each do |assigned_category|
+                item = result.find { |h| h[:id] == assigned_category[:id] }
+                if !item
+                  item = {id: assigned_category[:id], name: assigned_category[:name]}
+                  item[:background] = assigned_category[:background]
+                  item[:client] = {id: assigned_category[:client_id], name: assigned_category[:client_name]}
+                  item[:category] = []
+                  result.push(item)
+                end
+                item[:category].push({name: assigned_category[:category_name], cm_id: assigned_category[:cm_id]})
+              end
+
+              {"data": result}
+            end # End of assigned
 
             desc 'Get a project by id'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-            end
             get ':id' do
-                authenticated!
-                begin
-                  project = @current_user.projects.find(params[:id])
-                  project_hash = Hash.new
-                  project_hash.merge!(ProjectSerializer.new(project).attributes)
-                  project_hash[:client_name] = project.client[:name]
-                  project_hash[:tracked_time] = project.get_tracked_time
+              authenticated!
+              projects = @current_member.get_projects.where(id: params[:id])
 
-                  pc_list = project.project_categories
-                  list = []
-                  pc_list.each do |pc|
-                    item = Hash.new
-                    item.merge!(ProjectCategorySerializer.new(pc))
-                    item.delete(:project_id)
-                    item.delete(:category_id)
-                    item[:category] = CategorySerializer.new(pc.category)
-                    item[:tracked_time] = pc.get_tracked_time
+              if projects.length == 0
+                return error!(I18n.t("project_not_found"), 404)
+              end
 
-                    member_list = []
-                    pc.project_category_users.each do |pcu|
-                      member_hash = Hash.new
-                      member_hash.merge!(ProjectCategoryUserSerializer.new(pcu))
-                      member_hash.delete(:id)
-                      member_hash.delete(:user_id)
-                      role = ProjectUserRole.joins(:role).where(project_id: project.id, user_id: pcu.user.id).select("roles.id", "roles.name")
-                      member_hash[:user] = UserSerializer.new(pcu.user)
-                      member_hash[:role] = role
-                      member_hash[:tracked_time] = pcu.get_tracked_time
-                      member_list.push(member_hash)
-                    end
-                    item[:member] = member_list
-
-                    list.push(item)
-                  end
-                  {"data":{
-                    "info": project_hash,
-                    "project_category": list
-                    }
-                  }
-                rescue => e
-                    return error!(I18n.t("project_not_found"), 404)
-                end
-            end
+              project = projects.first
+              result = {}
+              result.merge!(ProjectSerializer.new(project))
+              result[:tracked_time] = project.get_tracked_time
+              categories = []
+              project.categories.each do |category|
+                # item = {}
+                # item.merge!(category.as_json)
+                # item[:tracked_time] = category.get_tracked_time
+                # category_members = []
+                # category.category_members.order(:id).each do |category_member|
+                #   item2 = {}
+                #   item2.merge!(MembersSerializer.new(category_member.member))
+                #   item2[:tracked_time] = category_member.get_tracked_time
+                #   category_members.push(item2)
+                # end
+                # item[:members] = category_members
+                categories.push(CategorySerializer.new(category))
+              end
+              result[:categories] = categories
+              {"data": result}
+            end # End of getting a project by ID (for details)
 
             desc 'create new project'
             params do
@@ -170,11 +103,11 @@ module ProjectApi
                 end
             end
             post '/' do
-              @current_member = Member.find(1)
+              authenticated!
               project_params = params[:project]
 
               # Current user has to be an admin or a PM
-              if @current_member.role != 1 && @current_member.role != 2
+              if @current_member.role.name != "Admin" && @current_member.role.name != "PM"
                 return error!(I18n.t("access_denied"), 400)
               end
 
@@ -234,9 +167,6 @@ module ProjectApi
             end # End of project add new
 
             desc 'Delete a project'
-            params do
-                requires :id, type: String, desc: 'Project ID'
-            end
             delete ':id' do
                 authenticated!
                 status 200

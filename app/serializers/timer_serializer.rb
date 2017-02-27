@@ -1,5 +1,26 @@
 class TimerSerializer < ActiveModel::Serializer
-    include Rails.application.routes.url_helpers
+    attributes :id, :task, :start_time, :stop_time, :cm_id, :project_name, :category_name, :background
+    belongs_to :task, serializer: TaskSerializer
 
-    attributes :id, :start_time, :stop_time
+    def cm_id
+        object.task.category_member.id
+    end
+
+    def project_name
+        category = object.task.category_member.category
+        return nil unless category
+        category.project.name
+    end
+
+    def category_name
+        category = object.task.category_member.category
+        return nil unless category
+        category.name
+    end
+
+    def background
+        category = object.task.category_member.category
+        return nil unless category
+        category.project.background
+    end
 end
