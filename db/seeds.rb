@@ -8,7 +8,7 @@
 
 Role.create!(name: 'Admin')
 Role.create!(name: 'PM')
-Role.create!(name: 'member')
+Role.create!(name: 'Member')
 
 Company.create!(name: 'CES Australia', domain: 'code-engine')
 Company.create!(name: 'Axon', domain: 'axon.active')

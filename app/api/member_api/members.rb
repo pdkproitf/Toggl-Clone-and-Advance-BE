@@ -7,13 +7,13 @@ module MemberApi
             def invite_new_user invite
                 invite ? invite.generate_token : (invite = @current_member.sent_invites.create!(email: params['email']))
                 invite.save!
-                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/sign_up/'+invite.invite_token).deliver_later
+                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/sign-up/'+invite.invite_token).deliver_later
             end
 
             def invite_exist_user invite, recepter
                 invite ? invite.generate_token : (invite = @current_member.sent_invites.build(email: params['email'], recipient_id: recepter.id))
                 invite.save!
-                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/sign_up').deliver_later
+                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/members_confirm/'+invite.invite_token).deliver_later
             end
         end
 
@@ -22,7 +22,7 @@ module MemberApi
             get '/' do
                 authenticated!
                 return return_message 'Access Denied, Just Admin and PM able to do this.' unless @current_member.admin? || @current_member.pm?
-                return_message 'Success', MembersSerializer.new(@current_member.company.members)
+                return_message 'Success', @current_member.company.members.map { |e|  MembersSerializer.new(e)}
             end
 
             desc 'Invite member to company'
@@ -36,7 +36,7 @@ module MemberApi
                 invite = Invite.find_by_email(params['email'])
                 messages =  invite ? "You already sent the mail invete to #{params['email']}. New invite will be send after few minutes" : 'Success, The email confirm will be send after few minutes'
                 recepter = User.find_by_email(params['email'])
-                return return_message 'User already member' if recepter && recepter.members.find_by_company_id(@current_member.company_id)
+                return error!('User already member', 400) if recepter && recepter.members.find_by_company_id(@current_member.company_id)
 
                 recepter.nil? ? (invite_new_user invite) : (invite_exist_user invite, recepter)
                 return_message messages

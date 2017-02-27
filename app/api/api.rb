@@ -31,9 +31,10 @@ module API
                 @current_member = user.members.find_by_company_id(company.id)
             end
 
-            def return_message(status, data = nil)
+            def return_message(status, data = nil, code = nil)
                 status 404 if status.include?('Not Found')
                 status 401 if status.include?('Not Allow') || status.include?('Access Denied')
+                status 201 if status.include?('Error') && status.include?('has already') 
                 {
                     status: status,
                     data: data

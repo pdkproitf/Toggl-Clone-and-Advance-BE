@@ -17,7 +17,7 @@ module UserApi
             end
 
             def create_company param_company
-                Company.new(name: param_company['company_name'], domain: param_company['company_name'].slice(0,20))
+                Company.new(name: param_company['company_domain'], domain: param_company['company_domain'].slice(0,20))
             end
 
             def create_member
@@ -62,22 +62,24 @@ module UserApi
                     requires :email, type: String, desc: "User's Email"
                     requires :password, type: String, desc: 'password'
                     requires :password_confirmation, type: String, desc: 'password_confirmation'
-                    optional :company_name, type: String, desc: 'Company Name'
+                    optional :company_domain, type: String, desc: 'Company Name'
                     optional :invited_token, type: String, desc: "invited Token Of company"
-                    exactly_one_of :company_name, :invited_token
+                    exactly_one_of :company_domain, :invited_token
                 end
             end
             post '/' do
                 @resource = sign_up_params
                 @resource.provider = 'email'
                 @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
-
+                binding.pry
                 if params['user']['invited_token']
-                    invite = Invite.find_by_token(params['user']['invited_token'])
+                    invite = Invite.find_by_email(params['user']['email'])
                     return return_message 'Not Found invite' unless invite
-                    return return_message 'Invite expiry' unless invite.expiry?
-                    @company = invive.conpany
+                    return return_message 'Invite expiry' if invite.expiry?
+                    return error!('Token Invalid', 400) unless invite.authenticated?(params['user']['invited_token'])
+                    @company = invite.sender.company
                 else
+                    return return_message 'Error: Domain has already been taken' if Company.find_by_domain(params['user']['company_domain'])
                     @company = create_company params['user']
                 end
 

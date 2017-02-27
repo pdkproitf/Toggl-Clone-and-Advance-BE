@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223173749) do
+ActiveRecord::Schema.define(version: 20170227041131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,6 @@ ActiveRecord::Schema.define(version: 20170223173749) do
 
   create_table "invites", force: :cascade do |t|
     t.string   "email"
-    t.integer  "company_id"
     t.integer  "sender_id"
     t.integer  "recipient_id"
     t.string   "token"
@@ -61,7 +60,6 @@ ActiveRecord::Schema.define(version: 20170223173749) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.datetime "expiry"
-    t.index ["company_id"], name: "index_invites_on_company_id", using: :btree
   end
 
   create_table "members", force: :cascade do |t|
@@ -114,6 +112,19 @@ ActiveRecord::Schema.define(version: 20170223173749) do
     t.index ["category_member_id"], name: "index_tasks_on_category_member_id", using: :btree
   end
 
+  create_table "time_offs", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean  "is_start_half_day"
+    t.boolean  "is_end_half_day"
+    t.text     "description"
+    t.boolean  "approver_id"
+    t.integer  "status",            default: 0
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
   create_table "timers", force: :cascade do |t|
     t.integer  "task_id"
     t.datetime "start_time"
@@ -155,7 +166,6 @@ ActiveRecord::Schema.define(version: 20170223173749) do
   add_foreign_key "category_members", "categories"
   add_foreign_key "category_members", "members"
   add_foreign_key "clients", "companies"
-  add_foreign_key "invites", "companies"
   add_foreign_key "members", "companies"
   add_foreign_key "members", "roles"
   add_foreign_key "members", "users"
