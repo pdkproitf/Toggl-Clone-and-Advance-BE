@@ -6,27 +6,21 @@ module ProjectApi
         resource :projects do
             # => /api/v1/projects/
             desc 'Get all projects that I own'
-            get '/' do
+            get do
               authenticated!
               projects = @current_member.get_projects
-              result = []
+              #return {members: Member.all.map{|p| MembersSerializer.new(p)}}
+              #return {hehe: ProjectSerializer.new(Project.find(1))}
+              #{"data": ProjectSerializer.new(Project.find(1))}
+              list = []
               projects.each do |project|
-                item = {}
-                item.merge!(ProjectSerializer.new(project))
-                item[:tracked_time] = project.tracked_time
-                members = []
-                project.members.order(:id).each do |member|
-                  members.push(UserSerializer.new(member.user))
-                end
-                item[:member] = members
-                result.push(item)
+                list.push(ProjectSerializer.new(project))
               end
-
-              {"data": result}
+              {data: list}
             end
 
             desc 'Get all projects that I join'
-            get '/assigned' do
+            get 'assigned' do
               authenticated!
               assigned_categories = @current_member.category_members
                 .where.not(category_id: nil)
@@ -65,24 +59,21 @@ module ProjectApi
                 return error!(I18n.t("project_not_found"), 404)
               end
 
-              #return TestsSerializer.new(Project.first)
-              return MembersSerializer.new(Member.first)
-
               project = projects.first
               result = {}
               result.merge!(ProjectSerializer.new(project))
-              result[:tracked_time] = project.tracked_time
+              result[:tracked_time] = project.get_tracked_time
               categories = []
               project.categories.order(:id).select("id", "name").each do |category|
                 item = {}
                 item.merge!(category.as_json)
-                item[:tracked_time] = category.tracked_time
+                item[:tracked_time] = category.get_tracked_time
                 category_members = []
                 category.category_members.order(:id).each do |category_member|
                   item2 = {}
-                  item2.merge!(TestSerializer.new(category_member.member.user))
+                  item2.merge!(UserSerializer.new(category_member.member.user))
                   item2[:role] = category_member.member.role
-                  item2[:tracked_time] = category_member.tracked_time
+                  item2[:tracked_time] = category_member.get_tracked_time
                   category_members.push(item2)
                 end
                 item[:members] = category_members

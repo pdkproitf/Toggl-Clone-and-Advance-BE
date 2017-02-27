@@ -1,7 +1,19 @@
 class ProjectSerializer < ActiveModel::Serializer
-    def method_name
-        object.name
+    attributes :id, :name, :background, :client, :tracked_time, :members
+
+    def client
+        ClientSerializer.new(object.client)
     end
-    attributes :id, :background, :method_name
-    belongs_to :client
+
+    def tracked_time
+        object.get_tracked_time
+    end
+
+    # def members
+    #     # object.members
+    #     # ActiveModel::Serializer::CollectionSerializer.new(object.members, each_serializer: MembersSerializer)
+    #     # ActiveModel::ArraySerializer.new(object.members).as_json
+    # end
+
+    has_many :members, serializer: MembersSerializer
 end
