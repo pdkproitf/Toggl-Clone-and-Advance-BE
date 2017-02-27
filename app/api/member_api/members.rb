@@ -35,9 +35,8 @@ module MemberApi
 
                 invite = Invite.find_by_email(params['email'])
                 messages =  invite ? "You already sent the mail invete to #{params['email']}. New invite will be send after few minutes" : 'Success, The email confirm will be send after few minutes'
-
                 recepter = User.find_by_email(params['email'])
-                return return_message 'User already member' if recepter.members.find_by_company_id(@current_member.company_id)
+                return return_message 'User already member' if recepter && recepter.members.find_by_company_id(@current_member.company_id)
 
                 recepter.nil? ? (invite_new_user invite) : (invite_exist_user invite, recepter)
                 return_message messages
