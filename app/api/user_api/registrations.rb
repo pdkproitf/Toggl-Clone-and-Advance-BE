@@ -71,7 +71,7 @@ module UserApi
                 @resource = sign_up_params
                 @resource.provider = 'email'
                 @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
-                binding.pry
+
                 if params['user']['invited_token']
                     invite = Invite.find_by_email(params['user']['email'])
                     return return_message 'Not Found invite' unless invite
@@ -82,7 +82,7 @@ module UserApi
                     return return_message 'Error: Domain has already been taken' if Company.find_by_domain(params['user']['company_domain'])
                     @company = create_company params['user']
                 end
-
+                
                 Company.transaction do
                     User.transaction do
                         @company.save!
