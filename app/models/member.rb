@@ -6,7 +6,12 @@ class Member < ApplicationRecord
     has_many :joined_projects, through: :project_members, source: :projects
     has_many :project_members, dependent: :destroy
     has_many :category_members, dependent: :destroy
+
+    has_many :sent_invites, class_name: 'Invite', foreign_key: 'sender_id'
+
     has_many :assigned_categories, through: :category_members, source: :categories
+    has_many :off_requests, class_name: 'Timeoff', foreign_key: 'sender_id'
+    has_many :off_approvers, class_name: 'Timeoff', foreign_key: 'approver_id'
 
     validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
