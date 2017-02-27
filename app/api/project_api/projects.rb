@@ -65,6 +65,7 @@ module ProjectApi
               result[:tracked_time] = project.get_tracked_time
               categories = []
               project.categories.each do |category|
+                # return {data: MembersSerializer.new(CategoryMember.find(42).member)}
                 # item = {}
                 # item.merge!(category.as_json)
                 # item[:tracked_time] = category.get_tracked_time
@@ -78,6 +79,10 @@ module ProjectApi
                 # item[:members] = category_members
                 categories.push(CategorySerializer.new(category))
               end
+
+              # category = project.categories
+
+              # return {data: category.map { |bookmark| ::CategorySerializer.new(bookmark)}.to_json}
               result[:categories] = categories
               {"data": result}
             end # End of getting a project by ID (for details)
