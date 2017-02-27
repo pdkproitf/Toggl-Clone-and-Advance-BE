@@ -7,7 +7,7 @@ module MemberApi
             def invite_new_user invite
                 invite ? invite.generate_token : (invite = @current_member.sent_invites.create!(email: params['email']))
                 invite.save!
-                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/sign_up').deliver_later
+                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/sign_up/'+invite.invite_token).deliver_later
             end
 
             def invite_exist_user invite, recepter
