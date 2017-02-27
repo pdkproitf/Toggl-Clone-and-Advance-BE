@@ -85,32 +85,20 @@ module TimerApi
                     return error!(I18n.t('from_to_day_error'), 400)
                 end
 
-                list = []
-                @current_member.timers.where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
-                               .each do |timer|
-                    list.push(TimerSerializer.new(timer))
+                timer_list = @current_member.timers
+                                            .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
+                                            .order('start_time')
+
+                data = {}
+                date_list = []
+                timer_list.each do |timer|
+                    unless date_list.include?(timer.start_time.to_date.to_s)
+                        date_list.push(timer.start_time.to_date.to_s)
+                        data[timer.start_time.to_date.to_s] = []
+                    end
+                    data[timer.start_time.to_date.to_s].push(TimerSerializer.new(timer))
                 end
-
-                { data: list }
-
-                # timer_list = Timer.left_outer_joins(task: { project_category_user: { project_category: [:project, :category] } })
-                #                   .where(project_category_users: { user_id: @current_user.id })
-                #                   .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
-                #                   .select('timers.id', 'timers.start_time', 'timers.stop_time')
-                #                   .select('tasks.id as task_id', 'tasks.name as task_name', 'tasks.project_category_user_id as pcu_id')
-                #                   .select('projects.name as project_name', 'categories.name as category_name')
-                #                   .order('timers.start_time asc')
-                #
-                # data = {}
-                # date_list = []
-                # timer_list.each do |timer|
-                #     unless date_list.include?(timer.start_time.to_date.to_s)
-                #         date_list.push(timer.start_time.to_date.to_s)
-                #         data[timer.start_time.to_date.to_s] = []
-                #     end
-                #     data[timer.start_time.to_date.to_s].push(timer)''
-                # end
-                # data
+                data
             end
 
             desc 'create new timer'
