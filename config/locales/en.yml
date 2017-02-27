@@ -39,3 +39,4 @@ en:
   category_not_found: "Category not found"
   start_stop_time_error: "Start time has to be less than stop time"
   member_not_assigned_to_category: "Member was not assigned to category"
+  from_to_day_error: "From day has to be less or equal to To day"

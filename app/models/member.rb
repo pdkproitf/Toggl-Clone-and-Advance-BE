@@ -14,6 +14,7 @@ class Member < ApplicationRecord
     has_many :assigned_categories, through: :category_members, source: :category
 
     has_many :tasks, through: :category_members
+    has_many :timers, through: :tasks
 
     validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 

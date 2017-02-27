@@ -1,5 +1,10 @@
 class TestsSerializer < ActiveModel::Serializer
-    attributes :id
-    belongs_to :client, serializer: ClientSerializer, key: :cube
-    has_many :categories, serializer: CategorySerializer
+    has_many :timers, serializer: TimerSerializer
+    def timers
+        object.timers.order('id desc')
+    end
+
+    #     def players
+    #     object.players.collect { |player| [player.name, player.number, player.age]}
+    # end
 end
