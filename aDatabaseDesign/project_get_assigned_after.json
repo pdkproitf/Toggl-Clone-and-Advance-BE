@@ -9,11 +9,11 @@
             },
             "category": [{
                     "name": "Marketing",
-                    "cm_id": 13
+                    "category_member_id": 13
                 },
                 {
                     "name": "SEO",
-                    "cm_id": 15
+                    "category_member_id": 15
                 }
             ]
         },
@@ -27,11 +27,11 @@
             },
             "category": [{
                     "name": "Marketing",
-                    "cm_id": 9
+                    "category_member_id": 9
                 },
                 {
                     "name": "SEO",
-                    "cm_id": 11
+                    "category_member_id": 11
                 }
             ]
         },
@@ -45,11 +45,11 @@
             },
             "category": [{
                     "name": "Marketing",
-                    "cm_id": 5
+                    "category_member_id": 5
                 },
                 {
                     "name": "SEO",
-                    "cm_id": 7
+                    "category_member_id": 7
                 }
             ]
         },
@@ -63,11 +63,11 @@
             },
             "category": [{
                     "name": "Marketing",
-                    "cm_id": 1
+                    "category_member_id": 1
                 },
                 {
                     "name": "SEO",
-                    "cm_id": 3
+                    "category_member_id": 3
                 }
             ]
         }
