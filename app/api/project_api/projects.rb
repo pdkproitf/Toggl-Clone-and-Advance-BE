@@ -19,7 +19,7 @@ module ProjectApi
               {data: list}
             end
 
-            desc 'Get all projects that I join'
+            desc 'Get all projects that I assigned'
             get 'assigned' do
               authenticated!
               assigned_categories = @current_member.category_members
