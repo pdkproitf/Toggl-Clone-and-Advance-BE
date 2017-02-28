@@ -21,11 +21,11 @@ module API
             end
 
             def current_member
-                company_name = request.headers['Company-Domain']
+                company_domain = request.headers['Company-Domain']
                 user = current_user
                 return nil unless user
-
-                company = user.companies.find_by_name(company_name)
+                
+                company = user.companies.find_by_domain(company_domain)
                 return nil unless company
 
                 @current_member = user.members.find_by_company_id(company.id)
