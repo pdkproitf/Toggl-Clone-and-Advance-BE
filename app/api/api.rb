@@ -21,7 +21,7 @@ module API
             end
 
             def current_member
-                company_name = request.headers['Company']
+                company_name = request.headers['Company-Domain']
                 user = current_user
                 return nil unless user
 
@@ -34,7 +34,7 @@ module API
             def return_message(status, data = nil, code = nil)
                 status 404 if status.include?('Not Found')
                 status 401 if status.include?('Not Allow') || status.include?('Access Denied')
-                status 201 if status.include?('Error') && status.include?('has already') 
+                status 400 if status.include?('Error')
                 {
                     status: status,
                     data: data
