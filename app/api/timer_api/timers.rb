@@ -119,7 +119,7 @@ module TimerApi
             put ':id' do
                 authenticated!
                 @timer = Timer.find(params['id'])
-                return return_message "Error Not Allow for #{@current_member.user.email}" unless (@timer.task.category_member.member_id == @current_member.id)
+                return return_message "Error Not Allow for #{@current_member.user.email}" unless @timer.task.category_member.member_id == @current_member.id
                 @category_member = @timer.task.category_member
                 return modify_with_project
             end
