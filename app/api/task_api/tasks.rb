@@ -17,7 +17,7 @@ module TaskApi
                 @current_member.timers
                                .where(category_members: { is_archived: false })
                                .where.not(category_members: { category_id: nil })
-                               .where.not(tasks: { name: nil })
+                               .where.not(tasks: { name: '' })
                                .order('start_time desc')
                                .limit(params[:number])
             end
