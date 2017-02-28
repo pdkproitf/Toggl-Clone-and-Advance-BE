@@ -25,15 +25,18 @@ en:
   user_not_added_to_project: "User was not added to project"
   role_not_found: "Role not found"
   category_name_taken: "Category name was taken"
-  project_not_found: "Project not found"
   project_name_client_taken: "Combination project name and client was taken"
   already_member: "User is already a member"
   task_not_found: "Task not found"
   not_project_category_current_user: "project_category_user is not belong to current user"
 
-  # v7
+  # v9
   access_denied: "Access denied"
   client_not_found: "Client not found"
   not_joined_to_company: "Not joined to company yet"
   not_added_to_project: "Not added to project yet"
+  project_not_found: "Project not found"
   category_not_found: "Category not found"
+  start_stop_time_error: "Start time has to be less than stop time"
+  member_not_assigned_to_category: "Member was not assigned to category"
+  from_to_day_error: "From day has to be less or equal to To day"

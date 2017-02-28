@@ -5,6 +5,7 @@ class Company < ApplicationRecord
     has_many :users, through: :members
     has_many :clients
     has_many :invites
+    has_many :projects, through: :members
 
     validates :name,    presence: true, uniqueness: true, length: { minimum: 3, maximum: 100 }
     validates :domain,  presence: true, uniqueness: true,

@@ -42,13 +42,13 @@ module UserApi
                 requires :user, type: Hash do
                     requires :email, type: String, desc: "User's Email"
                     requires :password,  type: String, desc: "password"
-                    requires :company_name, type: String, desc: "Company Name"
+                    requires :company_domain, type: String, desc: "Company Name"
                 end
             end
             post '/sign-in' do
                 @resource = sign_in_params
                 if @resource and @resource.valid_password?(params['user']['password']) and (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
-                    @company = @resource.companies.find_by_name(params['user']['company_name'])
+                    @company = @resource.companies.find_by_domain(params['user']['company_domain'])
                     return return_message 'Not Found Company' unless @company
 
                     @member =  @resource.members.find_by_company_id(@company.id)
