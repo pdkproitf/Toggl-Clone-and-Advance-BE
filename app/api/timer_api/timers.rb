@@ -131,7 +131,7 @@ module TimerApi
                 status 200
 
                 @timer = Timer.find(params['id'])
-                return return_message "Error Not Allow for #{@current_user.email}" unless @timer.task.project_category_user.user_id == @current_user.id
+                return return_message "Error Not Allow for #{@current_member.user.email}" unless @timer.task.category_member.member_id == @current_member.id
                 @timer.destroy!
                 return_message 'Success'
             end
