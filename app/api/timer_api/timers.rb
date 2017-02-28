@@ -135,13 +135,13 @@ module TimerApi
                                 return error!(I18n.t('member_not_assigned_to_category'), 400)
                             end
                             task = Task.create!(
-                                name: timer_params[:name],
+                                name: timer_params[:task_name],
                                 category_member_id: timer_params[:category_member_id]
                             )
                         end
                     else # category_member_id does not exist
                         category_member = @current_member.category_members.create!
-                        task = category_member.tasks.create!(name: timer_params[:name])
+                        task = category_member.tasks.create!(name: timer_params[:task_name])
                     end
                 else # Only start_time and stop_time (maybe category_member_id exists)
                     if timer_params[:category_member_id]
