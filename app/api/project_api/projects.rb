@@ -31,7 +31,7 @@ module ProjectApi
                 .select("projects.id", "projects.name", "projects.background")
                 .select("clients.id as client_id", "clients.name as client_name")
                 .select("categories.name as category_name")
-                .select("category_members.id as cm_id")
+                .select("category_members.id as category_member_id")
                 .order("projects.id desc", "categories.id asc")
 
               result = []
@@ -44,7 +44,7 @@ module ProjectApi
                   item[:category] = []
                   result.push(item)
                 end
-                item[:category].push({name: assigned_category[:category_name], cm_id: assigned_category[:cm_id]})
+                item[:category].push({name: assigned_category[:category_name], category_member_id: assigned_category[:category_member_id]})
               end
 
               {"data": result}
