@@ -7,7 +7,7 @@ module ClientApi
             def is_admin_or_pm
                 authenticated!
                 # Current user has to be an admin or a PM
-                if @current_member.role.name == 'Admin' || @current_member.role.name == 'PM'
+                if @current_member.admin? || @current_member.pm?
                     true
                 else
                     false
