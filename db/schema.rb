@@ -112,6 +112,19 @@ ActiveRecord::Schema.define(version: 20170227041131) do
     t.index ["category_member_id"], name: "index_tasks_on_category_member_id", using: :btree
   end
 
+  create_table "time_offs", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean  "is_start_half_day"
+    t.boolean  "is_end_half_day"
+    t.text     "description"
+    t.boolean  "approver_id"
+    t.integer  "status",            default: 0
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
   create_table "timers", force: :cascade do |t|
     t.integer  "task_id"
     t.datetime "start_time"
