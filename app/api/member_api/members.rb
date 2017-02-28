@@ -49,12 +49,16 @@ module MemberApi
             end
             put do
                 @invite = Invite.find_by_email(params['email'])
-                return return_message 'Not Found' unless @invite
+                return return_message "Not Found Invite for #{params['email']}"  unless @invite
                 return return_message 'Error Token un authenticated' unless @invite.authenticated?(params['token'])
                 return return_message 'Link confirm expiry' if @invite.expiry?
 
-                @invite.is_accepted = true
+                user = User.find_by_email(@invite.email).id
+                return return_message 'Error, User must exit' unless user
+
+                @invite.recipient_id = user.id
                 Invite.transaction do
+                    @invite.is_accepted = true
                     @invite.save!
                     member = Role.find_by_name('Member') || Role.create!(name: 'Member')
                     Member.transaction do
