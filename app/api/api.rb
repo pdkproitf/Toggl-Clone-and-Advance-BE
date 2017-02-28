@@ -24,7 +24,7 @@ module API
                 company_domain = request.headers['Company-Domain']
                 user = current_user
                 return nil unless user
-                
+
                 company = user.companies.find_by_domain(company_domain)
                 return nil unless company
 
@@ -32,9 +32,9 @@ module API
             end
 
             def return_message(status, data = nil, code = nil)
+                status 400 if status.include?('Error')
                 status 404 if status.include?('Not Found')
                 status 401 if status.include?('Not Allow') || status.include?('Access Denied')
-                status 400 if status.include?('Error')
                 {
                     status: status,
                     data: data
