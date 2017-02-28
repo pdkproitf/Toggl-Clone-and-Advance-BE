@@ -2,7 +2,7 @@ class Member < ApplicationRecord
     belongs_to :company
     belongs_to :user
     belongs_to :role
-    has_many :projects # Create new
+    has_many :projects, dependent: :destroy # Create new
     has_many :joined_projects, through: :project_members, source: :projects
 
     # Find projects member assigned PM
