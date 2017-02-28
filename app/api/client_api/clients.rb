@@ -41,8 +41,6 @@ module ClientApi
             post do
                 return error!(I18n.t('access_denied'), 400) unless is_admin_or_pm
                 client = @current_member.company.clients.create!(name: params[:client][:name])
-                # create! will raise exception if create new not successfully
-                true
             end
 
             desc 'Delete a client'

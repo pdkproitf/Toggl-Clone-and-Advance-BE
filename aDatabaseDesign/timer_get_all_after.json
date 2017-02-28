@@ -7,7 +7,7 @@
             },
             "start_time": "2017-02-27T14:38:00.000Z",
             "stop_time": "2017-02-27T14:55:00.000Z",
-            "cm_id": 13,
+            "category_member_id": 13,
             "project_name": "Zilly",
             "category_name": "Marketing",
             "background": "#FFFFFF"
@@ -20,7 +20,7 @@
             },
             "start_time": "2017-02-27T14:38:00.000Z",
             "stop_time": "2017-02-27T14:55:00.000Z",
-            "cm_id": 13,
+            "category_member_id": 13,
             "project_name": "Zilly",
             "category_name": "Marketing",
             "background": "#FFFFFF"
@@ -34,7 +34,7 @@
         },
         "start_time": "2017-02-28T14:38:00.000Z",
         "stop_time": "2017-02-28T14:55:00.000Z",
-        "cm_id": 13,
+        "category_member_id": 13,
         "project_name": "Zilly",
         "category_name": "Marketing",
         "background": "#FFFFFF"
@@ -47,7 +47,7 @@
         },
         "start_time": "2017-03-01T14:38:00.000Z",
         "stop_time": "2017-03-01T14:55:00.000Z",
-        "cm_id": 13,
+        "category_member_id": 13,
         "project_name": "Zilly",
         "category_name": "Marketing",
         "background": "#FFFFFF"
