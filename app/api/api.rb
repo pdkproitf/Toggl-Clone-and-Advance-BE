@@ -31,7 +31,7 @@ module API
                 @current_member = user.members.find_by_company_id(company.id)
             end
 
-            def return_message(status, data = nil, code = nil)
+            def return_message(status, data = nil, _code = nil)
                 status 400 if status.include?('Error')
                 status 404 if status.include?('Not Found')
                 status 401 if status.include?('Not Allow') || status.include?('Access Denied')
@@ -51,6 +51,7 @@ module API
         mount CategoryApi::Categories
         mount TimerApi::Timers
         mount MemberApi::Members
+        mount TaskApi::Tasks
 
         add_swagger_documentation(
             api_version: 'v1',
