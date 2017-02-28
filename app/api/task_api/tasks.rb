@@ -15,8 +15,10 @@ module TaskApi
             get 'recent' do
                 authenticated!
                 @current_member.timers
+                               .where('category_members.is_archived = ?', false)
                                .where.not('category_members.category_id IS ?', nil)
                                .where.not('tasks.name IS ?', nil)
+                               .where('tasks.name IS ?', nil)
                                .order('start_time desc')
             end
         end
