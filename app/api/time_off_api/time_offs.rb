@@ -6,6 +6,12 @@ module TimeOffApi
         helpers TimeOffHelper
 
         resource :timeoffs do
+            desc 'Get all timeoff request of themself'
+            get do
+                authenticated!
+                return_message 'Success', @current_member.off_requests
+            end
+
             desc 'Create time off'
             params do
                 requires :timeoff, type: Hash do
