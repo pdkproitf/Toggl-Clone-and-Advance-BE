@@ -25,7 +25,7 @@ module TimerApi
 
                 timer_list = @current_member.timers
                                             .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
-                                            .order('start_time')
+                                            .order('start_time desc')
 
                 data = {}
                 date_list = []
@@ -99,7 +99,6 @@ module TimerApi
                     start_time: timer_params['start_time'],
                     stop_time: timer_params['stop_time']
                 )
-                true
             end
 
             desc 'Edit timer'
