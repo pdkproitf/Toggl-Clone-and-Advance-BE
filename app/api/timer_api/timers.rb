@@ -111,8 +111,7 @@ module TimerApi
                     optional :task_id, type: Integer, desc: 'Task ID'
                     optional :task_name, type: String, desc: 'Task Name'
 
-                    requires :category_member_id, type: Integer, desc: "Member-Category's ID"
-                    requires :project_id, type: Integer, desc: 'Current Project id'
+                    optional :category_member_id, type: Integer, desc: "Member-Category's ID"
 
                     exactly_one_of :task_id, :task_name
                 end
@@ -121,8 +120,13 @@ module TimerApi
                 authenticated!
                 @timer = Timer.find(params['id'])
                 return return_message "Error Not Allow for #{@current_member.user.email}" unless (@timer.task.category_member.member_id == @current_member.id)
-                @category_member = @timer.task.category_member
-                return modify_with_project
+
+                @category_member = CategoryMember.find_by_id(params['timer_update']['category_member_id'])
+                return return_message "Error Not Found Member's Category id #{params['timer_update']['category_member_id']}" unless @category_member
+                return return_message "Error Not Allow for #{@current_member.user.email} access to Member's Category id #{params['timer_update']['category_member_id']}" unless access_to_category_member?
+
+                (@category_member.id == @timer.task.category_member.id)? modify_with_task : modify_with_category_member
+                return_message 'Sucess', TimerSerializer.new(@timer)
             end
 
             desc 'Delete Timer'
