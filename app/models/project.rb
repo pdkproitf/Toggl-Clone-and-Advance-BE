@@ -4,7 +4,7 @@ class Project < ApplicationRecord
     has_many :categories, dependent: :destroy
     has_many :project_members, dependent: :destroy
     has_many :members, through: :project_members
-    has_many :assigned_members, through: :categories, source: :category_members
+    # has_many :assigned_members, through: :categories, source: :category_members
 
     validates :name, presence: true
     validates :client_id, presence: true
