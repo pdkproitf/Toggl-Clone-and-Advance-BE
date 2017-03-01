@@ -59,5 +59,4 @@ module TimerHelper
             update_timer task
         end
     end
-
 end

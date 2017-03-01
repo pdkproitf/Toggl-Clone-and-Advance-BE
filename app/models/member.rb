@@ -18,8 +18,8 @@ class Member < ApplicationRecord
 
     has_many :sent_invites, class_name: 'Invite', foreign_key: 'sender_id'
 
-    has_many :off_requests, class_name: 'Timeoff', foreign_key: 'sender_id'
-    has_many :off_approvers, class_name: 'Timeoff', foreign_key: 'approver_id'
+    has_many :off_requests, class_name: 'TimeOff', foreign_key: 'sender_id'
+    has_many :off_approvers, class_name: 'TimeOff', foreign_key: 'approver_id'
 
     validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
