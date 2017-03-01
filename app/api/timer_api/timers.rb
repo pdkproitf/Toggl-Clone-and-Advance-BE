@@ -133,6 +133,7 @@ module TimerApi
                 @timer = Timer.find(params['id'])
                 return return_message "Error Not Allow for #{@current_member.user.email}" unless @timer.task.category_member.member_id == @current_member.id
                 @timer.destroy!
+                detelte_timer_with_relationship_self
                 return_message 'Success'
             end
         end
