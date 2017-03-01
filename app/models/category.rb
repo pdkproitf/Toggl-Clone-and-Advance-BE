@@ -16,10 +16,6 @@ class Category < ApplicationRecord
     end
 
     def archive
-        if category_members
-            category_members.each do |category_member|
-                sum += category_member.get_tracked_time
-            end
-        end
+        category_members.each(&:get_tracked_time) if category_members
     end
 end
