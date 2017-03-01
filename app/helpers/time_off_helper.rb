@@ -10,7 +10,7 @@ module TimeOffHelper
 
     def send_email_to_boss timeoff
         send_mail_to = (company_boss_without_current_member + project_pm_boss_without_current_member).uniq
-        send_mail_to.each{ |member| TimeOffMailer.timeoff_announce(timeoff, @current_member, member.user.email).deliver_later(wait: 10.seconds)}
+        send_mail_to.each{ |member| TimeOffMailer.timeoff_announce(timeoff, member.user.email).deliver_later(wait: 10.seconds)}
     end
 
     def company_boss_without_current_member

@@ -1,8 +1,7 @@
 class TimeOffMailer < ApplicationMailer
-    def timeoff_announce(timeoff, member, email)
+    def timeoff_announce(timeoff, email)
         @timeoff = timeoff
-        @member = member
         @mail = email
-        mail(to: email, subject: "Member Day Off at #{member.company.name} Company".upcase)
+        mail(to: email, subject: "Member Day Off at #{timeoff.sender.company.name} Company".upcase)
     end
 end
