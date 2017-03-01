@@ -1,0 +1,14 @@
+<div style="text-aligin; center;">
+    <h1>Announce Member Timeoff from <%= @timeoff.sender.company.name.upcase %></h1>
+    <p>You got this mail because have a member in your company want to off</p>
+    <h2>Member Off's Information</h2>
+    <div style="text-aligin: left;">
+        Name: <p> <%= @timeoff.sender.user.first_name + ' ' +  @timeoff.sender.user.last_name%></p>
+        Email: <p> <%= @timeoff.sender.user.email %></p>
+        From: <p><% if @timeoff.is_start_half_day %> Half day of  <%end%> <%= @timeoff.start_date %></p>
+        Until: <p><% if @timeoff.is_end_half_day %> Half day of  <%end%> <%= @timeoff.start_date %></p>
+        <p>Description: <%= @timeoff.description %></p>
+    </div>
+
+    Click <a href="https://spring-time-tracker.herokuapp.com/#/timeoffs">here</a> to see more timeoff request.
+</div>

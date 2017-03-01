@@ -17,6 +17,7 @@ module API
         mount TimerApi::Timers
         mount MemberApi::Members
         mount TaskApi::Tasks
+        mount TimeOffApi::TimeOffs
 
         add_swagger_documentation(
             api_version: 'v1',
