@@ -7,6 +7,7 @@ module TimerApi
 
         resource :timers do
             # => /api/v1/timers/
+            # => /api/v1/timers/
             desc 'Get all timers in period time'
             params do
                 requires :period, type: Hash do
@@ -25,7 +26,7 @@ module TimerApi
 
                 timer_list = @current_member.timers
                                             .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
-                                            .order('start_time')
+                                            .order('start_time desc')
 
                 data = {}
                 date_list = []
@@ -61,17 +62,20 @@ module TimerApi
                     # Check task_id belong to current member
                     task = @current_member.tasks.find_by_id(timer_params[:task_id])
                     return error!(I18n.t('task_not_found'), 404) if task.nil?
-                elsif timer_params[:task_name] # if task name exists
+                elsif timer_params[:task_name] && !timer_params[:task_name].blank? # if task name exists and is not blank
                     if timer_params[:category_member_id] # if category_member_id exists
-                        # if category_member does not belong to current_member
+                        category_member = @current_member.category_members.find_by(id: timer_params[:category_member_id])
+                        # if category member does not belong to any category
+                        if !category_member || category_member.category_id.nil?
+                            return error!(I18n.t('member_not_assigned_to_category'), 400)
+                        end
+
                         task = @current_member.tasks.find_by(
                             name: timer_params[:task_name],
                             category_member: timer_params[:category_member_id]
                         )
+                        # if cannot find and task then create new task
                         if task.nil?
-                            unless @current_member.category_members.exists?(timer_params[:category_member_id])
-                                return error!(I18n.t('member_not_assigned_to_category'), 400)
-                            end
                             task = Task.create!(
                                 name: timer_params[:task_name],
                                 category_member_id: timer_params[:category_member_id]
@@ -81,11 +85,14 @@ module TimerApi
                         category_member = @current_member.category_members.create!
                         task = category_member.tasks.create!(name: timer_params[:task_name])
                     end
-                else # Only start_time and stop_time (maybe category_member_id exists)
+                else # Only start_time and stop_time (maybe category_member_id exists, or maybe task_name blank)
                     if timer_params[:category_member_id]
-                        unless @current_member.category_members.exists?(timer_params[:category_member_id])
+                        category_member = @current_member.category_members.find_by(id: timer_params[:category_member_id])
+                        # if category member does not belong to any category
+                        if !category_member || category_member.category_id.nil?
                             return error!(I18n.t('member_not_assigned_to_category'), 400)
                         end
+
                         task = Task.create!(
                             category_member_id: timer_params[:category_member_id]
                         )
@@ -99,7 +106,6 @@ module TimerApi
                     start_time: timer_params['start_time'],
                     stop_time: timer_params['stop_time']
                 )
-                true
             end
 
             desc 'Edit timer'
@@ -119,13 +125,13 @@ module TimerApi
             put ':id' do
                 authenticated!
                 @timer = Timer.find(params['id'])
-                return return_message "Error Not Allow for #{@current_member.user.email}" unless (@timer.task.category_member.member_id == @current_member.id)
+                return return_message "Error Not Allow for #{@current_member.user.email}" unless @timer.task.category_member.member_id == @current_member.id
 
                 @category_member = CategoryMember.find_by_id(params['timer_update']['category_member_id'])
                 return return_message "Error Not Found Member's Category id #{params['timer_update']['category_member_id']}" unless @category_member
                 return return_message "Error Not Allow for #{@current_member.user.email} access to Member's Category id #{params['timer_update']['category_member_id']}" unless access_to_category_member?
 
-                (@category_member.id == @timer.task.category_member.id)? modify_with_task : modify_with_category_member
+                @category_member.id == @timer.task.category_member.id ? modify_with_task : modify_with_category_member
                 return_message 'Sucess', TimerSerializer.new(@timer)
             end
 
