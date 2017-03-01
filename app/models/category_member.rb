@@ -13,4 +13,8 @@ class CategoryMember < ApplicationRecord
         end
         sum
     end
+
+    def archive
+        update_attributes(is_archived: true)
+    end
 end
