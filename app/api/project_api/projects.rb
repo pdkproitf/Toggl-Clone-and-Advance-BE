@@ -171,6 +171,32 @@ module ProjectApi
                 project.save!
             end # End of project add new
 
+            desc 'Edit timer'
+            params do
+                 requires :project, type: Hash do
+                    requires :id, type: Integer, desc: 'Project ID'
+                    requires :name, type: String, desc: 'Project name.'
+                    requires :client_id, type: Integer, desc: 'Client id'
+                    optional :background, type: String, desc: 'Background color'
+                    optional :is_member_report, type: Boolean, desc: 'Allow member to run report'
+                    optional :member_roles, type: Array, desc: 'Member roles' do
+                        requires :member_id, type: Integer, desc: 'Member id'
+                        requires :is_pm, type: Boolean, desc: 'If member becomes Project Manager'
+                    end
+                    optional :category_members, type: Array, desc: 'Assign member to categories' do
+                        requires :category_name, type: String, desc: 'Category name'
+                        requires :is_billable, type: Boolean, desc: 'Billable'
+                        requires :members, type: Array, desc: 'Member' do
+                            requires :member_id, type: Integer, desc: 'Member id'
+                        end
+                    end
+                end
+            end
+            put ':id' do
+                authenticated!
+                @timer = Timer.find(params['id'])
+            end # End of editing project
+
             desc 'Delete a project'
             delete ':id' do
                 authenticated!
