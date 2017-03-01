@@ -35,12 +35,10 @@ class Member < ApplicationRecord
     def get_projects
         if admin? || pm?
             # Get all projects of company
-            projects = company.projects.where(is_archived: false).order('id desc')
-        else
-            # Get projects @current_member assigned pm
-            projects = pm_projects.where(is_archived: false).order('id desc')
+            return company.projects
         end
-        projects
+        # Get projects @current_member assigned pm
+        pm_projects
     end
 
     def admin?

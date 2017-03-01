@@ -8,7 +8,7 @@ module ProjectApi
             desc 'Get all projects that I own'
             get do
               authenticated!
-              projects = @current_member.get_projects
+              projects = @current_member.get_projects.where(is_archived: false).order('id desc')
               #return {members: Member.all.map{|p| MembersSerializer.new(p)}}
               #return {hehe: ProjectSerializer.new(Project.find(1))}
               #{"data": ProjectSerializer.new(Project.find(1))}
