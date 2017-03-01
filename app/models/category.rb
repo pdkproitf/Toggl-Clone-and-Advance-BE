@@ -14,4 +14,12 @@ class Category < ApplicationRecord
         end
         sum
     end
+
+    def archive
+        if category_members
+            category_members.each do |category_member|
+                sum += category_member.get_tracked_time
+            end
+        end
+    end
 end

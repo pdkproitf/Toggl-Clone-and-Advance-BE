@@ -15,6 +15,18 @@ class CategoryMember < ApplicationRecord
     end
 
     def archive
-        update_attributes(is_archived: true)
+        if update_attributes(is_archived: true)
+            true
+        else
+            error!(I18n.t('archive_failed'))
+        end
+    end
+
+    def unarchive
+        if update_attributes(is_archived: false)
+            true
+        else
+            error!(I18n.t('unarchive_failed'))
+        end
     end
 end
