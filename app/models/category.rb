@@ -16,6 +16,14 @@ class Category < ApplicationRecord
     end
 
     def archive
-        category_members.each(&:get_tracked_time) if category_members
+        update_attributes(is_archived: true)
+        # Archive all category members
+        category_members.each(&:archive) if category_members
+    end
+
+    def unarchive
+        update_attributes(is_archived: false)
+        # Unarchive all category members
+        category_members.each(&:unarchive) if category_members
     end
 end
