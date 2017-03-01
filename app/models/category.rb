@@ -14,4 +14,16 @@ class Category < ApplicationRecord
         end
         sum
     end
+
+    def archive
+        update_attributes(is_archived: true)
+        # Archive all category members
+        category_members.each(&:archive) if category_members
+    end
+
+    def unarchive
+        update_attributes(is_archived: false)
+        # Unarchive all category members
+        category_members.each(&:unarchive) if category_members
+    end
 end
