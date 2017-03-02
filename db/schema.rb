@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302022144) do
+ActiveRecord::Schema.define(version: 20170302045022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,16 +113,18 @@ ActiveRecord::Schema.define(version: 20170302022144) do
   end
 
   create_table "time_offs", force: :cascade do |t|
-    t.integer  "sender_id"
     t.datetime "start_date"
     t.datetime "end_date"
     t.boolean  "is_start_half_day"
     t.boolean  "is_end_half_day"
     t.text     "description"
-    t.boolean  "approver_id"
     t.integer  "status",            default: 0
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.integer  "sender_id"
+    t.integer  "approver_id"
+    t.index ["approver_id"], name: "index_time_offs_on_approver_id", using: :btree
+    t.index ["sender_id"], name: "index_time_offs_on_sender_id", using: :btree
   end
 
   create_table "timers", force: :cascade do |t|
