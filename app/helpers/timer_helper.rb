@@ -47,7 +47,7 @@ module TimerHelper
 
         @timer.save!
 
-        @old_category_member_empty.destroy! if @old_category_member_empty
+        @old_category_member_empty.destroy! unless @old_category_member_empty.category
         return_message 'Sucess', TimerSerializer.new(@timer)
     end
 
