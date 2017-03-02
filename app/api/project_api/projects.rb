@@ -235,15 +235,12 @@ module ProjectApi
                   end
                 end
 
+                # Archive members were added to project before but not exist in params
+
                 project_members.each do |project_member|
                   project_member.save
                 end
                 project.save
-                # Client has to belongs to the company of current user
-                # if !@current_member.company.clients.exists?(project_params[:client_id])
-                #   return error!(I18n.t("client_not_found"), 400)
-                # end
-
             end # End of editing project
 
             desc 'Delete a project'
