@@ -67,7 +67,7 @@ module TimerHelper
     end
 
     def detelte_timer_with_relationship_self
-        if task.category_member.category
+        if @timer.task.category_member.category
             @timer.task.destroy! if @timer.task.timers.where.not(id: @timer.id) == 0
         else
             @timer.task.category_member.destroy!
