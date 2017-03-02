@@ -132,7 +132,6 @@ module TimerApi
                 return return_message "Error Not Allow for #{@current_member.user.email} access to Member's Category id #{params['timer_update']['category_member_id']}" unless access_to_category_member?
 
                 @category_member.id == @timer.task.category_member.id ? modify_with_task : modify_with_category_member
-                return_message 'Sucess', TimerSerializer.new(@timer)
             end
 
             desc 'Delete Timer'
