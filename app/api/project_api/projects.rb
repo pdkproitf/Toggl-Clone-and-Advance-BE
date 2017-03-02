@@ -36,6 +36,10 @@ module ProjectApi
 
               result = []
               assigned_categories.each do |assigned_category|
+                return "hehe"
+                if @current_member.project_members.where(project_id: assigned_category.id).first.is_archived
+                  next
+                end
                 item = result.find { |h| h[:id] == assigned_category[:id] }
                 if !item
                   item = {id: assigned_category[:id], name: assigned_category[:name]}
@@ -53,7 +57,7 @@ module ProjectApi
             desc 'Get a project by id'
             get ':id' do
               authenticated!
-              projects = @current_member.get_projects.where(id: params[:id])
+              projects = @current_member.get_projects.where(id: params[:id], is_archived: false)
 
               if projects.length == 0
                 return error!(I18n.t("project_not_found"), 404)
