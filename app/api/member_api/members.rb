@@ -32,7 +32,6 @@ module MemberApi
             post '/' do
                 authenticated!
                 return return_message 'Access Denied, Just Admin and PM able to do this.' unless @current_member.admin? || @current_member.pm?
-
                 invite = Invite.find_by_email(params['email'])
                 messages =  invite ? "You already sent the mail invete to #{params['email']}. New invite will be send after few minutes" : 'Success, The email confirm will be send after few minutes'
                 recepter = User.find_by_email(params['email'])
@@ -53,16 +52,17 @@ module MemberApi
                 return return_message 'Error Token un authenticated' unless @invite.authenticated?(params['token'])
                 return return_message 'Link confirm expiry' if @invite.expiry?
 
-                user = User.find_by_email(@invite.email).id
+                user = User.find_by_email(@invite.email)
                 return return_message 'Error, User must exit' unless user
 
-                @invite.recipient_id = user.id
                 Invite.transaction do
+                    @invite.recipient_id = user.id
                     @invite.is_accepted = true
+                    @invite.invite_token = nil;
                     @invite.save!
-                    member = Role.find_by_name('Member') || Role.create!(name: 'Member')
+                    member_role = Role.find_by_name('Member') || Role.create!(name: 'Member')
                     Member.transaction do
-                        @invite.sender.company.members.create!(user_id: @invite.recipient_id, role_id: member.id)
+                        @invite.sender.company.members.create!(user_id: @invite.recipient_id, role_id: member_role.id)
                         return return_message 'Success, You can login under '+@invite.sender.company.name+'s company'
                     end
                 end
