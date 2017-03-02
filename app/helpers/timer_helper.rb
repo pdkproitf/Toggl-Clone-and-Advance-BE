@@ -1,5 +1,6 @@
 module TimerHelper
     def modify_with_category_member
+        @old_category_member_empty = nil
         if @category_member.category
             return return_message "Error Not Allow, #{@category_member.category.name} has been archived" unless access_to_category?
             return return_message "Error Not Allow, project  #{@category_member.category.project.name} has been archived or you no longer able to access" unless access_to_project? (@category_member.category.project)
@@ -11,9 +12,8 @@ module TimerHelper
     end
 
     def modify_with_category_member_exist_category
-        old_category_member_empty = @timer.task.category_member
+        @old_category_member_empty = @timer.task.category_member
         modify_with_task
-        old_category_member_empty.destroy! unless old_category_member_empty.category
     end
 
     def modify_with_category_member_empty_category
@@ -46,6 +46,9 @@ module TimerHelper
         @timer.stop_time = params['timer_update']['stop_time']
 
         @timer.save!
+
+        @old_category_member_empty.destroy! if @old_category_member_empty
+        return_message 'Sucess', TimerSerializer.new(@timer)
     end
 
     # true if you be member of project and project have not archived yet
