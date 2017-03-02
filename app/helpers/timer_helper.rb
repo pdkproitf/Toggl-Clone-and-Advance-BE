@@ -1,5 +1,6 @@
 module TimerHelper
     def modify_with_category_member
+      binding.pry
         if @category_member.category
             return return_message "Error Not Allow, #{@category_member.category.name} has been archived" unless access_to_category?
             return return_message "Error Not Allow, project  #{@category_member.category.project.name} has been archived or you no longer able to access" unless access_to_project? (@category_member.category.project)
