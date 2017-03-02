@@ -7,6 +7,6 @@ class TimeOffSerializer < ActiveModel::Serializer
     end
 
     def approver
-        MembersSerializer.new(object.approver)
+        MembersSerializer.new(object.approver) if object.approver
     end
 end

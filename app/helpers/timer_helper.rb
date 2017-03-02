@@ -3,7 +3,7 @@ module TimerHelper
         @old_category_member_empty = nil
         if @category_member.category
             return return_message "Error Not Allow, #{@category_member.category.name} has been archived" unless access_to_category?
-            return return_message "Error Not Allow, project  #{@category_member.category.project.name} has been archived or you no longer able to access" unless access_to_project? @category_member.category.project
+            return return_message "Error Not Allow, project  #{@category_member.category.project.name} has been archived or you no longer able to access" unless access_to_project? (@category_member.category.project)
 
             modify_with_category_member_exist_category
         else
@@ -18,12 +18,12 @@ module TimerHelper
 
     def modify_with_category_member_empty_category
         return return_message 'Nothing for update' unless @timer.task.category_member.category
-        @category_member = @current_member.category_member.create!
+        @category_member =  @current_member.category_member.create!()
         create_new_task
     end
 
     def modify_with_task
-        params['timer_update']['task_id'] ? update_exist_task : create_new_task
+        params['timer_update']['task_id']? update_exist_task : create_new_task
     end
 
     def update_exist_task
@@ -40,14 +40,14 @@ module TimerHelper
         end
     end
 
-    def update_timer(task)
+    def update_timer task
         @timer.task_id = task.id
         @timer.start_time = params['timer_update']['start_time']
         @timer.stop_time = params['timer_update']['stop_time']
 
         @timer.save!
 
-        @old_category_member_empty.destroy! unless @old_category_member_empty.category
+        @old_category_member_empty.destroy! if  @old_category_member_empty && !@old_category_member_empty.category
         return_message 'Sucess', TimerSerializer.new(@timer)
     end
 
@@ -56,7 +56,7 @@ module TimerHelper
         !project.is_archived && !project.project_members.find_by_member_id(@current_member.id).nil?
     end
 
-    # true if category have not archived yet
+    #true if category have not archived yet
     def access_to_category?
         !@category_member.category.is_archived
     end
@@ -65,7 +65,7 @@ module TimerHelper
         (@category_member.member_id == @current_member.id) && !@category_member.is_archived
     end
 
-    def access_to_task_under_pro_cate_member?(task)
+    def access_to_task_under_pro_cate_member? task
         task.category_member_id = @category_member.id
     end
 

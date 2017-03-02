@@ -8,7 +8,6 @@ module TimeOffApi
         resource :timeoffs do
             desc 'Get all timeoff request of themself'
             get do
-                binding.pry
                 authenticated!
                 return_message 'Success', @current_member.off_requests.map { |e|  TimeOffSerializer.new(e) }
             end
