@@ -1,5 +1,5 @@
 class RecentTaskSerializer < ActiveModel::Serializer
-    attributes :id, :name, :project_name, :category_name, :background, :last_start_time
+    attributes :id, :name, :project_name, :category_name, :background, :last_stop_time
 
     def project_name
         object.category_member.category.project.name if has_category?
@@ -21,7 +21,7 @@ class RecentTaskSerializer < ActiveModel::Serializer
         end
     end
 
-    def last_start_time
-        object.timers.order('start_time desc').first.start_time
+    def last_stop_time
+        object.timers.order('stop_time desc').first.stop_time
     end
 end

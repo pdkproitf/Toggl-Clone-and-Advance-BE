@@ -31,7 +31,7 @@ module TaskApi
                     result.push(RecentTaskSerializer.new(task).as_json)
                 end
 
-                result = result.sort_by { |hsh| hsh[:name] }
+                result.sort_by! { |hsh| hsh[:last_stop_time] }.reverse!
                 { data: result }
             end
         end
