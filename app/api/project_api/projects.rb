@@ -153,7 +153,7 @@ module ProjectApi
                 project.name = project_params[:name]
                 project.client_id = project_params[:client_id]
 
-                if project_params[:is_member_report]
+                if !project_params[:is_member_report].nil?
                   project.is_member_report = project_params[:is_member_report]
                 end
 
@@ -163,11 +163,10 @@ module ProjectApi
             desc 'Edit timer'
             params do
                  requires :project, type: Hash do
-                    requires :id, type: Integer, desc: 'Project ID'
                     requires :name, type: String, desc: 'Project name.'
                     requires :client_id, type: Integer, desc: 'Client id'
                     optional :background, type: String, desc: 'Background color'
-                    # optional :is_member_report, type: Boolean, desc: 'Allow member to run report'
+                    optional :is_member_report, type: Boolean, desc: 'Allow member to run report'
                     # optional :member_roles, type: Array, desc: 'Member roles' do
                     #     requires :member_id, type: Integer, desc: 'Member id'
                     #     requires :is_pm, type: Boolean, desc: 'If member becomes Project Manager'
@@ -184,7 +183,7 @@ module ProjectApi
             put ':id' do
                 authenticated!
                 project_params = params[:project]
-                project = @current_member.get_projects.find_by(id: project_params[:id])
+                project = @current_member.get_projects.find_by(id: params[:id])
                 if !project
                   error!(I18n.t("project_not_found"), 400)
                 end
@@ -203,6 +202,11 @@ module ProjectApi
                 # Edit background
                 if project_params[:background]
                   project.background = project_params[:background]
+                end
+
+                # Edit report permission
+                if !project_params[:is_member_report].nil?
+                  project.is_member_report = project_params[:is_member_report]
                 end
 
                 project.save
