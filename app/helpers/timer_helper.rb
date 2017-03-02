@@ -46,6 +46,7 @@ module TimerHelper
         @timer.stop_time = params['timer_update']['stop_time']
 
         @timer.save!
+        return_message 'Sucess', TimerSerializer.new(@timer)
     end
 
     # true if you be member of project and project have not archived yet
