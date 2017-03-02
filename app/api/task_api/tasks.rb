@@ -21,8 +21,6 @@ module TaskApi
                                         .limit(params[:number])
                                         .select('DISTINCT tasks.id as task_id', 'tasks.name as task_name')
                                         .select('tasks.created_at', 'tasks.updated_at', 'tasks.category_member_id')
-                                        .select('start_time')
-                                        .order('start_time desc')
 
                 result = []
                 timers.each do |timer|
@@ -30,8 +28,10 @@ module TaskApi
                     task[:category_member_id] = timer.category_member_id
                     task[:created_at] = timer.created_at
                     task[:updated_at] = timer.updated_at
-                    result.push(RecentTaskSerializer.new(task))
+                    result.push(RecentTaskSerializer.new(task).as_json)
                 end
+
+                result = result.sort_by { |hsh| hsh[:name] }
                 { data: result }
             end
         end
