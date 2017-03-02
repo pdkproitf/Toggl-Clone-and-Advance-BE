@@ -9,7 +9,8 @@ class Member < ApplicationRecord
     has_many :pm_project_members, -> { where is_pm: true }, class_name: 'ProjectMember'
     has_many :pm_projects, through: :pm_project_members, source: :project
 
-    has_many :project_members, -> { where is_archived: false }, dependent: :destroy
+    # has_many :project_members, -> { where is_archived: false }, dependent: :destroy
+    has_many :project_members, dependent: :destroy
     has_many :category_members, dependent: :destroy
     has_many :assigned_categories, through: :category_members, source: :category
 

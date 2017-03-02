@@ -9,18 +9,19 @@ module ProjectApi
             get do
               authenticated!
               projects = @current_member.get_projects.where(is_archived: false).order('id desc')
-              #return {members: Member.all.map{|p| MembersSerializer.new(p)}}
-              #return {hehe: ProjectSerializer.new(Project.find(1))}
-              #{"data": ProjectSerializer.new(Project.find(1))}
               list = []
               projects.each do |project|
                 list.push(ProjectSerializer.new(project))
               end
               {data: list}
+              #return {members: Member.all.map{|p| MembersSerializer.new(p)}}
+              #return {hehe: ProjectSerializer.new(Project.find(1))}
+              #{"data": ProjectSerializer.new(Project.find(1))}
             end
 
             desc 'Get all projects that I assigned'
             get 'assigned' do
+              # Get all projects, categories, category_members were not archived
               authenticated!
               assigned_categories = @current_member.category_members
                 .where.not(category_id: nil)
@@ -36,7 +37,7 @@ module ProjectApi
 
               result = []
               assigned_categories.each do |assigned_category|
-                return "hehe"
+                # if current_member is archived in project (remove from project)
                 if @current_member.project_members.where(project_id: assigned_category.id).first.is_archived
                   next
                 end
@@ -69,24 +70,8 @@ module ProjectApi
               result[:tracked_time] = project.get_tracked_time
               categories = []
               project.categories.each do |category|
-                # return {data: MembersSerializer.new(CategoryMember.find(42).member)}
-                # item = {}
-                # item.merge!(category.as_json)
-                # item[:tracked_time] = category.get_tracked_time
-                # category_members = []
-                # category.category_members.order(:id).each do |category_member|
-                #   item2 = {}
-                #   item2.merge!(MembersSerializer.new(category_member.member))
-                #   item2[:tracked_time] = category_member.get_tracked_time
-                #   category_members.push(item2)
-                # end
-                # item[:members] = category_members
                 categories.push(CategorySerializer.new(category))
               end
-
-              # category = project.categories
-
-              # return {data: category.map { |bookmark| ::CategorySerializer.new(bookmark)}.to_json}
               result[:categories] = categories
               {"data": result}
             end # End of getting a project by ID (for details)
