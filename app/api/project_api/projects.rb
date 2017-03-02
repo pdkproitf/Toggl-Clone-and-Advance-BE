@@ -165,7 +165,7 @@ module ProjectApi
                  requires :project, type: Hash do
                     requires :id, type: Integer, desc: 'Project ID'
                     requires :name, type: String, desc: 'Project name.'
-                    # requires :client_id, type: Integer, desc: 'Client id'
+                    requires :client_id, type: Integer, desc: 'Client id'
                     # optional :background, type: String, desc: 'Background color'
                     # optional :is_member_report, type: Boolean, desc: 'Allow member to run report'
                     # optional :member_roles, type: Array, desc: 'Member roles' do
@@ -189,6 +189,15 @@ module ProjectApi
                   error!(I18n.t("project_not_found"), 400)
                 end
                 project.name = project_params[:name]
+
+                # Client has to belongs to the company of current user
+                client = @current_member.company.clients.find_by(id: project_params[:client_id])
+                if !client
+                  return error!(I18n.t("client_not_found"), 400)
+                end
+
+                project.client = client
+
                 project.save
                 # Client has to belongs to the company of current user
                 # if !@current_member.company.clients.exists?(project_params[:client_id])
