@@ -167,10 +167,10 @@ module ProjectApi
                     requires :client_id, type: Integer, desc: 'Client id'
                     optional :background, type: String, desc: 'Background color'
                     optional :is_member_report, type: Boolean, desc: 'Allow member to run report'
-                    # optional :member_roles, type: Array, desc: 'Member roles' do
-                    #     requires :member_id, type: Integer, desc: 'Member id'
-                    #     requires :is_pm, type: Boolean, desc: 'If member becomes Project Manager'
-                    # end
+                    optional :member_roles, type: Array, desc: 'Member roles' do
+                        requires :member_id, type: Integer, desc: 'Member id'
+                        requires :is_pm, type: Boolean, desc: 'If member becomes Project Manager'
+                    end
                     # optional :category_members, type: Array, desc: 'Assign member to categories' do
                     #     requires :category_name, type: String, desc: 'Category name'
                     #     requires :is_billable, type: Boolean, desc: 'Billable'
@@ -209,6 +209,35 @@ module ProjectApi
                   project.is_member_report = project_params[:is_member_report]
                 end
 
+                # Edit member roles
+                project_members = []
+                if project_params[:member_roles]
+                  project_params[:member_roles].each do |member_role|
+                    project_member = project.project_members.find_by(member_id: member_role.member_id)
+                    # if member is added to project before (regardless is_archived)
+                    if project_member
+                      # Unarchive project_member
+                      project_member.unarchive
+                      # Change role
+                      project_member.is_pm = member_role.is_pm
+                      project_members.push(project_member)
+                    else  # Maybe new member
+                      # Check if member_id joined to current_member's company
+                      member = @current_member.company.members.find_by(id: member_role.member_id)
+                      if !member
+                        return error!(I18n.t("not_joined_to_company"), 400)
+                      end
+                      project_member = project.project_members.new
+                      project_member[:member_id] = member.id
+                      project_member[:is_pm] = member_role.is_pm
+                      project_members.push(project_member)
+                    end
+                  end
+                end
+
+                project_members.each do |project_member|
+                  project_member.save
+                end
                 project.save
                 # Client has to belongs to the company of current user
                 # if !@current_member.company.clients.exists?(project_params[:client_id])
