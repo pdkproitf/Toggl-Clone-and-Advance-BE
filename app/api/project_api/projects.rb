@@ -211,8 +211,10 @@ module ProjectApi
 
                 # Edit member roles
                 project_members = []
+                member_ids = []
                 if project_params[:member_roles]
                   project_params[:member_roles].each do |member_role|
+                    member_ids.push(member_role.member_id)
                     project_member = project.project_members.find_by(member_id: member_role.member_id)
                     # if member is added to project before (regardless is_archived)
                     if project_member
@@ -236,6 +238,11 @@ module ProjectApi
                 end
 
                 # Archive members were added to project before but not exist in params
+                project.project_members.each do |pro_mem|
+                  if !member_ids.include?(pro_mem.member_id)
+                    pro_mem.archive
+                  end
+                end
 
                 project_members.each do |project_member|
                   project_member.save
