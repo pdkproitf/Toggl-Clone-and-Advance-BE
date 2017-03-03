@@ -248,6 +248,7 @@ module ProjectApi
                 # ****************** Edit categories **********************
                 if project_params[:category_members]
                   #return {data: project_params[:category_members]}
+                  category_ids_in_param = []
                   project_params[:category_members].each do |category_member|
                     if category_member.category_id.nil? # Add new category
                       if project.categories.find_by(name: category_member.category_name)
@@ -268,6 +269,7 @@ module ProjectApi
                         end
                       end
                     else # Unarchive and change information of old category existing in params
+                      category_ids_in_param.push(category_member.category_id)
                       category = project.categories.find_by(id: category_member.category_id)
                       if category.nil?
                         return error!(I18n.t("category_not_found"), 400)
@@ -284,6 +286,7 @@ module ProjectApi
                       # Assign member to category
                       member_ids = []
                       # return {data: category.category_members}
+                      test_list = []
                       category_member.members.each do |member|
                         member_ids.push(member.member_id)
                         # Check if member was added to project
@@ -292,9 +295,11 @@ module ProjectApi
                         else
                           # Check if member assigned to project
                           mem = category.category_members.find_by(id: member.member_id)
+                          test_list.push(mem)
                           if mem.nil?
                             # Assign new member
                             new_cat_mem = category.category_members.new(member_id: member.member_id)
+                            #new_cat_mem.save
                             project_members.push(new_cat_mem)
                           else
                             # Unarchive old assigned members exist in params
@@ -302,14 +307,16 @@ module ProjectApi
                           end
                         end
                       end
+                      return {data: test_list}
                       # Archive old assigned members don't exist in params
                       category.category_members.where("member_id NOT IN (?)", member_ids).each do |category_member|
                         category_member.archive
                       end
                     end # End of checking category_id null
                     # Archive old category not existing in params
-
-
+                    project.categories.where("id NOT IN (?)", category_ids_in_param).each do |category|
+                      category.archive
+                    end
                     # *******************************************
                   end
                 end
