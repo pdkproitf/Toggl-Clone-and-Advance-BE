@@ -187,7 +187,7 @@ module ProjectApi
                 if !project
                   error!(I18n.t("project_not_found"), 400)
                 end
-
+                # ***************** Edit basic information *****************
                 # Edit project name
                 project.name = project_params[:name]
 
@@ -209,7 +209,7 @@ module ProjectApi
                   project.is_member_report = project_params[:is_member_report]
                 end
 
-                # Edit member roles
+                # ****************** Edit member roles **********************
                 project_members = []
                 member_ids = []
                 if project_params[:member_roles]
@@ -241,6 +241,17 @@ module ProjectApi
                 project.project_members.each do |pro_mem|
                   if !member_ids.include?(pro_mem.member_id)
                     pro_mem.archive
+                  end
+                end
+
+                # ****************** Edit categories **********************
+                if project_params[:category_members]
+                  #return {data: project_params[:category_members]}
+                  project_params[:category_members].each do |category_member|
+                    cat_mem = project.categories.find_by(name: category_member.category_name)
+                    # Check if category name exist in project (regardless to is_archived)
+                    return cat_mem
+
                   end
                 end
 
