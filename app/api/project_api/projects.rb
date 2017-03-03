@@ -171,13 +171,14 @@ module ProjectApi
                         requires :member_id, type: Integer, desc: 'Member id'
                         requires :is_pm, type: Boolean, desc: 'If member becomes Project Manager'
                     end
-                    # optional :category_members, type: Array, desc: 'Assign member to categories' do
-                    #     requires :category_name, type: String, desc: 'Category name'
-                    #     requires :is_billable, type: Boolean, desc: 'Billable'
-                    #     requires :members, type: Array, desc: 'Member' do
-                    #         requires :member_id, type: Integer, desc: 'Member id'
-                    #     end
-                    # end
+                    optional :category_members, type: Array, desc: 'Assign member to categories' do
+                        requires :category_id, type: Integer, desc: 'Category ID'
+                        requires :category_name, type: String, desc: 'Category name'
+                        requires :is_billable, type: Boolean, desc: 'Billable'
+                        requires :members, type: Array, desc: 'Member' do
+                            requires :member_id, type: Integer, desc: 'Member id'
+                        end
+                    end
                 end
             end
             put ':id' do
@@ -248,10 +249,31 @@ module ProjectApi
                 if project_params[:category_members]
                   #return {data: project_params[:category_members]}
                   project_params[:category_members].each do |category_member|
-                    cat_mem = project.categories.find_by(name: category_member.category_name)
-                    # Check if category name exist in project (regardless to is_archived)
-                    return cat_mem
-
+                    if category_member.category_id.nil? # new category
+                      if project.categories.find_by(name: category_member.category_name)
+                        return error!(I18n.t("category_name_taken"), 400)
+                      end
+                      # Add new category
+                      category = project.categories.new()
+                      category[:name] = category_member.category_name
+                      category[:is_billable] = category_member.is_billable
+                      category_member.members.each do |member|
+                        # Check if member was added to project
+                        if !project.project_members.find { |h| h[:member_id] == member.member_id }
+                          return error!(I18n.t("not_added_to_project"), 400)
+                        else
+                          cat_mem = category.category_members.new
+                          cat_mem[:member_id] = member.member_id
+                        end
+                      end
+                    else # old category
+                      cat_mem = project.categories.find_by(id: category_member.category_id)
+                      # if cat_mem
+                      #   cate_mem.unarchive
+                      #   cat_mem.
+                      # end
+                      #return cat_mem
+                    end
                   end
                 end
 
