@@ -4,7 +4,7 @@ class TimeOff < ApplicationRecord
     belongs_to :sender, class_name: 'Member'
     belongs_to :approver, class_name: 'Member'
 
-    validates_presence_of   :start_date, :end_date, :description
+    validates_presence_of   :start_date, :end_date, :description, :sender_id
     validate :time_valid
 
     private
