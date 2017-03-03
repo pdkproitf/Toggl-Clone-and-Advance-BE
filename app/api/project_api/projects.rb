@@ -249,7 +249,7 @@ module ProjectApi
                 if project_params[:category_members]
                   #return {data: project_params[:category_members]}
                   project_params[:category_members].each do |category_member|
-                    if category_member.category_id.nil? # new category
+                    if category_member.category_id.nil? # Add new category
                       if project.categories.find_by(name: category_member.category_name)
                         return error!(I18n.t("category_name_taken"), 400)
                       end
@@ -257,6 +257,7 @@ module ProjectApi
                       category = project.categories.new()
                       category[:name] = category_member.category_name
                       category[:is_billable] = category_member.is_billable
+                      # Assign member to category
                       category_member.members.each do |member|
                         # Check if member was added to project
                         if !project.project_members.find { |h| h[:member_id] == member.member_id }
@@ -266,14 +267,50 @@ module ProjectApi
                           cat_mem[:member_id] = member.member_id
                         end
                       end
-                    else # old category
-                      cat_mem = project.categories.find_by(id: category_member.category_id)
-                      # if cat_mem
-                      #   cate_mem.unarchive
-                      #   cat_mem.
-                      # end
-                      #return cat_mem
-                    end
+                    else # Unarchive and change information of old category existing in params
+                      category = project.categories.find_by(id: category_member.category_id)
+                      if category.nil?
+                        return error!(I18n.t("category_not_found"), 400)
+                      end
+
+                      if !category.name.eql? category_member.category_name
+                        if project.categories.find_by(name: category_member.category_name)
+                          return error!(I18n.t("category_name_taken"), 400)
+                        end
+                        category[:name] = category_member.category_name
+                      end
+                      category[:is_billable] = category_member.is_billable
+                      category.unarchive
+                      # Assign member to category
+                      member_ids = []
+                      # return {data: category.category_members}
+                      category_member.members.each do |member|
+                        member_ids.push(member.member_id)
+                        # Check if member was added to project
+                        if !project.project_members.find { |h| h[:member_id] == member.member_id }
+                          return error!(I18n.t("not_added_to_project"), 400)
+                        else
+                          # Check if member assigned to project
+                          mem = category.category_members.find_by(id: member.member_id)
+                          if mem.nil?
+                            # Assign new member
+                            new_cat_mem = category.category_members.new(member_id: member.member_id)
+                            project_members.push(new_cat_mem)
+                          else
+                            # Unarchive old assigned members exist in params
+                            mem.unarchive
+                          end
+                        end
+                      end
+                      # Archive old assigned members don't exist in params
+                      category.category_members.where("member_id NOT IN (?)", member_ids).each do |category_member|
+                        category_member.archive
+                      end
+                    end # End of checking category_id null
+                    # Archive old category not existing in params
+
+
+                    # *******************************************
                   end
                 end
 
