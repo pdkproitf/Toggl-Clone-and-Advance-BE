@@ -9,18 +9,19 @@ module ProjectApi
             get do
               authenticated!
               projects = @current_member.get_projects.where(is_archived: false).order('id desc')
-              #return {members: Member.all.map{|p| MembersSerializer.new(p)}}
-              #return {hehe: ProjectSerializer.new(Project.find(1))}
-              #{"data": ProjectSerializer.new(Project.find(1))}
               list = []
               projects.each do |project|
                 list.push(ProjectSerializer.new(project))
               end
               {data: list}
+              #return {members: Member.all.map{|p| MembersSerializer.new(p)}}
+              #return {hehe: ProjectSerializer.new(Project.find(1))}
+              #{"data": ProjectSerializer.new(Project.find(1))}
             end
 
             desc 'Get all projects that I assigned'
             get 'assigned' do
+              # Get all projects, categories, category_members were not archived
               authenticated!
               assigned_categories = @current_member.category_members
                 .where.not(category_id: nil)
@@ -36,6 +37,10 @@ module ProjectApi
 
               result = []
               assigned_categories.each do |assigned_category|
+                # if current_member is archived in project (remove from project)
+                if @current_member.project_members.where(project_id: assigned_category.id).first.is_archived
+                  next
+                end
                 item = result.find { |h| h[:id] == assigned_category[:id] }
                 if !item
                   item = {id: assigned_category[:id], name: assigned_category[:name]}
@@ -53,7 +58,7 @@ module ProjectApi
             desc 'Get a project by id'
             get ':id' do
               authenticated!
-              projects = @current_member.get_projects.where(id: params[:id])
+              projects = @current_member.get_projects.where(id: params[:id], is_archived: false)
 
               if projects.length == 0
                 return error!(I18n.t("project_not_found"), 404)
@@ -65,24 +70,8 @@ module ProjectApi
               result[:tracked_time] = project.get_tracked_time
               categories = []
               project.categories.each do |category|
-                # return {data: MembersSerializer.new(CategoryMember.find(42).member)}
-                # item = {}
-                # item.merge!(category.as_json)
-                # item[:tracked_time] = category.get_tracked_time
-                # category_members = []
-                # category.category_members.order(:id).each do |category_member|
-                #   item2 = {}
-                #   item2.merge!(MembersSerializer.new(category_member.member))
-                #   item2[:tracked_time] = category_member.get_tracked_time
-                #   category_members.push(item2)
-                # end
-                # item[:members] = category_members
                 categories.push(CategorySerializer.new(category))
               end
-
-              # category = project.categories
-
-              # return {data: category.map { |bookmark| ::CategorySerializer.new(bookmark)}.to_json}
               result[:categories] = categories
               {"data": result}
             end # End of getting a project by ID (for details)
@@ -112,7 +101,7 @@ module ProjectApi
               project_params = params[:project]
 
               # Current user has to be an admin or a PM
-              if @current_member.role.name != "Admin" && @current_member.role.name != "PM"
+              if !@current_member.admin? && !@current_member.pm?
                 return error!(I18n.t("access_denied"), 400)
               end
 
@@ -164,7 +153,7 @@ module ProjectApi
                 project.name = project_params[:name]
                 project.client_id = project_params[:client_id]
 
-                if project_params[:is_member_report]
+                if !project_params[:is_member_report].nil?
                   project.is_member_report = project_params[:is_member_report]
                 end
 
@@ -174,7 +163,6 @@ module ProjectApi
             desc 'Edit timer'
             params do
                  requires :project, type: Hash do
-                    requires :id, type: Integer, desc: 'Project ID'
                     requires :name, type: String, desc: 'Project name.'
                     requires :client_id, type: Integer, desc: 'Client id'
                     optional :background, type: String, desc: 'Background color'
@@ -183,18 +171,94 @@ module ProjectApi
                         requires :member_id, type: Integer, desc: 'Member id'
                         requires :is_pm, type: Boolean, desc: 'If member becomes Project Manager'
                     end
-                    optional :category_members, type: Array, desc: 'Assign member to categories' do
-                        requires :category_name, type: String, desc: 'Category name'
-                        requires :is_billable, type: Boolean, desc: 'Billable'
-                        requires :members, type: Array, desc: 'Member' do
-                            requires :member_id, type: Integer, desc: 'Member id'
-                        end
-                    end
+                    # optional :category_members, type: Array, desc: 'Assign member to categories' do
+                    #     requires :category_name, type: String, desc: 'Category name'
+                    #     requires :is_billable, type: Boolean, desc: 'Billable'
+                    #     requires :members, type: Array, desc: 'Member' do
+                    #         requires :member_id, type: Integer, desc: 'Member id'
+                    #     end
+                    # end
                 end
             end
             put ':id' do
                 authenticated!
-                @timer = Timer.find(params['id'])
+                project_params = params[:project]
+                project = @current_member.get_projects.find_by(id: params[:id])
+                if !project
+                  error!(I18n.t("project_not_found"), 400)
+                end
+                # ***************** Edit basic information *****************
+                # Edit project name
+                project.name = project_params[:name]
+
+                # Edit client
+                # Client has to belongs to the company of current user
+                client = @current_member.company.clients.find_by(id: project_params[:client_id])
+                if !client
+                  return error!(I18n.t("client_not_found"), 400)
+                end
+                project.client = client
+
+                # Edit background
+                if project_params[:background]
+                  project.background = project_params[:background]
+                end
+
+                # Edit report permission
+                if !project_params[:is_member_report].nil?
+                  project.is_member_report = project_params[:is_member_report]
+                end
+
+                # ****************** Edit member roles **********************
+                project_members = []
+                member_ids = []
+                if project_params[:member_roles]
+                  project_params[:member_roles].each do |member_role|
+                    member_ids.push(member_role.member_id)
+                    project_member = project.project_members.find_by(member_id: member_role.member_id)
+                    # if member is added to project before (regardless is_archived)
+                    if project_member
+                      # Unarchive project_member
+                      project_member.unarchive
+                      # Change role
+                      project_member.is_pm = member_role.is_pm
+                      project_members.push(project_member)
+                    else  # Maybe new member
+                      # Check if member_id joined to current_member's company
+                      member = @current_member.company.members.find_by(id: member_role.member_id)
+                      if !member
+                        return error!(I18n.t("not_joined_to_company"), 400)
+                      end
+                      project_member = project.project_members.new
+                      project_member[:member_id] = member.id
+                      project_member[:is_pm] = member_role.is_pm
+                      project_members.push(project_member)
+                    end
+                  end
+                end
+
+                # Archive members were added to project before but not exist in params
+                project.project_members.each do |pro_mem|
+                  if !member_ids.include?(pro_mem.member_id)
+                    pro_mem.archive
+                  end
+                end
+
+                # ****************** Edit categories **********************
+                if project_params[:category_members]
+                  #return {data: project_params[:category_members]}
+                  project_params[:category_members].each do |category_member|
+                    cat_mem = project.categories.find_by(name: category_member.category_name)
+                    # Check if category name exist in project (regardless to is_archived)
+                    return cat_mem
+
+                  end
+                end
+
+                project_members.each do |project_member|
+                  project_member.save
+                end
+                project.save
             end # End of editing project
 
             desc 'Delete a project'
