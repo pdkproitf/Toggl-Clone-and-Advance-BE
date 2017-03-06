@@ -30,4 +30,12 @@ module TimeOffHelper
         @current_member.project_members.each{|p_member| project_join.push(p_member.project_id) unless p_member.project.is_archived}
         project_join
     end
+
+    def get_pending_request_admin_role
+        
+    end
+
+    def get_pending_request_pm_role
+        TimeOff.where("created_at > (?) and sender_id not in (?)" ,Date.today.beginning_of_year, )
+    end
 end

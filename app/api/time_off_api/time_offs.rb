@@ -9,7 +9,10 @@ module TimeOffApi
             desc 'Get all timeoff request of themself'
             get do
                 authenticated!
-                return_message 'Success', @current_member.off_requests.map { |e|  TimeOffSerializer.new(e) }
+                off_requests = @current_member.off_requests.map { |e|  TimeOffSerializer.new(e)}
+                pending_requests = []
+                pending_requests = TimeOff.where("created_at > (?)" ,Date.today.beginning_of_year).map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
+                return_message 'Success', {off_requests: off_requests, pending_requests: pending_requests}
             end
 
             desc 'Create time off'
