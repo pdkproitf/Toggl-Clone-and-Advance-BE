@@ -15,33 +15,8 @@ class Category < ApplicationRecord
     sum
   end
 
-  def include_member?(member_id)
-
-  end
-
-  def add_member(member_id)
-    member_id
-  end
-
-  def check_assigned?(member)
-    category_members.where()
-  end
-
-  def check_archived?(member)
-    category_members.
-  end
-
-  def unarchive_member(assigned_member)
-    assigned_member = category_members.find_by(member_id: member_id)
-    if !assigned_member.nil?
-
-    end
-  end
-
-  def archive_members_not_in(member_ids)
-    members = project_members
-              .where.not(member_id: member_ids, is_archived: true)
-    members.each(&:archived)
+  def category_members_except_with(member_ids)
+    category_members.where.not(member_id: member_ids, is_archived: true)
   end
 
   def archive
