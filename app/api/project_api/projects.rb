@@ -181,24 +181,22 @@ module ProjectApi
         project.save!
       end # End of project add new
 
-      desc 'Edit timer'
+      desc 'Edit project'
       params do
         requires :project, type: Hash do
           requires :name, type: String, desc: 'Project name.'
           requires :client_id, type: Integer, desc: 'Client id'
           optional :background, type: String, desc: 'Background color'
           optional :is_member_report, type: Boolean, desc: 'Member run report'
-          optional :member_roles, type: Array, desc: 'Member roles' do
-            requires :member_id, type: Integer, desc: 'Member id'
+          optional :members, type: Array, desc: 'Members of project' do
+            requires :id, type: Integer, desc: 'Member id'
             requires :is_pm, type: Boolean, desc: 'Member as Project Manager'
           end
-          optional :category_members, type: Array, desc: 'Member - category' do
-            requires :category_id, type: Integer, desc: 'Category ID'
-            requires :category_name, type: String, desc: 'Category name'
-            requires :is_billable, type: Boolean, desc: 'Billable'
-            requires :members, type: Array, desc: 'Member' do
-              requires :member_id, type: Integer, desc: 'Member id'
-            end
+          optional :categories, type: Array, desc: 'Categories' do
+            requires :id, type: Integer, desc: 'Category ID'
+            requires :name, type: String, desc: 'Category name'
+            requires :is_billable, type: Boolean, desc: 'Billable or not'
+            requires :member_ids, type: Array[Integer], desc: 'Member IDs'
           end
         end
       end
@@ -207,144 +205,145 @@ module ProjectApi
         project_params = params[:project]
         project = @current_member.get_projects.find_by(id: params[:id])
         error!(I18n.t('project_not_found'), 400) unless project
-        # ***************** Edit basic information *****************
+        # ***************** Edit basic information ***************************
         # Edit project name
         project.name = project_params[:name]
-
         # Edit client
-        # Client has to belongs to the company of current user
         client = @current_member.company
                                 .clients
                                 .find_by(id: project_params[:client_id])
         return error!(I18n.t('client_not_found'), 400) unless client
         project.client = client
-
         # Edit background
-        if project_params[:background]
+        unless project_params[:background].nil?
           project.background = project_params[:background]
         end
-
         # Edit report permission
         unless project_params[:is_member_report].nil?
           project.is_member_report = project_params[:is_member_report]
         end
-
-        # ****************** Edit member roles **********************
-        project_members = []
-        member_ids = []
-        if project_params[:member_roles]
-          project_params[:member_roles].each do |member_role|
-            member_ids.push(member_role.member_id)
-            project_member = project.project_members
-                                    .find_by(member_id: member_role.member_id)
-            # if member is added to project before (regardless is_archived)
-            if project_member
-              # Unarchive project_member
-              project_member.unarchive
-              # Change role
-              project_member.is_pm = member_role.is_pm
-              project_members.push(project_member)
-            else # Maybe new member
-              # Check if member_id joined to current_member's company
-              member = @current_member.company
-                                      .members
-                                      .find_by(id: member_role.member_id)
-              return error!(I18n.t('not_joined_to_company'), 400) unless member
-              project_member = project.project_members.new
-              project_member[:member_id] = member.id
-              project_member[:is_pm] = member_role.is_pm
-              project_members.push(project_member)
+        # ***************** Edit basic information ends **********************
+        # ******************** Edit members of project ***********************
+        members = project_params[:members]
+        unless members.nil?
+          member_ids = []
+          members.each do |member|
+            member_ids.push(member.id)
+            existing_member = project.project_members
+                                     .find_by(member_id: member.id)
+            if existing_member.nil?
+              # Add new member to project
+              new_member = @current_member.company
+                                          .members
+                                          .find_by(id: member.id)
+              if new_member.nil?
+                return error!(I18n.t('not_joined_to_company'), 400)
+              end
+              project.project_members.new(
+                member_id: new_member.id,
+                is_pm: member.is_pm
+              )
+            else
+              # Edit existing member of project
+              existing_member.unarchive
+              existing_member.is_pm = member.is_pm
+              existing_member.save
             end
           end
+          # Archive members were added to project before but not exist in params
+          project.members_except_with(member_ids).each(&:archive)
         end
-
-        # Archive members were added to project before but not exist in params
-        project.project_members.each do |pro_mem|
-          pro_mem.archive unless member_ids.include?(pro_mem.member_id)
-        end
+        # ****************** Edit members of project ends ********************
+        project.save
 
         # ****************** Edit categories **********************
-        if project_params[:category_members]
-          # return {data: project_params[:category_members]}
-          category_ids_in_param = []
-          project_params[:category_members].each do |category_member|
-            if category_member.category_id.nil? # Add new category
-              if project.categories.find_by(name: category_member.category_name)
-                return error!(I18n.t('category_name_taken'), 400)
-              end
-              # Add new category
-              category = project.categories.new
-              category[:name] = category_member.category_name
-              category[:is_billable] = category_member.is_billable
-              # Assign member to category
-              category_member.members.each do |member|
-                # Check if member was added to project
-                if !project.project_members
-                           .find { |h| h[:member_id] == member.member_id }
-                  return error!(I18n.t('not_added_to_project'), 400)
-                else
-                  cat_mem = category.category_members.new
-                  cat_mem[:member_id] = member.member_id
-                end
-              end
-            else # Unarchive and change info of old category existing in params
-              category_ids_in_param.push(category_member.category_id)
-              category = project.categories
-                                .find_by(id: category_member.category_id)
-              return error!(I18n.t('category_not_found'), 400) if category.nil?
+        # assigned_categories = project_params[:category_members]
+        # # Check if assigned_categories exist
+        # return 'co' unless assigned_categories.nil?
+        # return 'save nhe!'
+        # ****************** Edit categories end ******************
 
-              unless category.name.eql? category_member.category_name
-                if project.categories
-                          .find_by(name: category_member.category_name)
-                  return error!(I18n.t('category_name_taken'), 400)
-                end
-                category[:name] = category_member.category_name
-              end
-              category[:is_billable] = category_member.is_billable
-              category.unarchive
-              # Assign member to category
-              member_ids = []
-              # return {data: category.category_members}
-              test_list = []
-              category_member.members.each do |member|
-                member_ids.push(member.member_id)
-                # Check if member was added to project
-                if !project.project_members
-                           .find { |h| h[:member_id] == member.member_id }
-                  return error!(I18n.t('not_added_to_project'), 400)
-                else
-                  # Check if member assigned to project
-                  mem = category.category_members.find_by(id: member.member_id)
-                  test_list.push(mem)
-                  if mem.nil?
-                    # Assign new member
-                    new_cat_mem = category
-                                  .category_members
-                                  .new(member_id: member.member_id)
-                    # new_cat_mem.save
-                    project_members.push(new_cat_mem)
-                  else
-                    # Unarchive old assigned members exist in params
-                    mem.unarchive
-                  end
-                end
-              end
-              return { data: test_list }
-              # Archive old assigned members don't exist in params
-              category.category_members
-                      .where('member_id NOT IN (?)', member_ids)
-                      .each(&:archive)
-            end # End of checking category_id null
-            # Archive old category not existing in params
-            project.categories
-                   .where('id NOT IN (?)', category_ids_in_param)
-                   .each(&:archive)
-            # *******************************************
-          end
-        end
+        # # ****************** Edit categories **********************
+        # if project_params[:category_members]
+        #   # return {data: project_params[:category_members]}
+        #   category_ids_in_param = []
+        #   project_params[:category_members].each do |category_member|
+        #     if category_member.category_id.nil? # Add new category
+        #       if project.categories.find_by(name: category_member.category_name)
+        #         return error!(I18n.t('category_name_taken'), 400)
+        #       end
+        #       # Add new category
+        #       category = project.categories.new
+        #       category[:name] = category_member.category_name
+        #       category[:is_billable] = category_member.is_billable
+        #       # Assign member to category
+        #       category_member.members.each do |member|
+        #         # Check if member was added to project
+        #         if !project.project_members
+        #                    .find { |h| h[:member_id] == member.member_id }
+        #           return error!(I18n.t('not_added_to_project'), 400)
+        #         else
+        #           cat_mem = category.category_members.new
+        #           cat_mem[:member_id] = member.member_id
+        #         end
+        #       end
+        #     else # Unarchive and change info of old category existing in params
+        #       category_ids_in_param.push(category_member.category_id)
+        #       category = project.categories
+        #                         .find_by(id: category_member.category_id)
+        #       return error!(I18n.t('category_not_found'), 400) if category.nil?
+        #
+        #       unless category.name.eql? category_member.category_name
+        #         if project.categories
+        #                   .find_by(name: category_member.category_name)
+        #           return error!(I18n.t('category_name_taken'), 400)
+        #         end
+        #         category[:name] = category_member.category_name
+        #       end
+        #       category[:is_billable] = category_member.is_billable
+        #       category.unarchive
+        #       # Assign member to category
+        #       member_ids = []
+        #       # return {data: category.category_members}
+        #       test_list = []
+        #       category_member.members.each do |member|
+        #         member_ids.push(member.member_id)
+        #         # Check if member was added to project
+        #         if !project.project_members
+        #                    .find { |h| h[:member_id] == member.member_id }
+        #           return error!(I18n.t('not_added_to_project'), 400)
+        #         else
+        #           # Check if member assigned to project
+        #           mem = category.category_members.find_by(id: member.member_id)
+        #           test_list.push(mem)
+        #           if mem.nil?
+        #             # Assign new member
+        #             new_cat_mem = category
+        #                           .category_members
+        #                           .new(member_id: member.member_id)
+        #             # new_cat_mem.save
+        #             project_members.push(new_cat_mem)
+        #           else
+        #             # Unarchive old assigned members exist in params
+        #             mem.unarchive
+        #           end
+        #         end
+        #       end
+        #       return { data: test_list }
+        #       # Archive old assigned members don't exist in params
+        #       category.category_members
+        #               .where('member_id NOT IN (?)', member_ids)
+        #               .each(&:archive)
+        #     end # End of checking category_id null
+        #     # Archive old category not existing in params
+        #     project.categories
+        #            .where('id NOT IN (?)', category_ids_in_param)
+        #            .each(&:archive)
+        #     # *******************************************
+        #  end
+        # end
 
-        project_members.each(&:save)
-        project.save
+        # project_members.each(&:save)
       end # End of editing project
 
       desc 'Delete a project'
