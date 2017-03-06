@@ -7,13 +7,13 @@ module MemberApi
             def invite_new_user invite
                 invite ? invite.generate_token : (invite = @current_member.sent_invites.create!(email: params['email']))
                 invite.save!
-                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/sign-up/'+invite.invite_token).deliver_later
+                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/sign-up/'+invite.invite_token+'/' + @current_member.company.name + '/' + @current_member.company.domain).deliver_later
             end
 
             def invite_exist_user invite, recepter
                 invite ? invite.generate_token : (invite = @current_member.sent_invites.build(email: params['email'], recipient_id: recepter.id))
                 invite.save!
-                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/members_confirm/'+invite.invite_token).deliver_later
+                InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/members-confirm/'+invite.invite_token+'/' + @current_member.company.name + '/' + @current_member.company.domain).deliver_later
             end
         end
 

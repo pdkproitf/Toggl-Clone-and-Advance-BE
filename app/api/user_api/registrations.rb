@@ -21,9 +21,7 @@ module UserApi
             end
 
             def create_member
-                admin = Role.find_by_name('Admin')
-                admin = Role.create!(name: 'Admin') unless admin
-                @company.members.build(user_id: @resource.id, role_id: admin.id)
+                @company.members.build(user_id: @resource.id, role_id: @role.id)
             end
 
             def save_user
@@ -71,12 +69,15 @@ module UserApi
                 @resource = sign_up_params
                 @resource.provider = 'email'
                 @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
+                @role = Role.find_by_name('Admin') || Role.create!(name: 'Admin')
 
                 if params['user']['invited_token']
                     invite = Invite.find_by_email(params['user']['email'])
                     return return_message 'Not Found invite' unless invite
                     return return_message 'Invite expiry' if invite.expiry?
                     return error!('Token Invalid', 400) unless invite.authenticated?(params['user']['invited_token'])
+
+                    @role = Role.find_by_name('Member') || Role.create!(name: 'Member')
                     @company = invite.sender.company
                 else
                     return return_message 'Error: Domain has already been taken' if Company.find_by_domain(params['user']['company_domain'])
