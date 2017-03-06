@@ -25,6 +25,10 @@ class Project < ApplicationRecord
     project_members.where.not(member_id: member_ids, is_archived: true)
   end
 
+  def categories_except_with(category_ids)
+    categories.where.not(id: category_ids, is_archived: true)
+  end
+
   def archive
     update_attributes(is_archived: true)
   end
