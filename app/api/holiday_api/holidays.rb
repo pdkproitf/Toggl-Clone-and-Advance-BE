@@ -9,8 +9,10 @@ module HolidayApi
     resource :holidays do
       # => /api/v1/holidays/
       desc 'Get all holidays'
-      get '/' do
-        Holiday.all
+      get do
+        authenticated!
+        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
+        @current_member.company.holidays
       end
 
       desc 'Create new holiday'
@@ -22,8 +24,13 @@ module HolidayApi
         end
       end
       post do
-        authentication!
-        @current_member
+        authenticated!
+        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
+        holiday = @current_member.company.holidays.new
+        holiday[:name] = params[:holiday][:name]
+        holiday[:begin_day] = params[:holiday][:begin_day]
+        holiday[:end_day] = params[:holiday][:end_day]
+        holiday.save!
       end
     end
   end

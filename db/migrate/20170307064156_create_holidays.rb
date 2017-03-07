@@ -4,7 +4,7 @@ class CreateHolidays < ActiveRecord::Migration[5.0]
       t.string :name, null: false
       t.date :begin_day, null: false
       t.date :end_day, null: false
-      t.references :companies, foreign_key: true, index: true
+      t.references :company, foreign_key: true, index: true
 
       t.timestamps
     end
