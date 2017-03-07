@@ -8,26 +8,29 @@ module CompanyApi
 
     resource :companies do
       # => /api/v1/companies/
-      desc 'Get all companies'
+      desc '[For development] Get all companies'
       get '/' do
         Company.all
       end
 
-      desc 'Get a category by id'
+      desc 'Get a company by id'
       get ':id' do
       end
 
-      desc 'create new category'
+      desc 'Edit a company'
       params do
-        requires :category, type: Hash do
-          requires :name, type: String, desc: 'Category name'
-          requires :default, type: Boolean, desc: 'Default'
+        requires :company, type: Hash do
+          requires :name, type: String, desc: 'Company name'
+          optional :overtime_max, type: Integer, desc: 'Overtime maximum'
+          optional :begin_week, type: Integer, values: 0..6,
+                                desc: 'Begin day of week'
         end
       end
-      post '/' do
+      put :id do
+        @current_member = Member.find(1)
       end
 
-      desc 'Delete a category'
+      desc 'Delete a company'
       delete ':id' do
       end
     end
