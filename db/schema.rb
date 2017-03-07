@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302045022) do
+ActiveRecord::Schema.define(version: 20170307064156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,10 +45,21 @@ ActiveRecord::Schema.define(version: 20170302045022) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "domain"
+    t.integer  "overtime_max", default: 40
+    t.integer  "begin_week",   default: 1
+  end
+
+  create_table "holidays", force: :cascade do |t|
+    t.string   "name",         null: false
+    t.date     "begin_day",    null: false
+    t.date     "end_day",      null: false
+    t.integer  "companies_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.string   "domain"
-    t.integer  "overtime_max"
+    t.index ["companies_id"], name: "index_holidays_on_companies_id", using: :btree
   end
 
   create_table "invites", force: :cascade do |t|
@@ -168,6 +179,7 @@ ActiveRecord::Schema.define(version: 20170302045022) do
   add_foreign_key "category_members", "categories"
   add_foreign_key "category_members", "members"
   add_foreign_key "clients", "companies"
+  add_foreign_key "holidays", "companies", column: "companies_id"
   add_foreign_key "members", "companies"
   add_foreign_key "members", "roles"
   add_foreign_key "members", "users"
