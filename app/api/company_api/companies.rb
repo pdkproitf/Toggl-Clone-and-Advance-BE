@@ -23,7 +23,7 @@ module CompanyApi
                                 desc: 'Begin day of week'
         end
       end
-      put do
+      put 'own' do
         authenticated!
         return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
         company = @current_member.company
