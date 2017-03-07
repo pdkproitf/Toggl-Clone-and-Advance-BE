@@ -26,8 +26,18 @@ module CompanyApi
                                 desc: 'Begin day of week'
         end
       end
-      put :id do
-        @current_member = Member.find(1)
+      put do
+        authenticated!
+        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
+        company = @current_member.company
+        company[:name] = params[:company][:name]
+        unless params[:company][:overtime_max].nil?
+          company[:overtime_max] = params[:company][:overtime_max]
+        end
+        unless params[:company][:begin_week].nil?
+          company[:begin_week] = params[:company][:begin_week]
+        end
+        company.save!
       end
 
       desc 'Delete a company'
