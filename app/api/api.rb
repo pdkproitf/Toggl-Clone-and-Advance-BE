@@ -19,6 +19,7 @@ module API
     mount TaskApi::Tasks
     mount TimeOffApi::TimeOffs
     mount CompanyApi::Companies
+    mount HolidayApi::Holidays
 
     add_swagger_documentation(
       api_version: 'v1',
