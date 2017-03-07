@@ -5,7 +5,7 @@ module ProjectApi
     version 'v1', using: :accept_version_header
     resource :projects do
       # => /api/v1/projects/
-      desc 'Get all projects that I own'
+      desc 'Get all projects current_member manage'
       get do
         authenticated!
         projects = @current_member.get_projects
