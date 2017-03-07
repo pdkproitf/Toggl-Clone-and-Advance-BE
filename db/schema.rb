@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307043456) do
+ActiveRecord::Schema.define(version: 20170307064156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 20170307043456) do
     t.string   "domain"
     t.integer  "overtime_max", default: 40
     t.integer  "begin_week",   default: 1
+  end
+
+  create_table "holidays", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "begin_day",  null: false
+    t.datetime "end_day",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "invites", force: :cascade do |t|
