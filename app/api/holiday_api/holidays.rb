@@ -15,12 +15,15 @@ module HolidayApi
 
       desc 'Create new holiday'
       params do
-        requires :category, type: Hash do
-          requires :name, type: String, desc: 'Category name'
-          requires :default, type: Boolean, desc: 'Default'
+        requires :holiday, type: Hash do
+          requires :name, type: String, desc: 'Holiday name'
+          requires :begin_day, type: Date, desc: 'Begin day'
+          requires :end_day, type: Date, desc: 'End day'
         end
       end
-      post '/' do
+      post do
+        authentication!
+        @current_member
       end
     end
   end

@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 20170307064156) do
 
   create_table "holidays", force: :cascade do |t|
     t.string   "name",         null: false
-    t.datetime "begin_day",    null: false
-    t.datetime "end_day",      null: false
+    t.date     "begin_day",    null: false
+    t.date     "end_day",      null: false
     t.integer  "companies_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
