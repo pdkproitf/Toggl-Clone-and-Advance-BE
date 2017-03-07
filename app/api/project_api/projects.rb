@@ -80,7 +80,7 @@ module ProjectApi
         project = projects.first
         result = {}
         result.merge!(ProjectSerializer.new(project))
-        result[:tracked_time] = project.get_tracked_time
+        result[:tracked_time] = project.tracked_time
         categories = []
         project.categories.each do |category|
           categories.push(CategorySerializer.new(category))

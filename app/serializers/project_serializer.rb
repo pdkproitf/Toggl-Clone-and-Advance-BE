@@ -8,7 +8,7 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def tracked_time
-    object.get_tracked_time
+    object.tracked_time
   end
 
   # def members

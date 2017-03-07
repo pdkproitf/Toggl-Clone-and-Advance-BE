@@ -3,7 +3,7 @@ class Timer < ApplicationRecord
 
   validate :time_valid
 
-  def get_tracked_time
+  def tracked_time
     stop_time - start_time
   end
 
