@@ -31,11 +31,23 @@ module TimeOffHelper
         project_join
     end
 
-    def get_pending_request_admin_role
-        
+    def update_timeoff
+        @timeoff.update_attributes!(create_params)
+        return_message 'Success'
     end
 
-    def get_pending_request_pm_role
-        TimeOff.where("created_at > (?) and sender_id not in (?)" ,Date.today.beginning_of_year, )
+    # true if timeoff didn't belong to current_member & current_member is admin or (PM and timeoff's sender  is member)
+    def able_to_answer_request?
+        return false if @current_member.id == @timeoff.sender_id
+        return true if @current_member.admin?
+        return true if @current_member.pm? & @timeoff.sender.member?
+        false
+    end
+
+    def answer_timeoff
+        @timeoff.update_attributes!(
+        approver_id: @current_member.id,
+        approver_messages: params['answer_timeoff_request']['approver_messages'],
+        status: params['answer_timeoff_request']['status'])
     end
 end

@@ -49,4 +49,8 @@ class Member < ApplicationRecord
     def pm?
         role.name == 'PM'
     end
+
+    def member?
+        role.name == 'Member'
+    end
 end
