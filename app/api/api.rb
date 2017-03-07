@@ -13,7 +13,6 @@ module API
 
     mount ProjectApi::Projects
     mount ClientApi::Clients
-    mount CategoryApi::Categories
     mount TimerApi::Timers
     mount MemberApi::Members
     mount TaskApi::Tasks
