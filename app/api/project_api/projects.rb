@@ -330,10 +330,11 @@ module ProjectApi
             end
           end
         end
-        project.save!
+
         # Archive old category not existing in params
         project.categories_except_with(category_ids).each(&:archive)
         # ********************** Edit categories ends ************************
+        project.save!
         # All validates pass
         saved_list.each(&:save!)
         archived_list.each(&:archive)
