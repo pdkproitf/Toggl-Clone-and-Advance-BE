@@ -1,5 +1,5 @@
 class CategorySerializer < ActiveModel::Serializer
-  attributes :id, :name, :tracked_time, :members
+  attributes :id, :name, :is_billable, :tracked_time, :members
   def tracked_time
     object.get_tracked_time
   end
