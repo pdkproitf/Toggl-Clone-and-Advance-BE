@@ -14,12 +14,25 @@ module TaskApi
             end
             get 'recent' do
                 authenticated!
-                @current_member.timers
-                               .where(category_members: { is_archived: false })
-                               .where.not(category_members: { category_id: nil })
-                               .where.not(tasks: { name: '' })
-                               .order('start_time desc')
-                               .limit(params[:number])
+                timers = @current_member.timers
+                                        .where(category_members: { is_archived: false })
+                                        .where.not(category_members: { category_id: nil })
+                                        .where.not(tasks: { name: '' })
+                                        .limit(params[:number])
+                                        .select('DISTINCT tasks.id as task_id', 'tasks.name as task_name')
+                                        .select('tasks.created_at', 'tasks.updated_at', 'tasks.category_member_id')
+
+                result = []
+                timers.each do |timer|
+                    task = Task.new(id: timer.task_id, name: timer.task_name)
+                    task[:category_member_id] = timer.category_member_id
+                    task[:created_at] = timer.created_at
+                    task[:updated_at] = timer.updated_at
+                    result.push(RecentTaskSerializer.new(task).as_json)
+                end
+
+                result.sort_by! { |hsh| hsh[:last_stop_time] }.reverse!
+                { data: result }
             end
         end
     end

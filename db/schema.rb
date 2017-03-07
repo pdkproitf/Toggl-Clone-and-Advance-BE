@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228104358) do
+ActiveRecord::Schema.define(version: 20170307064156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,10 +45,21 @@ ActiveRecord::Schema.define(version: 20170228104358) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.string   "domain"
-    t.integer  "overtime_max"
+    t.integer  "overtime_max", default: 40
+    t.integer  "begin_week",   default: 1
+  end
+
+  create_table "holidays", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.date     "begin_date", null: false
+    t.date     "end_date",   null: false
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_holidays_on_company_id", using: :btree
   end
 
   create_table "invites", force: :cascade do |t|
@@ -112,6 +123,21 @@ ActiveRecord::Schema.define(version: 20170228104358) do
     t.index ["category_member_id"], name: "index_tasks_on_category_member_id", using: :btree
   end
 
+  create_table "time_offs", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean  "is_start_half_day"
+    t.boolean  "is_end_half_day"
+    t.text     "description"
+    t.integer  "status",            default: 0
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "sender_id"
+    t.integer  "approver_id"
+    t.index ["approver_id"], name: "index_time_offs_on_approver_id", using: :btree
+    t.index ["sender_id"], name: "index_time_offs_on_sender_id", using: :btree
+  end
+
   create_table "timers", force: :cascade do |t|
     t.integer  "task_id"
     t.datetime "start_time"
@@ -153,6 +179,7 @@ ActiveRecord::Schema.define(version: 20170228104358) do
   add_foreign_key "category_members", "categories"
   add_foreign_key "category_members", "members"
   add_foreign_key "clients", "companies"
+  add_foreign_key "holidays", "companies"
   add_foreign_key "members", "companies"
   add_foreign_key "members", "roles"
   add_foreign_key "members", "users"

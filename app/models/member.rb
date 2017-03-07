@@ -9,7 +9,8 @@ class Member < ApplicationRecord
     has_many :pm_project_members, -> { where is_pm: true }, class_name: 'ProjectMember'
     has_many :pm_projects, through: :pm_project_members, source: :project
 
-    has_many :project_members, -> { where is_archived: false }, dependent: :destroy
+    # has_many :project_members, -> { where is_archived: false }, dependent: :destroy
+    has_many :project_members, dependent: :destroy
     has_many :category_members, dependent: :destroy
     has_many :assigned_categories, through: :category_members, source: :category
 
@@ -18,8 +19,8 @@ class Member < ApplicationRecord
 
     has_many :sent_invites, class_name: 'Invite', foreign_key: 'sender_id'
 
-    has_many :off_requests, class_name: 'Timeoff', foreign_key: 'sender_id'
-    has_many :off_approvers, class_name: 'Timeoff', foreign_key: 'approver_id'
+    has_many :off_requests, class_name: 'TimeOff', foreign_key: 'sender_id'
+    has_many :off_approvers, class_name: 'TimeOff', foreign_key: 'approver_id'
 
     validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
@@ -35,12 +36,10 @@ class Member < ApplicationRecord
     def get_projects
         if admin? || pm?
             # Get all projects of company
-            projects = company.projects.where(is_archived: false).order('id desc')
-        else
-            # Get projects @current_member assigned pm
-            projects = pm_projects.where(is_archived: false).order('id desc')
+            return company.projects
         end
-        projects
+        # Get projects @current_member assigned pm
+        pm_projects
     end
 
     def admin?

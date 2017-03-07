@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
@@ -35,37 +34,38 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-#****************************************
+# ****************************************
 # rails api                             *
-gem 'grape'                             #
+gem 'grape' #
 # create grape document                 *
-gem 'grape-swagger'                     #
+gem 'grape-swagger' #
 # create swagger router                 *
-gem 'grape-swagger-rails'               #
+gem 'grape-swagger-rails' #
 # => disables the security feature of   *
 # => strong_params at the model         *
-gem 'hashie-forbidden_attributes'       #
-#****************************************
+gem 'hashie-forbidden_attributes' #
+# ****************************************
 
-#****************************************
+# ****************************************
 # => using for login                    *
-gem 'devise_token_auth'                 #
+gem 'devise_token_auth' #
 # => using for authenticate             *
-gem 'omniauth'                          #
+gem 'omniauth' #
 # => using for get JSON  whren your API *
 # => and client on different domain     *
-gem 'rack-cors', :require => 'rack/cors'#
-#****************************************
+gem 'rack-cors', require: 'rack/cors' #
+# ****************************************
 
-#****************************************
+# ****************************************
 # fake model data for test              *
-gem "factory_girl_rails"                #
+gem 'factory_girl_rails' #
 # generate fake date                    *
-gem 'faker'                             #
-#****************************************
+gem 'faker' #
+# ****************************************
 
 gem 'active_model_serializers'
 gem 'grape-active_model_serializers'
+gem 'rails_best_practices'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -87,4 +87,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-ruby "2.3.1"
+ruby '2.3.1'

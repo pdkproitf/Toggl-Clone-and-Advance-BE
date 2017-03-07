@@ -2,9 +2,11 @@ class Invite < ApplicationRecord
     attr_accessor :invite_token
 
     belongs_to :sender, class_name: 'Member'
-    # belongs_to :recipient, class_name: 'User'
+    belongs_to :recipient, class_name: 'User'
 
-    validates :email, presence: true
+    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
+    validates_presence_of :sender_id
 
     before_create :generate_token
     def generate_token
