@@ -11,6 +11,7 @@ module CompanyApi
       desc 'Get company of admin'
       get 'own' do
         authenticated!
+        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
         @current_member.company
       end
 
