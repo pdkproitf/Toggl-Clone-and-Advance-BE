@@ -8,13 +8,10 @@ module CompanyApi
 
     resource :companies do
       # => /api/v1/companies/
-      desc '[For development] Get all companies'
-      get '/' do
-        Company.all
-      end
-
-      desc 'Get a company by id'
-      get ':id' do
+      desc 'Get company of admin'
+      get 'own' do
+        authenticated!
+        @current_member.company
       end
 
       desc 'Edit a company'
