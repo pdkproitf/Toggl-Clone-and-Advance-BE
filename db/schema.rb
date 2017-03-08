@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307064156) do
+ActiveRecord::Schema.define(version: 20170308091716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,13 +26,13 @@ ActiveRecord::Schema.define(version: 20170307064156) do
   end
 
   create_table "category_members", force: :cascade do |t|
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "member_id"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "category_id"
-    t.boolean  "is_archived", default: false
+    t.boolean  "is_archived",       default: false
+    t.integer  "project_member_id"
     t.index ["category_id"], name: "index_category_members_on_category_id", using: :btree
-    t.index ["member_id"], name: "index_category_members_on_member_id", using: :btree
+    t.index ["project_member_id"], name: "index_category_members_on_project_member_id", using: :btree
   end
 
   create_table "clients", force: :cascade do |t|
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 20170307064156) do
 
   add_foreign_key "categories", "projects"
   add_foreign_key "category_members", "categories"
-  add_foreign_key "category_members", "members"
+  add_foreign_key "category_members", "project_members"
   add_foreign_key "clients", "companies"
   add_foreign_key "holidays", "companies"
   add_foreign_key "members", "companies"
