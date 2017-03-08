@@ -4,11 +4,14 @@ class ProjectSerializer < ActiveModel::Serializer
   attribute :members, if: :is_members_serialized
   # has_many :members, serializer: MembersSerializer
 
-  def initialize(project, begin_date = nil, end_date = nil, is_members_serialized = true)
+  def initialize(project, options = {})
     super(project)
-    @begin_date = begin_date
-    @end_date = end_date
-    @is_members_serialized = is_members_serialized
+    @begin_date = options[:begin_date] || nil
+    @end_date = options[:end_date] || nil
+    @is_members_serialized = true
+    unless options[:is_members_serialized].nil?
+      @is_members_serialized = options[:is_members_serialized]
+    end
   end
 
   def client
