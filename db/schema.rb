@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20170307064156) do
     t.datetime "updated_at",                    null: false
     t.integer  "sender_id"
     t.integer  "approver_id"
+    t.text     "approver_messages"
     t.index ["approver_id"], name: "index_time_offs_on_approver_id", using: :btree
     t.index ["sender_id"], name: "index_time_offs_on_sender_id", using: :btree
   end

@@ -31,11 +31,48 @@ module TimeOffHelper
         project_join
     end
 
-    def get_pending_request_admin_role
-        
+    def update_timeoff
+        @timeoff.update_attributes!(create_params)
+        send_email_to_boss @timeoff
+        return_message 'Success'
     end
 
-    def get_pending_request_pm_role
-        TimeOff.where("created_at > (?) and sender_id not in (?)" ,Date.today.beginning_of_year, )
+    # true if timeoff didn't belong to current_member & current_member is admin or (PM and timeoff's sender  is member)
+    def able_to_answer_request?
+        return false if @current_member.id == @timeoff.sender_id
+        return true if @current_member.admin?
+        return true if @current_member.pm? & @timeoff.sender.member?
+        false
+    end
+
+    def answer_timeoff
+        @timeoff.update_attributes!(
+        approver_id: @current_member.id,
+        approver_messages: params['answer_timeoff_request']['approver_messages'],
+        status: params['answer_timeoff_request']['status'])
+        send_answer_to_person_relative @timeoff
+        return_message 'Success'
+    end
+
+    def send_answer_to_person_relative timeoff
+        send_mail_to = (company_boss_without_current_member + project_pm_boss_without_current_member)
+        send_mail_to.push(@timeoff.sender)
+        send_mail_to.reject!{|x| x.id == @current_member.id}
+        send_mail_to.uniq
+        send_mail_to.each{ |member| TimeOffMailer.timeoff_announce(timeoff, member.user.email, @current_member).deliver_later(wait: 5.seconds)}
+    end
+
+    def admin_delete
+        @timeoff.destroy!
+        send_answer_to_person_relative @timeoff
+        return_message 'Success!, Your timeoff was deleted!', @timeoff
+    end
+
+    def sender_delete
+        return return_message "Error Access Denied! You can't delete this Request" unless @timeoff.sender_id == @current_member.id
+        return return_message "Not Allow!  Your request was answered. You can contact with admin to delete this request" unless @timeoff.pending?
+
+        @timeoff.destroy!
+        return_message 'Success!, Your timeoff was deleted!', @timeoff
     end
 end
