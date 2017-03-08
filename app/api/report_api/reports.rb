@@ -40,7 +40,9 @@ module ReportApi
         projects = []
         project_options = { begin_date: begin_date, end_date: end_date,
                             is_members_serialized: false }
-        @current_member.get_projects.order(:name).each do |project|
+        @current_member.get_projects
+                       .where(is_archived: false)
+                       .order(:name).each do |project|
           projects.push(
             ProjectSerializer.new(project, project_options)
           )
