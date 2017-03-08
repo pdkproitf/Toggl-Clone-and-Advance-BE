@@ -8665,7 +8665,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "-begin_day",
+											"text": "-begin_date",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -8694,7 +8694,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "-end_day",
+											"text": "-end_date",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -17264,11 +17264,10 @@
 							"_parent": {
 								"$ref": "AAAAAAFaTLEjjiPvM+Y="
 							},
-							"name": "begin_day",
+							"name": "begin_date",
 							"visibility": "private",
 							"isStatic": false,
 							"isLeaf": false,
-							"type": "",
 							"isReadOnly": false,
 							"isOrdered": false,
 							"isUnique": false,
@@ -17282,11 +17281,10 @@
 							"_parent": {
 								"$ref": "AAAAAAFaTLEjjiPvM+Y="
 							},
-							"name": "end_day",
+							"name": "end_date",
 							"visibility": "private",
 							"isStatic": false,
 							"isLeaf": false,
-							"type": "",
 							"isReadOnly": false,
 							"isOrdered": false,
 							"isUnique": false,

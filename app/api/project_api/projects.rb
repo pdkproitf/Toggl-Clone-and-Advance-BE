@@ -112,35 +112,31 @@ module ProjectApi
       post '/' do
         authenticated!
         project_params = params[:project]
-
         # Current user has to be an admin or a PM
         if !@current_member.admin? && !@current_member.pm?
           return error!(I18n.t('access_denied'), 400)
         end
-
         # Client has to belongs to the company of current user
-        unless @current_member.company
-                              .clients
+        unless @current_member.company.clients
                               .exists?(project_params[:client_id])
           return error!(I18n.t('client_not_found'), 400)
         end
-
         # Create new project object
         project = @current_member.projects.new
-
-        # If background exists
-        if project_params[:background]
+        project.name = project_params[:name]
+        project.client_id = project_params[:client_id]
+        unless project_params[:background].nil?
           # Validate background here
           project.background = project_params[:background]
         end
-
-        # If member_roles exists
-        if project_params[:member_roles]
+        unless project_params[:is_member_report].nil?
+          project.is_member_report = project_params[:is_member_report]
+        end
+        # Add members to project
+        unless project_params[:member_roles].nil?
           project_params[:member_roles].each do |member_role|
-            # Check if member belongs to team
-            unless @current_member.company
-                                  .members
-                                  .exists?(member_role[:member_id])
+            # Check if member joined to company
+            unless @current_member.company.members.exists?(member_role[:member_id])
               return error!(I18n.t('not_joined_to_company'), 400)
             end
             # Add member in team to project
@@ -149,36 +145,32 @@ module ProjectApi
               is_pm: member_role[:is_pm]
             )
           end
-
-          # If category_members exists
-          if project_params[:category_members]
-            project_params[:category_members].each do |category_member|
-              # Create new categories
-              category = project.categories.new(
-                name: category_member[:category_name],
-                is_billable: category_member[:is_billable]
-              )
-              # Check if company members were added to project
-              category_member[:members].each do |member|
-                unless project.project_members
-                              .find { |h| h[:member_id] == member[:member_id] }
-                  return error!(I18n.t('not_added_to_project'), 400)
-                end
-                # Assign members to categories
-                category.category_members.new(member_id: member[:member_id])
+        end
+        project.save!
+        # Create new categories and assign members to them
+        unless project_params[:category_members].nil?
+          project_params[:category_members].each do |category_member|
+            # Create new categories
+            category = project.categories.new(
+              name: category_member[:category_name],
+              is_billable: category_member[:is_billable]
+            )
+            # Check if company members were added to project
+            category_member[:members].each do |member|
+              project_member = project.project_members
+                                      .find_by(member_id: member.member_id)
+              # Assign members to categories
+              if project_member.nil?
+                project.destroy
+                return error!(I18n.t('not_joined_to_company'), 400)
               end
+              category.category_members
+                      .new(project_member_id: project_member.id)
             end
+            category.save!
           end
         end
-
-        project.name = project_params[:name]
-        project.client_id = project_params[:client_id]
-
-        unless project_params[:is_member_report].nil?
-          project.is_member_report = project_params[:is_member_report]
-        end
-
-        project.save!
+        project
       end # End of project add new
 
       desc 'Edit project'
