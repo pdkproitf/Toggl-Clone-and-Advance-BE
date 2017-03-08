@@ -42,3 +42,4 @@ en:
   archive_failed: "Archiving failed"
   unarchive_failed: "Unarchiving failed"
   category_name_taken: "Category name was taken"
+  begin_date_not_greater_than_end_day: "Begin date not greater than end date"

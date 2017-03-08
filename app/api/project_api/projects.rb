@@ -5,7 +5,7 @@ module ProjectApi
     version 'v1', using: :accept_version_header
     resource :projects do
       # => /api/v1/projects/
-      desc 'Get all projects that I own'
+      desc 'Get all projects current_member manage'
       get do
         authenticated!
         projects = @current_member.get_projects
@@ -80,7 +80,7 @@ module ProjectApi
         project = projects.first
         result = {}
         result.merge!(ProjectSerializer.new(project))
-        result[:tracked_time] = project.get_tracked_time
+        result[:tracked_time] = project.tracked_time
         categories = []
         project.categories.each do |category|
           categories.push(CategorySerializer.new(category))

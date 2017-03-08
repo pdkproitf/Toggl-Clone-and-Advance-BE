@@ -5,12 +5,10 @@ class Category < ApplicationRecord
   validates :name, presence: true, length: { minimum: 1 }
   validates_uniqueness_of :name, scope: :project_id
 
-  def get_tracked_time
+  def tracked_time(begin_date = nil, end_date = nil)
     sum = 0
-    if category_members
-      category_members.each do |category_member|
-        sum += category_member.get_tracked_time
-      end
+    category_members.each do |category_member|
+      sum += category_member.tracked_time(begin_date, end_date)
     end
     sum
   end

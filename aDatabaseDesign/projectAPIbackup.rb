@@ -24,7 +24,7 @@ module ProjectApi
             # => /api/v1/projects/
             desc 'Get all projects'
             get '/test' do
-                Project.find(10).get_tracked_time
+                Project.find(10).tracked_time
             end
 
             desc 'Get all projects'
@@ -41,7 +41,7 @@ module ProjectApi
 
                   item = {
                     "info": ProjectSerializer.new(project),
-                    "tracked_time": project.get_tracked_time,
+                    "tracked_time": project.tracked_time,
                     "member": member_list
                   }
                   list.push(item)
@@ -78,7 +78,7 @@ module ProjectApi
                       # For data
                       item = Hash.new
                       item.merge!(ProjectCategoryUserSerializer.new(pcu).attributes)
-                      item[:tracked_time] = pcu.get_tracked_time
+                      item[:tracked_time] = pcu.tracked_time
                       list.push(item)
                     end
                 end
