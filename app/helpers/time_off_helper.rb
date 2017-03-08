@@ -59,6 +59,20 @@ module TimeOffHelper
         send_mail_to.push(@timeoff.sender)
         send_mail_to.reject!{|x| x.id == @current_member.id}
         send_mail_to.uniq
-        send_mail_to.each{ |member| TimeOffMailer.timeoff_announce(timeoff, member.user.email).deliver_now}
+        send_mail_to.each{ |member| TimeOffMailer.timeoff_announce(timeoff, member.user.email, @current_member).deliver_later(wait: 5.seconds)}
+    end
+
+    def admin_delete
+        @timeoff.destroy!
+        send_answer_to_person_relative @timeoff
+        return_message 'Success!, Your timeoff was deleted!', @timeoff
+    end
+
+    def sender_delete
+        return return_message "Error Access Denied! You can't delete this Request" unless @timeoff.sender_id == @current_member.id
+        return return_message "Not Allow!  Your request was answered. You can contact with admin to delete this request" unless @timeoff.pending?
+
+        @timeoff.destroy!
+        return_message 'Success!, Your timeoff was deleted!', @timeoff
     end
 end

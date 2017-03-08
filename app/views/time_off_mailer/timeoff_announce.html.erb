@@ -9,13 +9,17 @@
         <p>Until:       <% if @timeoff.is_end_half_day %> Half day of  <%else%> All day <% end %> <%= @timeoff.start_date %></p>
         <p>Description: <%= @timeoff.description %></p>
     </div>
-    <% unless @timeoff.pending?%>
-    <p>
+    <% if @timeoff.destroyed? %>
         <strong>
-            <i> This requet was <%= @timeoff.status %> by  <%= @timeoff.approver.user.first_name %> </i><br>
-            <i> Messages: <%= @timeoff.approver_messages %> </i>
+            <i> This requet was destroyed by  <%= @current_member.user.first_name %> </i><br>
         </strong>
-    </p>
+    <% else @timeoff.pending?%>
+        <p>
+            <strong>
+                <i> This requet was <%= @timeoff.status %> by  <%= @timeoff.approver.user.first_name %> </i><br>
+                <i> Messages: <%= @timeoff.approver_messages %> </i>
+            </strong>
+        </p>
     <% end %>
     Click <a href="https://spring-time-tracker.herokuapp.com/#/timeoffs">here</a> to see more timeoff request.
 </div>

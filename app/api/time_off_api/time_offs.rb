@@ -65,15 +65,28 @@ module TimeOffApi
                 authenticated!
                 @timeoff = TimeOff.find_by_id(params['id'])
                 return return_message "Not Found timeoff with id #{params['id']}" unless @timeoff
-                return return_message "Not Allow!  Your request was answered. If you want to change, you can delete this request and create new request" unless @timeoff.pending?
 
                 if params['timeoff']
                     return return_message "Access Denied! You can't modify this Request" unless @timeoff.sender_id == @current_member.id
+                    return return_message "Not Allow!  Your request was answered. If you want to change, you can delete this request and create new request" unless @timeoff.pending?
                     update_timeoff
+                    send_email_to_boss @timeoff
                 else
                     return return_message "Access Denied! You have not enough able to answer this request" unless able_to_answer_request?
                     answer_timeoff
+                    send_answer_to_person_relative
                 end
+                return_message 'Success', @timeoff
+            end
+
+
+            desc 'Delete timeoff request'
+            delete ':id' do
+                authenticated!
+                status 200
+                @timeoff = TimeOff.find_by_id(params['id'])
+                return return_message "Error Not Found timeoff with id #{params['id']}" unless @timeoff
+                (@current_member.admin? && @current_member.id != @timeoff.sender_id)? admin_delete : sender_delete
             end
         end
     end
