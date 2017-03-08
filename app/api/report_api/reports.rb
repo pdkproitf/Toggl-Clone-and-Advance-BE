@@ -31,8 +31,12 @@ module ReportApi
 
         # Report projects
         projects = []
+        is_members_serialized = false
         @current_member.get_projects.order(:name).each do |project|
-          projects.push(ReportProjectByTimeSerializer.new(project))
+          projects.push(
+            ProjectSerializer.new(project, begin_date, end_date,
+                                  is_members_serialized)
+          )
         end
         { data: {
           people: people,
