@@ -4,7 +4,7 @@ class Task < ApplicationRecord
   # validates :name, length: { minimum: 1 }, allow_nil: true
   validates_uniqueness_of :name, scope: :category_member_id, if: 'name.present?'
 
-  def tracked_time(begin_date, end_date)
+  def tracked_time(begin_date = nil, end_date = nil)
     sum = 0
     if !begin_date.nil? && !end_date.nil?
       timer_list = timers.where('start_time >= ? AND start_time < ?',

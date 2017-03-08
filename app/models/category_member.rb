@@ -4,7 +4,7 @@ class CategoryMember < ApplicationRecord
   has_many :tasks, dependent: :destroy
   validates_uniqueness_of :category_id, scope: :member_id, if: 'category_id.present?'
 
-  def tracked_time(begin_date, end_date)
+  def tracked_time(begin_date = nil, end_date = nil)
     sum = 0
     tasks.each do |task|
       sum += task.tracked_time(begin_date, end_date)

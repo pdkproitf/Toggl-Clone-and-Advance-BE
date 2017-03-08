@@ -11,7 +11,7 @@ class Project < ApplicationRecord
   validates :member_id, presence: true
   validates_uniqueness_of :name, scope: [:client_id, :member_id]
 
-  def tracked_time(begin_date, end_date)
+  def tracked_time(begin_date = nil, end_date = nil)
     sum = 0
     categories.each do |category|
       sum += category.tracked_time(begin_date, end_date)
