@@ -1,17 +1,21 @@
 class ProjectSerializer < ActiveModel::Serializer
   attributes :id, :name, :client, :background,
              :is_member_report, :tracked_time
-  attr_reader :is_members_serialized
-  attribute :members, if: :is_members_serialized
-  # has_many :members, serializer: MembersSerializer
+  attr_reader :members_serialized, :categories_serialized
+  attribute :members, if: :members_serialized
+  attribute :categories, if: :categories_serialized
 
   def initialize(project, options = {})
     super(project)
     @begin_date = options[:begin_date] || nil
     @end_date = options[:end_date] || nil
-    @is_members_serialized = true
-    unless options[:is_members_serialized].nil?
-      @is_members_serialized = options[:is_members_serialized]
+    @members_serialized = true
+    unless options[:members_serialized].nil?
+      @members_serialized = options[:members_serialized]
+    end
+    @categories_serialized = false
+    unless options[:categories_serialized].nil?
+      @categories_serialized = options[:categories_serialized]
     end
   end
 
@@ -38,5 +42,13 @@ class ProjectSerializer < ActiveModel::Serializer
       list.push(item)
     end
     list
+  end
+
+  def categories
+    categories = []
+    object.categories.where(is_archived: false).each do |category|
+      categories.push(CategorySerializer.new(category))
+    end
+    categories
   end
 end

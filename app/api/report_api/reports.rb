@@ -39,7 +39,7 @@ module ReportApi
         # Report projects
         projects = []
         project_options = { begin_date: begin_date, end_date: end_date,
-                            is_members_serialized: false }
+                            members_serialized: false }
         @current_member.get_projects
                        .where(is_archived: false)
                        .order(:name).each do |project|

@@ -6,14 +6,10 @@ class CategorySerializer < ActiveModel::Serializer
 
   def members
     list = []
-    object.category_members.where(category_members: { is_archived: false })
-          .each do |category_member|
+    object.category_members.where(is_archived: false).each do |category_member|
       item = {}
-      item.merge!(MembersSerializer.new(category_member.member))
-      item[:is_pm] = category_member.member
-                                    .project_members
-                                    .find_by(project_id: object.project_id)
-                                    .is_pm
+      item.merge!(MembersSerializer.new(category_member.project_member.member))
+      item[:is_pm] = category_member.project_member.is_pm
       item[:category_member_id] = category_member.id
       item[:tracked_time] = category_member.tracked_time
       list.push(item)

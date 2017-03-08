@@ -7,50 +7,42 @@ module ProjectApi
       # => /api/v1/projects/
       desc 'Get all projects current_member manage'
       get do
-        authenticated!
-        projects = @current_member.get_projects
-                                  .where(is_archived: false).order('id desc')
-        list = []
+        # authenticated!
+        @current_member = Member.find(1)
+        projects = @current_member.get_projects.where(is_archived: false)
+                                  .order('id desc')
+        project_list = []
         projects.each do |project|
-          list.push(ProjectSerializer.new(project))
+          project_list.push(ProjectSerializer.new(project))
         end
-        { data: list }
-        # return {members: Member.all.map{|p| MembersSerializer.new(p)}}
-        # return {hehe: ProjectSerializer.new(Project.find(1))}
-        # {"data": ProjectSerializer.new(Project.find(1))}
+        { data: project_list }
       end
 
       desc 'Get all projects that I assigned'
       get 'assigned' do
-        # Get all projects, categories, category_members were not archived
-        authenticated!
+        # authenticated!
+        @current_member = Member.find(1)
         assigned_categories =
           @current_member
           .category_members
-          .where.not(category_id: nil)
+          .where.not(category_id: nil, is_archived: true)
+          .where(project_members: { is_archived: false })
           .where(projects: { is_archived: false })
           .where(categories: { is_archived: false })
-          .where(category_members: { is_archived: false })
-          .joins(category: { project: :client })
-          .select('projects.id', 'projects.name', 'projects.background')
+          .select('projects.id as project_id', 'projects.name as project_name')
+          .select('projects.background')
           .select('clients.id as client_id', 'clients.name as client_name')
           .select('categories.name as category_name')
           .select('category_members.id as category_member_id')
+          .joins(category: { project: :client })
           .order('projects.id desc', 'categories.id asc')
-
         result = []
         assigned_categories.each do |assigned_category|
-          # if current_member is archived in project (remove from project)
-          if @current_member.project_members
-                            .where(project_id: assigned_category.id)
-                            .first.is_archived
-            next
-          end
-          item = result.find { |h| h[:id] == assigned_category[:id] }
+          item = result.find { |h| h[:id] == assigned_category[:project_id] }
           unless item
             item = {
-              id: assigned_category[:id],
-              name: assigned_category[:name]
+              id: assigned_category[:project_id],
+              name: assigned_category[:project_name]
             }
             item[:background] = assigned_category[:background]
             item[:client] = {
@@ -65,31 +57,20 @@ module ProjectApi
             category_member_id: assigned_category[:category_member_id]
           )
         end
-
         { data: result }
       end # End of assigned
 
       desc 'Get a project by id'
       get ':id' do
-        authenticated!
-        projects = @current_member.get_projects
-                                  .where(id: params[:id], is_archived: false)
-
-        return error!(I18n.t('project_not_found'), 404) if projects.empty?
-
-        project = projects.first
-        result = {}
-        result.merge!(ProjectSerializer.new(project))
-        result[:tracked_time] = project.tracked_time
-        categories = []
-        project.categories.each do |category|
-          categories.push(CategorySerializer.new(category))
-        end
-        result[:categories] = categories
-        { data: result }
+        # authenticated!
+        @current_member = Member.find(1)
+        project = @current_member.get_projects
+                                 .find_by(id: params[:id], is_archived: false)
+        return error!(I18n.t('project_not_found'), 404) if project.nil?
+        { data: ProjectSerializer.new(project, categories_serialized: true) }
       end # End of getting a project by ID (for details)
 
-      desc 'create new project'
+      desc 'Create new project'
       params do
         requires :project, type: Hash do
           requires :name, type: String, desc: 'Project name.'
@@ -109,8 +90,9 @@ module ProjectApi
           end
         end
       end
-      post '/' do
-        authenticated!
+      post do
+        # authenticated!
+        @current_member = Member.find(1)
         project_params = params[:project]
         # Current user has to be an admin or a PM
         if !@current_member.admin? && !@current_member.pm?

@@ -10,6 +10,7 @@ class Member < ApplicationRecord
   has_many :pm_projects, through: :pm_project_members, source: :project
 
   has_many :project_members, dependent: :destroy
+  has_many :category_members, through: :project_members
 
   has_many :tasks, through: :category_members
   has_many :timers, through: :tasks
