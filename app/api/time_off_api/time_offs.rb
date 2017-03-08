@@ -70,12 +70,10 @@ module TimeOffApi
                 if params['timeoff']
                     return return_message "Access Denied! You can't modify this Request" unless @timeoff.sender_id == @current_member.id
                     update_timeoff
-                    send_email_to_boss @timeoff
                 else
                     return return_message "Access Denied! You have not enough able to answer this request" unless able_to_answer_request?
                     answer_timeoff
                 end
-                return_message 'Success', @timeoff
             end
         end
     end

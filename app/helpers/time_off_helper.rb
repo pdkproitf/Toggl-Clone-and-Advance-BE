@@ -33,6 +33,7 @@ module TimeOffHelper
 
     def update_timeoff
         @timeoff.update_attributes!(create_params)
+        send_email_to_boss @timeoff
         return_message 'Success'
     end
 
@@ -49,5 +50,15 @@ module TimeOffHelper
         approver_id: @current_member.id,
         approver_messages: params['answer_timeoff_request']['approver_messages'],
         status: params['answer_timeoff_request']['status'])
+        send_answer_to_person_relative @timeoff
+        return_message 'Success'
+    end
+
+    def send_answer_to_person_relative timeoff
+        send_mail_to = (company_boss_without_current_member + project_pm_boss_without_current_member)
+        send_mail_to.push(@timeoff.sender)
+        send_mail_to.reject!{|x| x.id == @current_member.id}
+        send_mail_to.uniq
+        send_mail_to.each{ |member| TimeOffMailer.timeoff_announce(timeoff, member.user.email).deliver_now}
     end
 end

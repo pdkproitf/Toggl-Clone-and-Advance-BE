@@ -3,12 +3,19 @@
     <p>You got this mail because have a member in your company want to off</p>
     <h2>Member Off's Information</h2>
     <div style="text-aligin: left;">
-        Name: <p> <%= @timeoff.sender.user.first_name + ' ' +  @timeoff.sender.user.last_name%></p>
-        Email: <p> <%= @timeoff.sender.user.email %></p>
-        From: <p><% if @timeoff.is_start_half_day %> Half day of  <%end%> <%= @timeoff.start_date %></p>
-        Until: <p><% if @timeoff.is_end_half_day %> Half day of  <%end%> <%= @timeoff.start_date %></p>
+        <p>Name:        <%= @timeoff.sender.user.first_name + ' ' +  @timeoff.sender.user.last_name%></p>
+        <p>Email:       <%= @timeoff.sender.user.email %></p>
+        <p>From:        <% if @timeoff.is_start_half_day %> Half day of  <%else%> All day <% end %> <%= @timeoff.start_date %></p>
+        <p>Until:       <% if @timeoff.is_end_half_day %> Half day of  <%else%> All day <% end %> <%= @timeoff.start_date %></p>
         <p>Description: <%= @timeoff.description %></p>
     </div>
-
+    <% unless @timeoff.pending?%>
+    <p>
+        <strong>
+            <i> This requet was <%= @timeoff.status %> by  <%= @timeoff.approver.user.first_name %> </i><br>
+            <i> Messages: <%= @timeoff.approver_messages %> </i>
+        </strong>
+    </p>
+    <% end %>
     Click <a href="https://spring-time-tracker.herokuapp.com/#/timeoffs">here</a> to see more timeoff request.
 </div>
