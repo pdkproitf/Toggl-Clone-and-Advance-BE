@@ -69,21 +69,26 @@ module TimerApi
           if timer_params[:category_member_id] # if category_member_id exists
             category_member = @current_member
                               .category_members
-                              .find_by(id: timer_params[:category_member_id])
+                              .where.not(category_id: nil)
+                              .find_by(
+                                id: timer_params[:category_member_id],
+                                is_archived_by_category: false,
+                                is_archived_by_project_member: false
+                              )
             # if category member does not belong to any category
-            if !category_member || category_member.category_id.nil?
+            if category_member.nil?
               return error!(I18n.t('member_not_assigned_to_category'), 400)
             end
 
             task = @current_member.tasks.find_by(
               name: timer_params[:task_name],
-              category_member: timer_params[:category_member_id]
+              category_member: category_member.id
             )
             # if cannot find and task then create new task
             if task.nil?
               task = Task.create!(
                 name: timer_params[:task_name],
-                category_member_id: timer_params[:category_member_id]
+                category_member_id: category_member.id
               )
             end
           else # category_member_id does not exist
@@ -98,14 +103,19 @@ module TimerApi
           if timer_params[:category_member_id]
             category_member = @current_member
                               .category_members
-                              .find_by(id: timer_params[:category_member_id])
+                              .where.not(category_id: nil)
+                              .find_by(
+                                id: timer_params[:category_member_id],
+                                is_archived_by_category: false,
+                                is_archived_by_project_member: false
+                              )
             # if category member does not belong to any category
-            if !category_member || category_member.category_id.nil?
+            if category_member.nil?
               return error!(I18n.t('member_not_assigned_to_category'), 400)
             end
 
             task = Task.create!(
-              category_member_id: timer_params[:category_member_id]
+              category_member_id: category_member.id
             )
           else # Only start_time and stop_time
             project_member = @current_member.project_members.create!
