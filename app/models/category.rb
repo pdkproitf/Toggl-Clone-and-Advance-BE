@@ -14,8 +14,10 @@ class Category < ApplicationRecord
     sum
   end
 
-  def category_members_except_with(member_ids)
-    category_members.where.not(member_id: member_ids, is_archived: true)
+  def category_members_except_with(project_member_ids)
+    category_members.where
+                    .not(is_archived: true,
+                         project_member_id: project_member_ids)
   end
 
   def archive
