@@ -26,10 +26,9 @@ module ReportApi
         end_date = params[:end_date]
         check_begin_end_date_correct(begin_date, end_date)
 
-        WORKING_TIME_PER_DAY = 8
-        WORKING_TIME_PER_WEEK = 40
-
-        return WORKING_TIME_PER_WEEK
+        WORKING_TIME_PER_DAY = @current_member.company.working_time_per_day
+        WORKING_TIME_PER_WEEK = @current_member.company.working_time_per_week
+        BEGIN_WEEK = @current_member.company.begin_week
 
         # Report people
         people = []
