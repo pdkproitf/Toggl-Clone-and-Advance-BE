@@ -7,8 +7,7 @@ module ProjectApi
       # => /api/v1/projects/
       desc 'Get all projects current_member manage'
       get do
-        # authenticated!
-        @current_member = Member.find(1)
+        authenticated!
         projects = @current_member.get_projects.where(is_archived: false)
                                   .order('id desc')
         project_list = []
@@ -20,8 +19,7 @@ module ProjectApi
 
       desc 'Get all projects that I assigned'
       get 'assigned' do
-        # authenticated!
-        @current_member = Member.find(1)
+        authenticated!
         assigned_categories =
           @current_member
           .category_members
@@ -62,8 +60,7 @@ module ProjectApi
 
       desc 'Get a project by id'
       get ':id' do
-        # authenticated!
-        @current_member = Member.find(1)
+        authenticated!
         project = @current_member.get_projects
                                  .find_by(id: params[:id], is_archived: false)
         return error!(I18n.t('project_not_found'), 404) if project.nil?
@@ -91,8 +88,7 @@ module ProjectApi
         end
       end
       post do
-        # authenticated!
-        @current_member = Member.find(1)
+        authenticated!
         project_params = params[:project]
         # Current user has to be an admin or a PM
         if !@current_member.admin? && !@current_member.pm?
@@ -186,7 +182,7 @@ module ProjectApi
         client = @current_member.company
                                 .clients
                                 .find_by(id: project_params[:client_id])
-        return error!(I18n.t('client_not_found'), 400) unless client
+        return error!(I18n.t('client_not_found'), 400) if client.nil?
         project.client = client
         # Edit background
         unless project_params[:background].nil?
