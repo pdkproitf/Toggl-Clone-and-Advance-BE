@@ -6,8 +6,15 @@ module TimeOffApi
         helpers TimeOffHelper
 
         resource :timeoffs do
-            desc 'Get all timeoff request of themself'
+            desc 'Get all timeoff request'
             get do
+                authenticated!
+                data = TimeOff.all.map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
+                return_message 'Success', data
+            end
+
+            desc 'Get all timeoff request of themself in this year'
+            get '/this-year' do
                 authenticated!
                 off_requests = @current_member.off_requests.map { |e|  TimeOffSerializer.new(e)}
                 pending_requests = []
