@@ -13,18 +13,22 @@ class CategoryMember < ApplicationRecord
   end
 
   def archived_by_category
+    return if is_archived_by_category == true
     update_attributes(is_archived_by_category: true)
   end
 
   def archived_by_project_member
+    return if is_archived_by_project_member == true
     update_attributes(is_archived_by_project_member: true)
   end
 
   def unarchived_by_category
+    return if is_archived_by_category == false
     update_attributes(is_archived_by_category: false)
   end
 
   def unarchived_by_project_member
+    return if is_archived_by_project_member == false
     update_attributes(is_archived_by_project_member: false)
   end
 end

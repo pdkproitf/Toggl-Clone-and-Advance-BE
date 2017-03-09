@@ -21,10 +21,26 @@ class Category < ApplicationRecord
   end
 
   def archive
+    return if is_archived == true
+    category_members.each do |category_member|
+      if category_member[:is_archived_by_category] == is_archived
+        category_member.archived_by_category
+      else
+        category_member.unarchived_by_category
+      end
+    end
     update_attributes(is_archived: true)
   end
 
   def unarchive
+    return if is_archived == false
+    category_members.each do |category_member|
+      if category_member[:is_archived_by_category] == is_archived
+        category_member.unarchived_by_category
+      else
+        category_member.archived_by_category
+      end
+    end
     update_attributes(is_archived: false)
   end
 end
