@@ -27,11 +27,6 @@ class ProjectSerializer < ActiveModel::Serializer
     object.tracked_time(@begin_date, @end_date)
   end
 
-  # def members
-  #   object.members.where(project_members: { is_archived: false })
-  #   # ActiveModel::Serializer::CollectionSerializer.new(object.members, each_serializer: MembersSerializer)
-  # end
-
   def members
     list = []
     object.project_members.where(is_archived: false)
@@ -51,4 +46,9 @@ class ProjectSerializer < ActiveModel::Serializer
     end
     categories
   end
+
+  # def members
+  #   object.members.where(project_members: { is_archived: false })
+  #   # ActiveModel::Serializer::CollectionSerializer.new(object.members, each_serializer: MembersSerializer)
+  # end
 end

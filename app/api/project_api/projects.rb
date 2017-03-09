@@ -23,10 +23,9 @@ module ProjectApi
         assigned_categories =
           @current_member
           .category_members
-          .where.not(category_id: nil, is_archived: true)
-          .where(project_members: { is_archived: false })
-          .where(projects: { is_archived: false })
-          .where(categories: { is_archived: false })
+          .where.not(category_id: nil)
+          .where(is_archived_by_category: false)
+          .where(is_archived_by_project_member: false)
           .select('projects.id as project_id', 'projects.name as project_name')
           .select('projects.background')
           .select('clients.id as client_id', 'clients.name as client_name')
