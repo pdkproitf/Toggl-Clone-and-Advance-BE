@@ -2,7 +2,7 @@ module ReportApi
   class Reports < Grape::API
     prefix :api
     version 'v1', using: :accept_version_header
-    #
+
     helpers do
       def check_begin_end_date_correct(begin_date, end_date)
         if begin_date > end_date
@@ -25,6 +25,11 @@ module ReportApi
         begin_date = params[:begin_date]
         end_date = params[:end_date]
         check_begin_end_date_correct(begin_date, end_date)
+
+        WORKING_TIME_PER_DAY = 8
+        WORKING_TIME_PER_WEEK = 40
+
+        return WORKING_TIME_PER_WEEK
 
         # Report people
         people = []
