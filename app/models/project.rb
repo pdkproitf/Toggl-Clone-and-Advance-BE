@@ -36,6 +36,13 @@ class Project < ApplicationRecord
         category.unarchive
       end
     end
+    project_members.each do |project_member|
+      if project_member[:is_archived] == is_archived
+        project_member.archive
+      else
+        project_member.unarchive
+      end
+    end
     update_attributes(is_archived: true)
   end
 
@@ -46,6 +53,13 @@ class Project < ApplicationRecord
         category.unarchive
       else
         category.archive
+      end
+    end
+    project_members.each do |project_member|
+      if project_member[:is_archived] == is_archived
+        project_member.unarchive
+      else
+        project_member.archive
       end
     end
     update_attributes(is_archived: false)
