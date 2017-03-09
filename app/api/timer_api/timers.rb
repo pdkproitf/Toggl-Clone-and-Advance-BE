@@ -23,6 +23,8 @@ module TimerApi
 
         timer_list = @current_member
                      .timers
+                     .where(category_members: { is_archived_by_category: false })
+                     .where(category_members: { is_archived_by_project_member: false })
                      .where('timers.start_time >= ? AND timers.start_time < ?',
                             from_day, to_day + 1)
                      .order('start_time desc')
