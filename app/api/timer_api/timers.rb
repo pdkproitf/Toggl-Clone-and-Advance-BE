@@ -39,7 +39,7 @@ module TimerApi
         data
       end
 
-      desc 'create new timer'
+      desc 'Create new timer'
       params do
         requires :timer, type: Hash do
           optional :task_id, type: Integer, desc: 'Timer ID'
@@ -49,7 +49,7 @@ module TimerApi
           requires :stop_time, type: DateTime, desc: 'Stop time'
         end
       end
-      post '/' do
+      post do
         authenticated!
         timer_params = params['timer']
         if timer_params[:start_time] >= timer_params[:stop_time]
@@ -85,7 +85,8 @@ module TimerApi
               )
             end
           else # category_member_id does not exist
-            category_member = @current_member.category_members.create!
+            project_member = @current_member.project_members.create!
+            category_member = project_member.category_members.create!
             task = category_member.tasks.create!(name: timer_params[:task_name])
           end
 
@@ -105,7 +106,9 @@ module TimerApi
               category_member_id: timer_params[:category_member_id]
             )
           else # Only start_time and stop_time
-            category_member = @current_member.category_members.create!
+            project_member = @current_member.project_members.create!
+            category_member = project_member.category_members.create!
+
             task = category_member.tasks.create!
           end
         end
