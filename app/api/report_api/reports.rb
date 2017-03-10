@@ -26,10 +26,6 @@ module ReportApi
         end_date = params[:end_date]
         check_begin_end_date_correct(begin_date, end_date)
 
-        WORKING_TIME_PER_DAY = @current_member.company.working_time_per_day
-        WORKING_TIME_PER_WEEK = @current_member.company.working_time_per_week
-        BEGIN_WEEK = @current_member.company.begin_week
-
         # Report people
         people = []
         person_options = { begin_date: begin_date, end_date: end_date,
@@ -57,6 +53,8 @@ module ReportApi
           people: people,
           projects: projects
         } }
+
+        return Report.new(Member.find(3), begin_date, end_date).access_denied?
       end
 
       desc 'Report by project'
