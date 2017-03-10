@@ -24,7 +24,45 @@ class Report
     end
   end
 
-  def report_by_time; end
+  def project_pm?
+    if !@project.nil? &&
+       @who_run.project_members.exists?(project_id: @project.id, is_pm: true)
+      return true
+    end
+    false
+  end
+
+  def report_by_time
+    if @who_run.admin? || @who_run.pm?
+      # Report people
+      person_options = { begin_date: @begin_date,
+                         end_date: @end_date,
+                         is_tracked_time_serialized: true }
+      people = []
+      @who_run.company.members.each do |member|
+        people.push(MembersSerializer.new(member, person_options))
+      end
+
+      # Report projects
+      project_options = { begin_date: @begin_date,
+                          end_date: @end_date,
+                          members_serialized: false }
+      projects = []
+      @who_run.get_projects
+              .where(is_archived: false)
+              .order(:name).each do |project|
+        projects.push(
+          ProjectSerializer.new(project, project_options)
+        )
+      end
+
+      # Return result
+      { data: {
+        people: people,
+        projects: projects
+      } }
+    end
+   end
 
   def report_by_project; end
 

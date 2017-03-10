@@ -26,35 +26,11 @@ module ReportApi
         end_date = params[:end_date]
         check_begin_end_date_correct(begin_date, end_date)
 
-        # Report people
-        people = []
-        person_options = { begin_date: begin_date, end_date: end_date,
-                           is_tracked_time_serialized: true }
-        @current_member.company.members.each do |member|
-          people.push(
-            MembersSerializer.new(member, person_options)
-          )
-        end
-
-        # Report projects
-        projects = []
-        project_options = { begin_date: begin_date, end_date: end_date,
-                            members_serialized: false }
-        @current_member.get_projects
-                       .where(is_archived: false)
-                       .order(:name).each do |project|
-          projects.push(
-            ProjectSerializer.new(project, project_options)
-          )
-        end
-
         # Return result
-        { data: {
-          people: people,
-          projects: projects
-        } }
-
-        return Report.new(Member.find(3), begin_date, end_date).access_denied?
+        result = Report.new(Member.find(2), begin_date, end_date,
+                            project: Project.find(15)).report_by_time
+        return error!(I18n.t('access_denied'), 400) if result.nil?
+        result
       end
 
       desc 'Report by project'
