@@ -7,20 +7,17 @@ module TimeOffApi
 
         resource :timeoffs do
             desc 'Get all timeoff request'
+            params do
+                optional :from_date, type: DateTime, desc: 'start date'
+                optional :to_date, type: DateTime, desc: 'end date'
+                optional :status, type: String, desc: 'status request'
+                all_or_none_of :from_date, :to_date, :status
+            end
             get do
                 authenticated!
-                data = TimeOff.all.map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
-                return_message 'Success', data
-            end
-
-            desc 'Get all timeoff request of themself in this year'
-            get '/this-year' do
-                authenticated!
-                off_requests = @current_member.off_requests.map { |e|  TimeOffSerializer.new(e)}
-                pending_requests = []
-                pending_requests = TimeOff.where("created_at > (?) and status = ?" ,Date.today.beginning_of_year, TimeOff.statuses[:pending])
-                                        .map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
-                return_message 'Success', {off_requests: off_requests, pending_requests: pending_requests}
+                return return_message 'Access Denied' unless (@current_member.admin? || @current_member.pm?)
+                return get_phase if params['from_date']
+                return get_all
             end
 
             desc 'Get timeoff request of themself '
