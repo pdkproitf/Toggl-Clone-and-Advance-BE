@@ -4,7 +4,7 @@ class Report
     @who_run = who_run || nil
     @begin_date = begin_date || nil
     @end_date = end_date || nil
-    @project = options[:project] || nil
+    @project_id = options[:project_id] || nil
     @client = options[:client] || nil
     @member = options[:member] || nil
     @working_time_per_day = who_run.company.working_time_per_day
@@ -15,7 +15,7 @@ class Report
   def access_denied?
     if !@who_run.admin? && !@who_run.pm?
       if !@project.nil? &&
-         @who_run.project_members.exists?(project_id: @project.id, is_pm: true)
+         @who_run.project_members.exists?(project_id: @project_id, is_pm: true)
         return false
       end
       true
@@ -26,7 +26,7 @@ class Report
 
   def project_pm?
     if !@project.nil? &&
-       @who_run.project_members.exists?(project_id: @project.id, is_pm: true)
+       @who_run.project_members.exists?(project_id: @project_id, is_pm: true)
       return true
     end
     false
@@ -64,7 +64,15 @@ class Report
     end
    end
 
-  def report_by_project; end
+  def report_by_project
+    project = @who_run.get_projects.find_by(id: @project_id)
+    project_options = { chart_serialized: true,
+                        categories_serialized: true,
+                        members_serialized: false,
+                        begin_date: @begin_date, end_date: @end_date }
+    return { data: project } if project.nil?
+    { data: ProjectSerializer.new(project, project_options) }
+  end
 
   def report_by_client; end
 

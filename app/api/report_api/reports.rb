@@ -21,28 +21,31 @@ module ReportApi
       get 'time' do
         authenticated!
         # Who get permission to report
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
-        begin_date = params[:begin_date]
-        end_date = params[:end_date]
-        check_begin_end_date_correct(begin_date, end_date)
-
-        # Return result
-        result = Report.new(Member.find(2), begin_date, end_date,
-                            project: Project.find(15)).report_by_time
-        return error!(I18n.t('access_denied'), 400) if result.nil?
-        result
+        if !@current_member.admin? && @current_member.pm?
+          return error!(I18n.t('access_denied'), 400)
+        end
+        check_begin_end_date_correct(params[:begin_date], params[:end_date])
+        Report.new(@current_member, params[:begin_date], params[:end_date])
+              .report_by_time
       end
 
       desc 'Report by project'
       params do
         requires :begin_date, type: Date, desc: 'Begin date'
         requires :end_date, type: Date, desc: 'End date'
+        requires :project_id, type: Integer, desc: 'Project ID'
       end
       get 'project' do
         authenticated!
         # Who get permission to report
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
-        @current_member.company
+        if !@current_member.admin? && @current_member.pm? &&
+           !@current_member.project_members
+                           .exists?(project_id: params[:project_id])
+          return error!(I18n.t('access_denied'), 400)
+        end
+        check_begin_end_date_correct(params[:begin_date], params[:end_date])
+        Report.new(@current_member, params[:begin_date], params[:end_date],
+                   project_id: params[:project_id]).report_by_project
       end
 
       desc 'Report by member'
