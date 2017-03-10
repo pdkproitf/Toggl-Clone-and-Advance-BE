@@ -32,6 +32,15 @@ class Report
     false
   end
 
+  def overtime?(date)
+    date_diff = date.wday - @begin_week
+    date_diff += 7 if date_diff < 0
+    begin_week_date = date - date_diff
+    (begin_week_date..begin_week_date + 6).each do |week_date|
+      puts week_date
+    end
+  end
+
   def report_by_time
     if @who_run.admin? || @who_run.pm?
       # Report people
