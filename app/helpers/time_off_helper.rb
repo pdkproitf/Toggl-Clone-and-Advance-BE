@@ -75,4 +75,32 @@ module TimeOffHelper
         @timeoff.destroy!
         return_message 'Success!, Your timeoff was deleted!', @timeoff
     end
+
+    def get_all
+        data = TimeOff.all.map { |e|  TimeOffSerializer.new(e)}
+        return_message 'Success', data
+    end
+
+    def get_phase
+        (params['status'] == 'pending')? get_phase_without_member_ordinal : get_phase_member_ordinal
+    end
+
+    def get_phase_without_member_ordinal
+        off_requests = @current_member.off_requests.map { |e|  TimeOffSerializer.new(e)}
+        pending_requests = []
+        pending_requests = TimeOff.where("created_at >= (?) and created_at <= (?) and status = ?" , params['from_date'], params['to_date'], TimeOff.statuses[:pending])
+                                .map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
+        return_message 'Success', {off_requests: off_requests, pending_requests: pending_requests}
+    end
+
+    def get_phase_member_ordinal
+        return return_message 'Access Denied' unless (@current_member.admin? || @current_member.pm?)
+        hash_timeoffs = {}
+        members = []
+        @current_member.company.members.each do |member|
+            hash_timeoffs[member.id] = member.off_requests.where('created_at >= (?) and created_at <= (?)', params['from_date'], params['to_date'] ).map { |e| TimeOffSerializer.new(e) }
+            members.push(MembersSerializer.new(member))
+        end
+        return_message 'Success', {members: members, hash_timeoff: hash_timeoffs}
+    end
 end
