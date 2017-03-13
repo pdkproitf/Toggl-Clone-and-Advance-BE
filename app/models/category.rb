@@ -16,7 +16,7 @@ class Category < ApplicationRecord
 
   def category_members_except_with(project_member_ids)
     category_members.where
-                    .not(is_archived: true,
+                    .not(is_archived_by_category: true,
                          project_member_id: project_member_ids)
   end
 
