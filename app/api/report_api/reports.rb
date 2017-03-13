@@ -2,7 +2,7 @@ module ReportApi
   class Reports < Grape::API
     prefix :api
     version 'v1', using: :accept_version_header
-    #
+
     helpers do
       def check_begin_end_date_correct(begin_date, end_date)
         if begin_date > end_date
@@ -21,70 +21,48 @@ module ReportApi
       get 'time' do
         authenticated!
         # Who get permission to report
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
-        begin_date = params[:begin_date]
-        end_date = params[:end_date]
-        check_begin_end_date_correct(begin_date, end_date)
-
-        # Report people
-        people = []
-        person_options = { begin_date: begin_date, end_date: end_date,
-                           is_tracked_time_serialized: true }
-        @current_member.company.members.each do |member|
-          people.push(
-            MembersSerializer.new(member, person_options)
-          )
+        if !@current_member.admin? && @current_member.pm?
+          return error!(I18n.t('access_denied'), 400)
         end
-
-        # Report projects
-        projects = []
-        project_options = { begin_date: begin_date, end_date: end_date,
-                            is_members_serialized: false }
-        @current_member.get_projects
-                       .where(is_archived: false)
-                       .order(:name).each do |project|
-          projects.push(
-            ProjectSerializer.new(project, project_options)
-          )
-        end
-
-        # Return result
-        { data: {
-          people: people,
-          projects: projects
-        } }
+        check_begin_end_date_correct(params[:begin_date], params[:end_date])
+        Report.new(@current_member, params[:begin_date], params[:end_date])
+              .report_by_time
       end
 
       desc 'Report by project'
       params do
         requires :begin_date, type: Date, desc: 'Begin date'
         requires :end_date, type: Date, desc: 'End date'
+        requires :project_id, type: Integer, desc: 'Project ID'
       end
       get 'project' do
         authenticated!
+        # return Report.new(@current_member, params[:begin_date],
+        #                   params[:end_date]).overtime?(params[:end_date])
         # Who get permission to report
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
-        @current_member.company
+        if !@current_member.admin? && @current_member.pm? &&
+           !@current_member.project_members
+                           .exists?(project_id: params[:project_id])
+          return error!(I18n.t('access_denied'), 400)
+        end
+        check_begin_end_date_correct(params[:begin_date], params[:end_date])
+        Report.new(@current_member, params[:begin_date], params[:end_date],
+                   project_id: params[:project_id]).report_by_project
       end
 
       desc 'Report by member'
-      # params do
-      #   requires :report, type: Hash do
-      #     requires :begin_date, type: Date, desc: 'Begin date'
-      #     requires :end_date, type: Date, desc: 'End date'
-      #     optional :project_id, type: Date, desc: 'Project ID'
-      #     optional :member_id, type: Date, desc: 'Member ID'
-      #   end
-      # end
       params do
         requires :begin_date, type: Date, desc: 'Begin date'
         requires :end_date, type: Date, desc: 'End date'
+        requires :project_id, type: Integer, desc: 'Project ID'
+        requires :member_id, type: Integer, desc: 'Member ID'
       end
       get 'member' do
         authenticated!
-        # Who get permission to report
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
-        @current_member.company
+        report = Report.new(@current_member, params[:begin_date], params[:end_date],
+                            project_id: params[:project_id],
+                            member_id: params[:member_id])
+        report.report_by_member
       end
     end
   end

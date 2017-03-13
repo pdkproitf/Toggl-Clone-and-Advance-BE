@@ -28,10 +28,40 @@ class Project < ApplicationRecord
   end
 
   def archive
+    return if is_archived == true
+    categories.each do |category|
+      if category[:is_archived] == is_archived
+        category.archive
+      else
+        category.unarchive
+      end
+    end
+    project_members.each do |project_member|
+      if project_member[:is_archived] == is_archived
+        project_member.archive
+      else
+        project_member.unarchive
+      end
+    end
     update_attributes(is_archived: true)
   end
 
   def unarchive
+    return if is_archived == false
+    categories.each do |category|
+      if category[:is_archived] == is_archived
+        category.unarchive
+      else
+        category.archive
+      end
+    end
+    project_members.each do |project_member|
+      if project_member[:is_archived] == is_archived
+        project_member.unarchive
+      else
+        project_member.archive
+      end
+    end
     update_attributes(is_archived: false)
   end
 end
