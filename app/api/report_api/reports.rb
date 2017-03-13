@@ -37,8 +37,8 @@ module ReportApi
       end
       get 'project' do
         authenticated!
-        return Report.new(@current_member, params[:begin_date],
-                          params[:end_date]).overtime?(params[:end_date])
+        # return Report.new(@current_member, params[:begin_date],
+        #                   params[:end_date]).overtime?(params[:end_date])
         # Who get permission to report
         if !@current_member.admin? && @current_member.pm? &&
            !@current_member.project_members
@@ -51,23 +51,18 @@ module ReportApi
       end
 
       desc 'Report by member'
-      # params do
-      #   requires :report, type: Hash do
-      #     requires :begin_date, type: Date, desc: 'Begin date'
-      #     requires :end_date, type: Date, desc: 'End date'
-      #     optional :project_id, type: Date, desc: 'Project ID'
-      #     optional :member_id, type: Date, desc: 'Member ID'
-      #   end
-      # end
       params do
         requires :begin_date, type: Date, desc: 'Begin date'
         requires :end_date, type: Date, desc: 'End date'
+        requires :project_id, type: Integer, desc: 'Project ID'
+        requires :member_id, type: Integer, desc: 'Member ID'
       end
       get 'member' do
         authenticated!
-        # Who get permission to report
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
-        @current_member.company
+        report = Report.new(@current_member, params[:begin_date], params[:end_date],
+                            project_id: params[:project_id],
+                            member_id: params[:member_id])
+        report.report_by_member
       end
     end
   end

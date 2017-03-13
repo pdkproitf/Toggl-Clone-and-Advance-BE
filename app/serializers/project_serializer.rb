@@ -19,7 +19,13 @@ class ProjectSerializer < ActiveModel::Serializer
     @members_serialized = true
     unless options[:members_serialized].nil?
       @members_serialized = options[:members_serialized]
+      puts '--------IN--------'
+      puts @members_serialized
+      puts '----------------'
     end
+    puts '-------OUT---------'
+    puts @members_serialized
+    puts '----------------'
     @categories_serialized = false
     unless options[:categories_serialized].nil?
       @categories_serialized = options[:categories_serialized]

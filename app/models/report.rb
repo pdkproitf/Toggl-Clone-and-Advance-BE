@@ -6,7 +6,7 @@ class Report
     @end_date = end_date || nil
     @project_id = options[:project_id] || nil
     @client = options[:client] || nil
-    @member = options[:member] || nil
+    @member_id = options[:member_id] || nil
     @working_time_per_day = who_run.company.working_time_per_day
     @working_time_per_week = who_run.company.working_time_per_week
     @begin_week = who_run.company.begin_week
@@ -85,5 +85,24 @@ class Report
 
   def report_by_client; end
 
-  def report_by_member; end
+  def report_by_member
+    member_chart
+  end
+
+  private
+
+  def member_chart
+    member = Member.find(@member_id)
+    member_options = { chart_serialized: true,
+                       is_tracked_time_serialized: true,
+                       chart_serialized: false,
+                       begin_date: @begin_date, end_date: @end_date }
+    MembersSerializer.new(member, member_options)
+  end
+
+  def member_project; end
+
+  def member_category; end
+
+  def member_overtime; end
 end
