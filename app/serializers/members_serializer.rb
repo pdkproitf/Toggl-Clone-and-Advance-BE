@@ -28,7 +28,7 @@ class MembersSerializer < ActiveModel::Serializer
 
   def tracked_time
     sum = 0
-    object.assigned_category_members.each do |category_member|
+    assigned_category_members.each do |category_member|
       sum += category_member.tracked_time(@begin_date, @end_date)
     end
     sum
@@ -42,7 +42,7 @@ class MembersSerializer < ActiveModel::Serializer
       item[date] = {}
       billable_total = 0
       unbillable_total = 0
-      object.assigned_category_members.each do |category_member|
+      assigned_category_members.each do |category_member|
         if category_member.category.is_billable == true
           billable_total += category_member.tracked_time(date, date)
         else

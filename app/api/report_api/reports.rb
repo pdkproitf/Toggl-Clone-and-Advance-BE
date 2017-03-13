@@ -37,8 +37,6 @@ module ReportApi
       end
       get 'project' do
         authenticated!
-        # return Report.new(@current_member, params[:begin_date],
-        #                   params[:end_date]).overtime?(params[:end_date])
         # Who get permission to report
         if !@current_member.admin? && @current_member.pm? &&
            !@current_member.project_members
@@ -59,6 +57,7 @@ module ReportApi
       end
       get 'member' do
         authenticated!
+        return params
         report = Report.new(@current_member, params[:begin_date], params[:end_date],
                             project_id: params[:project_id],
                             member_id: params[:member_id])
