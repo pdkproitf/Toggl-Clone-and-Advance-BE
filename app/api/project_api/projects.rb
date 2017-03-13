@@ -191,6 +191,7 @@ module ProjectApi
         unless project_params[:is_member_report].nil?
           project.is_member_report = project_params[:is_member_report]
         end
+
         # ***************** Edit basic information ends **********************
         # ******************** Edit members of project ***********************
         members = project_params[:members]
@@ -232,7 +233,7 @@ module ProjectApi
           categories.each do |category|
             category_ids.push(category.id)
             if category.id.nil?
-              # Add new category --------------------------------------------
+              # Add new category
               new_category = project.categories.new(
                 name: category.name,
                 is_billable: category.is_billable
@@ -248,7 +249,7 @@ module ProjectApi
                 new_category.category_members
                             .new(project_member_id: project_member.id)
               end
-              # Add new category ends ----------------------------------------
+              # Add new category ends
             else
               # Unarchive and change info of old category existing in params
               existing_category = project.categories
@@ -276,13 +277,13 @@ module ProjectApi
                   # Add new member
                   existing_category.category_members
                                    .new(project_member_id: project_member.id)
-                elsif category_member.is_archived == true
-                  category_member.unarchive
+                elsif category_member.is_archived_by_category == true
+                  category_member.unarchived_by_category
                 end
               end
               # Archive members not in params
               existing_category.category_members_except_with(project_member_ids)
-                               .each(&:archive)
+                               .each(&:archived_by_category)
               existing_category.save!
             end
           end
