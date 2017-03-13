@@ -4,7 +4,7 @@ module ReportApi
     version 'v1', using: :accept_version_header
 
     helpers do
-      def check_begin_end_date_correct(begin_date, end_date)
+      def validate_date(begin_date, end_date)
         if begin_date > end_date
           error!(I18n.t('begin_date_not_greater_than_end_day'), 400)
         end
@@ -19,14 +19,14 @@ module ReportApi
         requires :end_date, type: Date, desc: 'End date'
       end
       get 'time' do
+        # Every member get permission to report
         authenticated!
-        # Who get permission to report
-        if !@current_member.admin? && @current_member.pm?
-          return error!(I18n.t('access_denied'), 400)
-        end
-        check_begin_end_date_correct(params[:begin_date], params[:end_date])
-        Report.new(@current_member, params[:begin_date], params[:end_date])
-              .report_by_time
+        # Validate begin and end date
+        validate_date(params[:begin_date], params[:end_date])
+        { data: Report.new(@current_member, params[:begin_date], params[:end_date])
+                      .report_by_time }
+        { data: Report.new(Member.find(3), params[:begin_date], params[:end_date])
+                      .report_by_time }
       end
 
       desc 'Report by project'
@@ -43,7 +43,9 @@ module ReportApi
                            .exists?(project_id: params[:project_id])
           return error!(I18n.t('access_denied'), 400)
         end
-        check_begin_end_date_correct(params[:begin_date], params[:end_date])
+
+        validate_date(params[:begin_date], params[:end_date])
+
         Report.new(@current_member, params[:begin_date], params[:end_date],
                    project_id: params[:project_id]).report_by_project
       end

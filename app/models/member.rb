@@ -27,16 +27,17 @@ class Member < ApplicationRecord
 
   def set_default_values
     # Only set if attribute IS NOT set
-    self.role ||= 3 # 1: Admin, 2: PM, 3: Staff
+    self.role ||= 3 # 1: Admin, 2: PM, 3: Member
     self.furlough_total ||= 10
   end
 
+  # Get all projects that member manage regardless to archive or not
   def get_projects
     if admin? || pm?
       # Get all projects of company
       return company.projects
     end
-    # Get projects @current_member assigned pm
+    # Get projects that member's role is project manager
     pm_projects
   end
 
