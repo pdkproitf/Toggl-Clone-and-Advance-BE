@@ -91,7 +91,7 @@ module ProjectApi
         project_params = params[:project]
         # Current user has to be an admin or a PM
         if !@current_member.admin? && !@current_member.pm?
-          return error!(I18n.t('access_denied'), 400)
+          return error!(I18n.t('access_denied'), 403)
         end
         # Client has to belongs to the company of current user
         unless @current_member.company.clients
@@ -243,7 +243,7 @@ module ProjectApi
                 project_member = project.project_members
                                         .find_by(member_id: member_id)
                 if project_member.nil?
-                  return error!(I18n.t('not_added_to_project'), 400)
+                  return error!(I18n.t('not_added_to_project'), 403)
                 end
                 # Add member to new category
                 new_category.category_members
@@ -266,7 +266,7 @@ module ProjectApi
                                         .find_by(member_id: member_id,
                                                  is_archived: false)
                 if project_member.nil?
-                  return error!(I18n.t('not_added_to_project'), 400)
+                  return error!(I18n.t('not_added_to_project'), 403)
                 end
                 project_member_ids.push(project_member.id)
 

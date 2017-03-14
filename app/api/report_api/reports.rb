@@ -38,16 +38,20 @@ module ReportApi
       get 'project' do
         authenticated!
         # Who get permission to report
-        if !@current_member.admin? && @current_member.pm? &&
-           !@current_member.project_members
-                           .exists?(project_id: params[:project_id])
-          return error!(I18n.t('access_denied'), 400)
+        project = @current_member.company.projects.find(params[:project_id])
+        project_member = @current_member.project_members
+                                        .find_by(project_id: project.id)
+        if project_member.nil?
+          return error!(I18n.t('not_added_to_project'), 403)
+        end
+        if @current_member.member? && project_member.is_pm = false
+          return error!(I18n.t('access_denied'), 403)
         end
 
         validate_date(params[:begin_date], params[:end_date])
 
         Report.new(@current_member, params[:begin_date], params[:end_date],
-                   project_id: params[:project_id]).report_by_project
+                   project: project).report_by_project
       end
 
       desc 'Report by member'

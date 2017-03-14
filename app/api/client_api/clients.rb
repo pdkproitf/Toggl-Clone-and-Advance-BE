@@ -19,7 +19,7 @@ module ClientApi
       # => /api/v1/projects/
       desc 'Get all clients'
       get do
-        return error!(I18n.t('access_denied'), 400) unless is_admin_or_pm
+        return error!(I18n.t('access_denied'), 403) unless is_admin_or_pm
         @current_member.company.clients.order('id asc')
       end
 
@@ -28,7 +28,7 @@ module ClientApi
         requires :id, type: String, desc: 'Client ID'
       end
       get ':id' do
-        return error!(I18n.t('access_denied'), 400) unless is_admin_or_pm
+        return error!(I18n.t('access_denied'), 403) unless is_admin_or_pm
         @current_member.company.clients.where(id: params[:id]).first!
       end
 
@@ -39,7 +39,7 @@ module ClientApi
         end
       end
       post do
-        return error!(I18n.t('access_denied'), 400) unless is_admin_or_pm
+        return error!(I18n.t('access_denied'), 403) unless is_admin_or_pm
         client = @current_member.company.clients.create!(name: params[:client][:name])
       end
 
@@ -48,7 +48,7 @@ module ClientApi
         requires :id, type: String, desc: 'Client ID'
       end
       delete ':id' do
-        return error!(I18n.t('access_denied'), 400) unless is_admin_or_pm
+        return error!(I18n.t('access_denied'), 403) unless is_admin_or_pm
         client = @current_member.company.clients.where(id: params[:id]).first!
         client.destroy
       end

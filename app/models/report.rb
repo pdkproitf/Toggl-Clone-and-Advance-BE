@@ -8,7 +8,7 @@ class Report
     @who_run = who_run || nil
     @begin_date = begin_date || nil
     @end_date = end_date || nil
-    @project_id = options[:project_id] || nil
+    @project = options[:project] || nil
     @client = options[:client] || nil
     @member_id = options[:member_id] || nil
     @working_time_per_day = who_run.company.working_time_per_day
@@ -54,13 +54,12 @@ class Report
   end
 
   def report_by_project
-    project = @who_run.get_projects.find_by(id: @project_id)
     project_options = { chart_serialized: true,
                         categories_serialized: true,
                         members_serialized: false,
                         begin_date: @begin_date, end_date: @end_date }
-    return { data: project } if project.nil?
-    { data: ProjectSerializer.new(project, project_options) }
+    return { data: project } if @project.nil?
+    { data: ProjectSerializer.new(@project, project_options) }
   end
 
   def report_by_client; end
@@ -102,6 +101,7 @@ class Report
         ProjectSerializer.new(project, project_options)
       )
     end
+    projects
   end
 
   def member_chart

@@ -11,7 +11,7 @@ module CompanyApi
       desc 'Get company of admin'
       get 'own' do
         authenticated!
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
+        return error!(I18n.t('access_denied'), 403) unless @current_member.admin?
         @current_member.company
       end
 
@@ -26,7 +26,7 @@ module CompanyApi
       end
       put 'own' do
         authenticated!
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
+        return error!(I18n.t('access_denied'), 403) unless @current_member.admin?
         company = @current_member.company
         company[:name] = params[:company][:name]
         unless params[:company][:overtime_max].nil?
