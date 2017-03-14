@@ -23,9 +23,9 @@ module ReportApi
         authenticated!
         # Validate begin and end date
         validate_date(params[:begin_date], params[:end_date])
-        { data: Report.new(@current_member, params[:begin_date], params[:end_date])
-                      .report_by_time }
-        { data: Report.new(Member.find(3), params[:begin_date], params[:end_date])
+        { data: Report.new(@current_member,
+                           params[:begin_date],
+                           params[:end_date])
                       .report_by_time }
       end
 
