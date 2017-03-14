@@ -1,16 +1,11 @@
 class Report
-  # @@no_of_reports = 0
-  def tracked_time
-    stop_time - start_time
-  end
-
   def initialize(who_run, begin_date, end_date, options = {})
     @who_run = who_run || nil
     @begin_date = begin_date || nil
     @end_date = end_date || nil
     @project = options[:project] || nil
     @client = options[:client] || nil
-    @member_id = options[:member_id] || nil
+    @member = options[:member] || nil
     @working_time_per_day = who_run.company.working_time_per_day
     @working_time_per_week = who_run.company.working_time_per_week
     @begin_week = who_run.company.begin_week
@@ -46,7 +41,6 @@ class Report
   end
 
   def report_by_time
-    # Report people
     {
       people: report_people,
       projects: report_projects
@@ -58,8 +52,7 @@ class Report
                         categories_serialized: true,
                         members_serialized: false,
                         begin_date: @begin_date, end_date: @end_date }
-    return { data: project } if @project.nil?
-    { data: ProjectSerializer.new(@project, project_options) }
+    ProjectSerializer.new(@project, project_options)
   end
 
   def report_by_client; end
@@ -90,12 +83,10 @@ class Report
 
   # Report projects
   def report_projects
-    project_options = { begin_date: @begin_date,
-                        end_date: @end_date,
+    project_options = { begin_date: @begin_date, end_date: @end_date,
                         members_serialized: false }
     projects = []
-    @who_run.get_projects
-            .where(is_archived: false)
+    @who_run.get_projects.where(is_archived: false)
             .order(:name).each do |project|
       projects.push(
         ProjectSerializer.new(project, project_options)
