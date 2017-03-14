@@ -36,7 +36,6 @@ module ReportApi
       end
       get 'project' do
         authenticated!
-        @current_member = Member.find(3)
         validate_date(params[:begin_date], params[:end_date])
         project = @current_member.company.projects.find(params[:project_id])
         if project.is_archived == true
