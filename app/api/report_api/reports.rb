@@ -8,6 +8,7 @@ module ReportApi
         if begin_date > end_date
           error!(I18n.t('begin_date_not_greater_than_end_day'), 400)
         end
+        error!(I18n.t('day_limit'), 400) if (end_date - begin_date).to_i > 100
       end
     end
 

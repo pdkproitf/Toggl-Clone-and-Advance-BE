@@ -12,7 +12,7 @@ class MembersSerializer < ActiveModel::Serializer
     super(member)
     @begin_date = options[:begin_date] || nil
     @end_date = options[:end_date] || nil
-    @chart_limit = 50
+    @chart_limit = 365
     @chart_serialized = false
     unless options[:chart_serialized].nil?
       @chart_serialized = options[:chart_serialized]

@@ -11,26 +11,6 @@ class Report
     @begin_week = who_run.company.begin_week
   end
 
-  def access_denied?
-    if !@who_run.admin? && !@who_run.pm?
-      if !@project.nil? &&
-         @who_run.project_members.exists?(project_id: @project_id, is_pm: true)
-        return false
-      end
-      true
-    else
-      false
-    end
-  end
-
-  def project_pm?
-    if !@project.nil? &&
-       @who_run.project_members.exists?(project_id: @project_id, is_pm: true)
-      return true
-    end
-    false
-  end
-
   def overtime?(date)
     date_diff = date.wday - @begin_week
     date_diff += 7 if date_diff < 0
@@ -58,7 +38,9 @@ class Report
   def report_by_client; end
 
   def report_by_member
-    member_chart
+    member_options = { begin_date: @begin_date, end_date: @end_date,
+                       tracked_time_serialized: true }
+    MembersSerializer.new(@member, member_options)
   end
 
   private
@@ -96,15 +78,14 @@ class Report
   end
 
   def member_chart
-    member_options = { chart_serialized: true,
-                       tracked_time_serialized: true,
-                       begin_date: @begin_date, end_date: @end_date }
+    member_options = { begin_date: @begin_date, end_date: @end_date,
+                       chart_serialized: true, tracked_time_serialized: true }
     MembersSerializer.new(@member, member_options)
   end
 
-  def member_project; end
+  def member_projects; end
 
-  def member_category; end
+  def member_tasks; end
 
   def member_overtime; end
 end

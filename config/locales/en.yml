@@ -1,3 +1,4 @@
+
 # Files in the config/locales directory are used for internationalization
 # and are automatically loaded by Rails. If you want to use locales other
 # than English, add the necessary files in this directory.
@@ -36,3 +37,4 @@ en:
   category_name_taken: "Category name was taken"
   begin_date_not_greater_than_end_day: "Begin date not greater than end date"
   project_archived: "The project was archived"
+  day_limit: "Too much days chosen, the limitation of days is 365"
