@@ -11,7 +11,7 @@ module HolidayApi
       desc 'Get all holidays'
       get do
         authenticated!
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
+        return error!(I18n.t('access_denied'), 403) unless @current_member.admin?
         @current_member.company.holidays
       end
 
@@ -25,7 +25,7 @@ module HolidayApi
       end
       post do
         authenticated!
-        return error!(I18n.t('access_denied'), 400) unless @current_member.admin?
+        return error!(I18n.t('access_denied'), 403) unless @current_member.admin?
         holiday = @current_member.company.holidays.new
         holiday[:name] = params[:holiday][:name]
         holiday[:begin_date] = params[:holiday][:begin_date]
