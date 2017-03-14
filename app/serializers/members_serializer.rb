@@ -3,10 +3,10 @@ class MembersSerializer < ActiveModel::Serializer
   belongs_to :company, serializer: CompaniesSerializer
   belongs_to :user, serializer: UserSerializer
   belongs_to :role, serializer: RolesSerializer
-  attr_reader :is_tracked_time_serialized
-  attribute :tracked_time, if: :is_tracked_time_serialized
-  # attr_reader :chart_limit, :chart_serialized
-  # attribute :chart, if: :chart_serialized
+  attr_reader :tracked_time_serialized
+  attribute :tracked_time, if: :tracked_time_serialized
+  attr_reader :chart_limit, :chart_serialized
+  attribute :chart, if: :chart_serialized
 
   def initialize(member, options = {})
     super(member)
@@ -16,13 +16,10 @@ class MembersSerializer < ActiveModel::Serializer
     @chart_serialized = false
     unless options[:chart_serialized].nil?
       @chart_serialized = options[:chart_serialized]
-      puts '----------------'
-      puts @chart_serialized
-      puts '----------------'
     end
-    @is_tracked_time_serialized = false
-    unless options[:is_tracked_time_serialized].nil?
-      @is_tracked_time_serialized = options[:is_tracked_time_serialized]
+    @tracked_time_serialized = false
+    unless options[:tracked_time_serialized].nil?
+      @tracked_time_serialized = options[:tracked_time_serialized]
     end
   end
 

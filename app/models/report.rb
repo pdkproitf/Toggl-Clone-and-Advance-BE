@@ -67,7 +67,7 @@ class Report
   def report_people
     person_options = { begin_date: @begin_date,
                        end_date: @end_date,
-                       is_tracked_time_serialized: true }
+                       tracked_time_serialized: true }
     if @who_run.member?
       # As staff, return only data of the staff
       return Array(MembersSerializer.new(@who_run, person_options))
@@ -96,12 +96,10 @@ class Report
   end
 
   def member_chart
-    member = Member.find(@member_id)
     member_options = { chart_serialized: true,
-                       is_tracked_time_serialized: true,
-                       chart_serialized: false,
+                       tracked_time_serialized: true,
                        begin_date: @begin_date, end_date: @end_date }
-    MembersSerializer.new(member, member_options)
+    MembersSerializer.new(@member, member_options)
   end
 
   def member_project; end

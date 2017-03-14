@@ -52,4 +52,18 @@ class Member < ApplicationRecord
   def member?
     role.name == 'Member'
   end
+
+  def joined_project?(project)
+    if project_members.exists?(project_id: project.id, is_archived: false)
+      return true
+    end
+    false
+  end
+
+  def pm_of_project?(project)
+    project_member = project_members
+                     .find_by(project_id: project.id, is_archived: false)
+    return false if project_member.nil? || project_member.is_pm == false
+    true
+  end
 end

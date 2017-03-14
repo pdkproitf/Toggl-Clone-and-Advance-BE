@@ -35,22 +35,18 @@ module ReportApi
       end
       get 'project' do
         authenticated!
+        @current_member = Member.find(3)
         validate_date(params[:begin_date], params[:end_date])
         project = @current_member.company.projects.find(params[:project_id])
-        project_member = @current_member.project_members
-                                        .find_by(project_id: project.id)
-        if @current_member.member?
-          if project_member.nil?
-            return error!(I18n.t('not_added_to_project'), 403)
-          end
-          if project_member.is_pm == false
-            return error!(I18n.t('access_denied'), 403)
-          end
+        if project.is_archived == true
+          return error!(I18n.t('project_archived'), 404)
         end
-
+        if @current_member.member? && !@current_member.pm_of_project?(project)
+          return error!(I18n.t('access_denied'), 403)
+        end
         report = Report.new(@current_member, params[:begin_date],
                             params[:end_date], project: project)
-        { data: report.report_by_time }
+        { data: report.report_by_project }
       end
 
       desc 'Report by member'
@@ -62,34 +58,27 @@ module ReportApi
       end
       get 'member' do
         authenticated!
-        @current_member = Member.find(3)
         validate_date(params[:begin_date], params[:end_date])
         project = @current_member.company.projects.find(params[:project_id])
         member = @current_member.company.members.find(params[:member_id])
         # Only Admin can run report of himself
-        if member.admin? && !@current_member.admin?
-          return error!(I18n.t('access_denied'), 403)
-        end
-        # Staff cannot run report of super PM
-        if member.pm? && @current_member.member?
-          return error!(I18n.t('access_denied'), 403)
-        end
-
-        if member.member? && @current_member.member? &&
-           member.id != @current_member.id
+        if (member.admin? && !@current_member.admin?) ||
+           # Staff cannot run report of super PM
+           (member.pm? && @current_member.member?) ||
+           # Staff only run report of himself
+           (member.member? && @current_member.member? &&
+              member.id != @current_member.id)
           return error!(I18n.t('access_denied'), 403)
         end
 
-        project_member = @current_member.project_members
-                                        .find_by(project_id: project.id)
-        if @current_member.member? && project_member.nil?
+        if member.member? && !member.joined_project?(project)
           return error!(I18n.t('not_added_to_project'), 403)
         end
 
-        # report = Report.new(@current_member,
-        #                     params[:begin_date], params[:end_date],
-        #                     project: project, member: member)
-        # { data: report.report_by_member }
+        report = Report.new(@current_member,
+                            params[:begin_date], params[:end_date],
+                            project: project, member: member)
+        { data: report.report_by_member }
       end
     end
   end
