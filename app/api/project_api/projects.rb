@@ -20,19 +20,7 @@ module ProjectApi
       desc 'Get all projects that I assigned'
       get 'assigned' do
         authenticated!
-        assigned_categories =
-          @current_member
-          .category_members
-          .where.not(category_id: nil)
-          .where(is_archived_by_category: false)
-          .where(is_archived_by_project_member: false)
-          .select('projects.id as project_id', 'projects.name as project_name')
-          .select('projects.background')
-          .select('clients.id as client_id', 'clients.name as client_name')
-          .select('categories.name as category_name')
-          .select('category_members.id as category_member_id')
-          .joins(category: { project: :client })
-          .order('projects.id desc', 'categories.id asc')
+        assigned_categories = @current_member.assigned_categories
         result = []
         assigned_categories.each do |assigned_category|
           item = result.find { |h| h[:id] == assigned_category[:project_id] }

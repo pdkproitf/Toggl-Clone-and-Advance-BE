@@ -1,3 +1,4 @@
+
 # Files in the config/locales directory are used for internationalization
 # and are automatically loaded by Rails. If you want to use locales other
 # than English, add the necessary files in this directory.
@@ -21,15 +22,7 @@
 
 en:
   hello: "Hello world"
-  user_not_member: "User is not a member of team"
-  user_not_added_to_project: "User was not added to project"
-  role_not_found: "Role not found"
-  project_name_client_taken: "Combination project name and client was taken"
-  already_member: "User is already a member"
   task_not_found: "Task not found"
-  not_project_category_current_user: "project_category_user is not belong to current user"
-
-  # v9
   access_denied: "Access denied"
   client_not_found: "Client not found"
   not_joined_to_company: "Member has not joined to company yet"
@@ -43,3 +36,5 @@ en:
   unarchive_failed: "Unarchiving failed"
   category_name_taken: "Category name was taken"
   begin_date_not_greater_than_end_day: "Begin date not greater than end date"
+  project_archived: "The project was archived"
+  day_limit: "Too much days chosen, the limitation of days is 365"
