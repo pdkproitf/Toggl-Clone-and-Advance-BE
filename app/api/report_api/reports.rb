@@ -8,7 +8,7 @@ module ReportApi
         if begin_date > end_date
           error!(I18n.t('begin_date_not_greater_than_end_day'), 400)
         end
-        error!(I18n.t('day_limit'), 400) if (end_date - begin_date).to_i > 100
+        error!(I18n.t('day_limit'), 400) if (end_date - begin_date).to_i > 366
       end
     end
 
@@ -58,7 +58,7 @@ module ReportApi
       end
       get 'member' do
         authenticated!
-        # @current_member = Member.find(3)
+        @current_member = Member.find(3)
         validate_date(params[:begin_date], params[:end_date])
         member = @current_member.company.members.find(params[:member_id])
         # Only Admin can run report of himself
@@ -71,11 +71,13 @@ module ReportApi
           return error!(I18n.t('access_denied'), 403)
         end
 
-        { data: @current_member.project_members
-                               .where(is_pm: true, is_archived: false)
-                               .ids }
-
-        # member.project_members.where(is_pm: false, is_archived: false)
+        # IDs of projects that current_member is pm
+        project_ids = @current_member.pm_projects
+                                     .where(is_archived: false)
+                                     .ids
+        { data: member.project_members
+                      .where(is_pm: false, is_archived: false)
+                      .where(project_id: project_ids) }
 
         # report = Report.new(@current_member, params[:begin_date],
         #                     params[:end_date], member: member)
