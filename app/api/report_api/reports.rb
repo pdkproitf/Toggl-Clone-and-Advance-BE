@@ -28,24 +28,25 @@ module ReportApi
         { data: report.report_by_time }
       end
 
-      desc 'Report by project'
+      desc 'Report by projects'
       params do
         requires :begin_date, type: Date, desc: 'Begin date'
         requires :end_date, type: Date, desc: 'End date'
-        requires :project_id, type: Integer, desc: 'Project ID'
       end
       get 'project' do
         authenticated!
         validate_date(params[:begin_date], params[:end_date])
-        project = @current_member.company.projects.find(params[:project_id])
-        if project.is_archived == true
-          return error!(I18n.t('project_archived'), 404)
-        end
-        if @current_member.member? && !@current_member.pm_of_project?(project)
+        projects = @current_member.company.projects.where(is_archived: false)
+        # If member is not pm of any project then access denied
+        if @current_member.member? &&
+           @current_member.project_members
+                          .where(project_id: projects.ids,
+                                 is_pm: true, is_archived: false)
+                          .empty?
           return error!(I18n.t('access_denied'), 403)
         end
-        report = Report.new(@current_member, params[:begin_date],
-                            params[:end_date], project: project)
+        report = Report.new(@current_member,
+                            params[:begin_date], params[:end_date])
         { data: report.report_by_project }
       end
 
@@ -53,32 +54,32 @@ module ReportApi
       params do
         requires :begin_date, type: Date, desc: 'Begin date'
         requires :end_date, type: Date, desc: 'End date'
-        requires :project_id, type: Integer, desc: 'Project ID'
         requires :member_id, type: Integer, desc: 'Member ID'
       end
       get 'member' do
         authenticated!
+        # @current_member = Member.find(3)
         validate_date(params[:begin_date], params[:end_date])
-        project = @current_member.company.projects.find(params[:project_id])
         member = @current_member.company.members.find(params[:member_id])
         # Only Admin can run report of himself
         if (member.admin? && !@current_member.admin?) ||
            # Staff cannot run report of super PM
-           (member.pm? && @current_member.member?) ||
-           # Staff only run report of himself
-           (member.member? && @current_member.member? &&
-              member.id != @current_member.id)
+           (member.pm? && @current_member.member?)
+          # Staff only run report of himself
+          #  (member.member? && @current_member.member? &&
+          #     member.id != @current_member.id)
           return error!(I18n.t('access_denied'), 403)
         end
 
-        if member.member? && !member.joined_project?(project)
-          return error!(I18n.t('not_added_to_project'), 403)
-        end
+        { data: @current_member.project_members
+                               .where(is_pm: true, is_archived: false)
+                               .ids }
 
-        report = Report.new(@current_member,
-                            params[:begin_date], params[:end_date],
-                            project: project, member: member)
-        { data: report.report_by_member }
+        # member.project_members.where(is_pm: false, is_archived: false)
+
+        # report = Report.new(@current_member, params[:begin_date],
+        #                     params[:end_date], member: member)
+        # { data: report.report_by_member }
       end
     end
   end

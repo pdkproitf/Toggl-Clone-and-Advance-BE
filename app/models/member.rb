@@ -34,11 +34,9 @@ class Member < ApplicationRecord
   # Get all projects that member manage regardless to archive or not
   def get_projects
     if admin? || pm?
-      # Get all projects of company
-      return company.projects
+      return company.projects # Get all projects of company
     end
-    # Get projects that member's role is project manager
-    pm_projects
+    pm_projects # Get projects that member's role is project manager
   end
 
   def admin?
@@ -72,10 +70,11 @@ class Member < ApplicationRecord
       .where.not(category_id: nil)
       .where(is_archived_by_category: false)
       .where(is_archived_by_project_member: false)
+      .select('category_members.id')
       .select('projects.id as project_id', 'projects.name as project_name')
       .select('projects.background')
       .select('clients.id as client_id', 'clients.name as client_name')
-      .select('categories.name as category_name')
+      .select('categories.id as category_id', 'categories.name as category_name')
       .select('category_members.id as category_member_id')
       .joins(category: { project: :client })
       .order('projects.id desc', 'categories.id asc')
