@@ -92,7 +92,8 @@ module TimeOffHelper
         off_requests = @current_member.off_requests.map { |e|  TimeOffSerializer.new(e)}
         pending_requests = []
         pending_requests = TimeOff.where("start_date >= (?) and created_at <= (?) and status = ?" , params['from_date'], params['to_date'], TimeOff.statuses[:pending])
-        .map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
+                                  .map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
+
         return_message 'Success', {off_requests: off_requests, pending_requests: pending_requests}
     end
 
@@ -109,7 +110,9 @@ module TimeOffHelper
             members.push(temp)
         end
 
-        return_message 'Success', {members: members, timeoffs: timeoffs}
+        holidays = @current_member.company.holidays.where('(begin_date >= (?) and begin_date <= (?)) or (end_date >= (?) and end_date <= (?))', params['from_date'], params['to_date'], params['from_date'], params['to_date'])
+
+        return_message 'Success', {members: members, timeoffs: timeoffs,holidays: holidays}
     end
 
     # get total future day off and the nearest day off in future
