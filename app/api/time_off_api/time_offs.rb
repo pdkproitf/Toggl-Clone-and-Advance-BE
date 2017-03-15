@@ -15,6 +15,9 @@ module TimeOffApi
             end
             get do
                 authenticated!
+                # params['from_date'] = params['from_date'].beginning_of_day if params['from_date']
+                # params['to_date'] = params['to_date'].beginning_of_day if params['to_date']
+
                 return get_phase if params['from_date']
                 return get_all
             end
