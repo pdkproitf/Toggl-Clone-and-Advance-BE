@@ -58,21 +58,28 @@ module ReportApi
       end
       get 'member' do
         authenticated!
+        # @current_member = Member.find(3)
         validate_date(params[:begin_date], params[:end_date])
         member = @current_member.company.members.find(params[:member_id])
         # Only Admin can run report of himself
         if (member.admin? && !@current_member.admin?) ||
            # Staff cannot run report of super PM
-           (member.pm? && @current_member.member?) ||
-           # Staff only run report of himself
-           (member.member? && @current_member.member? &&
-              member.id != @current_member.id)
+           (member.pm? && @current_member.member?)
+          # Staff only run report of himself
+          #  (member.member? && @current_member.member? &&
+          #     member.id != @current_member.id)
           return error!(I18n.t('access_denied'), 403)
         end
 
-        report = Report.new(@current_member, params[:begin_date],
-                            params[:end_date], member: member)
-        { data: report.report_by_member }
+        { data: @current_member.project_members
+                               .where(is_pm: true, is_archived: false)
+                               .ids }
+
+        # member.project_members.where(is_pm: false, is_archived: false)
+
+        # report = Report.new(@current_member, params[:begin_date],
+        #                     params[:end_date], member: member)
+        # { data: report.report_by_member }
       end
     end
   end

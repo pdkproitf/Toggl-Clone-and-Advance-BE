@@ -47,7 +47,7 @@ class Report
     result = {}
     result.merge!(MembersSerializer.new(@member, member_options))
     result[:projects] = member_projects
-    result[:tasks] = 'Tasks'
+    result[:tasks] = member_tasks
     result[:overtime] = 'Overtime'
     result
   end
@@ -88,8 +88,9 @@ class Report
 
   def member_projects
     who_run_projects = @who_run.get_projects.where(is_archived: false)
-    who_run_projects.ids
-    member_joined_categories = @member.assigned_categories
+    member_joined_categories = @member
+                               .assigned_categories
+                               .where(projects: { id: who_run_projects.ids })
     result = []
     member_joined_categories.each do |assigned_category|
       item = result.find { |h| h[:id] == assigned_category[:project_id] }
@@ -110,7 +111,7 @@ class Report
           item[:chart][date] = {}
           item[:chart][date][:billable] = 0
           item[:chart][date][:unbillable] = 0
-          break if item[:chart].size == 365
+          break if item[:chart].size == 367
         end
         result.push(item)
       end
@@ -132,7 +133,16 @@ class Report
     result
   end
 
-  def member_tasks; end
+  def member_tasks
+    tasks = []
+    @member.tasks.where.not(category_members: { category_id: nil })
+           .where(category_members: { is_archived_by_category: false })
+           .where(category_members: { is_archived_by_project_member: false })
+           .each do |task|
+      tasks.push(TaskTestSerializer.new(task))
+    end
+    tasks
+  end
 
   def member_overtime; end
 end
