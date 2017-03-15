@@ -3,7 +3,7 @@ class Report
     @who_run = who_run || nil
     @begin_date = begin_date || nil
     @end_date = end_date || nil
-    @project = options[:project] || nil
+    # @project = options[:project] || nil
     @client = options[:client] || nil
     @member = options[:member] || nil
     @working_time_per_day = who_run.company.working_time_per_day
@@ -28,11 +28,15 @@ class Report
   end
 
   def report_by_project
+    projects = []
     project_options = { chart_serialized: true,
                         categories_serialized: true,
                         members_serialized: false,
                         begin_date: @begin_date, end_date: @end_date }
-    ProjectSerializer.new(@project, project_options)
+    @who_run.get_projects.where(is_archived: false).each do |project|
+      projects.push(ProjectSerializer.new(project, project_options))
+    end
+    projects
   end
 
   def report_by_client; end

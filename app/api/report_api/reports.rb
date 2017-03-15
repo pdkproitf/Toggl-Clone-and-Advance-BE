@@ -28,24 +28,25 @@ module ReportApi
         { data: report.report_by_time }
       end
 
-      desc 'Report by project'
+      desc 'Report by projects'
       params do
         requires :begin_date, type: Date, desc: 'Begin date'
         requires :end_date, type: Date, desc: 'End date'
-        requires :project_id, type: Integer, desc: 'Project ID'
       end
       get 'project' do
         authenticated!
         validate_date(params[:begin_date], params[:end_date])
-        project = @current_member.company.projects.find(params[:project_id])
-        if project.is_archived == true
-          return error!(I18n.t('project_archived'), 404)
-        end
-        if @current_member.member? && !@current_member.pm_of_project?(project)
+        projects = @current_member.company.projects.where(is_archived: false)
+        # If member is not pm of any project then access denied
+        if @current_member.member? &&
+           @current_member.project_members
+                          .where(project_id: projects.ids,
+                                 is_pm: true, is_archived: false)
+                          .empty?
           return error!(I18n.t('access_denied'), 403)
         end
-        report = Report.new(@current_member, params[:begin_date],
-                            params[:end_date], project: project)
+        report = Report.new(@current_member,
+                            params[:begin_date], params[:end_date])
         { data: report.report_by_project }
       end
 

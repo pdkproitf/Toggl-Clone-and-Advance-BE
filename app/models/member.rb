@@ -34,11 +34,9 @@ class Member < ApplicationRecord
   # Get all projects that member manage regardless to archive or not
   def get_projects
     if admin? || pm?
-      # Get all projects of company
-      return company.projects
+      return company.projects # Get all projects of company
     end
-    # Get projects that member's role is project manager
-    pm_projects
+    pm_projects # Get projects that member's role is project manager
   end
 
   def admin?
