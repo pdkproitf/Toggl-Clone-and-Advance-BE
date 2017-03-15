@@ -111,7 +111,7 @@ class Report
           item[:chart][date] = {}
           item[:chart][date][:billable] = 0
           item[:chart][date][:unbillable] = 0
-          break if item[:chart].size == 367
+          break if item[:chart].size == 366
         end
         result.push(item)
       end
