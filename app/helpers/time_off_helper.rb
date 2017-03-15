@@ -115,13 +115,13 @@ module TimeOffHelper
     # get total future day off and the nearest day off in future
     def future_dateoff member
         today = Time.now.beginning_of_day
-        today = params['to_date'] if params['to_date'] > today
+        today = params['to_date'].beginning_of_day if params['to_date'] > today
         future_dayoff = 0.0
         previous_timeoff = nil
         current_diff = nil
         member.off_requests.where('end_date > (?)', today).each do |timeoff|
             previous_timeoff = timeoff if previous_timeoff.nil?
-            diff_day = compute timeoff, today
+            diff_day = find_nearest_day timeoff, today
             current_diff = diff_day if current_diff.nil?
 
             if diff_day < current_diff
@@ -129,7 +129,7 @@ module TimeOffHelper
                 previous_timeoff = timeoff
             end
 
-            future_dayoff += diff_day
+            future_dayoff += compute_diff_dayoff timeoff, today
         end
         if previous_timeoff.nil?
             return {'nearest_future_dateoff': today , 'future_dayoff': future_dayoff}
@@ -138,13 +138,23 @@ module TimeOffHelper
         end
     end
 
-    def compute timeoff, today
+    def compute_diff_dayoff timeoff, today
         if today < timeoff.start_date
             return ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/ 1.day + ((timeoff.is_start_half_day)? 0:0.5) + ((timeoff.is_end_half_day)? 0:0.5))
         elsif today == timeoff.start_date
             return ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/1.day + ((timeoff.is_end_half_day)? 0:0.5))
         else today > timeoff.start_date
             return ((timeoff.end_date.beginning_of_day - today)/1.day + ((timeoff.is_end_half_day)? 0:0.5))
+        end
+    end
+
+    def find_nearest_day timeoff, today
+        if today < timeoff.start_date
+            return (timeoff.start_date.beginning_of_day - today)/ 1.day
+        elsif today == timeoff.start_date
+            return today + 1.day
+        else today > timeoff.start_date
+            return (timeoff.end_date.beginning_of_day - today)/1.day
         end
     end
 
