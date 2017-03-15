@@ -1,10 +1,10 @@
 module TimeOffHelper
     def create_timeoff
+        params['timeoff'].store('sender_id', @current_member.id)
         TimeOff.create!(create_params)
     end
 
     def create_params
-        params['timeoff'].store('sender_id', @current_member.id)
         ActionController::Parameters.new(params).require(:timeoff).permit(:sender_id, :start_date, :end_date, :is_start_half_day, :is_end_half_day, :description)
     end
 
@@ -33,6 +33,7 @@ module TimeOffHelper
 
     def update_timeoff
         @timeoff.update_attributes!(create_params)
+
         send_email_to_boss @timeoff
         return_message 'Success'
     end
@@ -50,6 +51,7 @@ module TimeOffHelper
         approver_id: @current_member.id,
         approver_messages: params['answer_timeoff_request']['approver_messages'],
         status: params['answer_timeoff_request']['status'])
+
         send_answer_to_person_relative @timeoff
         return_message 'Success'
     end
@@ -85,22 +87,64 @@ module TimeOffHelper
         (params['status'] == 'pending')? get_phase_without_member_ordinal : get_phase_member_ordinal
     end
 
+    # using get timeoff of in phase for show person request and manage request
     def get_phase_without_member_ordinal
         off_requests = @current_member.off_requests.map { |e|  TimeOffSerializer.new(e)}
         pending_requests = []
-        pending_requests = TimeOff.where("created_at >= (?) and created_at <= (?) and status = ?" , params['from_date'], params['to_date'], TimeOff.statuses[:pending])
-                                .map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
+        pending_requests = TimeOff.where("start_date >= (?) and created_at <= (?) and status = ?" , params['from_date'], params['to_date'], TimeOff.statuses[:pending])
+        .map { |e|  TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
         return_message 'Success', {off_requests: off_requests, pending_requests: pending_requests}
     end
 
+    # using get timeoff of member in company follow phase
     def get_phase_member_ordinal
         return return_message 'Access Denied' unless (@current_member.admin? || @current_member.pm?)
-        hash_timeoffs = {}
+        timeoffs = []
         members = []
         @current_member.company.members.each do |member|
-            hash_timeoffs[member.id] = member.off_requests.where('created_at >= (?) and created_at <= (?)', params['from_date'], params['to_date'] ).map { |e| TimeOffSerializer.new(e) }
-            members.push(MembersSerializer.new(member))
+            timeoffs.push(member.off_requests.where('(start_date >= (?) and start_date <= (?)) or (end_date >= (?) and end_date <= (?))', params['from_date'], params['to_date'], params['from_date'], params['to_date'] ).map { |e| TimeOffSerializer.new(e) })
+            temp = MembersSerializer.new(member)
+            temp = temp.to_h
+            temp.merge!(future_dateoff(member))
+            members.push(temp)
         end
-        return_message 'Success', {members: members, hash_timeoff: hash_timeoffs}
+
+        return_message 'Success', {members: members, timeoffs: timeoffs}
+    end
+
+    # get total future day off and the nearest day off in future
+    def future_dateoff member
+        today = Time.now.beginning_of_day
+        today = params['to_date'] if params['to_date'] > today
+        future_dayoff = 0.0
+        previous_timeoff = nil
+        current_diff = nil
+        member.off_requests.where('end_date > (?)', today).each do |timeoff|
+            previous_timeoff = timeoff if previous_timeoff.nil?
+            diff_day = compute timeoff, today
+            current_diff = diff_day if current_diff.nil?
+
+            if diff_day < current_diff
+                current_diff = diff_day
+                previous_timeoff = timeoff
+            end
+
+            future_dayoff += diff_day
+        end
+        if previous_timeoff.nil?
+            return {'nearest_future_dateoff': today , 'future_dayoff': future_dayoff}
+        else
+            return {'nearest_future_dateoff': (previous_timeoff.start_date > today)? previous_timeoff.start_date : (previous_timeoff.start_date == today)? (today + 1.day) : previous_timeoff.end_date , 'future_dayoff': future_dayoff}
+        end
+    end
+
+    def compute timeoff, today
+        if today < timeoff.start_date
+            return ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/ 1.day + ((timeoff.is_start_half_day)? 0:0.5) + ((timeoff.is_end_half_day)? 0:0.5))
+        elsif today == timeoff.start_date
+            return ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/1.day + ((timeoff.is_end_half_day)? 0:0.5))
+        else today > timeoff.start_date
+            return ((timeoff.end_date.beginning_of_day - today)/1.day + ((timeoff.is_end_half_day)? 0:0.5))
+        end
     end
 end

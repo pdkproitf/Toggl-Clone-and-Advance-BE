@@ -15,17 +15,24 @@ module TimeOffApi
             end
             get do
                 authenticated!
-                return return_message 'Access Denied' unless (@current_member.admin? || @current_member.pm?)
                 return get_phase if params['from_date']
                 return get_all
             end
 
-            desc 'Get timeoff request of themself '
+            desc 'Get number timeoff of person'
+            get '/num-of-timeoff' do
+                authenticated!
+                total_date = @current_member.furlough_total;
+                offed_date = @current_member.off_requests.where('created_at >= (?) and status = (?)', Date.today.beginning_of_year, TimeOff.statuses[:approved])
+                return_message 'Success', { total: total_date, offed: offed_date}
+            end
+
+            desc 'Get a timeoff request of themself '
             get ':id' do
                 authenticated!
                 @timeoff = TimeOff.find_by_id(params['id'])
                 return return_message "Not Found timeoff with id #{params['id']}" unless @timeoff
-                return return_message "Access Denied timeoff id #{params['id']} with member #{current_member.user.email}" unless @timeoff.sender.id == @current_member.id
+                return return_message "Access Denied timeoff id #{params['id']} with member #{current_member.user.email}" unless (@timeoff.sender_id == @current_member.id) || able_to_answer_request?
                 return_message 'Success', @timeoff
             end
 
@@ -71,16 +78,13 @@ module TimeOffApi
                 return return_message "Not Found timeoff with id #{params['id']}" unless @timeoff
 
                 if params['timeoff']
-                    return return_message "Access Denied! You can't modify this Request" unless @timeoff.sender_id == @current_member.id
+                    return return_message "Access Denied! You can't modify this Request" unless (@timeoff.sender_id == @current_member.id) || able_to_answer_request?
                     return return_message "Not Allow!  Your request was answered. If you want to change, you can delete this request and create new request" unless @timeoff.pending?
                     update_timeoff
-                    send_email_to_boss @timeoff
                 else
                     return return_message "Access Denied! You have not enough able to answer this request" unless able_to_answer_request?
                     answer_timeoff
-                    send_answer_to_person_relative
                 end
-                return_message 'Success', @timeoff
             end
 
 
