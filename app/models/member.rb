@@ -3,7 +3,7 @@ class Member < ApplicationRecord
   belongs_to :user
   belongs_to :role
   has_many :projects, dependent: :destroy # Create new
-  has_many :joined_projects, through: :project_members, source: :projects
+  has_many :joined_projects, through: :project_members, source: :project
 
   # Find projects member assigned PM
   has_many :pm_project_members, -> { where is_pm: true }, class_name: 'ProjectMember'

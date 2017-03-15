@@ -87,7 +87,11 @@ class Report
   end
 
   def member_projects
-    who_run_projects = @who_run.get_projects.where(is_archived: false)
+    if @who_run.member?
+      who_run_projects = @who_run.joined_projects.where(is_archived: false)
+    else
+      who_run_projects = @who_run.get_projects.where(is_archived: false)
+    end
     member_joined_categories = @member
                                .assigned_categories
                                .where(projects: { id: who_run_projects.ids })
