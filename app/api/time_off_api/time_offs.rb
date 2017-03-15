@@ -25,9 +25,8 @@ module TimeOffApi
             desc 'Get number timeoff of person'
             get '/num-of-timeoff' do
                 authenticated!
-                total_date = @current_member.furlough_total;
                 offed_date = @current_member.off_requests.where('created_at >= (?) and status = (?)', Date.today.beginning_of_year, TimeOff.statuses[:approved])
-                return_message 'Success', { total: total_date, offed: offed_date}
+                return_message 'Success', offed_approver(offed_date)
             end
 
             desc 'Get a timeoff request of themself '

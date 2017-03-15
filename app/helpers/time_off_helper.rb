@@ -147,4 +147,14 @@ module TimeOffHelper
             return ((timeoff.end_date.beginning_of_day - today)/1.day + ((timeoff.is_end_half_day)? 0:0.5))
         end
     end
+
+    def offed_approver off_dates
+        offed = 0
+        approver = []
+        off_dates.each do |timeoff|
+            offed += ((timeoff.end_date -  timeoff.start_date)/ 1.day) + ((timeoff.is_start_half_day)? 0:0.5) + ((timeoff.is_end_half_day)? 0:0.5)
+            approver.push("#{timeoff.approver.user.first_name} #{timeoff.approver.user.last_name}")
+        end
+        return { total: @current_member.furlough_total ,offed: offed, approver: approver }
+    end
 end
