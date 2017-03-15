@@ -54,13 +54,11 @@ module ReportApi
       params do
         requires :begin_date, type: Date, desc: 'Begin date'
         requires :end_date, type: Date, desc: 'End date'
-        requires :project_id, type: Integer, desc: 'Project ID'
         requires :member_id, type: Integer, desc: 'Member ID'
       end
       get 'member' do
         authenticated!
         validate_date(params[:begin_date], params[:end_date])
-        project = @current_member.company.projects.find(params[:project_id])
         member = @current_member.company.members.find(params[:member_id])
         # Only Admin can run report of himself
         if (member.admin? && !@current_member.admin?) ||
@@ -72,13 +70,8 @@ module ReportApi
           return error!(I18n.t('access_denied'), 403)
         end
 
-        if member.member? && !member.joined_project?(project)
-          return error!(I18n.t('not_added_to_project'), 403)
-        end
-
-        report = Report.new(@current_member,
-                            params[:begin_date], params[:end_date],
-                            project: project, member: member)
+        report = Report.new(@current_member, params[:begin_date],
+                            params[:end_date], member: member)
         { data: report.report_by_member }
       end
     end

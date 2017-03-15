@@ -3,7 +3,6 @@ class Report
     @who_run = who_run || nil
     @begin_date = begin_date || nil
     @end_date = end_date || nil
-    # @project = options[:project] || nil
     @client = options[:client] || nil
     @member = options[:member] || nil
     @working_time_per_day = who_run.company.working_time_per_day
@@ -42,9 +41,15 @@ class Report
   def report_by_client; end
 
   def report_by_member
+    return nil if @member.nil?
     member_options = { begin_date: @begin_date, end_date: @end_date,
                        tracked_time_serialized: true }
-    MembersSerializer.new(@member, member_options)
+    result = {}
+    result.merge!(MembersSerializer.new(@member, member_options))
+    result[:projects] = member_projects
+    result[:tasks] = 'Tasks'
+    result[:overtime] = 'Overtime'
+    result
   end
 
   private
@@ -81,13 +86,51 @@ class Report
     projects
   end
 
-  def member_chart
-    member_options = { begin_date: @begin_date, end_date: @end_date,
-                       chart_serialized: true, tracked_time_serialized: true }
-    MembersSerializer.new(@member, member_options)
+  def member_projects
+    who_run_projects = @who_run.get_projects.where(is_archived: false)
+    who_run_projects.ids
+    member_joined_categories = @member.assigned_categories
+    result = []
+    member_joined_categories.each do |assigned_category|
+      item = result.find { |h| h[:id] == assigned_category[:project_id] }
+      unless item
+        item = {
+          id: assigned_category[:project_id],
+          name: assigned_category[:project_name]
+        }
+        item[:background] = assigned_category[:background]
+        item[:client] = {
+          id: assigned_category[:client_id],
+          name: assigned_category[:client_name]
+        }
+        item[:category] = []
+        item[:chart] = {}
+        count = 0
+        (@begin_date..@end_date).each do |date|
+          item[:chart][date] = {}
+          item[:chart][date][:billable] = 0
+          item[:chart][date][:unbillable] = 0
+          break if item[:chart].size == 365
+        end
+        result.push(item)
+      end
+      item[:category].push(
+        name: assigned_category[:category_name],
+        category_member_id: assigned_category[:category_member_id],
+        tracked_time: assigned_category.tracked_time(@begin_date, @end_date)
+      )
+      (@begin_date..@end_date).each do |date|
+        if assigned_category.category.is_billable == true
+          item[:chart][date][:billable] += assigned_category
+                                           .tracked_time(date, date)
+        else
+          item[:chart][date][:unbillable] += assigned_category
+                                             .tracked_time(date, date)
+        end
+      end
+    end
+    result
   end
-
-  def member_projects; end
 
   def member_tasks; end
 
