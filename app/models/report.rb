@@ -139,10 +139,7 @@ class Report
 
   def member_tasks
     tasks = []
-    @member.tasks.where.not(category_members: { category_id: nil })
-           .where(category_members: { is_archived_by_category: false })
-           .where(category_members: { is_archived_by_project_member: false })
-           .each do |task|
+    @member.perfect_tasks.each do |task|
       tasks.push(TaskTestSerializer.new(task))
     end
     tasks

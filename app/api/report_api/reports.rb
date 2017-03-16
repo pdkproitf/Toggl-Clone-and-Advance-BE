@@ -58,7 +58,6 @@ module ReportApi
       end
       get 'member' do
         authenticated!
-        @current_member = Member.find(4)
         validate_date(params[:begin_date], params[:end_date])
         member = @current_member.company.members.find(params[:member_id])
         # Only Admin can run report of himself

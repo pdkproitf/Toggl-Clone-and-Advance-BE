@@ -79,4 +79,10 @@ class Member < ApplicationRecord
       .joins(category: { project: :client })
       .order('projects.id desc', 'categories.id asc')
   end
+
+  def perfect_tasks
+    tasks.where.not(category_members: { category_id: nil })
+         .where(category_members: { is_archived_by_category: false })
+         .where(category_members: { is_archived_by_project_member: false })
+  end
 end
