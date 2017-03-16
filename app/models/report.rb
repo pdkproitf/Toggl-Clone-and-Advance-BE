@@ -131,17 +131,20 @@ class Report
   end
 
   def member_overtime
-    week_of_date_overtime?(@begin_date)
-    overtime_timers
+    test_count = 0
+    begin_week_days = []
+    overtime_timers.each do |timer|
+      next if begin_week_days.include?(begin_week_date(timer.start_time.to_date))
+      begin_week_days.push(begin_week_date(timer.start_time.to_date))
+      test_count += 1 if week_of_date_overtime?(timer.start_time.to_date)
+    end
+    test_count
   end
 
   def overtime_timers
-    timers = []
     @member.timers.where(category_members: { id: member_joined_categories.ids })
-           .each do |timer|
-      timers.push(TimerSerializer.new(timer))
-    end
-    timers
+           .where('start_time >= ? AND start_time < ?', @begin_date, @end_date + 1)
+           .order(:start_time)
   end
 
   def member_joined_categories
