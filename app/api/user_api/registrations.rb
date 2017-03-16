@@ -44,9 +44,15 @@ module UserApi
                     @member = create_member
                     Member.transaction do
                         @member.save!
+                        create_default_job
                     end
                     return return_message 'Success', UserSerializer.new(@resource)
                 end
+            end
+
+            def create_default_job
+                @member.jobs_members.create!(job_id: Job.find_or_create_by(name: 'President'))  if params['company_domain']
+                @member.jobs_members.create!(job_id: Job.find_or_create_by(name: 'Developper'))  if params['invited_token']
             end
         end
 
@@ -83,7 +89,7 @@ module UserApi
                     return return_message 'Error: Domain has already been taken' if Company.find_by_domain(params['user']['company_domain'])
                     @company = create_company params['user']
                 end
-                
+
                 Company.transaction do
                     User.transaction do
                         @company.save!
