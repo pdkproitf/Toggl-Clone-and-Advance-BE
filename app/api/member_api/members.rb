@@ -15,6 +15,10 @@ module MemberApi
                 invite.save!
                 InviteMailer.send_invite(invite, invite.invite_token, 'https://spring-time-tracker.herokuapp.com/#/members-confirm/'+invite.invite_token).deliver_later
             end
+
+            def create_default_job
+                @member.jobs_members.create!(job_id: Job.find_or_create_by(name: 'Developper'))
+            end
         end
 
         resource :members do
@@ -63,6 +67,7 @@ module MemberApi
                     member_role = Role.find_by_name('Member') || Role.create!(name: 'Member')
                     Member.transaction do
                         @invite.sender.company.members.create!(user_id: @invite.recipient_id, role_id: member_role.id)
+                        create_default_job
                         return return_message 'Success, You can login under '+@invite.sender.company.name+'s company'
                     end
                 end

@@ -14,3 +14,7 @@ Company.create!(name: 'CES Australia', domain: 'code-engine')
 Company.create!(name: 'Axon', domain: 'axon.active')
 Company.create!(name: 'Framja', domain: 'framja')
 #
+Job.find_or_create_by(name: 'President')
+Job.find_or_create_by(name: 'Developer')
+Job.find_or_create_by(name: 'Design')
+Job.find_or_create_by(name: 'Marketting')

@@ -3,6 +3,7 @@ class MembersSerializer < ActiveModel::Serializer
   belongs_to :company, serializer: CompaniesSerializer
   belongs_to :user, serializer: UserSerializer
   belongs_to :role, serializer: RolesSerializer
+  has_many   :jobs
   attr_reader :tracked_time_serialized
   attribute :tracked_time, if: :tracked_time_serialized
   attr_reader :chart_limit, :chart_serialized
