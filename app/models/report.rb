@@ -10,15 +10,6 @@ class Report
     @begin_week = who_run.company.begin_week
   end
 
-  def overtime?(date)
-    date_diff = date.wday - @begin_week
-    date_diff += 7 if date_diff < 0
-    begin_week_date = date - date_diff
-    (begin_week_date..begin_week_date + 6).each do |week_date|
-      puts week_date
-    end
-  end
-
   def report_by_time
     {
       people: report_people,
@@ -48,7 +39,7 @@ class Report
     result.merge!(MembersSerializer.new(@member, member_options))
     result[:projects] = member_projects
     result[:tasks] = member_tasks
-    result[:overtime] = 'Overtime'
+    result[:overtime] = member_overtime
     result
   end
 
@@ -147,5 +138,26 @@ class Report
     tasks
   end
 
-  def member_overtime; end
+  def member_overtime
+    overtime?(@begin_date)
+    # week_working_time_total(@begin_date)
+  end
+
+  def overtime?(date)
+    if week_working_time_total(date) < @working_time_per_week * 3600
+      return false
+    end
+    true
+  end
+
+  def begin_week_date(date)
+    date_diff = date.wday - @begin_week
+    date_diff += 7 if date_diff < 0
+    date - date_diff
+  end
+
+  def week_working_time_total(date)
+    begin_week_date = begin_week_date(date)
+    @member.tracked_time(begin_week_date, begin_week_date + 6)
+  end
 end

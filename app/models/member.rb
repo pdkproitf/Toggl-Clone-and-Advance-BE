@@ -85,4 +85,12 @@ class Member < ApplicationRecord
          .where(category_members: { is_archived_by_category: false })
          .where(category_members: { is_archived_by_project_member: false })
   end
+
+  def tracked_time(begin_date = nil, end_date = nil)
+    sum = 0
+    assigned_categories.each do |category_member|
+      sum += category_member.tracked_time(begin_date, end_date)
+    end
+    sum
+  end
 end
