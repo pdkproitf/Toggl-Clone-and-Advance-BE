@@ -78,14 +78,6 @@ class Report
   end
 
   def member_projects
-    if @who_run.member? && @who_run.id == @member.id
-      who_run_projects = @who_run.joined_projects.where(is_archived: false)
-    else
-      who_run_projects = @who_run.get_projects.where(is_archived: false)
-    end
-    member_joined_categories = @member
-                               .assigned_categories
-                               .where(projects: { id: who_run_projects.ids })
     result = []
     member_joined_categories.each do |assigned_category|
       item = result.find { |h| h[:id] == assigned_category[:project_id] }
@@ -139,14 +131,32 @@ class Report
   end
 
   def member_overtime
-    overtime?(@begin_date)
-    # week_working_time_total(@begin_date)
+    week_of_date_overtime?(@begin_date)
+    overtime_timers
   end
 
-  def overtime?(date)
-    holiday_hour = holidays_in_week_of_date(date).length * @working_time_per_day
-    return holiday_hour
-    working_time_per_week = @working_time_per_week - holiday_hour
+  def overtime_timers
+    timers = []
+    @member.timers.where(category_members: { id: member_joined_categories.ids })
+           .each do |timer|
+      timers.push(TimerSerializer.new(timer))
+    end
+    timers
+  end
+
+  def member_joined_categories
+    if @who_run.member? && @who_run.id == @member.id
+      who_run_projects = @who_run.joined_projects.where(is_archived: false)
+    else
+      who_run_projects = @who_run.get_projects.where(is_archived: false)
+    end
+    @member.assigned_categories
+           .where(projects: { id: who_run_projects.ids })
+  end
+
+  def week_of_date_overtime?(date)
+    holiday_hour_off_in_week = holiday_hour_off_in_week(date)
+    working_time_per_week = @working_time_per_week - holiday_hour_off_in_week
     if week_working_time_total(date) <= working_time_per_week * 3600
       return false
     end
@@ -179,5 +189,13 @@ class Report
       end
     end
     holidays_in_week_of_date
+  end
+
+  def holiday_hour_off_in_week(date)
+    not_weekend_holidays = 0
+    holidays_in_week_of_date(date).each do |holiday|
+      not_weekend_holidays += 1 if holiday.wday != 0 && holiday.wday != 6
+    end
+    not_weekend_holidays * @working_time_per_day
   end
 end
