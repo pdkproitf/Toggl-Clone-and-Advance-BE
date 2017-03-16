@@ -73,10 +73,10 @@ module ReportApi
           project_ids = @current_member.pm_projects
                                        .where(is_archived: false)
                                        .ids
-          member_joined_project = member.project_members
-                                        .where(project_id: project_ids,
-                                               is_archived: false)
-          if member_joined_project.empty?
+          is_member_joined_projects = member.project_members
+                                            .exists?(project_id: project_ids,
+                                                     is_archived: false)
+          if is_member_joined_projects == false
             return error!(I18n.t('access_denied'), 403)
           end
         end

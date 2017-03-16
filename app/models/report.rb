@@ -87,7 +87,7 @@ class Report
   end
 
   def member_projects
-    if @who_run.member?
+    if @who_run.member? && @who_run.id == @member.id
       who_run_projects = @who_run.joined_projects.where(is_archived: false)
     else
       who_run_projects = @who_run.get_projects.where(is_archived: false)
