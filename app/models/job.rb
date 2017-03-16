@@ -1,5 +1,6 @@
 class Job < ApplicationRecord
-    has_and_belongs_to_many :members
+    has_many :jobs_members
+    has_many :members, :through => :jobs_members
 
-    validates :name, presence: true, uniqueness: false;
+    validates :name, presence: true, uniqueness: true
 end
