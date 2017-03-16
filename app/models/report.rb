@@ -87,7 +87,11 @@ class Report
   end
 
   def member_projects
-    who_run_projects = @who_run.get_projects.where(is_archived: false)
+    if @who_run.member? && @who_run.id == @member.id
+      who_run_projects = @who_run.joined_projects.where(is_archived: false)
+    else
+      who_run_projects = @who_run.get_projects.where(is_archived: false)
+    end
     member_joined_categories = @member
                                .assigned_categories
                                .where(projects: { id: who_run_projects.ids })
@@ -135,11 +139,10 @@ class Report
 
   def member_tasks
     tasks = []
-    @member.tasks.where.not(category_members: { category_id: nil })
-           .where(category_members: { is_archived_by_category: false })
-           .where(category_members: { is_archived_by_project_member: false })
-           .each do |task|
-      tasks.push(TaskTestSerializer.new(task))
+    task_options = { begin_date: @begin_date, end_date: @end_date }
+    @member.perfect_tasks.each do |task|
+      customized_task = TaskTestSerializer.new(task, task_options)
+      tasks.push(customized_task) if customized_task.tracked_time > 0
     end
     tasks
   end
