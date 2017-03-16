@@ -104,15 +104,22 @@ module TimeOffHelper
         members = []
         @current_member.company.members.each do |member|
             timeoffs.push(member.off_requests.where('(start_date >= (?) and start_date <= (?)) or (end_date >= (?) and end_date <= (?))', params['from_date'], params['to_date'], params['from_date'], params['to_date'] ).map { |e| TimeOffSerializer.new(e) })
-            temp = MembersSerializer.new(member)
-            temp = temp.to_h
-            temp.merge!(future_dateoff(member))
-            members.push(temp)
+            serialize_member = MembersSerializer.new(member)
+            serialize_member = serialize_member.to_h
+            serialize_member.merge!(future_dateoff(member))
+            serialize_member.merge!(member_project_join(member))
+
+            members.push(serialize_member)
         end
 
         holidays = @current_member.company.holidays.where('(begin_date >= (?) and begin_date <= (?)) or (end_date >= (?) and end_date <= (?))', params['from_date'], params['to_date'], params['from_date'], params['to_date'])
 
         return_message 'Success', {members: members, timeoffs: timeoffs,holidays: holidays}
+    end
+
+    def member_project_join member
+        projects = member.joined_projects.where(is_archived: false)
+        { 'projects_joined': projects }
     end
 
     # get total future day off and the nearest day off in future
