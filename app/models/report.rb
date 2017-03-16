@@ -144,7 +144,10 @@ class Report
   end
 
   def overtime?(date)
-    if week_working_time_total(date) < @working_time_per_week * 3600
+    holiday_hour = holidays_in_week_of_date(date).length * @working_time_per_day
+    return holiday_hour
+    working_time_per_week = @working_time_per_week - holiday_hour
+    if week_working_time_total(date) <= working_time_per_week * 3600
       return false
     end
     true
@@ -159,5 +162,22 @@ class Report
   def week_working_time_total(date)
     begin_week_date = begin_week_date(date)
     @member.tracked_time(begin_week_date, begin_week_date + 6)
+  end
+
+  def holidays_in_week_of_date(date)
+    begin_week_date = begin_week_date(date)
+    @who_run.company.holidays
+    holidays = @who_run.company.holidays
+    holidays_in_week_of_date = []
+    (begin_week_date..begin_week_date + 6).each do |date_in_week|
+      holidays.each do |holiday|
+        if date_in_week >= holiday.begin_date &&
+           date_in_week <= holiday.end_date
+          holidays_in_week_of_date.push(date_in_week)
+          break
+        end
+      end
+    end
+    holidays_in_week_of_date
   end
 end
