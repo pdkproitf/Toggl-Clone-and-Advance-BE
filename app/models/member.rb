@@ -20,6 +20,9 @@ class Member < ApplicationRecord
   has_many :off_requests, class_name: 'TimeOff', foreign_key: 'sender_id'
   has_many :off_approvers, class_name: 'TimeOff', foreign_key: 'approver_id'
 
+  has_many :jobs_members
+  has_many :jobs, :through => :jobs_members
+
   validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
   # After initialization, set default values
