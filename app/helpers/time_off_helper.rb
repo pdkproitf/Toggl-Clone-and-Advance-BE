@@ -39,10 +39,13 @@ module TimeOffHelper
     end
 
     # true if timeoff didn't belong to current_member & current_member is admin or (PM and timeoff's sender  is member)
-    def able_to_answer_request?
-        return false if @current_member.id == @timeoff.sender_id
-        return true if @current_member.admin?
-        return true if @current_member.pm? & @timeoff.sender.member?
+    def able_to_answer_request? current_member = nil, timeoff = nil
+        current_member = current_member || @current_member
+        timeoff = timeoff || @timeoff
+
+        return false if current_member.id == timeoff.sender_id
+        return true if current_member.admin?
+        return true if current_member.pm? && timeoff.sender.member?
         false
     end
 
@@ -126,10 +129,12 @@ module TimeOffHelper
     def future_dateoff member
         today = Time.now.beginning_of_day
         today = params['to_date'].beginning_of_day if params['to_date'] > today
-        future_dayoff = 0.0
-        previous_timeoff = nil
-        current_diff = nil
-        member.off_requests.where('end_date > (?)', today).each do |timeoff|
+
+        future_dayoff = 0.0     #default num of future_dayoff
+        previous_timeoff = nil  #defaul nearest_future_dateoff
+        current_diff = nil      #using compute nearest day off
+
+        member.off_requests.where('end_date > (?)  and status != ?', today, TimeOff.statuses[:rejected]).each do |timeoff|
             previous_timeoff = timeoff if previous_timeoff.nil?
             diff_day = find_nearest_day timeoff, today
             current_diff = diff_day if current_diff.nil?

@@ -23,8 +23,18 @@ module TimeOffApi
             end
 
             desc 'Get number timeoff of person'
+            params do
+                optional :member_id, type: Integer, desc: 'member id'
+                optional :id, type: Integer, desc: 'member id'
+                all_or_none_of :member_id, :id
+            end
             get '/num-of-timeoff' do
                 authenticated!
+                if params['member_id']
+                    member = Member.find_by_id(params['member_id'])
+                    return return_message 'Error Access Denied' if able_to_answer_request? member, TimeOff.find_by_id(params['id'])
+                    @current_member = member
+                end
                 offed_date = @current_member.off_requests.where('created_at >= (?) and status = (?)', Date.today.beginning_of_year, TimeOff.statuses[:approved])
                 return_message 'Success', offed_approver(offed_date)
             end
