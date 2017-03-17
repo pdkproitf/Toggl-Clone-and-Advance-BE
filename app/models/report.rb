@@ -131,14 +131,28 @@ class Report
   end
 
   def member_overtime
-    test_count = 0
-    begin_week_days = []
+    # return overtime_timers
+    # olidays_in_week = holidays_in_week_of_date(date)
+    week = {}
+    timers = []
     overtime_timers.each do |timer|
-      next if begin_week_days.include?(begin_week_date(timer.start_time.to_date))
-      begin_week_days.push(begin_week_date(timer.start_time.to_date))
-      test_count += 1 if week_of_date_overtime?(timer.start_time.to_date)
+      week_date = timer.start_time.to_date
+      begin_week_date = begin_week_date(week_date)
+      if week[begin_week_date(week_date)].nil?
+        week[begin_week_date] = { overtime: false, holidays: nil }
+        # Check week of start_time of timer overtime or not
+        if week_of_date_overtime?(begin_week_date) == true
+          week[begin_week_date][:overtime] = true
+          week[begin_week_date][:holidays] = holidays_in_week_of_date(begin_week_date)
+        end
+      end
+      # Check overtime of that date
+      if week[begin_week_date][:overtime] == true
+        p '-------'
+        p 'yeah'
+      end
     end
-    test_count
+    week
   end
 
   def overtime_timers
