@@ -131,8 +131,6 @@ class Report
   end
 
   def member_overtime
-    # return overtime_timers
-    # olidays_in_week = holidays_in_week_of_date(date)
     week = {}
     timers = []
     overtime_timers.each do |timer|
@@ -147,12 +145,18 @@ class Report
         end
       end
       # Check overtime of that date
+      options = {}
       if week[begin_week_date][:overtime] == true
-        p '-------'
-        p 'yeah'
+        if week[begin_week_date][:holidays].include?(week_date)
+          options[:overtime_type] = 'Holiday'
+        end
+      else
+        p '---------------------'
+        p '----------OUT -------'
       end
+      timers.push(TestOvertimeTimerSerializer.new(timer, options))
     end
-    week
+    timers
   end
 
   def overtime_timers
