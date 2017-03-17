@@ -53,7 +53,6 @@ module TimerApi
       end
       post do
         authenticated!
-        @current_member = Member.find(4)
         timer_params = params['timer']
         if timer_params[:start_time] >= timer_params[:stop_time]
           return error!(I18n.t('start_stop_time_error'), 400)
