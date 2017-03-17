@@ -149,12 +149,16 @@ class Report
       if week[begin_week_date][:overtime] == true
         if week[begin_week_date][:holidays].include?(week_date)
           options[:overtime_type] = 'Holiday'
+        elsif week_date.wday == 0 || week_date.wday == 6
+          options[:overtime_type] = 'Weekend'
         end
       else
         p '---------------------'
         p '----------OUT -------'
       end
-      timers.push(TestOvertimeTimerSerializer.new(timer, options))
+      unless options[:overtime_type].nil?
+        timers.push(TestOvertimeTimerSerializer.new(timer, options))
+      end
     end
     timers
   end
