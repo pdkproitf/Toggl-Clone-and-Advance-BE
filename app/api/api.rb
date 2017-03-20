@@ -15,6 +15,7 @@ module API
     mount ClientApi::Clients
     mount TimerApi::Timers
     mount MemberApi::Members
+    mount InviteApi::Invites
     mount TaskApi::Tasks
     mount TimeOffApi::TimeOffs
     mount CompanyApi::Companies

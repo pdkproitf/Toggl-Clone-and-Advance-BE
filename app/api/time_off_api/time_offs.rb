@@ -6,6 +6,10 @@ module TimeOffApi
         helpers TimeOffHelper
 
         resource :timeoffs do
+            before do
+                authenticated!
+            end
+
             desc 'Get all timeoff request'
             params do
                 optional :from_date, type: DateTime, desc: 'start date'
@@ -14,12 +18,8 @@ module TimeOffApi
                 all_or_none_of :from_date, :to_date, :status
             end
             get do
-                authenticated!
-                # params['from_date'] = params['from_date'].beginning_of_day if params['from_date']
-                # params['to_date'] = params['to_date'].beginning_of_day if params['to_date']
-
-                return get_phase if params['from_date']
-                return get_all
+                return get_phase if params['from_date'] #get request folow phase
+                return get_all  # get all request
             end
 
             desc 'Get number timeoff of person'
@@ -29,23 +29,24 @@ module TimeOffApi
                 all_or_none_of :member_id, :id
             end
             get '/num-of-timeoff' do
-                authenticated!
                 if params['member_id']
                     member = Member.find_by_id(params['member_id'])
-                    return return_message 'Error Access Denied' if able_to_answer_request? member, TimeOff.find_by_id(params['id'])
+                    return return_message 'Error Access Denied' if able_to_answer_request?(member, TimeOff.find_by_id(params['id']))
                     @current_member = member
                 end
-                offed_date = @current_member.off_requests.where('created_at >= (?) and status = (?)', Date.today.beginning_of_year, TimeOff.statuses[:approved])
-                return_message 'Success', offed_approver(offed_date)
+                offed_date = @current_member
+                    .off_requests
+                    .where('created_at >= (?) and status = (?)',
+                        Date.today.beginning_of_year, TimeOff.statuses[:approved])
+                return_message(I18n.t("success"), offed_approver(offed_date))
             end
 
             desc 'Get a timeoff request of themself '
             get ':id' do
-                authenticated!
                 @timeoff = TimeOff.find_by_id(params['id'])
-                return return_message "Not Found timeoff with id #{params['id']}" unless @timeoff
-                return return_message "Access Denied timeoff id #{params['id']} with member #{current_member.user.email}" unless (@timeoff.sender_id == @current_member.id) || able_to_answer_request?
-                return_message 'Success', @timeoff
+                error!(I18n.t("not_found", content: "timeoff"), 404) unless @timeoff
+                error!(I18n.t("access_denied"), 403) unless (@timeoff.sender_id == @current_member.id) || able_answer_request?
+                return_message(I18n.t("success"), @timeoff)
             end
 
             desc 'Create time off'
@@ -60,10 +61,8 @@ module TimeOffApi
             end
 
             post do
-                authenticated!
-                timeoff = create_timeoff
-                send_email_to_boss timeoff
-                return_message 'Your time off created. The email will be send to your bosses after few minutes'
+                inform_request(create_timeoff)
+                return_message I18n.t("timeoff.created")
             end
 
             desc 'Update time off'
@@ -85,27 +84,24 @@ module TimeOffApi
             end
 
             put ':id' do
-                authenticated!
                 @timeoff = TimeOff.find_by_id(params['id'])
-                return return_message "Not Found timeoff with id #{params['id']}" unless @timeoff
+                error!(I18n.t("not_found", content: "timeoff"), 404) unless @timeoff
 
                 if params['timeoff']
-                    return return_message "Access Denied! You can't modify this Request" unless (@timeoff.sender_id == @current_member.id) || able_to_answer_request?
-                    return return_message "Not Allow!  Your request was answered. If you want to change, you can delete this request and create new request" unless @timeoff.pending?
+                    error!(I18n.t("access_denied", 404)) unless (@timeoff.sender_id == @current_member.id) || able_answer_request?
+                    error!(I18n.t("timeoff.request_answed"), 400) unless @timeoff.pending?
                     update_timeoff
                 else
-                    return return_message "Access Denied! You have not enough able to answer this request" unless able_to_answer_request?
+                    error!(I18n.t("access_denied"), 403) unless able_answer_request?
                     answer_timeoff
                 end
             end
 
-
             desc 'Delete timeoff request'
             delete ':id' do
-                authenticated!
                 status 200
                 @timeoff = TimeOff.find_by_id(params['id'])
-                return return_message "Error Not Found timeoff with id #{params['id']}" unless @timeoff
+                error!(I18n.t("not_found", content: "Timeoff"), 404) unless @timeoff
                 (@current_member.admin? && @current_member.id != @timeoff.sender_id)? admin_delete : sender_delete
             end
         end

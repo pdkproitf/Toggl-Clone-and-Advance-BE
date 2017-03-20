@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+    before_save :downcase_email
+    # after_create :send_confirmation_email
+    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
     has_many :members, dependent: :destroy
     has_many :companies, through: :members
 
@@ -10,17 +14,14 @@ class User < ActiveRecord::Base
            :confirmable, :omniauthable
     include DeviseTokenAuth::Concerns::User
 
-    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
 
-    validates :email, presence: true, length: { maximum: 255 },
+    validates :email, presence: true, length: { maximum: Settings.mail_max_length },
                       format: { with: VALID_EMAIL_REGEX },
                       uniqueness: { case_sensitive: false }
-    validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-
-    before_save :downcase_email
-    # after_create :send_confirmation_email
+    validates :password, presence: true, length: { minimum: Settings.password_min_length },
+                         allow_nil: true
 
     private
 
@@ -41,7 +42,7 @@ class User < ActiveRecord::Base
         if new_record? || changed?
             pending_notifications << [notification, args]
         else
-            devise_mailer.send(notification, self, *args).deliver_later(wait: 10.seconds)
+            devise_mailer.send(notification, self, *args).deliver_later(wait: Settings.send_later.seconds)
         end
     end
 end

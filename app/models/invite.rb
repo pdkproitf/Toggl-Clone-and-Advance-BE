@@ -1,18 +1,23 @@
 class Invite < ApplicationRecord
+    before_create :generate_token
     attr_accessor :invite_token
 
     belongs_to :sender, class_name: 'Member'
     belongs_to :recipient, class_name: 'User'
 
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-    validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
+
+    validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
+                      length: { maximum: Settings.mail_max_length }
     validates_presence_of :sender_id
 
-    before_create :generate_token
-    def generate_token
+    def send_email link
+        InviteMailer.send_invite(self, invite_token, link).deliver_later
+    end
 
+    def generate_token
         self.token = digest(new_token)
-        self.expiry = (Time.now + 1.week)
+        self.expiry = (Time.now + Settings.invite_expry.week)
     end
 
     def new_token

@@ -2,22 +2,24 @@ module TimerHelper
     def modify_with_category_member
         @old_category_member_empty = nil
         if @category_member.category
-            return return_message "Error Not Allow, #{@category_member.category.name} has been archived" unless access_to_category?
-            return return_message "Error Not Allow, project  #{@category_member.category.project.name} has been archived or you no longer able to access" unless access_to_project? (@category_member.category.project)
+            error!(I18n.t("archived", content: "Category"), 400) unless category_access?
+            error!(I18n.t("denied", acc_to: "Project"), 403)  unless project_access? (@category_member.category.project)
 
-            modify_with_category_member_exist_category
+            exist_category
         else
-            modify_with_category_member_empty_category
+            empty_category
         end
     end
 
-    def modify_with_category_member_exist_category
+    # => modify with case category_member exist category
+    def exist_category
         @old_category_member_empty = @timer.task.category_member
         modify_with_task
     end
 
-    def modify_with_category_member_empty_category
-        return return_message 'Nothing for update' unless @timer.task.category_member.category
+    # => modify with case category_member empty category
+    def empty_category
+        error!(I18n.t("nothing", content: "Update")) unless @timer.task.category_member.category
         @category_member =  @current_member.category_member.create!()
         create_new_task
     end
@@ -28,50 +30,53 @@ module TimerHelper
 
     def update_exist_task
         task = @category_member.tasks.find_by_id(params['timer_update']['task_id'])
-        return return_message "Task Not Found for #{@current_member.user.email}" unless task
+        error!(I18n.t("not_found", content: "Task"), 404) unless task
 
-        update_timer task
+        update_timer(task)
     end
 
     def create_new_task
         Task.transaction do
             task = @category_member.tasks.create!(name: params['timer_update']['task_name'])
-            update_timer task
+            update_timer(task)
         end
     end
 
-    def update_timer task
+    def update_timer(task)
         @timer.task_id = task.id
         @timer.start_time = params['timer_update']['start_time']
         @timer.stop_time = params['timer_update']['stop_time']
 
         @timer.save!
 
-        @old_category_member_empty.destroy! if  @old_category_member_empty && !@old_category_member_empty.category
-        return_message 'Sucess', TimerSerializer.new(@timer)
+        @old_category_member_empty.destroy! if @old_category_member_empty && !@old_category_member_empty.category
+        return_message(I18n.t("success"), TimerSerializer.new(@timer))
     end
 
-    # true if you be member of project and project have not archived yet
-    def access_to_project?(project)
-        !project.is_archived && !project.project_members.find_by_member_id(@current_member.id).nil?
+    # => true if you be member of project and project have not archived yet
+    def project_access?(project)
+        !project.is_archived &
+            !project.project_members.find_by_member_id(@current_member.id).nil? &
+            !project.project_members.find_by_member_id(@current_member.id).is_archived
     end
 
-    #true if category have not archived yet
-    def access_to_category?
+    # => true if category have not archived yet
+    def category_access?
         !@category_member.category.is_archived
     end
 
-    def access_to_category_member?
-        (@category_member.member_id == @current_member.id) && !@category_member.is_archived
+    # => true if category_member is current_member, category_member joined in project
+    # and meber have yet archived
+    def category_member_access?
+        (@category_member.project_member.member_id == @current_member.id) &
+            !@category_member.project_member.nil? &
+            !@category_member.project_member.is_archived
     end
 
-    def access_to_task_under_pro_cate_member? task
-        task.category_member_id = @category_member.id
-    end
-
-    def detelte_timer_with_relationship_self
+    # => delete empty category or delete task if the timer have onli one task
+    def detelte_timer
         if @timer.task.category_member.category
-            @timer.task.destroy! if @timer.task.timers.where.not(id: @timer.id) == 0
+            @timer.task.destroy! unless @timer.task.timers.where.not(id: @timer.id).present?
         else
             @timer.task.category_member.destroy!
         end

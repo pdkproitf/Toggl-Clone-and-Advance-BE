@@ -6,14 +6,13 @@ module UserApi
         helpers do
             def sign_up_params
                 user_params = params['user']
-                user = User.new(
+                User.new(
                         first_name: user_params['first_name'],
                         last_name: user_params['last_name'],
                         email: user_params['email'],
                         password: user_params['password'],
                         password_confirmation: user_params['password_confirmation']
                 )
-                user
             end
 
             def create_company param_company
@@ -46,7 +45,8 @@ module UserApi
                         @member.save!
                         create_default_job
                     end
-                    return return_message 'Success', UserSerializer.new(@resource)
+
+                    return_message I18n.t('success'), UserSerializer.new(@resource)
                 end
             end
 
@@ -79,14 +79,14 @@ module UserApi
 
                 if params['user']['invited_token']
                     invite = Invite.find_by_email(params['user']['email'])
-                    return return_message 'Not Found invite' unless invite
-                    return return_message 'Invite expiry' if invite.expiry?
-                    return error!('Token Invalid', 400) unless invite.authenticated?(params['user']['invited_token'])
+                    error!(I18n.t('not_found', title: params['user']['email']), 404) unless invite
+                    error!(I18n.t("expiry", title: "Invition")) if invite.expiry?
+                    error!(I18n.t("user.errors.token"), 400) unless invite.authenticated?(params['user']['invited_token'])
 
                     @role = Role.find_by_name('Member') || Role.create!(name: 'Member')
                     @company = invite.sender.company
                 else
-                    return return_message 'Error: Domain has already been taken' if Company.find_by_domain(params['user']['company_domain'])
+                    error!(I18n.t('company.errors.domain_already'), 400) if Company.find_by_domain(params['user']['company_domain'])
                     @company = create_company params['user']
                 end
 
