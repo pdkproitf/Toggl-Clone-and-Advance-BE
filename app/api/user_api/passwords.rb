@@ -30,7 +30,7 @@ module UserApi
             end
             post '/password' do
                 unless params[:user][:email]
-                    return error!(I18n.t("devise_token_auth.passwords.missing_email"), 401)
+                    return return_message(I18n.t("devise_token_auth.passwords.missing_email"), nil, 401)
                 end
 
                 # give redirect value from params priority
@@ -85,7 +85,7 @@ module UserApi
 
                 # make sure account doesn't use oauth2 provider
                 unless @resource.provider == 'email'
-                    return return_message I18n.t("devise_token_auth.passwords.password_not_required", provider: @resource.provider.humanize)
+                    error!(I18n.t("devise_token_auth.passwords.password_not_required", provider: @resource.provider.humanize), 400)
                 end
 
                 if @resource.send(resource_update_method, params["user"])

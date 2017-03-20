@@ -21,20 +21,52 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
-  task_not_found: "Task not found"
-  access_denied: "Access denied"
-  client_not_found: "Client not found"
-  not_joined_to_company: "Member has not joined to company yet"
-  not_added_to_project: "Member wasn't added to project yet"
-  project_not_found: "Project not found"
-  category_not_found: "Category not found"
-  start_stop_time_error: "Start time has to be less than stop time"
-  member_not_assigned_to_category: "Member was not assigned to category"
-  from_to_day_error: "From day has to be less or equal to To day"
-  archive_failed: "Archiving failed"
-  unarchive_failed: "Unarchiving failed"
-  category_name_taken: "Category name was taken"
-  begin_date_not_greater_than_end_day: "Begin date not greater than end date"
-  project_archived: "The project was archived"
-  day_limit: "Too much days chosen, the limitation of days is 366"
+    hello: "Hello world"
+    task_not_found: "Task not found"
+    access_denied: "Access denied"
+    client_not_found: "Client not found"
+    not_joined_to_company: "Member has not joined to company yet"
+    not_added_to_project: "Member wasn't added to project yet"
+    project_not_found: "Project not found"
+    category_not_found: "Category not found"
+    start_stop_time_error: "Start time has to be less than stop time"
+    member_not_assigned_to_category: "Member was not assigned to category"
+    from_to_day_error: "From day has to be less or equal to To day"
+    archive_failed: "Archiving failed"
+    unarchive_failed: "Unarchiving failed"
+    category_name_taken: "Category name was taken"
+    begin_date_not_greater_than_end_day: "Begin date not greater than end date"
+    project_archived: "The project was archived"
+    day_limit: "Too much days chosen, the limitation of days is 366"
+    success: 'Success'
+    expiry: "Your %{title} expiried!, please request a new one"
+    not_found: "%{title} not found"
+    archived: "%{content} hash been archived!"
+    denied: "Access denied to %{acc_to}"
+    nothing: "Nothing to do %{content}"
+    invite:
+        errors:
+            not_found: "Not Found invitetion for email %{email}"
+    user:
+        errors:
+            token: 'Invalid token'
+            already_member: "User already member"
+            must_exit: "User must exist!"
+    company:
+        errors:
+            domain_already: 'Domain are already taken'
+    timer:
+        errors:
+    category:
+        errors:
+    timeoff:
+        created: "Your time off created. The email will be send to your bosses after few minutes"
+        errors:
+            start_date: "Have to less than end date"
+            already_request: "You already has request off during this time."
+            request_answed: "Not Allow!  Your request was answered."
+    invite:
+        success: 'Success, The email confirm will be send to %{email} after few minutes'
+        errors:
+            sended: "You already sent the mail invete to %{email}. New invite will be send after few minutes"
+            token_error: "Token unauthenticated"

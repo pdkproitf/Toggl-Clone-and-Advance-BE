@@ -67,6 +67,9 @@ gem 'active_model_serializers'
 gem 'grape-active_model_serializers'
 gem 'rails_best_practices'
 
+# Using config global variable
+gem 'config'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'rspec-rails'

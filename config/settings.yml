@@ -1,0 +1,9 @@
+front_end: "https://spring-time-tracker.herokuapp.com"
+invite_expry: 1
+half_day: 0
+all_day: 0.5
+mail_max_length: 255
+password_min_length: 6
+domain_min_length: 3
+domain_max_length: 20
+send_later: 2
