@@ -134,6 +134,7 @@ class Report
   def member_overtime
     day_working_times = day_working_time
     week = {}
+    week_overtime = {}
     timers = []
     days = {}
     overtime_timers.each do |timer|
@@ -142,10 +143,13 @@ class Report
 
       if week[begin_week_date(week_date)].nil?
         week[begin_week_date] = { overtime: 0, holidays: nil }
+        week_overtime = {}
         # Check week of start_time of timer overtime or not
         if week_of_date_overtime(begin_week_date) > 0
-          week[begin_week_date][:overtime] = week_of_date_overtime(begin_week_date)
+          week_of_date_overtime = week_of_date_overtime(begin_week_date)
+          week[begin_week_date][:overtime] = week_of_date_overtime
           week[begin_week_date][:holidays] = holidays_in_week_of_date(begin_week_date)
+          week_overtime[begin_week_date] = week_of_date_overtime
         end
       end
 
@@ -154,20 +158,31 @@ class Report
 
       # Check overtime of that date
       options = {}
-      if week[begin_week_date][:overtime] > 0
-        week_overtime = week[begin_week_date][:overtime]
+      if week[begin_week_date][:overtime] > 0 && week_overtime[begin_week_date] > 0
         if week[begin_week_date][:holidays].include?(week_date)
           options[:overtime_type] = @overtime_type[:holiday]
+          week_overtime[begin_week_date] -= timer.tracked_time
         elsif week_date.wday == 0 || week_date.wday == 6
           options[:overtime_type] = @overtime_type[:weekend]
-        elsif day_working_times[week_date] > @working_time_per_day * 3600 &&
-              days[week_date] > @working_time_per_day * 3600
-          options[:overtime_type] = @overtime_type[:normal]
+          week_overtime[begin_week_date] -= timer.tracked_time
+        elsif day_working_times[week_date] > @working_time_per_day * 3600
+          day_overtime = days[week_date] - @working_time_per_day * 3600
+          if day_overtime > 0
+            if (days[week_date] - timer.tracked_time) < @working_time_per_day * 3600
+              options[:overtime_type] = @overtime_type[:normal]
+              options[:start_time_overtime] = timer.stop_time - day_overtime
+              week_overtime[begin_week_date] -= day_overtime
+            else
+              options[:overtime_type] = @overtime_type[:normal]
+              week_overtime[begin_week_date] -= timer.tracked_time
+            end
+          end
         end
       end
-      unless options[:overtime_type].nil?
-        timers.push(TestOvertimeTimerSerializer.new(timer, options))
-      end
+      next unless options[:overtime_type].present?
+      timers.push(TestOvertimeTimerSerializer.new(timer, options))
+      p week_overtime[begin_week_date]
+      p week[begin_week_date]
     end
     timers
   end
