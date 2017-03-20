@@ -8,6 +8,7 @@ class Report
     @working_time_per_day = who_run.company.working_time_per_day
     @working_time_per_week = who_run.company.working_time_per_week
     @begin_week = who_run.company.begin_week
+    @overtime_type = { holiday: 'Holiday', weekend: 'Weekend', normal: 'Normal' }
   end
 
   def report_by_time
@@ -156,12 +157,12 @@ class Report
       if week[begin_week_date][:overtime] > 0
         week_overtime = week[begin_week_date][:overtime]
         if week[begin_week_date][:holidays].include?(week_date)
-          options[:overtime_type] = 'Holiday'
+          options[:overtime_type] = @overtime_type[:holiday]
         elsif week_date.wday == 0 || week_date.wday == 6
-          options[:overtime_type] = 'Weekend'
+          options[:overtime_type] = @overtime_type[:weekend]
         elsif day_working_times[week_date] > @working_time_per_day * 3600 &&
               days[week_date] > @working_time_per_day * 3600
-          options[:overtime_type] = 'Normal'
+          options[:overtime_type] = @overtime_type[:normal]
         end
       end
       unless options[:overtime_type].nil?
