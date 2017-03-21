@@ -6,6 +6,10 @@ module TimerApi
         helpers TimerHelper
 
         resource :timers do
+            before do
+                authenticated!
+            end
+
             # => /api/v1/timers/
             desc 'Get all timers in period time'
             params do
@@ -15,7 +19,7 @@ module TimerApi
                 end
             end
             get do
-                authenticated!
+                # authenticated!
                 from_day = params[:period][:from_day]
                 to_day = params[:period][:to_day]
 
@@ -52,7 +56,7 @@ module TimerApi
                 end
             end
             post do
-                authenticated!
+                # authenticated!
                 timer_params = params['timer']
                 if timer_params[:start_time] >= timer_params[:stop_time]
                     return error!(I18n.t('start_stop_time_error'), 400)
@@ -146,7 +150,6 @@ module TimerApi
                 end
             end
             put ':id' do
-                authenticated!
                 @timer = Timer.find(params['id'])
                 error!(I18n.t("access_denied"), 403) unless
                     @timer.task.category_member.project_member.member_id == @current_member.id
@@ -161,7 +164,6 @@ module TimerApi
 
             desc 'Delete Timer'
             delete ':id' do
-                authenticated!
                 status 200
 
                 @timer = Timer.find(params['id'])
