@@ -1,13 +1,13 @@
 class Report
-  def initialize(who_run, begin_date, end_date, options = {})
-    @who_run = who_run
+  def initialize(reporter, begin_date, end_date, options = {})
+    @reporter = reporter
     @begin_date = begin_date
     @end_date = end_date
     @client = options[:client] || nil
     @member = options[:member] || nil
-    @working_time_per_day = who_run.company.working_time_per_day
-    @working_time_per_week = who_run.company.working_time_per_week
-    @begin_week = who_run.company.begin_week
+    @working_time_per_day = reporter.company.working_time_per_day
+    @working_time_per_week = reporter.company.working_time_per_week
+    @begin_week = reporter.company.begin_week
     @overtime_type = { holiday: 'Holiday', weekend: 'Weekend', normal: 'Normal' }
   end
 
@@ -24,7 +24,7 @@ class Report
                         categories_serialized: true,
                         members_serialized: false,
                         begin_date: @begin_date, end_date: @end_date }
-    @who_run.get_projects.where(is_archived: false).each do |project|
+    @reporter.get_projects.where(is_archived: false).each do |project|
       projects.push(ProjectSerializer.new(project, project_options))
     end
     projects
@@ -44,20 +44,20 @@ class Report
     result
   end
 
-  private
+  # private
 
   # Report people
   def report_people
     person_options = { begin_date: @begin_date,
                        end_date: @end_date,
                        tracked_time_serialized: true }
-    if @who_run.member?
+    if @reporter.member?
       # As staff, return only data of the staff
-      return Array(MembersSerializer.new(@who_run, person_options))
+      return Array(MembersSerializer.new(@reporter, person_options))
     else
       # As Admin and Super PM, return data of all member in company
       people = []
-      @who_run.company.members.each do |member|
+      @reporter.company.members.each do |member|
         people.push(MembersSerializer.new(member, person_options))
       end
       return people
@@ -69,8 +69,8 @@ class Report
     project_options = { begin_date: @begin_date, end_date: @end_date,
                         members_serialized: false }
     projects = []
-    @who_run.get_projects.where(is_archived: false)
-            .order(:name).each do |project|
+    @reporter.get_projects.where(is_archived: false)
+             .order(:name).each do |project|
       projects.push(
         ProjectSerializer.new(project, project_options)
       )
@@ -139,17 +139,17 @@ class Report
     days = {}
     overtime_timers.each do |timer|
       week_date = timer.start_time.to_date
-      week_first_day = week_first_day(week_date)
+      week_start_date = week_start_date(week_date)
 
-      if week[week_first_day(week_date)].nil?
-        week[week_first_day] = { overtime: 0, holidays: nil }
+      if week[week_start_date(week_date)].nil?
+        week[week_start_date] = { overtime: 0, holidays: nil }
         week_overtime = {}
         # Check week of start_time of timer overtime or not
-        if week_of_date_overtime(week_first_day) > 0
-          week_of_date_overtime = week_of_date_overtime(week_first_day)
-          week[week_first_day][:overtime] = week_of_date_overtime
-          week[week_first_day][:holidays] = holidays_in_week_of_date(week_first_day)
-          week_overtime[week_first_day] = week_of_date_overtime
+        if week_of_date_overtime(week_start_date) > 0
+          week_of_date_overtime = week_of_date_overtime(week_start_date)
+          week[week_start_date][:overtime] = week_of_date_overtime
+          week[week_start_date][:holidays] = holidays_in_week_of_date(week_start_date)
+          week_overtime[week_start_date] = week_of_date_overtime
         end
       end
 
@@ -158,31 +158,31 @@ class Report
 
       # Check overtime of that date
       options = {}
-      if week[week_first_day][:overtime] > 0 && week_overtime[week_first_day] > 0
-        if week[week_first_day][:holidays].include?(week_date)
+      if week[week_start_date][:overtime] > 0 && week_overtime[week_start_date] > 0
+        if week[week_start_date][:holidays].include?(week_date)
           options[:overtime_type] = @overtime_type[:holiday]
-          week_overtime[week_first_day] -= timer.tracked_time
+          week_overtime[week_start_date] -= timer.tracked_time
         elsif week_date.wday == 0 || week_date.wday == 6
           options[:overtime_type] = @overtime_type[:weekend]
-          week_overtime[week_first_day] -= timer.tracked_time
+          week_overtime[week_start_date] -= timer.tracked_time
         elsif day_working_times[week_date] > @working_time_per_day * 3600
           day_overtime = days[week_date] - @working_time_per_day * 3600
           if day_overtime > 0
             if (days[week_date] - timer.tracked_time) < @working_time_per_day * 3600
               options[:overtime_type] = @overtime_type[:normal]
               options[:start_time_overtime] = timer.stop_time - day_overtime
-              week_overtime[week_first_day] -= day_overtime
+              week_overtime[week_start_date] -= day_overtime
             else
               options[:overtime_type] = @overtime_type[:normal]
-              week_overtime[week_first_day] -= timer.tracked_time
+              week_overtime[week_start_date] -= timer.tracked_time
             end
           end
         end
       end
       next unless options[:overtime_type].present?
       timers.push(TestOvertimeTimerSerializer.new(timer, options))
-      p week_overtime[week_first_day]
-      p week[week_first_day]
+      p week_overtime[week_start_date]
+      p week[week_start_date]
     end
     timers
   end
@@ -204,13 +204,13 @@ class Report
   end
 
   def member_joined_categories
-    if @who_run.member? && @who_run.id == @member.id
-      who_run_projects = @who_run.joined_projects.where(is_archived: false)
+    if @reporter.member? && @reporter.id == @member.id
+      reporter_projects = @reporter.joined_projects.where(is_archived: false)
     else
-      who_run_projects = @who_run.get_projects.where(is_archived: false)
+      reporter_projects = @reporter.get_projects.where(is_archived: false)
     end
     @member.assigned_categories
-           .where(projects: { id: who_run_projects.ids })
+           .where(projects: { id: reporter_projects.ids })
   end
 
   def week_of_date_overtime(date)
@@ -221,23 +221,23 @@ class Report
     overtime
   end
 
-  def week_first_day(week_day)
+  def week_start_date(week_day)
     day_diff = week_day.wday - @begin_week
     day_diff += 7 if day_diff < 0
     week_day - day_diff
   end
 
   def week_working_time(week_day)
-    week_first_day = week_first_day(week_day)
-    @member.tracked_time(week_first_day, week_first_day + 6)
+    week_start_date = week_start_date(week_day)
+    @member.tracked_time(week_start_date, week_start_date + 6)
   end
 
   def holidays_in_week_of_date(date)
-    week_first_day = week_first_day(date)
-    @who_run.company.holidays
-    holidays = @who_run.company.holidays
+    week_start_date = week_start_date(date)
+    @reporter.company.holidays
+    holidays = @reporter.company.holidays
     holidays_in_week_of_date = []
-    (week_first_day..week_first_day + 6).each do |date_in_week|
+    (week_start_date..week_start_date + 6).each do |date_in_week|
       holidays.each do |holiday|
         if date_in_week >= holiday.begin_date &&
            date_in_week <= holiday.end_date
