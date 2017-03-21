@@ -1,8 +1,10 @@
 class Report
+  include Datetimes::Week
+
   def initialize(reporter, begin_date, end_date, options = {})
     @reporter = reporter
-    @begin_date = begin_date
-    @end_date = end_date
+    @begin_date = begin_date.to_date
+    @end_date = end_date.to_date
     @client = options[:client] || nil
     @member = options[:member] || nil
     @working_time_per_day = reporter.company.working_time_per_day
@@ -139,9 +141,9 @@ class Report
     days = {}
     overtime_timers.each do |timer|
       week_date = timer.start_time.to_date
-      week_start_date = week_start_date(week_date)
+      week_start_date = week_start_date(week_date, @begin_week)
 
-      if week[week_start_date(week_date)].nil?
+      if week[week_start_date(week_date, @begin_week)].nil?
         week[week_start_date] = { overtime: 0, holidays: nil }
         week_overtime = {}
         # Check week of start_time of timer overtime or not
@@ -221,19 +223,13 @@ class Report
     overtime
   end
 
-  def week_start_date(week_day)
-    day_diff = week_day.wday - @begin_week
-    day_diff += 7 if day_diff < 0
-    week_day - day_diff
-  end
-
   def week_working_time(week_day)
-    week_start_date = week_start_date(week_day)
+    week_start_date = week_start_date(week_day, @begin_week)
     @member.tracked_time(week_start_date, week_start_date + 6)
   end
 
   def holidays_in_week_of_date(date)
-    week_start_date = week_start_date(date)
+    week_start_date = week_start_date(date, @begin_week)
     @reporter.company.holidays
     holidays = @reporter.company.holidays
     holidays_in_week_of_date = []
