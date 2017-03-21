@@ -31,7 +31,7 @@ module TimeOffApi
             get '/num-of-timeoff' do
                 if params['member_id']
                     member = Member.find_by_id(params['member_id'])
-                    return return_message 'Error Access Denied' if able_to_answer_request?(member, TimeOff.find_by_id(params['id']))
+                    return return_message 'Error Access Denied' if able_answer_request?(member, TimeOff.find_by_id(params['id']))
                     @current_member = member
                 end
                 offed_date = @current_member

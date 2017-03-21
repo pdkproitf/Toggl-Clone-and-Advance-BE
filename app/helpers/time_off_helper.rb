@@ -36,7 +36,7 @@ module TimeOffHelper
     def get_project_joining
         project_join = []
         @current_member.project_members.each do |p_member|
-            project_join.push(p_member.project_id) unless p_member.project.is_archived
+            project_join.push(p_member.project_id) unless !p_member.project.blank? && p_member.project.is_archived
         end
         project_join
     end
