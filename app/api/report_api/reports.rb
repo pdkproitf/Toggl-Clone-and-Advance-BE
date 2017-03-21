@@ -2,7 +2,7 @@ module ReportApi
   class Reports < Grape::API
     prefix :api
     version 'v1', using: :accept_version_header
-
+    helpers ReportHelper
     helpers do
       def validate_date(begin_date, end_date)
         if begin_date > end_date
@@ -80,8 +80,8 @@ module ReportApi
           end
         end
 
-        report = Report.new(@current_member, params[:begin_date],
-                            params[:end_date], member: member)
+        report = ReportHelper::Report.new(@current_member, params[:begin_date],
+                                          params[:end_date], member: member)
         { data: report.report_by_member }
       end
     end
