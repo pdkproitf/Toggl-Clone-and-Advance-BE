@@ -1,6 +1,7 @@
 module ReportHelper
   class Report
     include Datetimes::Week
+    include HolidayHelper
 
     def initialize(reporter, begin_date, end_date, options = {})
       @reporter = reporter
@@ -12,10 +13,6 @@ module ReportHelper
       @working_time_per_week = reporter.company.working_time_per_week
       @begin_week = reporter.company.begin_week
       @overtime_type = { holiday: 'Holiday', weekend: 'Weekend', normal: 'Normal' }
-    end
-
-    def hehe
-      HolidayHelper::Holiday.new.hello
     end
 
     def report_by_time
