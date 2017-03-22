@@ -25,11 +25,7 @@ class MembersSerializer < ActiveModel::Serializer
   end
 
   def tracked_time
-    sum = 0
-    assigned_category_members.each do |category_member|
-      sum += category_member.tracked_time(@begin_date, @end_date)
-    end
-    sum
+    object.tracked_time(@begin_date, @end_date)
   end
 
   def chart
@@ -53,16 +49,6 @@ class MembersSerializer < ActiveModel::Serializer
       count += 1
       break if count == @chart_limit
     end
-
     chart
-  end
-
-  def assigned_category_members
-    object
-      .category_members
-      .where.not(category_id: nil)
-      .where(category_members: { is_archived_by_category: false })
-      .where(category_members: { is_archived_by_project_member: false })
-      .joins(category: :project)
   end
 end
