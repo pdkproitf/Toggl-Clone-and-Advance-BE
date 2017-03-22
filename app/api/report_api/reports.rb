@@ -22,9 +22,9 @@ module ReportApi
       get 'time' do
         authenticated!
         validate_date(params[:begin_date], params[:end_date])
-        report = Report.new(@current_member,
-                            params[:begin_date],
-                            params[:end_date])
+        report = ReportHelper::Report.new(@current_member,
+                                          params[:begin_date],
+                                          params[:end_date])
         { data: report.report_by_time }
       end
 
@@ -45,8 +45,8 @@ module ReportApi
                           .empty?
           return error!(I18n.t('access_denied'), 403)
         end
-        report = Report.new(@current_member,
-                            params[:begin_date], params[:end_date])
+        report = ReportHelper::Report.new(@current_member,
+                                          params[:begin_date], params[:end_date])
         { data: report.report_by_project }
       end
 
