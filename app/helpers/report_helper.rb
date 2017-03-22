@@ -47,15 +47,17 @@ module ReportHelper
     # Report people
     def report_people
       person_options = { begin_date: @begin_date, end_date: @end_date, tracked_time_serialized: true }
-      if @reporter.member? # As staff, return only data of the staff
-        return Array(MembersSerializer.new(@reporter, person_options))
-      else # As Admin and Super PM, return data of all member in company
-        people = []
-        @reporter.company.members.each do |member|
-          people.push(MembersSerializer.new(member, person_options))
-        end
-        return people
+      # As staff, return only data of the staff else As Admin and Super PM, return data of all member in company
+      @reporter.member? ? members = Array(@reporter) : members = @reporter.company.members
+      people = []
+      members.each do |member|
+        person = {}
+        person.merge!(MembersSerializer.new(member, person_options))
+        member_overtime(member).present? ? person[:overtime] = true : person[:overtime] = false
+        # person[:overtime] = true
+        people.push(person)
       end
+      people
     end
 
     # Report projects
