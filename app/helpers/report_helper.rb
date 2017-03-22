@@ -16,18 +16,13 @@ module ReportHelper
     end
 
     def report_by_time
-      {
-        people: report_people,
-        projects: report_projects
-      }
+      { people: report_people, projects: report_projects }
     end
 
     def report_by_project
       projects = []
-      project_options = { chart_serialized: true,
-                          categories_serialized: true,
-                          members_serialized: false,
-                          begin_date: @begin_date, end_date: @end_date }
+      project_options = { chart_serialized: true, categories_serialized: true,
+                          members_serialized: false, begin_date: @begin_date, end_date: @end_date }
       @reporter.get_projects.where(is_archived: false).each do |project|
         projects.push(ProjectSerializer.new(project, project_options))
       end
@@ -38,8 +33,7 @@ module ReportHelper
 
     def report_by_member
       return nil if @member.nil?
-      member_options = { begin_date: @begin_date, end_date: @end_date,
-                         tracked_time_serialized: true }
+      member_options = { begin_date: @begin_date, end_date: @end_date, tracked_time_serialized: true }
       result = {}
       result.merge!(MembersSerializer.new(@member, member_options))
       result[:projects] = member_projects
@@ -52,14 +46,10 @@ module ReportHelper
 
     # Report people
     def report_people
-      person_options = { begin_date: @begin_date,
-                         end_date: @end_date,
-                         tracked_time_serialized: true }
-      if @reporter.member?
-        # As staff, return only data of the staff
+      person_options = { begin_date: @begin_date, end_date: @end_date, tracked_time_serialized: true }
+      if @reporter.member? # As staff, return only data of the staff
         return Array(MembersSerializer.new(@reporter, person_options))
-      else
-        # As Admin and Super PM, return data of all member in company
+      else # As Admin and Super PM, return data of all member in company
         people = []
         @reporter.company.members.each do |member|
           people.push(MembersSerializer.new(member, person_options))
@@ -70,14 +60,10 @@ module ReportHelper
 
     # Report projects
     def report_projects
-      project_options = { begin_date: @begin_date, end_date: @end_date,
-                          members_serialized: false }
+      project_options = { begin_date: @begin_date, end_date: @end_date, members_serialized: false }
       projects = []
-      @reporter.get_projects.where(is_archived: false)
-               .order(:name).each do |project|
-        projects.push(
-          ProjectSerializer.new(project, project_options)
-        )
+      @reporter.get_projects.where(is_archived: false) .order(:name).each do |project|
+        projects.push(ProjectSerializer.new(project, project_options))
       end
       projects
     end
@@ -87,15 +73,9 @@ module ReportHelper
       member_joined_categories.each do |assigned_category|
         item = result.find { |h| h[:id] == assigned_category[:project_id] }
         unless item
-          item = {
-            id: assigned_category[:project_id],
-            name: assigned_category[:project_name]
-          }
+          item = { id: assigned_category[:project_id], name: assigned_category[:project_name] }
           item[:background] = assigned_category[:background]
-          item[:client] = {
-            id: assigned_category[:client_id],
-            name: assigned_category[:client_name]
-          }
+          item[:client] = { id: assigned_category[:client_id], name: assigned_category[:client_name] }
           item[:category] = []
           item[:chart] = {}
           count = 0
@@ -114,11 +94,9 @@ module ReportHelper
         )
         (@begin_date..@end_date).each do |date|
           if assigned_category.category.is_billable == true
-            item[:chart][date][:billable] += assigned_category
-                                             .tracked_time(date, date)
+            item[:chart][date][:billable] += assigned_category.tracked_time(date, date)
           else
-            item[:chart][date][:unbillable] += assigned_category
-                                               .tracked_time(date, date)
+            item[:chart][date][:unbillable] += assigned_category.tracked_time(date, date)
           end
         end
       end
@@ -136,30 +114,30 @@ module ReportHelper
     end
 
     def member_overtime
-      week = {}
+      weeks = {}
       timers = []
       normal_timers = []
       overtime_timers.each do |timer|
         week_date = timer.start_time.to_date
         week_start_date = week_start_date(week_date, @begin_week)
-        if week[week_start_date].blank?
+        if weeks[week_start_date].blank?
           holidays = holidays_in_week(@reporter.company, week_date, @begin_week)
           holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
           week_working_hour = @working_time_per_week - holidays_not_weekend.length * @working_time_per_day
-          week[week_start_date] = { working_time: week_working_hour * 3600 }
-          week_overtime = week_working_time(week_start_date) - week[week_start_date][:working_time]
-          week[week_start_date][:overtime] = week_overtime
-          week[week_start_date][:overtime_temp] = week_overtime
-          week[week_start_date][:holidays] = holidays
+          weeks[week_start_date] = { working_time: week_working_hour * 3600 }
+          week_overtime = week_working_time(week_start_date) - weeks[week_start_date][:working_time]
+          weeks[week_start_date][:overtime] = week_overtime
+          weeks[week_start_date][:overtime_temp] = week_overtime
+          weeks[week_start_date][:holidays] = holidays
         end
-        next unless week[week_start_date][:overtime] > 0
+        next unless weeks[week_start_date][:overtime] > 0
         options = {}
-        if week[week_start_date][:holidays].include?(week_date)
+        if weeks[week_start_date][:holidays].include?(week_date)
           options[:overtime_type] = @overtime_type[:holiday]
-          week[week_start_date][:overtime_temp] -= timer.tracked_time
+          weeks[week_start_date][:overtime_temp] -= timer.tracked_time
         elsif week_date.wday == 0 || week_date.wday == 6
           options[:overtime_type] = @overtime_type[:weekend]
-          week[week_start_date][:overtime_temp] -= timer.tracked_time
+          weeks[week_start_date][:overtime_temp] -= timer.tracked_time
         else # If week_date is a normal day
           normal_timers.push(timer)
         end
@@ -176,14 +154,14 @@ module ReportHelper
         day_time_totals[week_date] += timer.tracked_time
         day_overtime = day_time_totals[week_date] - @working_time_per_day * 3600
         options = {}
-        if week[week_start_date][:overtime_temp] > 0 && day_overtime > 0
+        if weeks[week_start_date][:overtime_temp] > 0 && day_overtime > 0
           if (day_time_totals[week_date] - timer.tracked_time) < @working_time_per_day * 3600
             options[:overtime_type] = @overtime_type[:normal]
             options[:start_time_overtime] = timer.stop_time - day_overtime
-            week[week_start_date][:overtime_temp] -= day_overtime
+            weeks[week_start_date][:overtime_temp] -= day_overtime
           else
             options[:overtime_type] = @overtime_type[:normal]
-            week[week_start_date][:overtime_temp] -= timer.tracked_time
+            weeks[week_start_date][:overtime_temp] -= timer.tracked_time
           end
         end
         next unless options[:overtime_type].present?
