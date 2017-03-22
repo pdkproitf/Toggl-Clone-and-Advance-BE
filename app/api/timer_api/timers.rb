@@ -66,7 +66,7 @@ module TimerApi
                 if timer_params[:task_id]
                     # Check task_id belong to current member
                     task = @current_member.tasks.find_by_id(timer_params[:task_id])
-                    return error!(I18n.t('task_not_found'), 404) if task.nil?
+                    return error!(I18n.t('not_found', title: "Task"), 404) if task.nil?
 
                     # if task name exists and is not blank
                 elsif timer_params[:task_name] && !timer_params[:task_name].blank?

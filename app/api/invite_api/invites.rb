@@ -10,13 +10,14 @@ module InviteApi
                     @current_member.sent_invites.create!(email: params['email'], recipient_id: recepter.id)
             end
 
-            def invite_inform invite, recepter
-                link = recepter.blank? ?
-                    '/#/sign-up/' + invite.invite_token+'/' + @current_member.company.name +
-                        '/' + @current_member.company.domain :
-                    '/#/invites-confirm/' + invite.invite_token
-
-                invite.send_email(Settings.front_end + link)
+            def invite_inform(invite, recepter)
+                link = if recepter
+                    'sign-up/' + invite.invite_token + '/' + @current_member.company.name +
+                        '/' + @current_member.company.domain
+                else
+                    'invites-confirm/' + invite.invite_token
+                end
+                invite.send_email "#{Setting.front_end}/#/#{link}"
             end
 
             def create_default_job

@@ -30,7 +30,7 @@ module TimerHelper
 
     def update_exist_task
         task = @category_member.tasks.find_by_id(params['timer_update']['task_id'])
-        error!(I18n.t("not_found", content: "Task"), 404) unless task
+        error!(I18n.t("not_found", title: "Task"), 404) unless task
 
         update_timer(task)
     end
