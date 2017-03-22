@@ -38,11 +38,11 @@ module ReportHelper
       result.merge!(MembersSerializer.new(@member, member_options))
       result[:projects] = member_projects
       result[:tasks] = member_tasks
-      result[:overtime] = member_overtime
+      result[:overtime] = member_overtime(@member)
       result
     end
 
-    private
+    # private
 
     # Report people
     def report_people
@@ -70,7 +70,7 @@ module ReportHelper
 
     def member_projects
       result = []
-      member_joined_categories.each do |assigned_category|
+      member_joined_categories(@member).each do |assigned_category|
         item = result.find { |h| h[:id] == assigned_category[:project_id] }
         unless item
           item = { id: assigned_category[:project_id], name: assigned_category[:project_name] }
@@ -113,11 +113,11 @@ module ReportHelper
       tasks
     end
 
-    def member_overtime
+    def member_overtime(member)
       weeks = {}
       timers = []
       normal_timers = []
-      overtime_timers.each do |timer|
+      overtime_timers(member).each do |timer|
         week_date = timer.start_time.to_date
         week_start_date = week_start_date(week_date, @begin_week)
         if weeks[week_start_date].blank?
@@ -125,7 +125,7 @@ module ReportHelper
           holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
           week_working_hour = @working_time_per_week - holidays_not_weekend.length * @working_time_per_day
           weeks[week_start_date] = { working_time: week_working_hour * 3600 }
-          week_overtime = week_working_time(week_start_date) - weeks[week_start_date][:working_time]
+          week_overtime = week_working_time(week_start_date, member) - weeks[week_start_date][:working_time]
           weeks[week_start_date][:overtime] = week_overtime
           weeks[week_start_date][:overtime_temp] = week_overtime
           weeks[week_start_date][:holidays] = holidays
@@ -172,24 +172,24 @@ module ReportHelper
     end
 
     # ============================ GET TIMER ===================================
-    def overtime_timers
-      @member.timers
-             .where(category_members: { id: member_joined_categories.ids })
-             .where('start_time >= ? AND start_time < ?', @begin_date, @end_date + 1)
+    def overtime_timers(member)
+      member.timers
+            .where(category_members: { id: member_joined_categories(member).ids })
+            .where('start_time >= ? AND start_time < ?', @begin_date, @end_date + 1)
     end
 
-    def member_joined_categories
-      if @reporter.member? && @reporter.id == @member.id
+    def member_joined_categories(member)
+      if @reporter.member? && @reporter.id == member.id
         reporter_projects = @reporter.joined_projects.where(is_archived: false)
       else
         reporter_projects = @reporter.get_projects.where(is_archived: false)
       end
-      @member.assigned_categories.where(projects: { id: reporter_projects.ids })
+      member.assigned_categories.where(projects: { id: reporter_projects.ids })
     end
     # =========================== GET TIMER END ================================
 
-    def week_working_time(week_start_date)
-      @member.tracked_time(week_start_date, week_start_date + 6)
+    def week_working_time(week_start_date, member)
+      member.tracked_time(week_start_date, week_start_date + 6)
     end
   end
 end
