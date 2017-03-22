@@ -48,7 +48,7 @@ module ReportHelper
       result
     end
 
-    # private
+    private
 
     # Report people
     def report_people
@@ -135,62 +135,6 @@ module ReportHelper
       tasks
     end
 
-    # def member_overtime
-    #   day_working_times = day_working_time
-    #   week = {}
-    #   week_overtime = {}
-    #   timers = []
-    #   days = {}
-    #   overtime_timers.each do |timer|
-    #     week_date = timer.start_time.to_date
-    #     week_start_date = week_start_date(week_date, @begin_week)
-    #
-    #     if week[week_start_date(week_date, @begin_week)].nil?
-    #       week[week_start_date] = { overtime: 0, holidays: nil }
-    #       week_overtime = {}
-    #       # Check week of start_time of timer overtime or not
-    #       if week_of_date_overtime(week_start_date) > 0
-    #         week_of_date_overtime = week_of_date_overtime(week_start_date)
-    #         week[week_start_date][:overtime] = week_of_date_overtime
-    #         week[week_start_date][:holidays] = holidays_in_week(@reporter.company, week_start_date, @begin_week)
-    #         week_overtime[week_start_date] = week_of_date_overtime
-    #       end
-    #     end
-    #
-    #     days[week_date] = 0 if days[week_date].nil?
-    #     days[week_date] += timer.tracked_time
-    #
-    #     # Check overtime of that date
-    #     options = {}
-    #     if week[week_start_date][:overtime] > 0 && week_overtime[week_start_date] > 0
-    #       if week[week_start_date][:holidays].include?(week_date)
-    #         options[:overtime_type] = @overtime_type[:holiday]
-    #         week_overtime[week_start_date] -= timer.tracked_time
-    #       elsif week_date.wday == 0 || week_date.wday == 6
-    #         options[:overtime_type] = @overtime_type[:weekend]
-    #         week_overtime[week_start_date] -= timer.tracked_time
-    #       elsif day_working_times[week_date] > @working_time_per_day * 3600
-    #         day_overtime = days[week_date] - @working_time_per_day * 3600
-    #         if day_overtime > 0
-    #           if (days[week_date] - timer.tracked_time) < @working_time_per_day * 3600
-    #             options[:overtime_type] = @overtime_type[:normal]
-    #             options[:start_time_overtime] = timer.stop_time - day_overtime
-    #             week_overtime[week_start_date] -= day_overtime
-    #           else
-    #             options[:overtime_type] = @overtime_type[:normal]
-    #             week_overtime[week_start_date] -= timer.tracked_time
-    #           end
-    #         end
-    #       end
-    #     end
-    #     next unless options[:overtime_type].present?
-    #     timers.push(TestOvertimeTimerSerializer.new(timer, options))
-    #     p week_overtime[week_start_date]
-    #     p week[week_start_date]
-    #   end
-    #   timers
-    # end
-
     def member_overtime
       week = {}
       timers = []
@@ -245,18 +189,8 @@ module ReportHelper
         next unless options[:overtime_type].present?
         timers.push(TestOvertimeTimerSerializer.new(timer, options).as_json)
       end
-      # timers
+      # Return result
       timers.sort_by! { |hsh| hsh[:start_time] }
-    end
-
-    def day_working_time
-      day_overtime = {}
-      overtime_timers.each do |timer|
-        week_date = timer.start_time.to_date
-        day_overtime[week_date] = 0 if day_overtime[week_date].nil?
-        day_overtime[week_date] += timer.tracked_time
-      end
-      day_overtime
     end
 
     # ============================ GET TIMER ===================================
@@ -275,14 +209,6 @@ module ReportHelper
       @member.assigned_categories.where(projects: { id: reporter_projects.ids })
     end
     # =========================== GET TIMER END ================================
-
-    def week_of_date_overtime(date)
-      holiday_hour_off_in_week = holiday_hour_off_in_week(date)
-      working_time_per_week = @working_time_per_week - holiday_hour_off_in_week
-      overtime = week_working_time(date) - working_time_per_week * 3600
-      return 0 if overtime <= 0
-      overtime
-    end
 
     def week_working_time(week_start_date)
       @member.tracked_time(week_start_date, week_start_date + 6)
