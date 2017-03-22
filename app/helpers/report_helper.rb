@@ -193,7 +193,6 @@ module ReportHelper
 
     def member_overtime
       week = {}
-      options = {}
       timers = []
       normal_timers = []
       overtime_timers.each do |timer|
@@ -204,22 +203,24 @@ module ReportHelper
           holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
           week_working_hour = @working_time_per_week - holidays_not_weekend.length * @working_time_per_day
           week[week_start_date] = { working_time: week_working_hour * 3600 }
-          week[week_start_date][:real_working_time] = week_working_time(week_start_date)
-          week[week_start_date][:overtime] = 0
+          week_overtime = week_working_time(week_start_date) - week[week_start_date][:working_time]
+          week[week_start_date][:overtime] = week_overtime
+          week[week_start_date][:overtime_temp] = week_overtime
           week[week_start_date][:holidays] = holidays
         end
-        next unless week[week_start_date][:real_working_time] > week[week_start_date][:working_time]
+        next unless week[week_start_date][:overtime] > 0
+        options = {}
         if week[week_start_date][:holidays].include?(week_date)
           options[:overtime_type] = @overtime_type[:holiday]
-          week[week_start_date][:overtime] += timer.tracked_time
+          week[week_start_date][:overtime_temp] -= timer.tracked_time
         elsif week_date.wday == 0 || week_date.wday == 6
           options[:overtime_type] = @overtime_type[:weekend]
-          week[week_start_date][:overtime] += timer.tracked_time
+          week[week_start_date][:overtime_temp] -= timer.tracked_time
         else # If week_date is a normal day
           normal_timers.push(timer)
         end
         next unless options[:overtime_type].present?
-        timers.push(TestOvertimeTimerSerializer.new(timer, options))
+        timers.push(TestOvertimeTimerSerializer.new(timer, options).as_json)
       end
       # Calculate overtime for normal days
       day_time_totals = {}
@@ -229,24 +230,23 @@ module ReportHelper
 
         day_time_totals[week_date] = 0 if day_time_totals[week_date].nil?
         day_time_totals[week_date] += timer.tracked_time
-
-        p '@@@@@@@@@@@@@@@'
-        p day_time_totals
-
         day_overtime = day_time_totals[week_date] - @working_time_per_day * 3600
-        if day_time_totals[week_date] < (week[week_start_date][:real_working_time] - week[week_start_date][:working_time]) &&
-           day_overtime > 0
+        options = {}
+        if week[week_start_date][:overtime_temp] > 0 && day_overtime > 0
           if (day_time_totals[week_date] - timer.tracked_time) < @working_time_per_day * 3600
             options[:overtime_type] = @overtime_type[:normal]
             options[:start_time_overtime] = timer.stop_time - day_overtime
-            week[week_start_date][:overtime] += day_overtime
+            week[week_start_date][:overtime_temp] -= day_overtime
           else
             options[:overtime_type] = @overtime_type[:normal]
-            week[week_start_date][:overtime] += timer.tracked_time
+            week[week_start_date][:overtime_temp] -= timer.tracked_time
           end
         end
+        next unless options[:overtime_type].present?
+        timers.push(TestOvertimeTimerSerializer.new(timer, options).as_json)
       end
-      normal_timers
+      # timers
+      timers.sort_by! { |hsh| hsh[:start_time] }
     end
 
     def day_working_time
@@ -264,7 +264,6 @@ module ReportHelper
       @member.timers
              .where(category_members: { id: member_joined_categories.ids })
              .where('start_time >= ? AND start_time < ?', @begin_date, @end_date + 1)
-             .order(:start_time)
     end
 
     def member_joined_categories
