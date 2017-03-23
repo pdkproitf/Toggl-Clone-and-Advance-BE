@@ -84,9 +84,9 @@ class Member < ApplicationRecord
   end
 
   def perfect_tasks
-    tasks.where.not(category_members: { category_id: nil })
+    tasks.joins(:project_member).where.not(category_members: { category_id: nil })
          .where(category_members: { is_archived_by_category: false })
-         .where(category_members: { is_archived_by_project_member: false })
+         .where(project_member: { is_archived: false })
   end
 
   def pm_of_project?(project)

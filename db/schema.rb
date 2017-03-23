@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316074830) do
+ActiveRecord::Schema.define(version: 20170323024208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,11 @@ ActiveRecord::Schema.define(version: 20170316074830) do
   end
 
   create_table "category_members", force: :cascade do |t|
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "category_id"
-    t.boolean  "is_archived_by_category",       default: false
+    t.boolean  "is_archived",       default: false
     t.integer  "project_member_id"
-    t.boolean  "is_archived_by_project_member", default: false
     t.index ["category_id"], name: "index_category_members_on_category_id", using: :btree
     t.index ["project_member_id"], name: "index_category_members_on_project_member_id", using: :btree
   end
