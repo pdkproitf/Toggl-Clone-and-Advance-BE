@@ -11,6 +11,10 @@ class Project < ApplicationRecord
   validates :member_id, presence: true
   validates_uniqueness_of :name, scope: [:client_id, :member_id]
 
+  def unarchived_members
+    project_members.where(is_archived: false)
+  end
+
   def unarchived_categories
     categories.where(is_archived: false)
   end

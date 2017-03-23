@@ -34,6 +34,24 @@ class ProjectSerializer < ActiveModel::Serializer
     object.tracked_time(@begin_date, @end_date)
   end
 
+  def members
+    list = []
+    object.project_members.where(is_archived: false)
+          .each do |project_member|
+      item = {}
+      item.merge!(MembersSerializer.new(project_member.member))
+      item[:is_pm] = project_member.is_pm
+      list.push(item)
+    end
+    list
+  end
+
+  def categories
+    categories = object.unarchived_categories
+    options = { each_serializer: CategorySerializer, begin_date: @begin_date, end_date: @end_date }
+    ActiveModel::Serializer::CollectionSerializer.new(categories, options)
+  end
+
   def chart
     chart = []
     (@begin_date..@end_date).each do |date|
@@ -55,27 +73,4 @@ class ProjectSerializer < ActiveModel::Serializer
     end
     chart
   end
-
-  def members
-    list = []
-    object.project_members.where(is_archived: false)
-          .each do |project_member|
-      item = {}
-      item.merge!(MembersSerializer.new(project_member.member))
-      item[:is_pm] = project_member.is_pm
-      list.push(item)
-    end
-    list
-  end
-
-  def categories
-    categories = object.unarchived_categories
-    options = { each_serializer: CategorySerializer, begin_date: @begin_date, end_date: @end_date }
-    ActiveModel::Serializer::CollectionSerializer.new(categories, options)
-  end
-
-  # def members
-  #   object.members.where(project_members: { is_archived: false })
-  #   # ActiveModel::Serializer::CollectionSerializer.new(object.members, each_serializer: MembersSerializer)
-  # end
 end
