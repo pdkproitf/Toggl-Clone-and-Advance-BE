@@ -61,13 +61,6 @@ class Member < ApplicationRecord
     false
   end
 
-  def pm_of_project?(project)
-    project_member = project_members
-                     .find_by(project_id: project.id, is_archived: false)
-    return false if project_member.nil? || project_member.is_pm == false
-    true
-  end
-
   def assigned_categories
     category_members
       .where(project_members: { is_archived: false })
