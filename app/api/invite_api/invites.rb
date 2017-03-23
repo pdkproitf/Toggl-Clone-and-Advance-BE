@@ -17,7 +17,7 @@ module InviteApi
                 else
                     'invites-confirm/' + invite.invite_token
                 end
-                invite.send_email "#{Setting.front_end}/#/#{link}"
+                invite.send_email "#{Settings.front_end}/#/#{link}"
             end
 
             def create_default_job
@@ -32,7 +32,6 @@ module InviteApi
             end
             post '/' do
                 authenticated!
-                binding.pry
                 error!(I18n.t("access_denied")) unless @current_member.admin? || @current_member.pm?
                 invite = Invite.find_by_email(params['email'])
                 messages =  invite.blank? ?
