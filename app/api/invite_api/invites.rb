@@ -32,7 +32,6 @@ module InviteApi
             end
             post '/' do
                 authenticated!
-                binding.pry
                 error!(I18n.t("access_denied")) unless @current_member.admin? || @current_member.pm?
                 invite = Invite.find_by_email(params['email'])
                 messages =  invite.blank? ?
