@@ -55,21 +55,21 @@ class Member < ApplicationRecord
   end
 
   def joined_project?(project)
-    if project_members.exists?(project_id: project.id, is_archived: false)
-      return true
-    end
-    false
+    project_members.exists?(project_id: project.id, is_archived: false) ? (return true) : (return false)
+  end
+
+  def pm_of_project?(project)
+    project_member = project_members.find_by(project_id: project.id, is_archived: false)
+    project_member.nil? || project_member.is_pm == false ? (return false) : (return true)
   end
 
   def assigned_categories
     category_members
       .where(project_members: { is_archived: false })
-      .where.not(category_id: nil)
-      .where(is_archived: false)
+      .where.not(category_id: nil, is_archived: true)
       .joins(category: { project: :client })
       .select('category_members.id')
-      .select('projects.id as project_id', 'projects.name as project_name')
-      .select('projects.background')
+      .select('projects.id as project_id', 'projects.name as project_name', 'projects.background')
       .select('clients.id as client_id', 'clients.name as client_name')
       .select('categories.id as category_id', 'categories.name as category_name')
       .select('category_members.id as category_member_id')
@@ -80,11 +80,6 @@ class Member < ApplicationRecord
     tasks.where(project_members: { is_archived: false })
          .where.not(category_members: { category_id: nil })
          .where(category_members: { is_archived: false })
-  end
-
-  def pm_of_project?(project)
-    project_member = project_members.find_by(project_id: project.id, is_archived: false)
-    return false if (project_member.nil? || project_member.is_pm == false) ? return false : return true
   end
 
   def tracked_time(begin_date = nil, end_date = nil)
