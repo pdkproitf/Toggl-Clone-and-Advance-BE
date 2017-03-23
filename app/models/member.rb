@@ -6,7 +6,7 @@ class Member < ApplicationRecord
   has_many :joined_projects, through: :project_members, source: :project
 
   # Find projects member assigned PM
-  has_many :pm_project_members, -> { where is_pm: true }, class_name: 'ProjectMember'
+  has_many :pm_project_members, -> { where is_pm: true, is_archived: false }, class_name: 'ProjectMember'
   has_many :pm_projects, through: :pm_project_members, source: :project
 
   has_many :project_members, dependent: :destroy
@@ -34,12 +34,9 @@ class Member < ApplicationRecord
     self.furlough_total ||= 10
   end
 
-  # Get all projects that member manage regardless to archive or not
+  # Get all unarchived projects that member manage
   def get_projects
-    if admin? || pm?
-      return company.projects # Get all projects of company
-    end
-    pm_projects # Get projects that member's role is project manager
+    admin? || pm? ? company.projects.where(is_archived: false) : pm_projects.where(is_archived: false)
   end
 
   def admin?
@@ -55,12 +52,12 @@ class Member < ApplicationRecord
   end
 
   def joined_project?(project)
-    project_members.exists?(project_id: project.id, is_archived: false) ? (return true) : (return false)
+    project_members.exists?(project_id: project.id, is_archived: false) ? true : false
   end
 
   def pm_of_project?(project)
     project_member = project_members.find_by(project_id: project.id, is_archived: false)
-    project_member.nil? || project_member.is_pm == false ? (return false) : (return true)
+    project_member.nil? || project_member.is_pm == false ? false : true
   end
 
   def assigned_categories
