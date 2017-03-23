@@ -36,12 +36,9 @@ module ProjectApi
 
       desc 'Get a project by id'
       get ':id' do
-        authenticated!
-        project = @current_member.get_projects
-                                 .find_by(id: params[:id], is_archived: false)
-        return error!(I18n.t('project_not_found'), 404) if project.nil?
+        project = @current_member.get_projects.find(params[:id])
         { data: ProjectSerializer.new(project, categories_serialized: true) }
-      end # End of getting a project by ID (for details)
+      end
 
       desc 'Create new project'
       params do
