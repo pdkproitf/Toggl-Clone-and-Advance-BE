@@ -84,10 +84,9 @@ class Member < ApplicationRecord
   end
 
   def perfect_tasks
-    tasks.joins(:project_member)
+    tasks.where(project_members: { is_archived: false })
          .where.not(category_members: { category_id: nil })
          .where(category_members: { is_archived: false })
-         .where(project_member: { is_archived: false })
   end
 
   def pm_of_project?(project)
@@ -95,12 +94,6 @@ class Member < ApplicationRecord
                      .find_by(project_id: project.id, is_archived: false)
     return false if project_member.nil? || project_member.is_pm == false
     true
-  end
-
-  def perfect_tasks
-    tasks.where.not(category_members: { category_id: nil })
-         .where(category_members: { is_archived_by_category: false })
-         .where(category_members: { is_archived_by_project_member: false })
   end
 
   def tracked_time(begin_date = nil, end_date = nil)
