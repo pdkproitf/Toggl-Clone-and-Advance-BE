@@ -69,7 +69,7 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def categories
-    categories = object.categories.where(is_archived: false)
+    categories = object.unarchived_categories
     options = { each_serializer: CategorySerializer, begin_date: @begin_date, end_date: @end_date }
     ActiveModel::Serializer::CollectionSerializer.new(categories, options)
   end
