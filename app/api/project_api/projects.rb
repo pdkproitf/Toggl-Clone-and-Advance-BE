@@ -37,7 +37,7 @@ module ProjectApi
       desc 'Get a project by id'
       get ':id' do
         project = @current_member.get_projects.find(params[:id])
-        { data: ActiveModelSerializers::SerializableResource.new(project, categories_serialized: true) }
+        { data: ProjectSerializer.new(project, categories_serialized: true) }
       end
 
       desc 'Create new project'
@@ -61,30 +61,20 @@ module ProjectApi
         end
       end
       post do
-        authenticated!
         project_params = params[:project]
-        # Current user has to be an admin or a PM
-        if !@current_member.admin? && !@current_member.pm?
-          return error!(I18n.t('access_denied'), 403)
-        end
-        # Client has to belongs to the company of current user
-        unless @current_member.company.clients
-                              .exists?(project_params[:client_id])
-          return error!(I18n.t('client_not_found'), 400)
-        end
-        # Create new project object
+        # Only Admin or Super PM has right to add new project
+        return error!(I18n.t('access_denied'), 403) if !@current_member.admin? && !@current_member.pm?
+        client = @current_member.company.clients.find(project_params[:client_id])
+
+        # Create new project
         project = @current_member.projects.new
         project.name = project_params[:name]
-        project.client_id = project_params[:client_id]
-        unless project_params[:background].nil?
-          # Validate background here
-          project.background = project_params[:background]
-        end
-        unless project_params[:is_member_report].nil?
-          project.is_member_report = project_params[:is_member_report]
-        end
+        project.client_id = client.id
+        project.background = project_params[:background] if project_params[:background].present?
+        project.is_member_report = project_params[:is_member_report] if project_params[:is_member_report].present?
+
         # Add members to project
-        unless project_params[:member_roles].nil?
+        if project_params[:member_roles].present?
           project_params[:member_roles].each do |member_role|
             # Check if member joined to company
             unless @current_member.company.members.exists?(member_role[:member_id])
