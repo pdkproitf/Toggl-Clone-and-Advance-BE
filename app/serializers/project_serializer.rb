@@ -69,12 +69,9 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def categories
-    options = { begin_date: @begin_date, end_date: @end_date }
-    categories = []
-    object.categories.where(is_archived: false).each do |category|
-      categories.push(CategorySerializer.new(category, options))
-    end
-    categories
+    categories = object.categories.where(is_archived: false)
+    options = { each_serializer: CategorySerializer, begin_date: @begin_date, end_date: @end_date }
+    ActiveModel::Serializer::CollectionSerializer.new(categories, options)
   end
 
   # def members

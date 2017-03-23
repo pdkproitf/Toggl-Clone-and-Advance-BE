@@ -13,7 +13,7 @@ module ProjectApi
       desc 'Get all projects current_member manage'
       get do
         projects = @current_member.get_projects.order('id desc')
-        { data: ActiveModel::Serializer::CollectionSerializer.new(projects, each_serializer: ProjectSerializer) }
+        { data: ActiveModelSerializers::SerializableResource.new(projects, each_serializer: ProjectSerializer) }
       end
 
       desc 'Get all projects that I assigned'
@@ -37,7 +37,7 @@ module ProjectApi
       desc 'Get a project by id'
       get ':id' do
         project = @current_member.get_projects.find(params[:id])
-        { data: ProjectSerializer.new(project, categories_serialized: true) }
+        { data: ActiveModelSerializers::SerializableResource.new(project, categories_serialized: true) }
       end
 
       desc 'Create new project'
