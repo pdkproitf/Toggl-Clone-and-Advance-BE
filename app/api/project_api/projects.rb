@@ -67,51 +67,39 @@ module ProjectApi
         client = @current_member.company.clients.find(project_params[:client_id])
 
         # Create new project
-        project = @current_member.projects.new
-        project.name = project_params[:name]
-        project.client_id = client.id
-        project.background = project_params[:background] if project_params[:background].present?
-        project.is_member_report = project_params[:is_member_report] if project_params[:is_member_report].present?
+        Project.transaction do
+          project = @current_member.projects.new
+          project.name = project_params[:name]
+          project.client_id = client.id
+          project.background = project_params[:background] if project_params[:background].present?
+          project.is_member_report = project_params[:is_member_report] if project_params[:is_member_report].present?
 
-        # Add members to project
-        if project_params[:member_roles].present?
-          project_params[:member_roles].each do |member_role|
-            # Check if member joined to company
-            unless @current_member.company.members.exists?(member_role[:member_id])
-              return error!(I18n.t('not_joined_to_company'), 400)
+          # Add members to project
+          if project_params[:member_roles].present?
+            project_params[:member_roles].each do |member_role|
+              member = @current_member.company.members.find(member_role[:member_id])
+              project.project_members.new(member_id: member.id, is_pm: member_role[:is_pm])
             end
-            # Add member in team to project
-            project.project_members.new(
-              member_id: member_role[:member_id],
-              is_pm: member_role[:is_pm]
-            )
           end
-        end
-        project.save!
-        # Create new categories and assign members to them
-        unless project_params[:category_members].nil?
-          project_params[:category_members].each do |category_member|
-            # Create new categories
-            category = project.categories.new(
-              name: category_member[:category_name],
-              is_billable: category_member[:is_billable]
-            )
-            # Check if company members were added to project
-            category_member[:members].each do |member|
-              project_member = project.project_members
-                                      .find_by(member_id: member.member_id)
-              # Assign members to categories
-              if project_member.nil?
-                project.destroy
-                return error!(I18n.t('not_joined_to_company'), 400)
+          project.save!
+
+          # Create new categories and assign members to them
+          if project_params[:category_members].present?
+            Category.transaction do
+              project_params[:category_members].each do |category_member|
+                # Create new categories
+                category = project.categories.new(name: category_member[:category_name], is_billable: category_member[:is_billable])
+                # Assign members to categories
+                category_member[:members].each do |member|
+                  project_member = project.project_members.find_by!(member_id: member.member_id)
+                  category.category_members.new(project_member_id: project_member.id)
+                end
+                category.save!
               end
-              category.category_members
-                      .new(project_member_id: project_member.id)
-            end
-            category.save!
+            end # End of Category transaction
           end
-        end
-        project
+          project
+        end # End of Project transaction
       end # End of project add new
 
       desc 'Edit project'
