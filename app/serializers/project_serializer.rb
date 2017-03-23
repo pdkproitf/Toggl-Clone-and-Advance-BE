@@ -13,15 +13,15 @@ class ProjectSerializer < ActiveModel::Serializer
     @end_date = options[:end_date] || nil
     @chart_limit = 366
     @chart_serialized = false
-    unless options[:chart_serialized].nil?
+    if options[:chart_serialized].present?
       @chart_serialized = options[:chart_serialized]
     end
     @members_serialized = true
-    unless options[:members_serialized].nil?
+    if options[:members_serialized].present?
       @members_serialized = options[:members_serialized]
     end
     @categories_serialized = false
-    unless options[:categories_serialized].nil?
+    if options[:categories_serialized].present?
       @categories_serialized = options[:categories_serialized]
     end
   end
@@ -35,15 +35,14 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def members
-    list = []
-    object.project_members.where(is_archived: false)
-          .each do |project_member|
+    member_list = []
+    object.unarchived_members.each do |project_member|
       item = {}
       item.merge!(MembersSerializer.new(project_member.member))
       item[:is_pm] = project_member.is_pm
-      list.push(item)
+      member_list.push(item)
     end
-    list
+    member_list
   end
 
   def categories
