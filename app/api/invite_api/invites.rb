@@ -17,7 +17,7 @@ module InviteApi
                 else
                     'invites-confirm/' + invite.invite_token
                 end
-                invite.send_email "#{Setting.front_end}/#/#{link}"
+                invite.send_email "#{Settings.front_end}/#/#{link}"
             end
 
             def create_default_job
