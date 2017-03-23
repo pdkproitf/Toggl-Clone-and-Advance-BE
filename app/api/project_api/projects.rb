@@ -20,25 +20,16 @@ module ProjectApi
       get 'assigned' do
         assigned_categories = @current_member.assigned_categories
         result = []
-        assigned_categories.each do |assigned_category|
-          item = result.find { |h| h[:id] == assigned_category[:project_id] }
-          unless item
-            item = {
-              id: assigned_category[:project_id],
-              name: assigned_category[:project_name]
-            }
-            item[:background] = assigned_category[:background]
-            item[:client] = {
-              id: assigned_category[:client_id],
-              name: assigned_category[:client_name]
-            }
+        assigned_categories.each do |ass_cat|
+          item = result.find { |h| h[:id] == ass_cat[:project_id] }
+          if item.blank?
+            item = { id: ass_cat[:project_id], name: ass_cat[:project_name] }
+            item[:background] = ass_cat[:background]
+            item[:client] = { id: ass_cat[:client_id], name: ass_cat[:client_name] }
             item[:category] = []
             result.push(item)
           end
-          item[:category].push(
-            name: assigned_category[:category_name],
-            category_member_id: assigned_category[:category_member_id]
-          )
+          item[:category].push(name: ass_cat[:category_name], category_member_id: ass_cat[:category_member_id])
         end
         { data: result }
       end # End of assigned
