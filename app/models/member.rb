@@ -60,6 +60,7 @@ class Member < ApplicationRecord
     project_member.nil? || project_member.is_pm == false ? false : true
   end
 
+  # Get all categories that member assigned
   def assigned_categories
     category_members
       .where(project_members: { is_archived: false })

@@ -3,23 +3,21 @@ module ProjectApi
   class Projects < Grape::API
     prefix :api
     version 'v1', using: :accept_version_header
+
+    # => /api/v1/projects/
     resource :projects do
-      # => /api/v1/projects/
+      before do
+        authenticated!
+      end
+
       desc 'Get all projects current_member manage'
       get do
-        authenticated!
-        projects = @current_member.get_projects.where(is_archived: false)
-                                  .order('id desc')
-        project_list = []
-        projects.each do |project|
-          project_list.push(ProjectSerializer.new(project))
-        end
-        { data: project_list }
+        projects = @current_member.get_projects.order('id desc')
+        { data: ActiveModel::Serializer::CollectionSerializer.new(projects, each_serializer: ProjectSerializer) }
       end
 
       desc 'Get all projects that I assigned'
       get 'assigned' do
-        authenticated!
         assigned_categories = @current_member.assigned_categories
         result = []
         assigned_categories.each do |assigned_category|
