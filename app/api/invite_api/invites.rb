@@ -11,12 +11,10 @@ module InviteApi
             end
 
             def invite_inform(invite, recepter)
-                link = if recepter
-                    'sign-up/' + invite.invite_token + '/' + @current_member.company.name +
-                        '/' + @current_member.company.domain
-                else
-                    'invites-confirm/' + invite.invite_token
-                end
+                link = recepter.blank? ? 'sign-up/' : 'invites-confirm/' 
+
+                link += invite.invite_token + '/' + @current_member.company.name +
+                    '/' + @current_member.company.domain
                 invite.send_email "#{Settings.front_end}/#/#{link}"
             end
 
