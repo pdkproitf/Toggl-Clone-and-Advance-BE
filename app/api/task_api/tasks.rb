@@ -13,8 +13,7 @@ module TaskApi
         authenticated!
         timers = @current_member
                  .timers
-                 .where(category_members: { is_archived_by_category: false })
-                 .where(category_members: { is_archived_by_project_member: false })
+                 .where(category_members: { is_archived: false })
                  .where.not(category_members: { category_id: nil })
                  .where.not(tasks: { name: '' })
                  .limit(params[:number])
