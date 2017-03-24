@@ -41,82 +41,36 @@ module TimerApi
         end
       end
       post do
-        # authenticated!
         timer_params = params['timer']
-        if timer_params[:start_time] >= timer_params[:stop_time]
-          return error!(I18n.t('start_stop_time_error'), 400)
-        end
-
-        # if task_id exists
-        if timer_params[:task_id]
+        return error!(I18n.t('start_stop_time_error'), 400) if timer_params[:start_time] >= timer_params[:stop_time]
+        # Check if task_id present
+        if timer_params[:task_id].present?
           # Check task_id belong to current member
-          task = @current_member.tasks.find_by_id(timer_params[:task_id])
-          return error!(I18n.t('not_found', title: 'Task'), 404) if task.nil?
-
-        # if task name exists and is not blank
-        elsif timer_params[:task_name] && !timer_params[:task_name].blank?
-          if timer_params[:category_member_id] # if category_member_id exists
+          task = @current_member.tasks.find(timer_params[:task_id])
+        elsif timer_params[:task_name].present?
+          if timer_params[:category_member_id].present? # if category_member_id exists
             category_member = @current_member
-                              .category_members
-                              .where.not(category_id: nil)
-                              .find_by(
-                                id: timer_params[:category_member_id],
-                                is_archived_by_category: false,
-                                is_archived_by_project_member: false
-                              )
-            # if category member does not belong to any category
-            if category_member.nil?
-              return error!(I18n.t('member_not_assigned_to_category'), 400)
-            end
-
-            task = @current_member.tasks.find_by(
-              name: timer_params[:task_name],
-              category_member: category_member.id
-            )
-
-            # if cannot find and task then create new task
-            if task.nil?
-              task = Task.create!(
-                name: timer_params[:task_name],
-                category_member_id: category_member.id
-              )
-            end
-          else # category_member_id does not exist
-            project_member = @current_member.project_members.create!
-            category_member = project_member.category_members.create!
-            task = category_member.tasks.create!(name: timer_params[:task_name])
+                              .category_members.where.not(category_id: nil)
+                              .find_by!(id: timer_params[:category_member_id], is_archived: false)
+            # Find task by name and category_member
+            task = @current_member.tasks.find_by(name: timer_params[:task_name], category_member_id: category_member.id)
+            # If task not found then create new one
+            task = Task.create!(name: timer_params[:task_name], category_member_id: category_member.id) if task.blank?
+          else # category_member_id does not exist then create and add member to fake project
+            task = @current_member.new_fake_task(timer_params[:task_name])
           end
-
-        # Only start_time and stop_time
-        # Maybe category_member_id exists, or maybe task_name blank
-        else
+        else # Only start_time and stop_time. Maybe category_member_id exists, or maybe task_name blank
           if timer_params[:category_member_id]
             category_member = @current_member
-                              .category_members
-                              .where.not(category_id: nil)
-                              .find_by(
-                                id: timer_params[:category_member_id],
-                                is_archived_by_category: false,
-                                is_archived_by_project_member: false
-                              )
-            # if category member does not belong to any category
-            if category_member.nil?
-              return error!(I18n.t('member_not_assigned_to_category'), 400)
-            end
-
-            task = Task.create!(
-              category_member_id: category_member.id
-            )
+                              .category_members.where.not(category_id: nil)
+                              .find_by!(id: timer_params[:category_member_id], is_archived: false)
+            task = Task.create!(category_member_id: category_member.id)
           else # Only start_time and stop_time
-            project_member = @current_member.project_members.create!
-            category_member = project_member.category_members.create!
-
-            task = category_member.tasks.create!
+            task = @current_member.new_fake_task
           end
         end
-        unless task.nil?
-          task.timers.create!(start_time: timer_params[:start_time],
-                              stop_time: timer_params[:stop_time])
+        if task.present?
+          task.timers.create!(start_time: timer_params[:start_time], stop_time: timer_params[:stop_time])
         end
       end
 

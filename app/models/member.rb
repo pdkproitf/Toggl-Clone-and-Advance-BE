@@ -93,4 +93,10 @@ class Member < ApplicationRecord
     end
     sum
   end
+
+  def new_fake_task(name = '')
+    project_member = project_members.create!
+    category_member = project_member.category_members.create!
+    task = category_member.tasks.create!(name: name)
+  end
 end
