@@ -19,22 +19,15 @@ module TimerApi
         end
       end
       get do
-        from_day = params[:period][:from_day]
-        to_day = params[:period][:to_day]
-        return error!(I18n.t('from_to_day_error'), 400) if from_day > to_day
+        return error!(I18n.t('from_to_day_error'), 400) if params[:period][:from_day] > params[:period][:to_day]
+        timers = @current_member.get_timers(params[:period][:from_day], params[:period][:to_day])
 
-        timer_list = @current_member.get_timers(from_day, to_day)
-
-        data = {}
-        date_list = []
-        timer_list.each do |timer|
-          unless date_list.include?(timer.start_time.to_date.to_s)
-            date_list.push(timer.start_time.to_date.to_s)
-            data[timer.start_time.to_date.to_s] = []
-          end
-          data[timer.start_time.to_date.to_s].push(TimerSerializer.new(timer))
+        date = {}
+        timers.each do |timer|
+          date[timer.start_time.to_date.to_s] = [] if date[timer.start_time.to_date.to_s].nil?
+          date[timer.start_time.to_date.to_s].push(TimerSerializer.new(timer))
         end
-        data
+        date
       end
 
       desc 'Create new timer'
