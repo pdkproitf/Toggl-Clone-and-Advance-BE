@@ -1,7 +1,0 @@
-1. ADD NEW PROJECT
-* Case 1: project - (team member + category)
-  - Add a record into projects table
-* Case 2: project + team member - category
-  - Each member ---> record in ProjectCategoryUser with project_category_id = null
-* Case 3: project + team member + category
-  -

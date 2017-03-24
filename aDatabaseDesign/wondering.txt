@@ -1,5 +1,0 @@
-jbuider
-active_model_serializers
-rack-cors
-active record association
-grape active_model_serializers

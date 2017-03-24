@@ -125,32 +125,28 @@ module ProjectApi
         project_params = params[:project]
         project = @current_member.get_projects.find(params[:id])
         client = @current_member.company.clients.find(project_params[:client_id])
-        # ***************** Edit basic information ***************************
-        project.name = project_params[:name]
-        project.client = client
-        project.background = project_params[:background] if project_params[:background].present?
-        project.is_member_report = project_params[:is_member_report] if project_params[:is_member_report].present?
-        # ***************** Edit basic information ends **********************
+        Project.transaction do
+          # ***************** Edit basic information ***************************
+          project.name = project_params[:name]
+          project.client = client
+          project.background = project_params[:background] if project_params[:background].present?
+          project.is_member_report = project_params[:is_member_report] if project_params[:is_member_report].present?
+          # ***************** Edit basic information ends **********************
+        end
         # ******************** Edit members of project ***********************
-        members = project_params[:members]
-        unless members.nil?
+        if project_params[:members].present?
+          members = project_params[:members]
           member_ids = []
           members.each do |member|
             member_ids.push(member.id)
-            existing_member = project.project_members
-                                     .find_by(member_id: member.id)
+            existing_member = project.project_members.find_by(member_id: member.id)
             if existing_member.nil?
               # Add new member to project
-              new_member = @current_member.company
-                                          .members
-                                          .find_by(id: member.id)
+              new_member = @current_member.company.members.find_by(id: member.id)
               if new_member.nil?
                 return error!(I18n.t('not_joined_to_company'), 400)
               end
-              project.project_members.new(
-                member_id: new_member.id,
-                is_pm: member.is_pm
-              )
+              project.project_members.new(member_id: new_member.id, is_pm: member.is_pm)
             else
               # Edit existing member of project
               existing_member[:is_pm] = member.is_pm
