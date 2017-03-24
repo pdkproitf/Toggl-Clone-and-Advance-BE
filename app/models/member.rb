@@ -80,6 +80,12 @@ class Member < ApplicationRecord
          .where(category_members: { is_archived: false })
   end
 
+  def get_timers(from_day, to_day)
+    timers.where(category_members: { is_archived: false })
+          .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
+          .order('start_time desc')
+  end
+
   def tracked_time(begin_date = nil, end_date = nil)
     sum = 0
     assigned_categories.each do |category_member|
