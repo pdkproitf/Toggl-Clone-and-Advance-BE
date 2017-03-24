@@ -122,28 +122,14 @@ module ProjectApi
         end
       end
       put ':id' do
-        authenticated!
         project_params = params[:project]
-        project = @current_member.get_projects.find_by(id: params[:id])
-        error!(I18n.t('project_not_found'), 400) unless project
+        project = @current_member.get_projects.find(params[:id])
+        client = @current_member.company.clients.find(project_params[:client_id])
         # ***************** Edit basic information ***************************
-        # Edit project name
         project.name = project_params[:name]
-        # Edit client
-        client = @current_member.company
-                                .clients
-                                .find_by(id: project_params[:client_id])
-        return error!(I18n.t('client_not_found'), 400) if client.nil?
         project.client = client
-        # Edit background
-        unless project_params[:background].nil?
-          project.background = project_params[:background]
-        end
-        # Edit report permission
-        unless project_params[:is_member_report].nil?
-          project.is_member_report = project_params[:is_member_report]
-        end
-
+        project.background = project_params[:background] if project_params[:background].present?
+        project.is_member_report = project_params[:is_member_report] if project_params[:is_member_report].present?
         # ***************** Edit basic information ends **********************
         # ******************** Edit members of project ***********************
         members = project_params[:members]
