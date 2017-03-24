@@ -44,19 +44,18 @@ class Project < ApplicationRecord
     end
   end
 
-  def update_categories(categories = [])
+  def update_categories(cats = [])
     Category.transaction do
-      binding.pry
-      if categories.empty?
+      if cats.empty?
         categories.each(&:archive)
         return
       end
       # Categories present
       category_ids = []
-      categories.each do |category|
+      cats.each do |category|
         category_ids.push(category.id)
         if category.id.nil? # Add new category
-          new_category = self.categories.new(name: category.name, is_billable: category.is_billable)
+          new_category = categories.new(name: category.name, is_billable: category.is_billable)
           # Add members to new category
           category.member_ids.each do |member_id|
             project_member = project_members.find(member_id)
@@ -64,9 +63,10 @@ class Project < ApplicationRecord
           end
           save!
         else # Unarchive and change info of old category existing in params
-          existing_category = self.categories.find(category.id)
+          existing_category = categories.find(category.id)
           existing_category[:name] = category.name
           existing_category[:is_billable] = category.is_billable
+          existing_category.unarchive
           # Update members of existing category
           project_member_ids = []
           category.member_ids.each do |member_id|
@@ -77,7 +77,7 @@ class Project < ApplicationRecord
             category_member = existing_category.category_members.find_by(project_member_id: project_member.id)
             if category_member.nil? # Add new member
               existing_category.category_members.new(project_member_id: project_member.id)
-            elsif category_member.is_archived == true
+            elsif category_member.is_archived
               category_member.unarchive
             end
           end
