@@ -1,11 +1,15 @@
 class TaskTestSerializer < ActiveModel::Serializer
-  attributes :id, :name, :category_member_id, :project_name,
+  attributes :id, :name, :category_member_id, :project_id, :project_name,
              :category_name, :background, :client, :tracked_time
 
   def initialize(task, options = {})
     super(task)
     @begin_date = options[:begin_date] || nil
     @end_date = options[:end_date] || nil
+  end
+
+  def project_id
+    object.category_member.category.project.id if category?
   end
 
   def project_name

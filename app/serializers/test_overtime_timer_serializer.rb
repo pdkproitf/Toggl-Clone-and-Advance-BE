@@ -1,6 +1,6 @@
 class TestOvertimeTimerSerializer < ActiveModel::Serializer
   attributes :id, :task, :start_time, :stop_time, :category_member_id,
-             :project_name, :category_name, :background
+             :project_id, :project_name, :category_name, :background
   attr_reader :overtime_type, :start_time_overtime
   attributes :overtime_type, :overtime
   belongs_to :task, serializer: TaskSerializer
@@ -22,6 +22,12 @@ class TestOvertimeTimerSerializer < ActiveModel::Serializer
 
   def category_member_id
     object.task.category_member.id
+  end
+
+  def project_id
+    category = object.task.category_member.category
+    return nil unless category
+    category.project.id
   end
 
   def project_name
