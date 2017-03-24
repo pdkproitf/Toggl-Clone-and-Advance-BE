@@ -21,11 +21,11 @@ class Project < ApplicationRecord
 
   def update_members(members = [])
     ProjectMember.transaction do
-      if members.blank?
+      if members.empty?
         project_members.each(&:archive)
         return
       end
-
+      # member present
       member_ids = []
       members.each do |member|
         member_ids.push(member.id)
@@ -42,6 +42,53 @@ class Project < ApplicationRecord
       # Archive members were added to project before but not exist in params
       members_except_with(member_ids).each(&:archive)
     end
+  end
+
+  def update_categories(categories = [])
+    Category.transaction do
+      binding.pry
+      if categories.empty?
+        categories.each(&:archive)
+        return
+      end
+      # Categories present
+      category_ids = []
+      categories.each do |category|
+        category_ids.push(category.id)
+        if category.id.nil? # Add new category
+          new_category = self.categories.new(name: category.name, is_billable: category.is_billable)
+          # Add members to new category
+          category.member_ids.each do |member_id|
+            project_member = project_members.find(member_id)
+            new_category.category_members.new(project_member_id: project_member.id)
+          end
+          save!
+        else # Unarchive and change info of old category existing in params
+          existing_category = self.categories.find(category.id)
+          existing_category[:name] = category.name
+          existing_category[:is_billable] = category.is_billable
+          # Update members of existing category
+          project_member_ids = []
+          category.member_ids.each do |member_id|
+            # Check member whether added to project or not
+            project_member = project_members.find_by!(member_id: member_id, is_archived: false)
+            project_member_ids.push(project_member.id)
+            # Check member whether assigned to category or not
+            category_member = existing_category.category_members.find_by(project_member_id: project_member.id)
+            if category_member.nil? # Add new member
+              existing_category.category_members.new(project_member_id: project_member.id)
+            elsif category_member.is_archived == true
+              category_member.unarchive
+            end
+          end
+          existing_category.save!
+          # Archive members not in params
+          existing_category.category_members_except_with(project_member_ids).each(&:archive)
+        end # End of if category.id.nil?
+      end # End of categories each
+      # Archive old category not existing in params
+      categories_except_with(category_ids).each(&:archive)
+    end # End of Category transaction
   end
 
   def unarchived_members

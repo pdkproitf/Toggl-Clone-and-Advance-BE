@@ -15,19 +15,13 @@ class Category < ApplicationRecord
   end
 
   def category_members_except_with(project_member_ids)
-    category_members.where
-                    .not(is_archived: true,
-                         project_member_id: project_member_ids)
+    category_members.where.not(is_archived: true, project_member_id: project_member_ids)
   end
 
   def archive
     return if is_archived == true
     category_members.each do |category_member|
-      if category_member[:is_archived] == is_archived
-        category_member.archive
-      else
-        category_member.unarchive
-      end
+      category_member[:is_archived] == is_archived ? category_member.archive : category_member.unarchive
     end
     update_attributes(is_archived: true)
   end
@@ -35,11 +29,7 @@ class Category < ApplicationRecord
   def unarchive
     return if is_archived == false
     category_members.each do |category_member|
-      if category_member[:is_archived] == is_archived
-        category_member.unarchive
-      else
-        category_member.archive
-      end
+      category_member[:is_archived] == is_archived ? category_member.unarchive : category_member.archive
     end
     update_attributes(is_archived: false)
   end
