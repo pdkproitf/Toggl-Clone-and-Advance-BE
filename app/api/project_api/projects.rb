@@ -127,106 +127,83 @@ module ProjectApi
         client = @current_member.company.clients.find(project_params[:client_id])
         Project.transaction do
           # ***************** Edit basic information ***************************
-          project.name = project_params[:name]
-          project.client = client
-          project.background = project_params[:background] if project_params[:background].present?
-          project.is_member_report = project_params[:is_member_report] if project_params[:is_member_report].present?
-          # ***************** Edit basic information ends **********************
-        end
-        # ******************** Edit members of project ***********************
-        if project_params[:members].present?
-          members = project_params[:members]
-          member_ids = []
-          members.each do |member|
-            member_ids.push(member.id)
-            existing_member = project.project_members.find_by(member_id: member.id)
-            if existing_member.nil?
-              # Add new member to project
-              new_member = @current_member.company.members.find_by(id: member.id)
-              if new_member.nil?
-                return error!(I18n.t('not_joined_to_company'), 400)
-              end
-              project.project_members.new(member_id: new_member.id, is_pm: member.is_pm)
-            else
-              # Edit existing member of project
-              existing_member[:is_pm] = member.is_pm
-              existing_member.unarchive
-              existing_member.save!
-            end
-          end
-          # Archive members were added to project before but not exist in params
-          # project.members_except_with(member_ids).each(&:archive)
-          project.members_except_with(member_ids).each(&:archive)
-        end
-        # ****************** Edit members of project ends ********************
-        project.save!
-        # ************************* Edit categories **************************
-        categories = project_params[:categories]
-        category_ids = []
-        unless categories.nil?
-          categories.each do |category|
-            category_ids.push(category.id)
-            if category.id.nil?
-              # Add new category
-              new_category = project.categories.new(
-                name: category.name,
-                is_billable: category.is_billable
-              )
-              # Add members to new project
-              category.member_ids.each do |member_id|
-                project_member = project.project_members
-                                        .find_by(member_id: member_id)
-                if project_member.nil?
-                  return error!(I18n.t('not_added_to_project'), 403)
-                end
-                # Add member to new category
-                new_category.category_members
-                            .new(project_member_id: project_member.id)
-              end
-              # Add new category ends
-            else
-              # Unarchive and change info of old category existing in params
-              existing_category = project.categories
-                                         .find_by(id: category.id)
-              if existing_category.nil?
-                return error!(I18n.t('category_not_found'), 400)
-              end
-              existing_category[:name] = category.name
-              existing_category[:is_billable] = category.is_billable
-              # Edit members
-              project_member_ids = []
-              category.member_ids.each do |member_id|
-                project_member = project.project_members
-                                        .find_by(member_id: member_id,
-                                                 is_archived: false)
-                if project_member.nil?
-                  return error!(I18n.t('not_added_to_project'), 403)
-                end
-                project_member_ids.push(project_member.id)
+          name = project_params[:name]
+          background = project_params[:background] if project_params[:background].present?
+          is_member_report = project_params[:is_member_report] if project_params[:is_member_report].present?
+          project.update_info(name, client, background: background, is_member_report: is_member_report)
 
-                category_member = existing_category
-                                  .category_members
-                                  .find_by(project_member_id: project_member.id)
-                if category_member.nil?
-                  # Add new member
-                  existing_category.category_members
-                                   .new(project_member_id: project_member.id)
-                elsif category_member.is_archived_by_category == true
-                  category_member.unarchived_by_category
-                end
-              end
-              # Archive members not in params
-              existing_category.category_members_except_with(project_member_ids)
-                               .each(&:archived_by_category)
-              existing_category.save!
-            end
-          end
-        end
-        # Archive old category not existing in params
-        project.categories_except_with(category_ids).each(&:archive)
-        # ********************** Edit categories ends ************************
-        project.save!
-        { data: ProjectSerializer.new(project, categories_serialized: true) }
+          # ******************** Edit members of project ***********************
+          project.update_members(project_params[:members]) unless project_params[:members].nil?
+        end # End of Project transaction
+        return project
+
+        # # ************************* Edit categories **************************
+        # categories = project_params[:categories]
+        # category_ids = []
+        # unless categories.nil?
+        #   categories.each do |category|
+        #     category_ids.push(category.id)
+        #     if category.id.nil?
+        #       # Add new category
+        #       new_category = project.categories.new(
+        #         name: category.name,
+        #         is_billable: category.is_billable
+        #       )
+        #       # Add members to new project
+        #       category.member_ids.each do |member_id|
+        #         project_member = project.project_members
+        #                                 .find_by(member_id: member_id)
+        #         if project_member.nil?
+        #           return error!(I18n.t('not_added_to_project'), 403)
+        #         end
+        #         # Add member to new category
+        #         new_category.category_members
+        #                     .new(project_member_id: project_member.id)
+        #       end
+        #       # Add new category ends
+        #     else
+        #       # Unarchive and change info of old category existing in params
+        #       existing_category = project.categories
+        #                                  .find_by(id: category.id)
+        #       if existing_category.nil?
+        #         return error!(I18n.t('category_not_found'), 400)
+        #       end
+        #       existing_category[:name] = category.name
+        #       existing_category[:is_billable] = category.is_billable
+        #       # Edit members
+        #       project_member_ids = []
+        #       category.member_ids.each do |member_id|
+        #         project_member = project.project_members
+        #                                 .find_by(member_id: member_id,
+        #                                          is_archived: false)
+        #         if project_member.nil?
+        #           return error!(I18n.t('not_added_to_project'), 403)
+        #         end
+        #         project_member_ids.push(project_member.id)
+        #
+        #         category_member = existing_category
+        #                           .category_members
+        #                           .find_by(project_member_id: project_member.id)
+        #         if category_member.nil?
+        #           # Add new member
+        #           existing_category.category_members
+        #                            .new(project_member_id: project_member.id)
+        #         elsif category_member.is_archived_by_category == true
+        #           category_member.unarchived_by_category
+        #         end
+        #       end
+        #       # Archive members not in params
+        #       existing_category.category_members_except_with(project_member_ids)
+        #                        .each(&:archived_by_category)
+        #       existing_category.save!
+        #     end
+        #   end
+        # end
+        # # Archive old category not existing in params
+        # project.categories_except_with(category_ids).each(&:archive)
+        # # ********************** Edit categories ends ************************
+        # project.save!
+        # { data: ProjectSerializer.new(project, categories_serialized: true) }
       end # End of editing project
 
       desc 'Delete a project'
