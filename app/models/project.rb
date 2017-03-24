@@ -118,18 +118,10 @@ class Project < ApplicationRecord
   def archive
     return if is_archived == true
     categories.each do |category|
-      if category[:is_archived] == is_archived
-        category.archive
-      else
-        category.unarchive
-      end
+      category[:is_archived] == is_archived ? category.archive : category.unarchive
     end
     project_members.each do |project_member|
-      if project_member[:is_archived] == is_archived
-        project_member.archive
-      else
-        project_member.unarchive
-      end
+      project_member[:is_archived] == is_archived ? project_member.archive : project_member.unarchive
     end
     update_attributes(is_archived: true)
   end
@@ -137,18 +129,10 @@ class Project < ApplicationRecord
   def unarchive
     return if is_archived == false
     categories.each do |category|
-      if category[:is_archived] == is_archived
-        category.unarchive
-      else
-        category.archive
-      end
+      category[:is_archived] == is_archived ? category.unarchive : category.archive
     end
     project_members.each do |project_member|
-      if project_member[:is_archived] == is_archived
-        project_member.unarchive
-      else
-        project_member.archive
-      end
+      project_member[:is_archived] == is_archived ? project_member.unarchive : project_member.archive
     end
     update_attributes(is_archived: false)
   end
