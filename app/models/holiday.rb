@@ -9,8 +9,6 @@ class Holiday < ApplicationRecord
   validate :begin_date_cannot_be_greater_than_end_date
 
   def begin_date_cannot_be_greater_than_end_date
-    if begin_date > end_date
-      errors.add(:begin_date, "can't be greater than end date")
-    end
+    errors.add(:begin_date, "can't be greater than end date") if begin_date > end_date
   end
 end

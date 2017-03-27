@@ -7,8 +7,7 @@ class Task < ApplicationRecord
   def tracked_time(begin_date = nil, end_date = nil)
     sum = 0
     if !begin_date.nil? && !end_date.nil?
-      timer_list = timers.where('start_time >= ? AND start_time < ?',
-                                begin_date, end_date + 1)
+      timer_list = timers.where('start_time >= ? AND start_time < ?', begin_date, end_date + 1)
     else
       timer_list = timers
     end

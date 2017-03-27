@@ -137,20 +137,23 @@ module ReportHelper
           weeks[week_start_date][:overtime_temp] = week_overtime
           weeks[week_start_date][:holidays] = holidays
         end
+
+        # If week has no overtime, then skip
         next unless weeks[week_start_date][:overtime] > 0
         options = {}
-        if weeks[week_start_date][:holidays].include?(week_date)
+        if weeks[week_start_date][:holidays].include?(week_date) # Overtime in holidays
           options[:overtime_type] = @overtime_type[:holiday]
           weeks[week_start_date][:overtime_temp] -= timer.tracked_time
-        elsif week_date.wday == 0 || week_date.wday == 6
+        elsif week_date.wday == 0 || week_date.wday == 6 # Overtime in weekend
           options[:overtime_type] = @overtime_type[:weekend]
           weeks[week_start_date][:overtime_temp] -= timer.tracked_time
         else # If week_date is a normal day
           normal_timers.push(timer)
         end
         next unless options[:overtime_type].present?
-        timers.push(TestOvertimeTimerSerializer.new(timer, options).as_json)
+        timers.push(TimerSerializer.new(timer, options).as_json)
       end
+
       # Calculate overtime for normal days
       day_time_totals = {}
       normal_timers.each do |timer|
@@ -172,7 +175,7 @@ module ReportHelper
           end
         end
         next unless options[:overtime_type].present?
-        timers.push(TestOvertimeTimerSerializer.new(timer, options).as_json)
+        timers.push(TimerSerializer.new(timer, options).as_json)
       end
       # Return result order by start_time asc
       timers.sort_by! { |hsh| hsh[:start_time] }
