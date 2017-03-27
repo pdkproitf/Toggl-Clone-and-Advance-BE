@@ -9,6 +9,7 @@ module ReportHelper
       @end_date = end_date.to_date
       @client = options[:client] || nil
       @member = options[:member] || nil
+      @chart_limit = 366
       @working_time_per_day = reporter.company.working_time_per_day
       @working_time_per_week = reporter.company.working_time_per_week
       @begin_week = reporter.company.begin_week
@@ -81,11 +82,10 @@ module ReportHelper
           item[:category] = []
           item[:chart] = {}
           count = 0
-          (@begin_date..@end_date).each do |date|
+          (@begin_date..@end_date).take(@chart_limit).each do |date|
             item[:chart][date] = {}
             item[:chart][date][:billable] = 0
             item[:chart][date][:unbillable] = 0
-            break if item[:chart].size == 366
           end
           result.push(item)
         end
@@ -94,7 +94,7 @@ module ReportHelper
           category_member_id: assigned_category[:category_member_id],
           tracked_time: assigned_category.tracked_time(@begin_date, @end_date)
         )
-        (@begin_date..@end_date).each do |date|
+        (@begin_date..@end_date).take(@chart_limit).each do |date|
           if assigned_category.category.is_billable == true
             item[:chart][date][:billable] += assigned_category.tracked_time(date, date)
           else
