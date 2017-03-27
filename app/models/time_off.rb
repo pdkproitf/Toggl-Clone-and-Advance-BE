@@ -31,22 +31,30 @@ class TimeOff < ApplicationRecord
 
     def conflict_timeoff status = [TimeOff.statuses[:rejected]], id = 0
         return true if status == TimeOff.statuses[:rejected]
-        current_member = sender
-        conflict_start = current_member
+
+        conflict_start = sender
             .off_requests
             .where('start_date <= ? and end_date >= ? and status NOT IN (?) and id != ?',
-                self.start_date, self.start_date, status, id)
-        errors.add(:start_date, I18n.t("timeoff.errors.already_request")) if conflict_start.size > 0
+                start_date, start_date, status, id)
+        errors.add(:start_date, I18n.t("timeoff.errors.already_request")) unless conflict_start.blank?
 
-        conflict_end = current_member
+        conflict_end = sender
             .off_requests
             .where('(start_date <= ? and end_date >= ? and status NOT IN (?) and id != ?)',
-                self.end_date, self.end_date, status, id)
-        errors.add(:end_date, I18n.t("timeoff.errors.already_request")) if conflict_end.size > 0
+                end_date, end_date, status, id)
+        errors.add(:end_date, I18n.t("timeoff.errors.already_request")) unless conflict_end.blank?
+
+        if(conflict_start.blank? && conflict_end.blank?)
+            conflict_middle = sender
+                .off_requests
+                .where('(((start_date >= ? and start_date <= ?) or (end_date >= ? and end_date <= ?)) and status NOT IN (?) and id != ?)',
+                    start_date, end_date, start_date, end_date, status, id)
+            errors.add(:start_date, I18n.t("timeoff.errors.already_request")) unless conflict_middle.blank?
+        end
     end
 
     def convert_to_beginning_of_day
-        self.start_date = self.start_date.beginning_of_day
-        self.end_date = self.end_date.beginning_of_day
+        start_date = start_date.beginning_of_day
+        end_date = end_date.beginning_of_day
     end
 end
