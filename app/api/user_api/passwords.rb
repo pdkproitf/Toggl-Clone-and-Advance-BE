@@ -29,9 +29,7 @@ module UserApi
                 end
             end
             post '/password' do
-                unless params[:user][:email]
-                    return return_message(I18n.t("devise_token_auth.passwords.missing_email"), nil, 401)
-                end
+                error!(I18n.t("devise_token_auth.passwords.missing_email"), 401) unless params[:user][:email]
 
                 # give redirect value from params priority
                 @redirect_url = params[:user][:redirect_url]
@@ -39,17 +37,13 @@ module UserApi
                 # fall back to default value if provided
                 @redirect_url ||= DeviseTokenAuth.default_password_reset_url
 
-                unless @redirect_url
-                    return error!(I18n.t("devise_token_auth.passwords.missing_redirect_url"), 401)
-                end
+                error!(I18n.t("devise_token_auth.passwords.missing_redirect_url"), 401) unless @redirect_url
 
                 @email = params[:user][:email].downcase
 
                 @resource = User.find_by_email(@email)
 
-                unless @resource
-                    return return_message 'Not found!'
-                end
+                error!(I18n('not_found', title: 'User'), 404) unless @resource
 
                 @resource.save!
                 if @resource
@@ -65,7 +59,7 @@ module UserApi
                         @errors = @resource.errors
                     end
                 else
-                    return error!(I18n.t("devise_token_auth.passwords.user_not_found", email: @email), 404)
+                    error!(I18n.t("devise_token_auth.passwords.user_not_found", email: @email), 404)
                 end
             end
 
@@ -79,14 +73,13 @@ module UserApi
             end
             put '/password' do
                 get_user_confirmation_token
-                unless @resource
-                    return return_message 'Unauthorized'
-                end
+
+                error!(I18n.t('Unauthor'), 401) unless @resource
 
                 # make sure account doesn't use oauth2 provider
-                unless @resource.provider == 'email'
-                    error!(I18n.t("devise_token_auth.passwords.password_not_required", provider: @resource.provider.humanize), 400)
-                end
+
+                error!(I18n.t("devise_token_auth.passwords.password_not_required",
+                    provider: @resource.provider.humanize), 400) unless @resource.provider == 'email'
 
                 if @resource.send(resource_update_method, params["user"])
                     @resource.allow_password_change = false

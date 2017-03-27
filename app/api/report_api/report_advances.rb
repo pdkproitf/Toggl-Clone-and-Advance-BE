@@ -83,14 +83,15 @@ module ReportApi
             get do
                 authenticated!
                 error!(I18n.t("access_denied"), 403) unless @current_member.admin? || @current_member.pm?
-                projects = []
                 # prepare param
                 prepare_param
+
+                projects = []
                 # => constraint all category (uniq name) in all_project
                 @categories = []
                 # => constraint all member in company
                 @company_members = @current_member.company.members.map { |e| MemberUserSerializer.new(e) }
-                members = []
+
                 _projects = @param_project.blank? ? @current_member.company.projects :
                     @current_member.company.projects.where(id: @param_project)
                 _projects.map do |project|
