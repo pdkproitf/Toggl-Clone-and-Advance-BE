@@ -91,7 +91,7 @@ class Member < ApplicationRecord
 
   def pm_of_project?(project)
     project_member = project_members.find_by(project_id: project.id, is_archived: false)
-    return false if (project_member.nil? || project_member.is_pm == false) ? return false : return true
+    # return false if (project_member.nil? || project_member.is_pm == false) ? return false : return true
   end
 
   def tracked_time(begin_date = nil, end_date = nil)

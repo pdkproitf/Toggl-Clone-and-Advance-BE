@@ -11,7 +11,7 @@ module InviteApi
             end
 
             def invite_inform(invite, recepter)
-                link = recepter.blank? ? 'sign-up/' : 'invites-confirm/' 
+                link = recepter.blank? ? 'sign-up/' : 'invites-confirm/'
 
                 link += invite.invite_token + '/' + @current_member.company.name +
                     '/' + @current_member.company.domain
@@ -58,7 +58,7 @@ module InviteApi
                 error!(I18n.t("expiry", title: "Invitation")) if @invite.expiry?
 
                 user = User.find_by_email(@invite.email)
-                return return_message I18n.t("user.must_exit") unless user
+                error!(I18n.t("user.must_exit")) unless user
 
                 Invite.transaction do
                     @invite.update_attributes!(recipient_id: user.id, is_accepted: true, invite_token: nil)
