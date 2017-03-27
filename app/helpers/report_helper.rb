@@ -109,7 +109,7 @@ module ReportHelper
       tasks = []
       task_options = { begin_date: @begin_date, end_date: @end_date }
       @member.perfect_tasks.each do |task|
-        customized_task = TaskTestSerializer.new(task, task_options)
+        customized_task = ReportTaskSerializer.new(task, task_options)
         tasks.push(customized_task) if customized_task.tracked_time > 0
       end
       tasks
