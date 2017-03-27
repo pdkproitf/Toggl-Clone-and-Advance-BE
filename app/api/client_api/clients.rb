@@ -5,18 +5,16 @@ module ClientApi
     #
     helpers do
       def is_admin_or_pm
-        authenticated!
-        # Current user has to be an admin or a PM
-        if @current_member.admin? || @current_member.pm?
-          true
-        else
-          false
-        end
-        end
+        @current_member.admin? || @current_member.pm? ? true : false
+      end
     end
 
     resource :clients do
       # => /api/v1/projects/
+      before do
+        authenticated!
+      end
+
       desc 'Get all clients'
       get do
         return error!(I18n.t('access_denied'), 403) unless is_admin_or_pm
@@ -29,7 +27,7 @@ module ClientApi
       end
       get ':id' do
         return error!(I18n.t('access_denied'), 403) unless is_admin_or_pm
-        @current_member.company.clients.where(id: params[:id]).first!
+        @current_member.company.clients.find(params[:id])
       end
 
       desc 'create new client'
@@ -40,7 +38,7 @@ module ClientApi
       end
       post do
         return error!(I18n.t('access_denied'), 403) unless is_admin_or_pm
-        client = @current_member.company.clients.create!(name: params[:client][:name])
+        @current_member.company.clients.create!(name: params[:client][:name])
       end
 
       desc 'Delete a client'
@@ -49,8 +47,7 @@ module ClientApi
       end
       delete ':id' do
         return error!(I18n.t('access_denied'), 403) unless is_admin_or_pm
-        client = @current_member.company.clients.where(id: params[:id]).first!
-        client.destroy
+        @current_member.company.clients.find(params[:id]).destroy!
       end
     end
   end

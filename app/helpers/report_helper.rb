@@ -116,16 +116,21 @@ module ReportHelper
     end
 
     def member_overtime(member)
-      weeks = {}
-      timers = []
-      normal_timers = []
+      weeks = {} # Include information of weeks - working_time, overtime and holidays
+      timers = [] # Overtime timers
+      normal_timers = [] # Include the normal timers (not weekend or holiday)
       overtime_timers(member).each do |timer|
         week_date = timer.start_time.to_date
+        # A week is identified by the first day of week
         week_start_date = week_start_date(week_date, @begin_week)
-        if weeks[week_start_date].blank?
+
+        if weeks[week_start_date].blank? # Create info for new week
+          # Get all holidays in week
           holidays = holidays_in_week(@reporter.company, week_date, @begin_week)
           holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
+          # Calculate working time that has to do in week
           week_working_hour = @working_time_per_week - holidays_not_weekend.length * @working_time_per_day
+          # Start to create week's info
           weeks[week_start_date] = { working_time: week_working_hour * 3600 }
           week_overtime = week_working_time(week_start_date, member) - weeks[week_start_date][:working_time]
           weeks[week_start_date][:overtime] = week_overtime
@@ -169,7 +174,7 @@ module ReportHelper
         next unless options[:overtime_type].present?
         timers.push(TestOvertimeTimerSerializer.new(timer, options).as_json)
       end
-      # Return result
+      # Return result order by start_time asc
       timers.sort_by! { |hsh| hsh[:start_time] }
     end
 
