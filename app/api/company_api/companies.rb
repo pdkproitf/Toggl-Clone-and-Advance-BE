@@ -8,9 +8,12 @@ module CompanyApi
 
     resource :companies do
       # => /api/v1/companies/
+      before do
+        authenticated!
+      end
+
       desc 'Get company of admin'
       get 'own' do
-        authenticated!
         return error!(I18n.t('access_denied'), 403) unless @current_member.admin?
         @current_member.company
       end
@@ -20,26 +23,16 @@ module CompanyApi
         requires :company, type: Hash do
           requires :name, type: String, desc: 'Company name'
           optional :overtime_max, type: Integer, desc: 'Overtime maximum'
-          optional :begin_week, type: Integer, values: 0..6,
-                                desc: 'Begin day of week'
+          optional :begin_week, type: Integer, values: 0..6, desc: 'Begin day of week'
         end
       end
       put 'own' do
-        authenticated!
         return error!(I18n.t('access_denied'), 403) unless @current_member.admin?
         company = @current_member.company
         company[:name] = params[:company][:name]
-        unless params[:company][:overtime_max].nil?
-          company[:overtime_max] = params[:company][:overtime_max]
-        end
-        unless params[:company][:begin_week].nil?
-          company[:begin_week] = params[:company][:begin_week]
-        end
+        company[:overtime_max] = params[:company][:overtime_max] if params[:company][:overtime_max].present?
+        company[:begin_week] = params[:company][:begin_week] if params[:company][:begin_week].present?
         company.save!
-      end
-
-      desc 'Delete a company'
-      delete ':id' do
       end
     end
   end
