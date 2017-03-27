@@ -53,7 +53,7 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def chart
     chart = []
-    (@begin_date..@end_date).each do |date|
+    (@begin_date..@end_date).take(@chart_limit).each do |date|
       item = {}
       item[date] = {}
       billable_total = 0
@@ -68,7 +68,6 @@ class ProjectSerializer < ActiveModel::Serializer
       item[date][:billable] = billable_total
       item[date][:unbillable] = unbillable_total
       chart.push(item)
-      break if chart.length == @chart_limit
     end
     chart
   end
