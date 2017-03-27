@@ -21,6 +21,7 @@ module API
     mount CompanyApi::Companies
     mount HolidayApi::Holidays
     mount ReportApi::Reports
+    mount ReportApi::ReportAdvances
 
     add_swagger_documentation(
       api_version: 'v1',
