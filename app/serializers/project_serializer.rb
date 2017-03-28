@@ -62,7 +62,6 @@ class ProjectSerializer < ActiveModel::Serializer
     chart = []
     (@begin_date..@end_date).take(@chart_limit).each do |date|
       item = {}
-      item[date] = {}
       item[date] = category_tracked_time(date, date)
       chart.push(item)
     end
@@ -70,15 +69,33 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def month_chart
+    chart = []
+    month = {}
     # Chart of month that begin_date belongs to (Calculate from begin_date)
+    month_end_date = Date.new(@begin_date.year, @begin_date.month, -1)
+    month_key = @begin_date.strftime('%Y-%m')
+    month[month_key] = category_tracked_time(@begin_date, month_end_date)
+    chart.push(month)
 
+    # month_key = @begin_date.strftime('%Y-%m')
+    # month_end_date = Date.new(@begin_date.year, @begin_date.month, -1)
+    # p month_end_date + 1
+
+    # Calculate month after month of end_date
+    month_after = (Date.new(@end_date.year, @end_date.month, -1) + 1).strftime('%Y-%m')
+
+    until month_key == month_after
+      month_begin_date = month_end_date + 1
+      month_key = month_begin_date.strftime('%Y-%m')
+      month_end_date = Date.new(month_begin_date.year, month_begin_date.month)
+    end
     # Number of months between the month of begin_date and the month of end_date
     number_of_months = @end_date.month - @begin_date.month - 1
-    (1..number_of_months).each do |i|
-      p i
-    end
     # Chart of months between the month of begin_date and the month of end_date
-    # Chart of month that end_date belongs to (Calculate to end_date)
+
+    # Chart of month that end_date belongs to (Calculate begin of month to end_date)
+
+    chart
   end
 
   def year_chart
