@@ -14,6 +14,7 @@ module ReportApi
       # => /api/v1/reports/
       before do
         authenticated!
+        validate_date(params[:begin_date], params[:end_date])
       end
 
       desc 'Report by time'
@@ -22,7 +23,6 @@ module ReportApi
         requires :end_date, type: Date, desc: 'End date'
       end
       get 'time' do
-        validate_date(params[:begin_date], params[:end_date])
         report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date])
         { data: report.report_by_time }
       end
@@ -33,7 +33,6 @@ module ReportApi
         requires :end_date, type: Date, desc: 'End date'
       end
       get 'project' do
-        validate_date(params[:begin_date], params[:end_date])
         projects = @current_member.company.projects.where(is_archived: false)
         # If member is not pm of any project then access denied
         if @current_member.member? &&
@@ -51,7 +50,6 @@ module ReportApi
         requires :member_id, type: Integer, desc: 'Member ID'
       end
       get 'member' do
-        validate_date(params[:begin_date], params[:end_date])
         member = @current_member.company.members.find(params[:member_id])
         # Only Admin can run report of himself. Staff cannot run report of super PM
         if (member.admin? && !@current_member.admin?) || (member.pm? && @current_member.member?)
