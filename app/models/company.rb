@@ -11,4 +11,8 @@ class Company < ApplicationRecord
   validates :domain,  presence: true, uniqueness: true,
                       length: { minimum: Settings.domain_min_length, maximum: Settings.domain_max_length },
                       format: { with: VALID_DOMAIN_REGEX }
+
+  def unarchived_projects
+    projects.where(is_archived: false)
+  end
 end

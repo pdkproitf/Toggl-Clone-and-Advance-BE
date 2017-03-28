@@ -24,7 +24,7 @@ module ReportHelper
       projects = []
       project_options = { chart_serialized: true, categories_serialized: true,
                           members_serialized: false, begin_date: @begin_date, end_date: @end_date }
-      @reporter.get_projects.where(is_archived: false).each do |project|
+      @reporter.get_projects.each do |project|
         projects.push(ProjectSerializer.new(project, project_options))
       end
       projects
@@ -64,7 +64,7 @@ module ReportHelper
     def report_projects
       project_options = { begin_date: @begin_date, end_date: @end_date, members_serialized: false }
       projects = []
-      @reporter.get_projects.where(is_archived: false) .order(:name).each do |project|
+      @reporter.get_projects.order(:name).each do |project|
         projects.push(ProjectSerializer.new(project, project_options))
       end
       projects
@@ -191,7 +191,7 @@ module ReportHelper
       if @reporter.member? && @reporter.id == member.id
         reporter_projects = @reporter.joined_projects.where(is_archived: false)
       else
-        reporter_projects = @reporter.get_projects.where(is_archived: false)
+        reporter_projects = @reporter.get_projects
       end
       member.assigned_categories.where(projects: { id: reporter_projects.ids })
     end

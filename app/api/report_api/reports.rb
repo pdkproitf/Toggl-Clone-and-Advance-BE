@@ -6,7 +6,18 @@ module ReportApi
     helpers do
       def validate_date(begin_date, end_date)
         error!(I18n.t('begin_date_not_greater_than_end_day'), 400) if begin_date > end_date
-        error!(I18n.t('day_limit'), 400) if (end_date - begin_date).to_i > 366
+        error!(I18n.t('year_limit'), 400) if (end_date.year - begin_date.year).to_i > 100
+      end
+
+      def view_detected(begin_date, end_date)
+        # Date.leap?(begin_date.year)
+        if (end_date - begin_date).to_i <= 31
+          'day'
+        elsif (end_date - begin_date).to_i <= 366
+          'month'
+        else
+          'year'
+        end
       end
     end
 
@@ -14,7 +25,6 @@ module ReportApi
       # => /api/v1/reports/
       before do
         authenticated!
-        validate_date(params[:begin_date], params[:end_date])
       end
 
       desc 'Report by time'
@@ -23,6 +33,8 @@ module ReportApi
         requires :end_date, type: Date, desc: 'End date'
       end
       get 'time' do
+        validate_date(params[:begin_date], params[:end_date])
+        return view_detected(params[:begin_date], params[:end_date])
         report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date])
         { data: report.report_by_time }
       end
@@ -33,7 +45,8 @@ module ReportApi
         requires :end_date, type: Date, desc: 'End date'
       end
       get 'project' do
-        projects = @current_member.company.projects.where(is_archived: false)
+        validate_date(params[:begin_date], params[:end_date])
+        projects = @current_member.company.unarchived_projects
         # If member is not pm of any project then access denied
         if @current_member.member? &&
            @current_member.project_members.where(project_id: projects.ids, is_pm: true, is_archived: false).empty?
@@ -50,6 +63,7 @@ module ReportApi
         requires :member_id, type: Integer, desc: 'Member ID'
       end
       get 'member' do
+        validate_date(params[:begin_date], params[:end_date])
         member = @current_member.company.members.find(params[:member_id])
         # Only Admin can run report of himself. Staff cannot run report of super PM
         if (member.admin? && !@current_member.admin?) || (member.pm? && @current_member.member?)

@@ -50,6 +50,10 @@ class Member < ApplicationRecord
     role.name == 'Member'
   end
 
+  def joined_unarchived_projects
+    joined_projects.where(is_archived: false)
+  end
+
   # Get all categories that member assigned
   def assigned_categories
     category_members
