@@ -2,8 +2,8 @@ class Project < ApplicationRecord
   belongs_to :member, -> {where(is_archived: false)}
   belongs_to :client
   has_many :categories, dependent: :destroy
-  has_many :project_members, dependent: :destroy
-  has_many :members, through: :project_members
+  has_many :project_members, -> {where(is_archived: false)}, dependent: :destroy
+  has_many :members, -> {where(is_archived: false)}, through: :project_members
   has_many :assigned_members, through: :categories, source: :category_members
 
   validates :name, presence: true
