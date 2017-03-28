@@ -13,17 +13,11 @@ class ProjectSerializer < ActiveModel::Serializer
     @end_date = options[:end_date] || nil
     @chart_limit = 366
     @chart_serialized = false
-    if options[:chart_serialized].present?
-      @chart_serialized = options[:chart_serialized]
-    end
+    @chart_serialized = options[:chart_serialized] if options[:chart_serialized].present?
     @members_serialized = true
-    if options[:members_serialized].present?
-      @members_serialized = options[:members_serialized]
-    end
+    @members_serialized = options[:members_serialized] if options[:members_serialized].present?
     @categories_serialized = false
-    if options[:categories_serialized].present?
-      @categories_serialized = options[:categories_serialized]
-    end
+    @categories_serialized = options[:categories_serialized] if options[:categories_serialized].present?
   end
 
   def client

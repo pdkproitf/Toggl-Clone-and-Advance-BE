@@ -21,13 +21,9 @@ module ReportHelper
     end
 
     def report_by_project
-      projects = []
-      project_options = { chart_serialized: true, categories_serialized: true,
-                          members_serialized: false, begin_date: @begin_date, end_date: @end_date }
-      @reporter.get_projects.each do |project|
-        projects.push(ProjectSerializer.new(project, project_options))
-      end
-      projects
+      project_options = { each_serializer: ProjectSerializer, begin_date: @begin_date, end_date: @end_date,
+                          members_serialized: false, chart_serialized: true, categories_serialized: true }
+      ActiveModel::Serializer::CollectionSerializer.new(@reporter.get_projects, project_options)
     end
 
     def report_by_client; end
@@ -43,8 +39,9 @@ module ReportHelper
       result
     end
 
-    # private
+    private
 
+    # ===================== Report Only by Time helper methods =================
     # Report people
     def report_people
       person_options = { begin_date: @begin_date, end_date: @end_date, tracked_time_serialized: true }
@@ -70,6 +67,8 @@ module ReportHelper
       projects
     end
 
+    # ================== Report Only by Time helper methods ends ===============
+    # ======================= Report by Member helper methods ==================
     def member_projects
       result = []
       member_joined_categories(@member).each do |assigned_category|
@@ -180,7 +179,7 @@ module ReportHelper
       timers.sort_by! { |hsh| hsh[:start_time] }
     end
 
-    # ============================ GET TIMER ===================================
+    # ===================== GET TIMER ===================
     def overtime_timers(member)
       member.timers
             .where(category_members: { id: member_joined_categories(member).ids })
@@ -189,13 +188,14 @@ module ReportHelper
 
     def member_joined_categories(member)
       if @reporter.member? && @reporter.id == member.id
-        reporter_projects = @reporter.joined_projects.where(is_archived: false)
+        reporter_projects = @reporter.joined_unarchived_projects
       else
         reporter_projects = @reporter.get_projects
       end
       member.assigned_categories.where(projects: { id: reporter_projects.ids })
     end
-    # =========================== GET TIMER END ================================
+    # ==================== GET TIMER END ================
+    # =================== Report by Member helper methods ends =================
 
     def week_working_time(week_start_date, member)
       member.tracked_time(week_start_date, week_start_date + 6)
