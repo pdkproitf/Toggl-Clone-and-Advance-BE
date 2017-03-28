@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
     # after_create :send_confirmation_email
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-    has_many :members, dependent: :destroy
+    has_many :members, -> {where(is_archived: false)}, dependent: :destroy
     has_many :companies, through: :members
 
     has_many :invitations, class_name: 'Invite', foreign_key: 'recipient_id'

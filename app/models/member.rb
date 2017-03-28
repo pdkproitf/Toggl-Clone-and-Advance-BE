@@ -43,7 +43,7 @@ class Member < ApplicationRecord
     end
 
     def admin?
-        role.name == 'Admin'
+        actived? && (role.name == 'Admin')
     end
 
     # Get all unarchived projects that member manage
@@ -51,16 +51,20 @@ class Member < ApplicationRecord
         admin? || pm? ? company.projects.where(is_archived: false) : pm_projects.where(is_archived: false)
     end
     def pm?
-        role.name == 'PM'
+        actived? && (role.name == 'PM')
     end
 
     def member?
-        role.name == 'Member'
+        actived? && (role.name == 'Member')
     end
 
     # check is member manager role
     def manager?
-        admin? || pm?
+        actived? && (admin? || pm?)
+    end
+
+    def actived?
+        !is_archived
     end
 
     def joined_project?(project)
