@@ -22,9 +22,7 @@ module ReportApi
       get 'time' do
         authenticated!
         validate_date(params[:begin_date], params[:end_date])
-        report = ReportHelper::Report.new(@current_member,
-                                          params[:begin_date],
-                                          params[:end_date])
+        report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date])
         { data: report.report_by_time }
       end
 
@@ -39,14 +37,10 @@ module ReportApi
         projects = @current_member.company.projects.where(is_archived: false)
         # If member is not pm of any project then access denied
         if @current_member.member? &&
-           @current_member.project_members
-                          .where(project_id: projects.ids,
-                                 is_pm: true, is_archived: false)
-                          .empty?
+           @current_member.project_members.where(project_id: projects.ids, is_pm: true, is_archived: false).empty?
           return error!(I18n.t('access_denied'), 403)
         end
-        report = ReportHelper::Report.new(@current_member,
-                                          params[:begin_date], params[:end_date])
+        report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date])
         { data: report.report_by_project }
       end
 
@@ -60,28 +54,19 @@ module ReportApi
         authenticated!
         validate_date(params[:begin_date], params[:end_date])
         member = @current_member.company.members.find(params[:member_id])
-        # Only Admin can run report of himself
-        if (member.admin? && !@current_member.admin?) ||
-           # Staff cannot run report of super PM
-           (member.pm? && @current_member.member?)
+        # Only Admin can run report of himself. Staff cannot run report of super PM
+        if (member.admin? && !@current_member.admin?) || (member.pm? && @current_member.member?)
           return error!(I18n.t('access_denied'), 403)
         end
 
         if member.member? && member.id != @current_member.id
           # IDs of projects that current_member is pm
-          project_ids = @current_member.pm_projects
-                                       .where(is_archived: false)
-                                       .ids
-          is_member_joined_projects = member.project_members
-                                            .exists?(project_id: project_ids,
-                                                     is_archived: false)
-          if is_member_joined_projects == false
-            return error!(I18n.t('access_denied'), 403)
-          end
+          project_ids = @current_member.pm_projects.where(is_archived: false).ids
+          is_member_joined_projects = member.project_members.exists?(project_id: project_ids, is_archived: false)
+          return error!(I18n.t('access_denied'), 403) if is_member_joined_projects == false
         end
 
-        report = ReportHelper::Report.new(@current_member, params[:begin_date],
-                                          params[:end_date], member: member)
+        report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date], member: member)
         { data: report.report_by_member }
       end
     end

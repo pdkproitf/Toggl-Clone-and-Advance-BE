@@ -55,7 +55,6 @@ module ReportHelper
         person = {}
         person.merge!(MembersSerializer.new(member, person_options))
         member_overtime(member).present? ? person[:overtime] = true : person[:overtime] = false
-        # person[:overtime] = true
         people.push(person)
       end
       people

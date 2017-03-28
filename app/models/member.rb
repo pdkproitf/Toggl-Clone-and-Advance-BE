@@ -28,8 +28,7 @@ class Member < ApplicationRecord
   # After initialization, set default values
   after_initialize :set_default_values
 
-  def set_default_values
-    # Only set if attribute IS NOT set
+  def set_default_values # Only set if attribute IS NOT set
     self.role ||= 3 # 1: Admin, 2: PM, 3: Member
     self.furlough_total ||= 10
   end
@@ -49,15 +48,6 @@ class Member < ApplicationRecord
 
   def member?
     role.name == 'Member'
-  end
-
-  def joined_project?(project)
-    project_members.exists?(project_id: project.id, is_archived: false) ? true : false
-  end
-
-  def pm_of_project?(project)
-    project_member = project_members.find_by(project_id: project.id, is_archived: false)
-    project_member.nil? || project_member.is_pm == false ? false : true
   end
 
   # Get all categories that member assigned
