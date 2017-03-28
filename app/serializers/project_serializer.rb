@@ -13,15 +13,15 @@ class ProjectSerializer < ActiveModel::Serializer
     @end_date = options[:end_date] || nil
     @chart_limit = 366
     @chart_serialized = false
-    unless options[:chart_serialized].nil?
+    if options[:chart_serialized].present?
       @chart_serialized = options[:chart_serialized]
     end
     @members_serialized = true
-    unless options[:members_serialized].nil?
+    if options[:members_serialized].present?
       @members_serialized = options[:members_serialized]
     end
     @categories_serialized = false
-    unless options[:categories_serialized].nil?
+    if options[:categories_serialized].present?
       @categories_serialized = options[:categories_serialized]
     end
   end
@@ -34,9 +34,26 @@ class ProjectSerializer < ActiveModel::Serializer
     object.tracked_time(@begin_date, @end_date)
   end
 
+  def members
+    member_list = []
+    object.unarchived_members.each do |project_member|
+      item = {}
+      item.merge!(MembersSerializer.new(project_member.member))
+      item[:is_pm] = project_member.is_pm
+      member_list.push(item)
+    end
+    member_list
+  end
+
+  def categories
+    categories = object.unarchived_categories
+    options = { each_serializer: CategorySerializer, begin_date: @begin_date, end_date: @end_date }
+    ActiveModel::Serializer::CollectionSerializer.new(categories, options)
+  end
+
   def chart
     chart = []
-    (@begin_date..@end_date).each do |date|
+    (@begin_date..@end_date).take(@chart_limit).each do |date|
       item = {}
       item[date] = {}
       billable_total = 0
@@ -51,34 +68,7 @@ class ProjectSerializer < ActiveModel::Serializer
       item[date][:billable] = billable_total
       item[date][:unbillable] = unbillable_total
       chart.push(item)
-      break if chart.length == @chart_limit
     end
     chart
   end
-
-  def members
-    list = []
-    object.project_members.where(is_archived: false)
-          .each do |project_member|
-      item = {}
-      item.merge!(MembersSerializer.new(project_member.member))
-      item[:is_pm] = project_member.is_pm
-      list.push(item)
-    end
-    list
-  end
-
-  def categories
-    options = { begin_date: @begin_date, end_date: @end_date }
-    categories = []
-    object.categories.where(is_archived: false).each do |category|
-      categories.push(CategorySerializer.new(category, options))
-    end
-    categories
-  end
-
-  # def members
-  #   object.members.where(project_members: { is_archived: false })
-  #   # ActiveModel::Serializer::CollectionSerializer.new(object.members, each_serializer: MembersSerializer)
-  # end
 end

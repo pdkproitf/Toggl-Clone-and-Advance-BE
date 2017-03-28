@@ -11,26 +11,18 @@ module TaskApi
       end
       get 'recent' do
         authenticated!
-        timers = @current_member
-                 .timers
-                 .where(category_members: { is_archived_by_category: false })
-                 .where(category_members: { is_archived_by_project_member: false })
-                 .where.not(category_members: { category_id: nil })
-                 .where.not(tasks: { name: '' })
-                 .limit(params[:number])
-                 .select('DISTINCT tasks.id as task_id', 'tasks.name as task_name')
-                 .select('tasks.created_at', 'tasks.updated_at', 'tasks.category_member_id')
-        result = []
-        timers.each do |timer|
-          task = Task.new(id: timer.task_id, name: timer.task_name)
-          task[:category_member_id] = timer.category_member_id
-          task[:created_at] = timer.created_at
-          task[:updated_at] = timer.updated_at
-          result.push(RecentTaskSerializer.new(task).as_json)
-        end
+        unique_tasks = Task.joins(:timers, category_member: { project_member: :member })
+                           .where(members: { id: @current_member.id })
+                           .where.not(tasks: { name: '' })
+                           .where.not(category_members: { category_id: nil, is_archived: true })
+                           .select('DISTINCT ON (tasks.id) tasks.*, category_members.id as category_member_id')
+                           .select('timers.id as timer_id, timers.stop_time')
 
-        result.sort_by! { |hsh| hsh[:last_stop_time] }.reverse!
-        { data: result }
+        recent_tasks = Task.from("(#{unique_tasks.to_sql}) as unique_tasks")
+                           .select('unique_tasks.*')
+                           .order('unique_tasks.stop_time DESC').limit(params[:number])
+
+        { data: ActiveModelSerializers::SerializableResource.new(recent_tasks, each_serializer: RecentTaskSerializer) }
       end
     end
   end

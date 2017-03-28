@@ -19,10 +19,7 @@ class CategorySerializer < ActiveModel::Serializer
 
   def members
     list = []
-    object.category_members
-          .where(is_archived_by_category: false)
-          .where(is_archived_by_project_member: false)
-          .each do |category_member|
+    object.category_members.where(is_archived: false) .each do |category_member|
       item = {}
       item.merge!(MembersSerializer.new(category_member.project_member.member))
       item[:is_pm] = category_member.project_member.is_pm

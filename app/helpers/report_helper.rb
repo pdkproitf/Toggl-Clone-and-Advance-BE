@@ -9,6 +9,7 @@ module ReportHelper
       @end_date = end_date.to_date
       @client = options[:client] || nil
       @member = options[:member] || nil
+      @chart_limit = 366
       @working_time_per_day = reporter.company.working_time_per_day
       @working_time_per_week = reporter.company.working_time_per_week
       @begin_week = reporter.company.begin_week
@@ -81,11 +82,10 @@ module ReportHelper
           item[:category] = []
           item[:chart] = {}
           count = 0
-          (@begin_date..@end_date).each do |date|
+          (@begin_date..@end_date).take(@chart_limit).each do |date|
             item[:chart][date] = {}
             item[:chart][date][:billable] = 0
             item[:chart][date][:unbillable] = 0
-            break if item[:chart].size == 366
           end
           result.push(item)
         end
@@ -94,7 +94,7 @@ module ReportHelper
           category_member_id: assigned_category[:category_member_id],
           tracked_time: assigned_category.tracked_time(@begin_date, @end_date)
         )
-        (@begin_date..@end_date).each do |date|
+        (@begin_date..@end_date).take(@chart_limit).each do |date|
           if assigned_category.category.is_billable == true
             item[:chart][date][:billable] += assigned_category.tracked_time(date, date)
           else
@@ -109,43 +109,51 @@ module ReportHelper
       tasks = []
       task_options = { begin_date: @begin_date, end_date: @end_date }
       @member.perfect_tasks.each do |task|
-        customized_task = TaskTestSerializer.new(task, task_options)
+        customized_task = ReportTaskSerializer.new(task, task_options)
         tasks.push(customized_task) if customized_task.tracked_time > 0
       end
       tasks
     end
 
     def member_overtime(member)
-      weeks = {}
-      timers = []
-      normal_timers = []
+      weeks = {} # Include information of weeks - working_time, overtime and holidays
+      timers = [] # Overtime timers
+      normal_timers = [] # Include the normal timers (not weekend or holiday)
       overtime_timers(member).each do |timer|
         week_date = timer.start_time.to_date
+        # A week is identified by the first day of week
         week_start_date = week_start_date(week_date, @begin_week)
-        if weeks[week_start_date].blank?
+
+        if weeks[week_start_date].blank? # Create info for new week
+          # Get all holidays in week
           holidays = holidays_in_week(@reporter.company, week_date, @begin_week)
           holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
+          # Calculate working time that has to do in week
           week_working_hour = @working_time_per_week - holidays_not_weekend.length * @working_time_per_day
+          # Start to create week's info
           weeks[week_start_date] = { working_time: week_working_hour * 3600 }
           week_overtime = week_working_time(week_start_date, member) - weeks[week_start_date][:working_time]
           weeks[week_start_date][:overtime] = week_overtime
           weeks[week_start_date][:overtime_temp] = week_overtime
           weeks[week_start_date][:holidays] = holidays
         end
+
+        # If week has no overtime, then skip
         next unless weeks[week_start_date][:overtime] > 0
         options = {}
-        if weeks[week_start_date][:holidays].include?(week_date)
+        if weeks[week_start_date][:holidays].include?(week_date) # Overtime in holidays
           options[:overtime_type] = @overtime_type[:holiday]
           weeks[week_start_date][:overtime_temp] -= timer.tracked_time
-        elsif week_date.wday == 0 || week_date.wday == 6
+        elsif week_date.wday == 0 || week_date.wday == 6 # Overtime in weekend
           options[:overtime_type] = @overtime_type[:weekend]
           weeks[week_start_date][:overtime_temp] -= timer.tracked_time
         else # If week_date is a normal day
           normal_timers.push(timer)
         end
         next unless options[:overtime_type].present?
-        timers.push(TestOvertimeTimerSerializer.new(timer, options).as_json)
+        timers.push(TimerSerializer.new(timer, options).as_json)
       end
+
       # Calculate overtime for normal days
       day_time_totals = {}
       normal_timers.each do |timer|
@@ -167,9 +175,9 @@ module ReportHelper
           end
         end
         next unless options[:overtime_type].present?
-        timers.push(TestOvertimeTimerSerializer.new(timer, options).as_json)
+        timers.push(TimerSerializer.new(timer, options).as_json)
       end
-      # Return result
+      # Return result order by start_time asc
       timers.sort_by! { |hsh| hsh[:start_time] }
     end
 

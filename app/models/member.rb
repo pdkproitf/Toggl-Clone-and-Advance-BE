@@ -6,7 +6,7 @@ class Member < ApplicationRecord
   has_many :joined_projects, through: :project_members, source: :project
 
   # Find projects member assigned PM
-  has_many :pm_project_members, -> { where is_pm: true }, class_name: 'ProjectMember'
+  has_many :pm_project_members, -> { where is_pm: true, is_archived: false }, class_name: 'ProjectMember'
   has_many :pm_projects, through: :pm_project_members, source: :project
 
   has_many :project_members, dependent: :destroy
@@ -34,12 +34,9 @@ class Member < ApplicationRecord
     self.furlough_total ||= 10
   end
 
-  # Get all projects that member manage regardless to archive or not
+  # Get all unarchived projects that member manage
   def get_projects
-    if admin? || pm?
-      return company.projects # Get all projects of company
-    end
-    pm_projects # Get projects that member's role is project manager
+    admin? || pm? ? company.projects.where(is_archived: false) : pm_projects.where(is_archived: false)
   end
 
   def admin?
@@ -55,28 +52,22 @@ class Member < ApplicationRecord
   end
 
   def joined_project?(project)
-    if project_members.exists?(project_id: project.id, is_archived: false)
-      return true
-    end
-    false
+    project_members.exists?(project_id: project.id, is_archived: false) ? true : false
   end
 
   def pm_of_project?(project)
-    project_member = project_members
-                     .find_by(project_id: project.id, is_archived: false)
-    return false if project_member.nil? || project_member.is_pm == false
-    true
+    project_member = project_members.find_by(project_id: project.id, is_archived: false)
+    project_member.nil? || project_member.is_pm == false ? false : true
   end
 
+  # Get all categories that member assigned
   def assigned_categories
     category_members
       .where(project_members: { is_archived: false })
-      .where.not(category_id: nil)
-      .where(is_archived: false)
+      .where.not(category_id: nil, is_archived: true)
       .joins(category: { project: :client })
       .select('category_members.id')
-      .select('projects.id as project_id', 'projects.name as project_name')
-      .select('projects.background')
+      .select('projects.id as project_id', 'projects.name as project_name', 'projects.background')
       .select('clients.id as client_id', 'clients.name as client_name')
       .select('categories.id as category_id', 'categories.name as category_name')
       .select('category_members.id as category_member_id')
@@ -89,9 +80,10 @@ class Member < ApplicationRecord
          .where(category_members: { is_archived: false })
   end
 
-  def pm_of_project?(project)
-    project_member = project_members.find_by(project_id: project.id, is_archived: false)
-    # return false if (project_member.nil? || project_member.is_pm == false) ? return false : return true
+  def get_timers(from_day, to_day)
+    timers.where(category_members: { is_archived: false })
+          .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
+          .order('start_time desc')
   end
 
   def tracked_time(begin_date = nil, end_date = nil)
@@ -100,5 +92,11 @@ class Member < ApplicationRecord
       sum += category_member.tracked_time(begin_date, end_date)
     end
     sum
+  end
+
+  def new_fake_task(name = '')
+    project_member = project_members.create!
+    category_member = project_member.category_members.create!
+    task = category_member.tasks.create!(name: name)
   end
 end
