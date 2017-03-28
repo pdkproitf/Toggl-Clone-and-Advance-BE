@@ -11,13 +11,11 @@ module InviteApi
             end
 
             def invite_inform(invite, recepter)
-                link = if recepter
-                    'sign-up/' + invite.invite_token + '/' + @current_member.company.name +
-                        '/' + @current_member.company.domain
-                else
-                    'invites-confirm/' + invite.invite_token
-                end
-                invite.send_email "#{Setting.front_end}/#/#{link}"
+                link = recepter.blank? ? 'sign-up/' : 'invites-confirm/'
+
+                link += invite.invite_token + '/' + @current_member.company.name +
+                    '/' + @current_member.company.domain
+                invite.send_email "#{Settings.front_end}/#/#{link}"
             end
 
             def create_default_job
@@ -60,7 +58,7 @@ module InviteApi
                 error!(I18n.t("expiry", title: "Invitation")) if @invite.expiry?
 
                 user = User.find_by_email(@invite.email)
-                return return_message I18n.t("user.must_exit") unless user
+                error!(I18n.t("user.must_exit")) unless user
 
                 Invite.transaction do
                     @invite.update_attributes!(recipient_id: user.id, is_accepted: true, invite_token: nil)

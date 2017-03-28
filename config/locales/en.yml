@@ -44,6 +44,7 @@ en:
     archived: "%{content} hash been archived!"
     denied: "Access denied to %{acc_to}"
     nothing: "Nothing to do %{content}"
+    Unauthor: "Unauthorized"
     invite:
         errors:
             not_found: "Not Found invitetion for email %{email}"
