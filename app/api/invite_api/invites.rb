@@ -23,35 +23,6 @@ module InviteApi
         end
 
         resource :invites do
-            desc 'Invite member to company'
-            params do
-                requires :email, type: String, desc: 'Email New Member'
-            end
-            post '/' do
-                authenticated!
-                error!(I18n.t("access_denied")) unless @current_member.admin? || @current_member.pm?
-                invite = Invite.find_by_email(params['email'])
-
-                recepter = User.find_by_email(params['email'])
-                error!("user.errors.already_member", 400) if recepter &&
-                    recepter.members.find_by_company_id(@current_member.company_id)
-
-                # crete invite and send email to peron invited
-                messages = if invite.blank?
-                    invite = create_invite(recepter)
-                    I18n.t("invite.success", email: params['email'])
-                else
-                    invite.generate_token
-                    invite.generate_expry
-                    invite.save!
-                    I18n.t("invite.errors.sended", email: params['email'])
-                end
-
-                invite_inform(invite, recepter)
-
-                return_message(messages)
-            end
-
             desc 'Confirmation invites with member exist account'
             params do
                 requires :email, type: String, desc: 'Email New Member'
@@ -78,9 +49,46 @@ module InviteApi
                 end
             end
 
+            before do
+                authenticated!
+            end
+
+            desc 'Get all Invite'
+            get do
+                error!(I18n.t("access_denied")) unless @current_member.admin? || @current_member.pm?
+                return_message(I18n.t('success'), Invite.all.map { |e|  InviteSerializer.new(e)})
+            end
+
+            desc 'Invite member to company'
+            params do
+                requires :email, type: String, desc: 'Email New Member'
+            end
+            post '/' do
+                error!(I18n.t("access_denied")) unless @current_member.admin? || @current_member.pm?
+                invite = Invite.find_by_email(params['email'])
+
+                recepter = User.find_by_email(params['email'])
+                error!("user.errors.already_member", 400) if recepter &&
+                    recepter.members.find_by_company_id(@current_member.company_id)
+
+                # crete invite and send email to peron invited
+                messages = if invite.blank?
+                    invite = create_invite(recepter)
+                    I18n.t("invite.success", email: params['email'])
+                else
+                    invite.generate_token
+                    invite.generate_expry
+                    invite.save!
+                    I18n.t("invite.errors.sended", email: params['email'])
+                end
+
+                invite_inform(invite, recepter)
+
+                return_message(messages)
+            end
+
             desc 'Delete Invites'
             delete ':id' do
-                authenticated!
                 invite = Invite.find(params[:id])
                 error!(I18n.t('not_found', title: "Invitetion"), 404) unless invite
                 if (invite.sender_id == @current_member.id) || @current_member.admin?
