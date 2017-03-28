@@ -45,9 +45,6 @@ en:
     denied: "Access denied to %{acc_to}"
     nothing: "Nothing to do %{content}"
     Unauthor: "Unauthorized"
-    invite:
-        errors:
-            not_found: "Not Found invitetion for email %{email}"
     user:
         errors:
             token: 'Invalid token'
@@ -73,5 +70,6 @@ en:
     invite:
         success: 'Success, The email confirm will be send to %{email} after few minutes'
         errors:
-            sended: "You already sent the mail invete to %{email}. New invite will be send after few minutes"
+            sended: "You already sent the mail invite to %{email}. New invite will be send after few minutes"
             token_error: "Token unauthenticated"
+            not_found: "Not Found invitetion for email %{email}"

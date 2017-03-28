@@ -1,5 +1,5 @@
 class Invite < ApplicationRecord
-    before_create :generate_token
+    before_create :generate_token, :generate_expry
     attr_accessor :invite_token
 
     belongs_to :sender, class_name: 'Member'
@@ -17,6 +17,9 @@ class Invite < ApplicationRecord
 
     def generate_token
         self.token = digest(new_token)
+    end
+
+    def generate_expry
         self.expiry = (Time.now + Settings.invite_expry.week)
     end
 
