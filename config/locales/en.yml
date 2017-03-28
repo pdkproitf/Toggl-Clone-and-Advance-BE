@@ -51,11 +51,15 @@ en:
     user:
         errors:
             token: 'Invalid token'
-            already_member: "User already member"
+            already_member: "User already member, go to manager pages to manage member."
             must_exit: "User must exist!"
     company:
         errors:
             domain_already: 'Domain are already taken'
+    member:
+        errors:
+            archived: 'The member has been archived'
+            already_archived: 'The member already archived'
     timer:
         errors:
     category:

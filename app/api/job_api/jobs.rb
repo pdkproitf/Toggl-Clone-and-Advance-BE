@@ -13,7 +13,6 @@ module JobApi
 
             desc 'get all jobs'
             get '/' do
-
                 return_message(I18n.t("success"), Job.all.map {|e| JobSerializer.new(e)})
             end
 

@@ -1,7 +1,7 @@
 class TimeOff < ApplicationRecord
     enum status: [:pending, :approved, :rejected, :archived]
 
-    belongs_to :sender, class_name: 'Member'
+    belongs_to :sender, -> {where(is_archived: false)}, class_name: 'Member'
     belongs_to :approver, class_name: 'Member'
 
     validates_presence_of   :start_date, :end_date, :description, :sender_id
@@ -9,6 +9,7 @@ class TimeOff < ApplicationRecord
     validate :conflict_timeoff, on: :create
     validate :conflict_timeoff_update, on: :update
 
+    # default_scope -> { where("sender_id NOT NULL") }
     # before_save :convert_to_beginning_of_day
 
     def send_email send_mail_to, current_member = nil
