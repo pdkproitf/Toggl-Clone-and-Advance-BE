@@ -94,6 +94,7 @@ module ReportApi
 
                 _projects = @param_project.blank? ? @current_member.company.projects :
                     @current_member.company.projects.where(id: @param_project)
+
                 _projects.map do |project|
                     projects.push(get_project(project))
                 end

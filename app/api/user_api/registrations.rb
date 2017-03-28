@@ -38,7 +38,7 @@ module UserApi
                     else
                         # user will require email authentication
                         @resource.send_confirmation_instructions(client_config: params[:config_name],
-                        redirect_url: @redirect_url)
+                        redirect_url: Settings.front_end)
                     end
                     @member = create_member
                     Member.transaction do
@@ -74,8 +74,7 @@ module UserApi
             post '/' do
                 @resource = sign_up_params
                 @resource.provider = 'email'
-                @redirect_url = 'https://spring-time-tracker.herokuapp.com/'
-                @role = Role.find_by_name('Admin') || Role.create!(name: 'Admin')
+                @role = Role.find_or_create_by(name: 'Admin')
 
                 if params['user']['invited_token']
                     invite = Invite.find_by_email(params['user']['email'])
@@ -83,7 +82,7 @@ module UserApi
                     error!(I18n.t("expiry", title: "Invition")) if invite.expiry?
                     error!(I18n.t("user.errors.token"), 400) unless invite.authenticated?(params['user']['invited_token'])
 
-                    @role = Role.find_by_name('Member') || Role.create!(name: 'Member')
+                    @role = Role.find_or_create_by(name: 'Member')
                     @company = invite.sender.company
                 else
                     error!(I18n.t('company.errors.domain_already'), 400) if Company.find_by_domain(params['user']['company_domain'])
@@ -96,6 +95,24 @@ module UserApi
                         save_user
                     end
                 end
+            end
+
+            desc 'update a user'
+            params do
+                requires :user, type: Hash do
+                    requires :first_name, type: String, desc: 'first name'
+                    requires :last_name, type:String, desc: 'last name'
+                    requires :image, type: String, desc: 'user avatar'
+                end
+            end
+
+            put do
+                authenticated!
+                @current_member.user.update_attributes!(
+                    first_name: params[:user][:first_name],
+                    last_name: params[:user][:last_name],
+                    image: params[:user][:image])
+                return_message 'Success'
             end
         end
     end
