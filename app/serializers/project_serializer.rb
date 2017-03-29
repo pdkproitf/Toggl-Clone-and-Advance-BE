@@ -47,11 +47,11 @@ class ProjectSerializer < ActiveModel::Serializer
   def chart
     case @view
     when 'day'
-      object.day_chart
+      object.day_chart(@begin_date, @end_date)
     when 'month'
-      object.month_chart
+      object.month_chart(@begin_date, @end_date)
     when 'year'
-      object.year_chart
+      object.year_chart(@begin_date, @end_date)
     end
   end
 end
