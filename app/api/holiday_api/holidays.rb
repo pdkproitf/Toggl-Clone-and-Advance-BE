@@ -35,6 +35,20 @@ module HolidayApi
                 holiday = Holiday.find(params[:id])
                 return_message(I18n.t('success'), HolidaySerializer.new(holiday))
             end
+
+            desc 'Edit holiday'
+            params do
+                requires :holiday, type: Hash do
+                    requires :name, type: String, desc: 'Holiday name'
+                    requires :begin_date, type: Date, desc: 'Begin day'
+                    requires :end_date, type: Date, desc: 'End day'
+                end
+            end
+            put ':id' do
+                holiday = Holiday.find(params[:id])
+                holiday.update_attributes!(create_params)
+                return_message(I18n.t('success'), HolidaySerializer.new(holiday))
+            end
         end
     end
 end
