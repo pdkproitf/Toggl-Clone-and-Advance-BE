@@ -26,8 +26,14 @@ module HolidayApi
                 end
             end
             post do
-                @current_member.company.holidays.create!(create_params)
-                return_message(I18n.t('success'))
+                holiday = @current_member.company.holidays.create!(create_params)
+                return_message(I18n.t('success'), HolidaySerializer.new(holiday))
+            end
+
+            desc 'Get a holiday'
+            get ':id' do
+                holiday = Holiday.find(params[:id])
+                return_message(I18n.t('success'), HolidaySerializer.new(holiday))
             end
         end
     end
