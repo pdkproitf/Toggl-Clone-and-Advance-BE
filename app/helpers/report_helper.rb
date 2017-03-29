@@ -102,12 +102,59 @@ module ReportHelper
             end
           end
         when 'month'
-        when 'year'
+          begin_date_month = @begin_date.strftime('%Y-%m')
+          end_date_month = @end_date.strftime('%Y-%m')
+          next_end_date_month = (Date.new(@end_date.year, @end_date.month, -1) + 1).strftime('%Y-%m')
+          month = begin_date_month
+          month_begin_date = @begin_date
+          month_end_date = Date.new(@begin_date.year, @begin_date.month, -1)
 
+          until month == next_end_date_month
+            month == begin_date_month ? month_begin_date = @begin_date : month_begin_date = month_end_date + 1
+            month == end_date_month ? month_end_date = @end_date : month_end_date = Date.new(month_begin_date.year, month_begin_date.month, -1)
+
+            unless item[:chart][month]
+              item[:chart][month] = {}
+              item[:chart][month][:billable] = 0
+              item[:chart][month][:unbillable] = 0
+            end
+
+            tracked_time = assigned_category.tracked_time(month_begin_date, month_end_date)
+            if assigned_category.category.is_billable
+              item[:chart][month][:billable] += tracked_time
+            else
+              item[:chart][month][:unbillable] += tracked_time
+            end
+
+            month = (Date.new(month_end_date.year, month_end_date.month, -1) + 1).strftime('%Y-%m')
+          end
+        when 'year'
+          year = @begin_date.year
+          until year == @end_date.year + 1
+            year == @begin_date.year ? year_begin_date = @begin_date : year_begin_date = Date.new(year, 0o1, 0o1)
+            year == @end_date.year ? year_end_date = @end_date : year_end_date = Date.new(year, 12, 31)
+
+            unless item[:chart][year]
+              item[:chart][year] = {}
+              item[:chart][year][:billable] = 0
+              item[:chart][year][:unbillable] = 0
+            end
+
+            tracked_time = assigned_category.tracked_time(year_begin_date, year_end_date)
+            if assigned_category.category.is_billable
+              item[:chart][year][:billable] += tracked_time
+            else
+              item[:chart][year][:unbillable] += tracked_time
+            end
+
+            year += 1
+          end
         end
       end
       result
     end
+
+    def method_name; end
 
     def member_tasks
       tasks = []
