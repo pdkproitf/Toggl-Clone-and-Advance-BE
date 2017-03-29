@@ -86,18 +86,24 @@ module ReportHelper
           category_member_id: assigned_category[:category_member_id],
           tracked_time: assigned_category.tracked_time(@begin_date, @end_date)
         )
-        (@begin_date..@end_date).each do |date|
-          unless item[:chart][date]
-            item[:chart][date] = {}
-            item[:chart][date][:billable] = 0
-            item[:chart][date][:unbillable] = 0
+        case @view
+        when 'day'
+          (@begin_date..@end_date).each do |date|
+            unless item[:chart][date]
+              item[:chart][date] = {}
+              item[:chart][date][:billable] = 0
+              item[:chart][date][:unbillable] = 0
+            end
+            tracked_time = assigned_category.tracked_time(date, date)
+            if assigned_category.category.is_billable
+              item[:chart][date][:billable] += tracked_time
+            else
+              item[:chart][date][:unbillable] += tracked_time
+            end
           end
-          tracked_time = assigned_category.tracked_time(date, date)
-          if assigned_category.category.is_billable
-            item[:chart][date][:billable] += tracked_time
-          else
-            item[:chart][date][:unbillable] += tracked_time
-          end
+        when 'month'
+        when 'year'
+
         end
       end
       result

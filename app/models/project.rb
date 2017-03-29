@@ -190,7 +190,7 @@ class Project < ApplicationRecord
   def category_tracked_time(begin_date, end_date)
     billable_total = 0
     unbillable_total = 0
-    categories.each do |category|
+    unarchived_categories.each do |category|
       tracked_time = category.tracked_time(begin_date, end_date)
       category.is_billable ? billable_total += tracked_time : unbillable_total += tracked_time
     end
