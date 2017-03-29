@@ -5,7 +5,7 @@ class TimeOff < ApplicationRecord
     belongs_to :approver, class_name: 'Member'
 
     validates_presence_of :start_date, :end_date, :description, :sender_id
-    validate :time_valid
+    validate :days_valid
     validate :conflict_timeoff, on: :create
     validate :conflict_timeoff_update, on: :update
 
@@ -18,7 +18,7 @@ class TimeOff < ApplicationRecord
 
     private
     # begin_date_cannot_be_greater_than_end_date
-    def time_valid
+    def days_valid
         errors.add(:start_date, I18n.t("less_than_end_date")) if start_date > end_date
         errors.add(:start_date, I18n.t("over_date")) if start_date < Time.now.beginning_of_day
     end

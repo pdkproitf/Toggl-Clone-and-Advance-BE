@@ -1,7 +1,7 @@
 class Timer < ApplicationRecord
     belongs_to :task
 
-    validate :time_valid
+    validate :days_valid
 
     def tracked_time
         stop_time - start_time
@@ -9,7 +9,7 @@ class Timer < ApplicationRecord
 
     private
 
-    def time_valid
-        errors.add(:start_time, 'Start time have to less than stop time') if start_time >= stop_time
+    def days_valid
+        errors.add(:start_time, I18n.t("less_than_end_date")) if start_time >= stop_time
     end
 end

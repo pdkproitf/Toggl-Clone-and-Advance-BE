@@ -14,7 +14,8 @@ module HolidayApi
 
             desc 'Get all holidays'
             get do
-                @current_member.company.holidays
+                return_message(I18n.t('success'),
+                    @current_member.company.holidays.map { |e| HolidaySerializer.new(e) })
             end
 
             desc 'Create new holiday'
@@ -32,7 +33,7 @@ module HolidayApi
 
             desc 'Get a holiday'
             get ':id' do
-                holiday = Holiday.find(params[:id])
+                holiday = @current_member.company.holidays.find(params[:id])
                 return_message(I18n.t('success'), HolidaySerializer.new(holiday))
             end
 
@@ -45,9 +46,17 @@ module HolidayApi
                 end
             end
             put ':id' do
-                holiday = Holiday.find(params[:id])
+                holiday = @current_member.company.holidays.find(params[:id])
                 holiday.update_attributes!(create_params)
                 return_message(I18n.t('success'), HolidaySerializer.new(holiday))
+            end
+
+            desc 'Destroy holiday'
+            delete ':id' do
+                holiday = @current_member.company.holidays.find(params[:id])
+                holiday.destroy!
+                status 200
+                return_message(I18n.t('success'))
             end
         end
     end
