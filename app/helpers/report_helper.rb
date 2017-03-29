@@ -10,6 +10,7 @@ module ReportHelper
       @client = options[:client] || nil
       @member = options[:member] || nil
       @chart_limit = 366
+      @view = options[:view] || nil
       @working_time_per_day = reporter.company.working_time_per_day
       @working_time_per_week = reporter.company.working_time_per_week
       @begin_week = reporter.company.begin_week
@@ -22,7 +23,7 @@ module ReportHelper
 
     def report_by_project
       project_options = { each_serializer: ProjectSerializer, begin_date: @begin_date, end_date: @end_date,
-                          members_serialized: false, chart_serialized: true, categories_serialized: true }
+                          members_serialized: false, chart_serialized: true, categories_serialized: true, view: @view }
       ActiveModel::Serializer::CollectionSerializer.new(@reporter.get_projects, project_options)
     end
 

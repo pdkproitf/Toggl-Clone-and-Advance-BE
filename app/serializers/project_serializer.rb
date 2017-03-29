@@ -1,8 +1,7 @@
 class ProjectSerializer < ActiveModel::Serializer
   attributes :id, :name, :client, :background,
              :is_member_report, :tracked_time
-  attr_reader :chart_limit, :chart_serialized,
-              :members_serialized, :categories_serialized
+  attr_reader :chart_serialized, :members_serialized, :categories_serialized
   attribute :chart, if: :chart_serialized
   attribute :members, if: :members_serialized
   attribute :categories, if: :categories_serialized
@@ -11,7 +10,7 @@ class ProjectSerializer < ActiveModel::Serializer
     super(project)
     @begin_date = options[:begin_date] || nil
     @end_date = options[:end_date] || nil
-    @chart_limit = 366
+    @view = options[:view] || nil
     @chart_serialized = false
     @chart_serialized = options[:chart_serialized] unless options[:chart_serialized].nil?
     @members_serialized = true
@@ -46,7 +45,7 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def chart
-    case view_detected
+    case @view
     when 'day'
       day_chart
     when 'month'
@@ -60,7 +59,7 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def day_chart
     chart = []
-    (@begin_date..@end_date).take(@chart_limit).each do |date|
+    (@begin_date..@end_date).each do |date|
       item = {}
       item[date] = category_tracked_time(date, date)
       chart.push(item)
@@ -108,30 +107,13 @@ class ProjectSerializer < ActiveModel::Serializer
     chart
   end
 
-  def view_detected
-    # Date.leap?(begin_date.year)
-    if (@end_date - @begin_date).to_i <= 31
-      'day'
-    elsif (@end_date - @begin_date).to_i <= 366
-      'month'
-    else
-      'year'
-    end
-  end
-
   def category_tracked_time(begin_date, end_date)
     billable_total = 0
     unbillable_total = 0
     object.categories.each do |category|
-      if category.is_billable == true
-        billable_total += category.tracked_time(begin_date, end_date)
-      else
-        unbillable_total += category.tracked_time(begin_date, end_date)
-      end
+      tracked_time = category.tracked_time(begin_date, end_date)
+      category.is_billable ? billable_total += tracked_time : unbillable_total += tracked_time
     end
-    {
-      billable: billable_total,
-      unbillable: unbillable_total
-    }
+    { billable: billable_total, unbillable: unbillable_total }
   end
 end

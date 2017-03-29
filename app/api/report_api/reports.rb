@@ -8,6 +8,17 @@ module ReportApi
         error!(I18n.t('begin_date_not_greater_than_end_day'), 400) if begin_date > end_date
         error!(I18n.t('year_limit'), 400) if (end_date.year - begin_date.year).to_i > 100
       end
+
+      def view_detected(begin_date, end_date)
+        # Date.leap?(begin_date.year)
+        if (end_date - begin_date).to_i <= 31
+          'day'
+        elsif (end_date - begin_date).to_i <= 366
+          'month'
+        else
+          'year'
+        end
+      end
     end
 
     resource :reports do
@@ -40,7 +51,8 @@ module ReportApi
            @current_member.project_members.where(project_id: projects.ids, is_pm: true, is_archived: false).empty?
           return error!(I18n.t('access_denied'), 403)
         end
-        report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date])
+        view = view_detected(params[:begin_date], params[:end_date])
+        report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date], view: view)
         { data: report.report_by_project }
       end
 
