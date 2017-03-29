@@ -1,6 +1,7 @@
 module AuthenticationHelper
     def authenticated!
         error!(I18n.t('Unauthor'), 401) unless current_member
+        error!(I18n.t('member.errors.archived'), 401) unless current_member.actived?
     end
 
     def current_user

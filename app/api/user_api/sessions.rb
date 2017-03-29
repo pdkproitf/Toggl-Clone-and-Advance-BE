@@ -49,7 +49,7 @@ module UserApi
                 @resource = sign_in_params
                 if @resource and @resource.valid_password?(params['user']['password']) and (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
                     @company = @resource.companies.find_by_domain(params['user']['company_domain'])
-                    return error!(I18n.t("company.errors.not_found", domain: params['user']['company_domain']), 404) unless @company
+                    error!(I18n.t("not_found", title: params['user']['company_domain']), 404) unless @company
 
                     @member =  @resource.members.find_by_company_id(@company.id)
 

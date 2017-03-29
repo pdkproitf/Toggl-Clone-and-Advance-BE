@@ -22,6 +22,7 @@ module API
     mount HolidayApi::Holidays
     mount ReportApi::Reports
     mount ReportApi::ReportAdvances
+    mount JobApi::Jobs
 
     add_swagger_documentation(
       api_version: 'v1',
