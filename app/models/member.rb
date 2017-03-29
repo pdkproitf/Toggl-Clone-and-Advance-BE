@@ -6,11 +6,11 @@ class Member < ApplicationRecord
     has_many :joined_projects, through: :project_members, source: :project
 
     # Find projects member assigned PM
-    has_many :pm_project_members, -> { where is_pm: true, is_archived: false }, class_name: 'ProjectMember'
+    has_many :pm_project_members, -> { where is_pm: true }, class_name: 'ProjectMember'
     has_many :pm_projects, through: :pm_project_members, source: :project
 
-    has_many :project_members, dependent: :destroy
-    has_many :category_members, through: :project_members
+    has_many :project_members, -> { where is_archived: false }, dependent: :destroy
+    has_many :category_members, -> { where is_archived: false }, through: :project_members
 
     has_many :tasks, through: :category_members
     has_many :timers, through: :tasks

@@ -120,7 +120,7 @@ module TimeOffHelper
 
     # using get timeoff of member in company follow phase and # ordinal member
     def member_ordinal
-        return return_message I18n.t("access_denied") unless (@current_member.admin? || @current_member.pm?)
+        error!(I18n.t("access_denied"), 403) unless (@current_member.admin? || @current_member.pm?)
         timeoffs = []
         members = []
         @current_member.company.members.each do |member|
