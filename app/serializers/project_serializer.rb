@@ -70,36 +70,23 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def month_chart
     chart = []
-    # Chart of month that begin_date belongs to (Calculate from begin_date)
-    # month_begin_date = @begin_date
-    # month_end_date = Date.new(@begin_date.year, @begin_date.month, -1)
-    # begin_month_key = @begin_date.strftime('%Y-%m')
-    # end_month_key = @end_date.strftime('%Y-%m')
-    # month_key = (month_end_date + 1).strftime('%Y-%m')
-    #
-    # month = {}
-    # month[begin_month_key] = category_tracked_time(month_begin_date, month_end_date)
-    # chart.push(month)
-
-    # Chart of months between the month of begin_date and the month of end_date
-    month = @begin_date.strftime('%Y-%m')
+    begin_date_month = @begin_date.strftime('%Y-%m')
+    end_date_month = @end_date.strftime('%Y-%m')
     next_end_date_month = (Date.new(@end_date.year, @end_date.month, -1) + 1).strftime('%Y-%m')
-    return next_end_date_month
-    # until month == end_month_key
-    #   month_begin_date = month_end_date + 1
-    #   month_end_date = Date.new(month_begin_date.year, month_begin_date.month, -1)
-    #
-    #   month = {}
-    #   month[month_key] = category_tracked_time(month_begin_date, month_end_date)
-    #   chart.push(month)
-    #
-    #   month_key = (month_end_date + 1).strftime('%Y-%m')
-    # end
+    month = begin_date_month
+    month_begin_date = @begin_date
+    month_end_date = Date.new(@begin_date.year, @begin_date.month, -1)
 
-    # Chart of month that end_date belongs to (Calculate begin of month to end_date)
-    # month = {}
-    # month[month_key] = category_tracked_time(month_end_date + 1, @end_date)
-    # chart.push(month)
+    until month == next_end_date_month
+      month == begin_date_month ? month_begin_date = @begin_date : month_begin_date = month_end_date + 1
+      month == end_date_month ? month_end_date = @end_date : month_end_date = Date.new(month_begin_date.year, month_begin_date.month, -1)
+
+      columns = {}
+      columns[month] = category_tracked_time(month_begin_date, month_end_date)
+      chart.push(columns)
+
+      month = (Date.new(month_end_date.year, month_end_date.month, -1) + 1).strftime('%Y-%m')
+    end
 
     chart
   end
