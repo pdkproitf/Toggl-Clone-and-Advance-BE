@@ -9,7 +9,6 @@ class TimeOff < ApplicationRecord
     validate :conflict_timeoff, on: :create
     validate :conflict_timeoff_update, on: :update
 
-    default_scope -> { where(sender_id: Member.where(is_archived: false).select('id'))}
     # before_save :convert_to_beginning_of_day
 
     def send_email send_mail_to, current_member = nil

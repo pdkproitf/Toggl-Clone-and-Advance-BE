@@ -24,15 +24,15 @@ module TimeOffApi
 
             desc 'Get number timeoff of person'
             params do
-                optional :member_id, type: Integer, desc: 'member id'
-                optional :id, type: Integer, desc: 'member id'
-                all_or_none_of :member_id, :id
+                optional :id, type: Integer, desc: 'timeoff id'
+                all_or_none_of :id
             end
             get '/num-of-timeoff' do
-                if params['member_id']
-                    member = Member.find_by_id(params['member_id'])
-                    error!(I18n.t('access_denied'), 403) unless able_answer_request?(member, TimeOff.find_by_id(params['id']))
-                    @current_member = member
+                if params['id']
+                    timeoff = TimeOff.find_by_id(params['id'])
+                    error!(I18n.t('not_found', title: 'Timeoff'), 404) unless timeoff
+                    error!(I18n.t('access_denied'), 403) unless @current_member.manager?
+                    @current_member = timeoff.sender
                 end
                 offed_date = @current_member
                     .off_requests

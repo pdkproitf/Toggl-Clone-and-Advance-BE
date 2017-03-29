@@ -50,12 +50,11 @@ module TimeOffHelper
 
     # true if timeoff didn't belong to current_member
     # && current_member is admin or (PM and timeoff's sender  is member)
-    def able_answer_request?(current_member = nil, timeoff = nil)
-        current_member = current_member || @current_member
+    def able_answer_request?(timeoff = nil)
         timeoff = timeoff || @timeoff
 
-        return false if current_member.id == timeoff.sender_id
-        return true if current_member.admin? || current_member.pm? && timeoff.sender.member?
+        return false if @current_member.id == timeoff.sender_id
+        return true if  @current_member.admin? ||  @current_member.pm? && timeoff.sender.member?
         false
     end
 
@@ -120,7 +119,7 @@ module TimeOffHelper
 
     # using get timeoff of member in company follow phase and # ordinal member
     def member_ordinal
-        return return_message I18n.t("access_denied") unless (@current_member.admin? || @current_member.pm?)
+        error!(I18n.t("access_denied"), 403) unless (@current_member.admin? || @current_member.pm?)
         timeoffs = []
         members = []
         @current_member.company.members.each do |member|
