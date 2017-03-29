@@ -25,6 +25,8 @@ class Member < ApplicationRecord
 
     validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
+    # default_scope ->{ where(is_archived: false) }
+
     # After initialization, set default values
     after_initialize :set_default_values
 
