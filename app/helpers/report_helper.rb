@@ -79,11 +79,6 @@ module ReportHelper
           item[:client] = { id: assigned_category[:client_id], name: assigned_category[:client_name] }
           item[:category] = []
           item[:chart] = {}
-          (@begin_date..@end_date).each do |date|
-            item[:chart][date] = {}
-            item[:chart][date][:billable] = 0
-            item[:chart][date][:unbillable] = 0
-          end
           result.push(item)
         end
         item[:category].push(
@@ -92,10 +87,16 @@ module ReportHelper
           tracked_time: assigned_category.tracked_time(@begin_date, @end_date)
         )
         (@begin_date..@end_date).each do |date|
-          if assigned_category.category.is_billable == true
-            item[:chart][date][:billable] += assigned_category.tracked_time(date, date)
+          unless item[:chart][date]
+            item[:chart][date] = {}
+            item[:chart][date][:billable] = 0
+            item[:chart][date][:unbillable] = 0
+          end
+          tracked_time = assigned_category.tracked_time(date, date)
+          if assigned_category.category.is_billable
+            item[:chart][date][:billable] += tracked_time
           else
-            item[:chart][date][:unbillable] += assigned_category.tracked_time(date, date)
+            item[:chart][date][:unbillable] += tracked_time
           end
         end
       end
