@@ -77,7 +77,8 @@ module ReportApi
           return error!(I18n.t('access_denied'), 403) if is_member_joined_projects == false
         end
 
-        report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date], member: member)
+        view = view_detected(params[:begin_date], params[:end_date])
+        report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date], member: member, view: view)
         { data: report.report_by_member }
       end
     end

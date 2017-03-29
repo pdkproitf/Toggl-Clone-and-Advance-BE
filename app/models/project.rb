@@ -136,4 +136,64 @@ class Project < ApplicationRecord
     end
     update_attributes(is_archived: false)
   end
+
+  def day_chart(begin_date, end_date)
+    chart = []
+    (begin_date..end_date).each do |date|
+      item = {}
+      item[date] = category_tracked_time(date, date)
+      chart.push(item)
+    end
+    chart
+  end
+
+  def month_chart(begin_date, end_date)
+    chart = []
+    begin_date_month = begin_date.strftime('%Y-%m')
+    end_date_month = end_date.strftime('%Y-%m')
+    next_end_date_month = (Date.new(end_date.year, end_date.month, -1) + 1).strftime('%Y-%m')
+    month = begin_date_month
+    month_begin_date = begin_date
+    month_end_date = Date.new(begin_date.year, begin_date.month, -1)
+
+    until month == next_end_date_month
+      month == begin_date_month ? month_begin_date = begin_date : month_begin_date = month_end_date + 1
+      month == end_date_month ? month_end_date = end_date : month_end_date = Date.new(month_begin_date.year, month_begin_date.month, -1)
+
+      columns = {}
+      columns[month] = category_tracked_time(month_begin_date, month_end_date)
+      chart.push(columns)
+
+      month = (Date.new(month_end_date.year, month_end_date.month, -1) + 1).strftime('%Y-%m')
+    end
+
+    chart
+  end
+
+  def year_chart(begin_date, end_date)
+    chart = []
+    year = begin_date.year
+    until year == end_date.year + 1
+      year == begin_date.year ? year_begin_date = begin_date : year_begin_date = Date.new(year, 0o1, 0o1)
+      year == end_date.year ? year_end_date = end_date : year_end_date = Date.new(year, 12, 31)
+
+      columns = {}
+      columns[year_begin_date.year] = category_tracked_time(year_begin_date, year_end_date)
+      chart.push(columns)
+
+      year += 1
+    end
+
+    chart
+  end
+
+  def category_tracked_time(begin_date, end_date)
+    billable_total = 0
+    unbillable_total = 0
+    object.categories.each do |category|
+      tracked_time = category.tracked_time(begin_date, end_date)
+      category.is_billable ? billable_total += tracked_time : unbillable_total += tracked_time
+    end
+    { billable: billable_total, unbillable: unbillable_total }
+  end
 end
