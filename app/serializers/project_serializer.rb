@@ -71,47 +71,54 @@ class ProjectSerializer < ActiveModel::Serializer
   def month_chart
     chart = []
     # Chart of month that begin_date belongs to (Calculate from begin_date)
-    month_begin_date = @begin_date
-    month_end_date = Date.new(@begin_date.year, @begin_date.month, -1)
-    begin_month_key = @begin_date.strftime('%Y-%m')
-    end_month_key = @end_date.strftime('%Y-%m')
-    month_key = (month_end_date + 1).strftime('%Y-%m')
-
-    month = {}
-    month[begin_month_key] = category_tracked_time(month_begin_date, month_end_date)
-    chart.push(month)
+    # month_begin_date = @begin_date
+    # month_end_date = Date.new(@begin_date.year, @begin_date.month, -1)
+    # begin_month_key = @begin_date.strftime('%Y-%m')
+    # end_month_key = @end_date.strftime('%Y-%m')
+    # month_key = (month_end_date + 1).strftime('%Y-%m')
+    #
+    # month = {}
+    # month[begin_month_key] = category_tracked_time(month_begin_date, month_end_date)
+    # chart.push(month)
 
     # Chart of months between the month of begin_date and the month of end_date
-    until month_key == end_month_key
-      month_begin_date = month_end_date + 1
-      month_end_date = Date.new(month_begin_date.year, month_begin_date.month, -1)
-
-      month = {}
-      month[month_key] = category_tracked_time(month_begin_date, month_end_date)
-      chart.push(month)
-
-      month_key = (month_end_date + 1).strftime('%Y-%m')
-    end
+    month = @begin_date.strftime('%Y-%m')
+    next_end_date_month = (Date.new(@end_date.year, @end_date.month, -1) + 1).strftime('%Y-%m')
+    return next_end_date_month
+    # until month == end_month_key
+    #   month_begin_date = month_end_date + 1
+    #   month_end_date = Date.new(month_begin_date.year, month_begin_date.month, -1)
+    #
+    #   month = {}
+    #   month[month_key] = category_tracked_time(month_begin_date, month_end_date)
+    #   chart.push(month)
+    #
+    #   month_key = (month_end_date + 1).strftime('%Y-%m')
+    # end
 
     # Chart of month that end_date belongs to (Calculate begin of month to end_date)
-    month = {}
-    month[month_key] = category_tracked_time(month_end_date + 1, @end_date)
-    chart.push(month)
+    # month = {}
+    # month[month_key] = category_tracked_time(month_end_date + 1, @end_date)
+    # chart.push(month)
 
     chart
   end
 
   def year_chart
     chart = []
-    year_begin_date = @begin_date
-    year_end_date = Date.new(@begin_date.year, 12, 31)
-    month = {}
-    month[year_begin_date.year] = category_tracked_time(year_begin_date, year_end_date)
-    chart.push(month)
+    year = @begin_date.year
+    until year == @end_date.year + 1
+      year == @begin_date.year ? year_begin_date = @begin_date : year_begin_date = Date.new(year, 0o1, 0o1)
+      year == @end_date.year ? year_end_date = @end_date : year_end_date = Date.new(year, 12, 31)
 
-    until condition
+      columns = {}
+      columns[year_begin_date.year] = category_tracked_time(year_begin_date, year_end_date)
+      chart.push(columns)
 
+      year += 1
     end
+
+    chart
   end
 
   def view_detected
