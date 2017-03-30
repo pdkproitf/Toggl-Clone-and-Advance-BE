@@ -193,11 +193,21 @@ module ReportHelper
         next unless weeks[week_start_date][:overtime] > 0
         options = {}
         if weeks[week_start_date][:holidays].include?(week_date) # Overtime in holidays
-          options[:overtime_type] = @overtime_type[:holiday]
-          weeks[week_start_date][:overtime_temp] -= timer.tracked_time
+          if weeks[week_start_date][:overtime_temp] < 0
+            options[:start_time_overtime] = timer.stop_time + weeks[week_start_date][:overtime_temp]
+            break
+          else
+            options[:overtime_type] = @overtime_type[:holiday]
+            weeks[week_start_date][:overtime_temp] -= timer.tracked_time
+          end
         elsif week_date.wday == 0 || week_date.wday == 6 # Overtime in weekend
-          options[:overtime_type] = @overtime_type[:weekend]
-          weeks[week_start_date][:overtime_temp] -= timer.tracked_time
+          if weeks[week_start_date][:overtime_temp] < 0
+            options[:start_time_overtime] = timer.stop_time + weeks[week_start_date][:overtime_temp]
+            break
+          else
+            options[:overtime_type] = @overtime_type[:weekend]
+            weeks[week_start_date][:overtime_temp] -= timer.tracked_time
+          end
         else # If week_date is a normal day
           normal_timers.push(timer)
         end
