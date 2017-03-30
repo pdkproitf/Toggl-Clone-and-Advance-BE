@@ -14,7 +14,7 @@ module JobApi
             desc 'get all jobs in company'
             get '/' do
                 return_message(I18n.t("success"),
-                    @current_member.company.jobs.all.map {|e| JobSerializer.new(e)})
+                    @current_member.company.jobs.uniq.map {|e| JobSerializer.new(e)})
             end
 
             desc 'create new job'
@@ -24,7 +24,9 @@ module JobApi
                 end
             end
             post do
-                job = Job.create!(name: params[:job][:name])
+                job = @current_member.company.jobs.find_by_name(params[:job][:name])
+                return error!(I18n.t('already', content: params[:job][:name]), 409) if job
+                job = Job.find_or_create_by!(name: params[:job][:name])
                 return_message(I18n.t('success'), JobSerializer.new(job))
             end
         end
