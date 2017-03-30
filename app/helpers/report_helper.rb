@@ -9,7 +9,7 @@ module ReportHelper
       @end_date = end_date.to_date
       @client = options[:client] || nil
       @member = options[:member] || nil
-      @chart_limit = 366
+      @view = options[:view] || nil
       @working_time_per_day = reporter.company.working_time_per_day
       @working_time_per_week = reporter.company.working_time_per_week
       @begin_week = reporter.company.begin_week
@@ -21,13 +21,9 @@ module ReportHelper
     end
 
     def report_by_project
-      projects = []
-      project_options = { chart_serialized: true, categories_serialized: true,
-                          members_serialized: false, begin_date: @begin_date, end_date: @end_date }
-      @reporter.get_projects.where(is_archived: false).each do |project|
-        projects.push(ProjectSerializer.new(project, project_options))
-      end
-      projects
+      project_options = { each_serializer: ProjectSerializer, begin_date: @begin_date, end_date: @end_date,
+                          members_serialized: false, chart_serialized: true, categories_serialized: true, view: @view }
+      ActiveModel::Serializer::CollectionSerializer.new(@reporter.get_projects, project_options)
     end
 
     def report_by_client; end
@@ -43,8 +39,9 @@ module ReportHelper
       result
     end
 
-    # private
+    private
 
+    # ===================== Report Only by Time helper methods =================
     # Report people
     def report_people
       person_options = { begin_date: @begin_date, end_date: @end_date, tracked_time_serialized: true }
@@ -55,7 +52,6 @@ module ReportHelper
         person = {}
         person.merge!(MembersSerializer.new(member, person_options))
         member_overtime(member).present? ? person[:overtime] = true : person[:overtime] = false
-        # person[:overtime] = true
         people.push(person)
       end
       people
@@ -65,12 +61,14 @@ module ReportHelper
     def report_projects
       project_options = { begin_date: @begin_date, end_date: @end_date, members_serialized: false }
       projects = []
-      @reporter.get_projects.where(is_archived: false) .order(:name).each do |project|
+      @reporter.get_projects.order(:name).each do |project|
         projects.push(ProjectSerializer.new(project, project_options))
       end
       projects
     end
 
+    # ================== Report Only by Time helper methods ends ===============
+    # ======================= Report by Member helper methods ==================
     def member_projects
       result = []
       member_joined_categories(@member).each do |assigned_category|
@@ -81,12 +79,6 @@ module ReportHelper
           item[:client] = { id: assigned_category[:client_id], name: assigned_category[:client_name] }
           item[:category] = []
           item[:chart] = {}
-          count = 0
-          (@begin_date..@end_date).take(@chart_limit).each do |date|
-            item[:chart][date] = {}
-            item[:chart][date][:billable] = 0
-            item[:chart][date][:unbillable] = 0
-          end
           result.push(item)
         end
         item[:category].push(
@@ -94,16 +86,75 @@ module ReportHelper
           category_member_id: assigned_category[:category_member_id],
           tracked_time: assigned_category.tracked_time(@begin_date, @end_date)
         )
-        (@begin_date..@end_date).take(@chart_limit).each do |date|
-          if assigned_category.category.is_billable == true
-            item[:chart][date][:billable] += assigned_category.tracked_time(date, date)
-          else
-            item[:chart][date][:unbillable] += assigned_category.tracked_time(date, date)
+        case @view
+        when 'day'
+          (@begin_date..@end_date).each do |date|
+            unless item[:chart][date]
+              item[:chart][date] = {}
+              item[:chart][date][:billable] = 0
+              item[:chart][date][:unbillable] = 0
+            end
+            tracked_time = assigned_category.tracked_time(date, date)
+            if assigned_category.category.is_billable
+              item[:chart][date][:billable] += tracked_time
+            else
+              item[:chart][date][:unbillable] += tracked_time
+            end
+          end
+        when 'month'
+          begin_date_month = @begin_date.strftime('%Y-%m')
+          end_date_month = @end_date.strftime('%Y-%m')
+          next_end_date_month = (Date.new(@end_date.year, @end_date.month, -1) + 1).strftime('%Y-%m')
+          month = begin_date_month
+          month_begin_date = @begin_date
+          month_end_date = Date.new(@begin_date.year, @begin_date.month, -1)
+
+          until month == next_end_date_month
+            month == begin_date_month ? month_begin_date = @begin_date : month_begin_date = month_end_date + 1
+            month == end_date_month ? month_end_date = @end_date : month_end_date = Date.new(month_begin_date.year, month_begin_date.month, -1)
+
+            unless item[:chart][month]
+              item[:chart][month] = {}
+              item[:chart][month][:billable] = 0
+              item[:chart][month][:unbillable] = 0
+            end
+
+            tracked_time = assigned_category.tracked_time(month_begin_date, month_end_date)
+            if assigned_category.category.is_billable
+              item[:chart][month][:billable] += tracked_time
+            else
+              item[:chart][month][:unbillable] += tracked_time
+            end
+
+            month = (Date.new(month_end_date.year, month_end_date.month, -1) + 1).strftime('%Y-%m')
+          end
+        when 'year'
+          year = @begin_date.year
+          until year == @end_date.year + 1
+            year == @begin_date.year ? year_begin_date = @begin_date : year_begin_date = Date.new(year, 0o1, 0o1)
+            year == @end_date.year ? year_end_date = @end_date : year_end_date = Date.new(year, 12, 31)
+
+            unless item[:chart][year]
+              item[:chart][year] = {}
+              item[:chart][year][:billable] = 0
+              item[:chart][year][:unbillable] = 0
+            end
+
+            tracked_time = assigned_category.tracked_time(year_begin_date, year_end_date)
+            if assigned_category.category.is_billable
+              item[:chart][year][:billable] += tracked_time
+            else
+              item[:chart][year][:unbillable] += tracked_time
+            end
+
+            year += 1
           end
         end
       end
       result
     end
+
+    def method_name; end
 
     def member_tasks
       tasks = []
@@ -181,7 +232,7 @@ module ReportHelper
       timers.sort_by! { |hsh| hsh[:start_time] }
     end
 
-    # ============================ GET TIMER ===================================
+    # ===================== GET TIMER ===================
     def overtime_timers(member)
       member.timers
             .where(category_members: { id: member_joined_categories(member).ids })
@@ -190,13 +241,14 @@ module ReportHelper
 
     def member_joined_categories(member)
       if @reporter.member? && @reporter.id == member.id
-        reporter_projects = @reporter.joined_projects.where(is_archived: false)
+        reporter_projects = @reporter.joined_unarchived_projects
       else
-        reporter_projects = @reporter.get_projects.where(is_archived: false)
+        reporter_projects = @reporter.get_projects
       end
       member.assigned_categories.where(projects: { id: reporter_projects.ids })
     end
-    # =========================== GET TIMER END ================================
+    # ==================== GET TIMER END ================
+    # =================== Report by Member helper methods ends =================
 
     def week_working_time(week_start_date, member)
       member.tracked_time(week_start_date, week_start_date + 6)

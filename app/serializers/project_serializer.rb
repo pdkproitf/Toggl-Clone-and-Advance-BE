@@ -1,8 +1,7 @@
 class ProjectSerializer < ActiveModel::Serializer
   attributes :id, :name, :client, :background,
              :is_member_report, :tracked_time
-  attr_reader :chart_limit, :chart_serialized,
-              :members_serialized, :categories_serialized
+  attr_reader :chart_serialized, :members_serialized, :categories_serialized
   attribute :chart, if: :chart_serialized
   attribute :members, if: :members_serialized
   attribute :categories, if: :categories_serialized
@@ -11,19 +10,13 @@ class ProjectSerializer < ActiveModel::Serializer
     super(project)
     @begin_date = options[:begin_date] || nil
     @end_date = options[:end_date] || nil
-    @chart_limit = 366
+    @view = options[:view] || nil
     @chart_serialized = false
-    if options[:chart_serialized].present?
-      @chart_serialized = options[:chart_serialized]
-    end
+    @chart_serialized = options[:chart_serialized] unless options[:chart_serialized].nil?
     @members_serialized = true
-    if options[:members_serialized].present?
-      @members_serialized = options[:members_serialized]
-    end
+    @members_serialized = options[:members_serialized] unless options[:members_serialized].nil?
     @categories_serialized = false
-    if options[:categories_serialized].present?
-      @categories_serialized = options[:categories_serialized]
-    end
+    @categories_serialized = options[:categories_serialized] unless options[:categories_serialized].nil?
   end
 
   def client
@@ -52,23 +45,13 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def chart
-    chart = []
-    (@begin_date..@end_date).take(@chart_limit).each do |date|
-      item = {}
-      item[date] = {}
-      billable_total = 0
-      unbillable_total = 0
-      object.categories.each do |category|
-        if category.is_billable == true
-          billable_total += category.tracked_time(date, date)
-        else
-          unbillable_total += category.tracked_time(date, date)
-        end
-      end
-      item[date][:billable] = billable_total
-      item[date][:unbillable] = unbillable_total
-      chart.push(item)
+    case @view
+    when 'day'
+      object.day_chart(@begin_date, @end_date)
+    when 'month'
+      object.month_chart(@begin_date, @end_date)
+    when 'year'
+      object.year_chart(@begin_date, @end_date)
     end
-    chart
   end
 end

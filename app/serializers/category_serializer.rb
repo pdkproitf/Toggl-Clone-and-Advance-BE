@@ -8,9 +8,7 @@ class CategorySerializer < ActiveModel::Serializer
     @begin_date = options[:begin_date] || nil
     @end_date = options[:end_date] || nil
     @members_serialized = true
-    unless options[:members_serialized].nil?
-      @members_serialized = options[:members_serialized]
-    end
+    @members_serialized = options[:members_serialized] unless options[:members_serialized].nil?
   end
 
   def tracked_time

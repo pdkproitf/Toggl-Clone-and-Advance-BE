@@ -37,7 +37,7 @@ en:
     category_name_taken: "Category name was taken"
     begin_date_not_greater_than_end_day: "Begin date not greater than end date"
     project_archived: "The project was archived"
-    day_limit: "Too much days chosen, the limitation of days is 366"
+    year_limit: "Too much years chosen"
     success: 'Success'
     expiry: "Your %{title} expiried!, please request a new one"
     not_found: "%{title} not found"
