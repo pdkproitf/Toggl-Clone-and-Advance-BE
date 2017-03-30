@@ -8,17 +8,17 @@ module MemberHelper
     end
 
     def update_role(role_id, member)
-        member.update_attributes!(role_id: role_id)
+        member.update_attributes!(role_id: Role.find(role_id).id)
     end
 
     def update_jobs(new_jobs, member)
-        job_removed(member.jobs, new_jobs)
-        new_jobs.each{|id| member.jobs_members.find_or_create_by!(job_id: id) }
+        job_removed(member.jobs, new_jobs, member)
+        new_jobs.each{|id| member.jobs_members.find_or_create_by!(job_id: Job.find(id).id)}
     end
 
-    # => find job was removed and removed it
+    # => find job was removed in front end and removed it
     def job_removed(current_jobs, new_jobs, member)
-        current_jobs.reject{|x| new_jobs.include? x.id }
+        current_jobs.reject{|x| new_jobs.include? x.id}
         member.jobs_members.where(job_id: current_jobs).destroy_all
     end
 

@@ -5,6 +5,7 @@ class Company < ApplicationRecord
   has_many :invites
   has_many :projects, -> { where(is_archived: false) }, through: :members
   has_many :holidays, dependent: :destroy
+  has_many :jobs, through: :members, source: :jobs
 
   VALID_DOMAIN_REGEX = /\A[\w0-9+\-.]+[a-z0-9]+\z/i
   # validates :name,    presence: true, uniqueness: true, length: { minimum: 3, maximum: 100 }

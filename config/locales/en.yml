@@ -45,6 +45,10 @@ en:
     denied: "Access denied to %{acc_to}"
     nothing: "Nothing to do %{content}"
     Unauthor: "Unauthorized"
+    already_request: "You already constraint request during this time."
+    over_date: "Over day. Today over start date"
+    less_than_end_date: "Have to less than end date"
+
     user:
         errors:
             token: 'Invalid token'
@@ -64,8 +68,6 @@ en:
     timeoff:
         created: "Your time off created. The email will be send to your bosses after few minutes"
         errors:
-            start_date: "Have to less than end date"
-            already_request: "You already has request off during this time."
             request_answed: "Not Allow!  Your request was answered."
     invite:
         success: 'Success, The email confirm will be send to %{email} after few minutes'
