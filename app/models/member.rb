@@ -9,8 +9,8 @@ class Member < ApplicationRecord
   has_many :pm_project_members, -> { where is_pm: true, is_archived: false }, class_name: 'ProjectMember'
   has_many :pm_projects, through: :pm_project_members, source: :project
 
-  has_many :project_members, dependent: :destroy
-  has_many :category_members, through: :project_members
+  has_many :project_members, -> { where is_archived: false }, dependent: :destroy
+  has_many :category_members, -> { where is_archived: false }, through: :project_members
 
   has_many :tasks, through: :category_members
   has_many :timers, through: :tasks
@@ -24,6 +24,8 @@ class Member < ApplicationRecord
   has_many :jobs, through: :jobs_members
 
   validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
+
+  # default_scope ->{ where(is_archived: false) }
 
   # After initialization, set default values
   after_initialize :set_default_values
@@ -39,15 +41,24 @@ class Member < ApplicationRecord
   end
 
   def admin?
-    role.name == 'Admin'
+    actived? && (role.name == 'Admin')
   end
 
   def pm?
-    role.name == 'PM'
+    actived? && (role.name == 'PM')
   end
 
   def member?
-    role.name == 'Member'
+    actived? && (role.name == 'Member')
+  end
+
+  # check is member manager role
+  def manager?
+    actived? && (admin? || pm?)
+  end
+
+  def actived?
+    !is_archived
   end
 
   def joined_unarchived_projects
