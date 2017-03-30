@@ -35,7 +35,7 @@ module UserApi
                     @company = invite.sender.company
                 else
                     error!(I18n.t('company.errors.domain_already'), 400) if Company.find_by_domain(params['user']['company_domain'])
-                    @company = create_company params['user']
+                    @company = create_company(params['user'])
                 end
 
                 Company.transaction do

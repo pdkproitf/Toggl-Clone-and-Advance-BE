@@ -25,8 +25,11 @@ module JobApi
             end
             post do
                 job = @current_member.company.jobs.find_by_name(params[:job][:name])
-                return error!(I18n.t('already', content: params[:job][:name]), 409) if job
+                error!(I18n.t('already', content: params[:job][:name]), 409) if job
+
                 job = Job.find_or_create_by!(name: params[:job][:name])
+                @current_member.company.jobs_members.create!(job_id: job.id)
+
                 return_message(I18n.t('success'), JobSerializer.new(job))
             end
         end
