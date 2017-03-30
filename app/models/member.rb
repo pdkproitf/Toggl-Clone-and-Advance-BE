@@ -24,6 +24,7 @@ class Member < ApplicationRecord
     has_many :jobs, through: :jobs_members
 
     validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
+    validates_presence_of :user_id, :role_id
 
     # default_scope ->{ where(is_archived: false) }
 

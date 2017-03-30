@@ -11,9 +11,10 @@ module JobApi
                 error!(I18n.t("access_denied"), 403) unless @current_member.manager?
             end
 
-            desc 'get all jobs'
+            desc 'get all jobs in company'
             get '/' do
-                return_message(I18n.t("success"), Job.all.map {|e| JobSerializer.new(e)})
+                return_message(I18n.t("success"),
+                    @current_member.company.jobs.all.map {|e| JobSerializer.new(e)})
             end
 
             desc 'create new job'
