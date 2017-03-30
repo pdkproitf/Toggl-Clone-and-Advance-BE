@@ -45,8 +45,8 @@ en:
     denied: "Access denied to %{acc_to}"
     nothing: "Nothing to do %{content}"
     Unauthor: "Unauthorized"
-    already_request: "You already has request during this time."
-    over_date: "Over day. You can't make this request!"
+    already_request: "You already constraint request during this time."
+    over_date: "Over day. Today over start date"
     less_than_end_date: "Have to less than end date"
 
     user:
