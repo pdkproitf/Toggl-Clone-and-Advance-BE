@@ -95,7 +95,7 @@ module TimeOffHelper
 
     # get all request
     def get_all
-        data = TimeOff.all.map { |e| TimeOffSerializer.new(e)}
+        data = @current_member.company,timeoffs.map { |e| TimeOffSerializer.new(e)}
         return_message(I18n.t('success'), data)
     end
 

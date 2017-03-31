@@ -29,7 +29,7 @@ module TimeOffApi
             end
             get '/num-of-timeoff' do
                 if params['id']
-                    timeoff = TimeOff.find_by_id(params['id'])
+                    timeoff =  @current_member.company.timeoffs.find_by_id(params['id'])
                     error!(I18n.t('not_found', title: 'Timeoff'), 404) unless timeoff
                     error!(I18n.t('access_denied'), 403) unless @current_member.manager?
                     @current_member = timeoff.sender
@@ -43,7 +43,7 @@ module TimeOffApi
 
             desc 'Get a timeoff request of themself '
             get ':id' do
-                @timeoff = TimeOff.find_by_id(params['id'])
+                @timeoff = @current_member.company.timeoffs.find_by_id(params['id'])
                 error!(I18n.t("not_found", title: "timeoff"), 404) unless @timeoff
                 error!(I18n.t("access_denied"), 403) unless (@timeoff.sender_id == @current_member.id) || able_answer_request?
                 return_message(I18n.t("success"), @timeoff)
@@ -84,7 +84,7 @@ module TimeOffApi
             end
 
             put ':id' do
-                @timeoff = TimeOff.find_by_id(params['id'])
+                @timeoff =  @current_member.company.timeoffs.find_by_id(params['id'])
                 error!(I18n.t("not_found", title: "timeoff"), 404) unless @timeoff
 
                 if params['timeoff']
@@ -100,7 +100,7 @@ module TimeOffApi
             desc 'Delete timeoff request'
             delete ':id' do
                 status 200
-                @timeoff = TimeOff.find_by_id(params['id'])
+                @timeoff =  @current_member.company.timeoffs.find_by_id(params['id'])
                 error!(I18n.t("not_found", title: "Timeoff"), 404) unless @timeoff
                 (@current_member.admin? && @current_member.id != @timeoff.sender_id)? admin_delete : sender_delete
             end
