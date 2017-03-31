@@ -154,8 +154,6 @@ module ReportHelper
       result
     end
 
-    def method_name; end
-
     def member_tasks
       tasks = []
       task_options = { begin_date: @begin_date, end_date: @end_date }
@@ -231,6 +229,9 @@ module ReportHelper
             options[:start_time_overtime] = timer.stop_time - day_overtime
             weeks[week_start_date][:overtime_temp] -= day_overtime
           else
+            if timer.tracked_time > weeks[week_start_date][:overtime_temp]
+              options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime_temp]
+            end
             options[:overtime_type] = @overtime_type[:normal]
             weeks[week_start_date][:overtime_temp] -= timer.tracked_time
           end
@@ -247,6 +248,7 @@ module ReportHelper
       member.timers
             .where(category_members: { id: member_joined_categories(member).ids })
             .where('start_time >= ? AND start_time < ?', @begin_date, @end_date + 1)
+            .order(:start_time)
     end
 
     def member_joined_categories(member)
