@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328070916) do
+ActiveRecord::Schema.define(version: 20170330095156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,8 @@ ActiveRecord::Schema.define(version: 20170328070916) do
     t.integer  "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "company_id"
+    t.index ["company_id"], name: "index_jobs_members_on_company_id", using: :btree
     t.index ["job_id"], name: "index_jobs_members_on_job_id", using: :btree
     t.index ["member_id"], name: "index_jobs_members_on_member_id", using: :btree
   end
@@ -198,6 +200,7 @@ ActiveRecord::Schema.define(version: 20170328070916) do
   add_foreign_key "category_members", "project_members"
   add_foreign_key "clients", "companies"
   add_foreign_key "holidays", "companies"
+  add_foreign_key "jobs_members", "companies"
   add_foreign_key "jobs_members", "jobs"
   add_foreign_key "jobs_members", "members"
   add_foreign_key "members", "companies"

@@ -4,12 +4,12 @@ module RegistrationsHelper
             .permit(:first_name, :last_name, :email, :password, :password_confirmation)
     end
 
-    def create_company param_company
+    def create_company(param_company)
         Company.new(name: param_company['company_domain'], domain: param_company['company_domain'].slice(0,20))
     end
 
     def create_member
-        @company.members.build(user_id: @resource.id, role_id: @role.id)
+        @company.members.new(user_id: @resource.id, role_id: @role.id)
     end
 
     def save_user
@@ -32,16 +32,17 @@ module RegistrationsHelper
             @member = create_member
             Member.transaction do
                 @member.save!
-                create_default_job
+                create_default_job(params[:user]['company_domain'])
             end
 
             return_message I18n.t('success'), UserSerializer.new(@resource)
         end
     end
 
-    def create_default_job
-        @member.jobs_members.create!(job_id: Job.find_or_create_by(name: 'President'))  if params['company_domain']
-        @member.jobs_members.create!(job_id: Job.find_or_create_by(name: 'Developper'))  if params['invited_token']
+    def create_default_job(company)
+        job = company.blank? ? Job.find_or_create_by(name: 'Developper') : Job.find_or_create_by(name: 'President')
+
+        @company.jobs_members.create!(job_id: job.id, member_id: @member.id)
     end
 
     def update_params

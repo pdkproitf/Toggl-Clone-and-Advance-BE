@@ -49,6 +49,7 @@ en:
     over_date: "Over day. Today over start date"
     less_than_end_date: "Have to less than end date"
     already:  "%{content} already exist"
+    url: 'is not a valid HTTP URL'
 
     user:
         errors:
