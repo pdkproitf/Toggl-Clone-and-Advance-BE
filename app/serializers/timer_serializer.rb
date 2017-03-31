@@ -3,7 +3,7 @@ class TimerSerializer < ActiveModel::Serializer
              :project_id, :project_name, :category_name, :background
   belongs_to :task, serializer: TaskSerializer
 
-  attr_reader :overtime_type, :start_time_overtime
+  attr_reader :overtime_type, :start_time_overtime, :stop_time_overtime
   attribute :overtime_type, if: :overtime_type
   attribute :overtime, if: :overtime_type
 
@@ -11,6 +11,7 @@ class TimerSerializer < ActiveModel::Serializer
     super(timer)
     @overtime_type = options[:overtime_type] || nil
     @start_time_overtime = options[:start_time_overtime] || nil
+    @stop_time_overtime = options[:stop_time_overtime] || nil
   end
 
   def overtime
@@ -20,6 +21,11 @@ class TimerSerializer < ActiveModel::Serializer
   def start_time
     return @start_time_overtime if @start_time_overtime.present?
     object.start_time
+  end
+
+  def stop_time
+    return @stop_time_overtime if @stop_time_overtime.present?
+    object.stop_time
   end
 
   def category_member_id
