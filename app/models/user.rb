@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+    include UrlValidator
+
     before_save :downcase_email
     # after_create :send_confirmation_email
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -20,10 +22,17 @@ class User < ActiveRecord::Base
     validates :email, presence: true, length: { maximum: Settings.mail_max_length },
                       format: { with: VALID_EMAIL_REGEX },
                       uniqueness: { case_sensitive: false }
-    validates :password, presence: true, length: { minimum: Settings.password_min_length },
-                         allow_nil: true
+    validates :password, presence: true, allow_nil: true,
+                         length: { minimum: Settings.password_min_length }
+
+    # validates :image, http_url: true
+    validate  :is_url?
 
     private
+    def is_url?
+        return unless image
+        errors.add(:image, I18n.t("url")) unless url_valid?(image)
+    end
 
     # Converts email to all lower-case
     def downcase_email
