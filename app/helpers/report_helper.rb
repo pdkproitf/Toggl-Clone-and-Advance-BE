@@ -190,19 +190,24 @@ module ReportHelper
         # If week has no overtime, then skip
         next unless weeks[week_start_date][:overtime] > 0
         options = {}
+        # binding.pry
         if weeks[week_start_date][:holidays].include?(week_date) # Overtime in holidays
-          if weeks[week_start_date][:overtime_temp] < 0
+          if weeks[week_start_date][:overtime_temp] - timer.tracked_time < 0
             options[:start_time_overtime] = timer.stop_time + weeks[week_start_date][:overtime_temp]
-            break
           else
+            if timer.tracked_time > weeks[week_start_date][:overtime_temp]
+              options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime_temp]
+            end
             options[:overtime_type] = @overtime_type[:holiday]
             weeks[week_start_date][:overtime_temp] -= timer.tracked_time
           end
         elsif week_date.wday == 0 || week_date.wday == 6 # Overtime in weekend
-          if weeks[week_start_date][:overtime_temp] < 0
+          if weeks[week_start_date][:overtime_temp] - timer.tracked_time < 0
             options[:start_time_overtime] = timer.stop_time + weeks[week_start_date][:overtime_temp]
-            break
           else
+            if timer.tracked_time > weeks[week_start_date][:overtime_temp]
+              options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime_temp]
+            end
             options[:overtime_type] = @overtime_type[:weekend]
             weeks[week_start_date][:overtime_temp] -= timer.tracked_time
           end
