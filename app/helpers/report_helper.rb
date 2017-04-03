@@ -164,6 +164,12 @@ module ReportHelper
       tasks
     end
 
+    def week_info(week_start_date)
+      # Get all holidays in week
+      holidays = holidays_in_week(@reporter.company, week_start_date, @begin_week)
+      holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
+    end
+
     def member_overtime(member)
       weeks = {} # Include information of weeks - working_time, overtime and holidays
       timers = [] # Overtime timers
@@ -174,7 +180,7 @@ module ReportHelper
         week_start_date = week_start_date(week_date, @begin_week)
         if weeks[week_start_date].blank? # Create info for new week
           # Get all holidays in week
-          holidays = holidays_in_week(@reporter.company, week_date, @begin_week)
+          holidays = holidays_in_week(@reporter.company, week_start_date)
           holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
           # Calculate working time that has to do in week
           week_working_hour = @working_time_per_week - holidays_not_weekend.length * @working_time_per_day
@@ -226,9 +232,7 @@ module ReportHelper
       #     if (day_time_totals[week_date] - timer.tracked_time) < @working_time_per_day * 3600
       #       options[:overtime_type] = @overtime_type[:normal]
       #       options[:start_time_overtime] = timer.stop_time - day_overtime
-      #       weeks[week_start_date][:overtime_temp] -= day_overtime
-      #     else
-      #       if timer.tracked_time > weeks[week_start_date][:overtime_temp]
+      #       weeks[week_acked_time > weeks[week_start_date][:overtime_temp]
       #         options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime_temp]
       #       end
       #       options[:overtime_type] = @overtime_type[:normal]
