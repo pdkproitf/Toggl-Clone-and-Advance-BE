@@ -22,8 +22,8 @@ module HolidayApi
             params do
                 requires :holiday, type: Hash do
                     requires :name, type: String, desc: 'Holiday name'
-                    requires :begin_date, type: Date, desc: 'Begin day'
-                    requires :end_date, type: Date, desc: 'End day'
+                    requires :begin_date, type: DateTime, desc: 'Begin day'
+                    requires :end_date, type: DateTime, desc: 'End day'
                 end
             end
             post do
@@ -41,8 +41,8 @@ module HolidayApi
             params do
                 requires :holiday, type: Hash do
                     requires :name, type: String, desc: 'Holiday name'
-                    requires :begin_date, type: Date, desc: 'Begin day'
-                    requires :end_date, type: Date, desc: 'End day'
+                    requires :begin_date, type: DateTime, desc: 'Begin day'
+                    requires :end_date, type: DateTime, desc: 'End day'
                 end
             end
             put ':id' do
