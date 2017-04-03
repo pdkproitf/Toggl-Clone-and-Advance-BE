@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170330095156) do
+ActiveRecord::Schema.define(version: 20170403050821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20170330095156) do
 
   create_table "holidays", force: :cascade do |t|
     t.string   "name",       null: false
-    t.date     "begin_date", null: false
-    t.date     "end_date",   null: false
+    t.datetime "begin_date", null: false
+    t.datetime "end_date",   null: false
     t.integer  "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
