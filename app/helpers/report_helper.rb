@@ -164,10 +164,17 @@ module ReportHelper
       tasks
     end
 
-    def week_info(week_start_date)
+    def week_info(week_start_date, member)
       # Get all holidays in week
-      holidays = holidays_in_week(@reporter.company, week_start_date, @begin_week)
+      holidays = holidays_in_week(@reporter.company, week_start_date)
       holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
+      # Calculate working time that has to do in week
+      week_working_hour = @working_time_per_week - holidays_not_weekend.length * @working_time_per_day
+      # Start to create week's info
+      week = { working_time: week_working_hour * 3600 }
+      week[:overtime] = week_working_time(week_start_date, member) - week[:working_time]
+      week[:holidays] = holidays
+      week
     end
 
     def member_overtime(member)
@@ -178,19 +185,7 @@ module ReportHelper
         week_date = timer.start_time.to_date
         # A week is identified by the first day of week
         week_start_date = week_start_date(week_date, @begin_week)
-        if weeks[week_start_date].blank? # Create info for new week
-          # Get all holidays in week
-          holidays = holidays_in_week(@reporter.company, week_start_date)
-          holidays_not_weekend = holidays.select { |holiday| holiday.wday != 0 && holiday.wday != 6 }
-          # Calculate working time that has to do in week
-          week_working_hour = @working_time_per_week - holidays_not_weekend.length * @working_time_per_day
-          # Start to create week's info
-          weeks[week_start_date] = { working_time: week_working_hour * 3600 }
-          week_overtime = week_working_time(week_start_date, member) - weeks[week_start_date][:working_time]
-          weeks[week_start_date][:overtime] = week_overtime
-          # weeks[week_start_date][:overtime_temp] = week_overtime
-          weeks[week_start_date][:holidays] = holidays
-        end
+        weeks[week_start_date] = week_info(week_start_date, member) if weeks[week_start_date].blank? # Create info for new week
 
         # If week has no overtime, then skip
         next unless weeks[week_start_date][:overtime] > 0
