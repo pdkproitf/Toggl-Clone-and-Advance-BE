@@ -14,8 +14,8 @@ module TimerApi
       desc 'Get all timers in period time'
       params do
         requires :period, type: Hash do
-          requires :from_day, type: Date, desc: 'From day'
-          requires :to_day, type: Date, desc: 'To day'
+          requires :from_day, type: DateTime, desc: 'From day'
+          requires :to_day, type: DateTime, desc: 'To day'
         end
       end
       get do
