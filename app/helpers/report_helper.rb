@@ -177,14 +177,14 @@ module ReportHelper
       week
     end
 
+    # Calculate member's timers that are overtime
     def member_overtime(member)
       weeks = {} # Include information of weeks - working_time, overtime and holidays
       timers = [] # Overtime timers
       normal_timers = [] # Include the normal timers (not weekend or holiday)
       overtime_timers(member).each do |timer|
-        week_date = timer.start_time.to_date
-        # A week is identified by the first day of week
-        week_start_date = week_start_date(week_date, @begin_week)
+        week_date = timer.start_time.to_date # Get date of timer
+        week_start_date = week_start_date(week_date, @begin_week) # A week is identified by the first day of week
         weeks[week_start_date] = week_info(week_start_date, member) if weeks[week_start_date].blank? # Create info for new week
 
         # If week has no overtime, then skip
@@ -193,53 +193,61 @@ module ReportHelper
         if weeks[week_start_date][:holidays].include?(week_date) # Overtime in holidays
           options[:overtime_type] = @overtime_type[:holiday]
           if weeks[week_start_date][:overtime] - timer.tracked_time < 0 # Leftover overtime less than period time of timer
-            options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime]
-            weeks[week_start_date][:overtime] = 0
+            options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime] # Adjust the stop_time of timer
+            weeks[week_start_date][:overtime] = 0 # Because there is no overtime left over
           else
             weeks[week_start_date][:overtime] -= timer.tracked_time
           end
         elsif week_date.wday == 0 || week_date.wday == 6 # Overtime in weekend
           options[:overtime_type] = @overtime_type[:weekend]
-          if weeks[week_start_date][:overtime] - timer.tracked_time < 0
-            options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime]
-            weeks[week_start_date][:overtime] = 0
+          if weeks[week_start_date][:overtime] - timer.tracked_time < 0 # Leftover overtime less than period time of timer
+            options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime] # Adjust the stop_time of timer
+            weeks[week_start_date][:overtime] = 0 # Because there is no overtime left over
           else
             weeks[week_start_date][:overtime] -= timer.tracked_time
           end
         else # If week_date is a normal day
-          normal_timers.push(timer)
+          normal_timers.push(timer) # classify timers in not special days to process later
+        end
+        # Serialize the timer that overtime
+        timers.push(TimerSerializer.new(timer, options).as_json) if options[:overtime_type].present?
+      end
+
+      # Calculate overtime for normal days
+      day_time_totals = {}
+      normal_timers.each do |timer|
+        week_date = timer.start_time.to_date
+        week_start_date = week_start_date(week_date, @begin_week)
+
+        day_time_totals[week_date] = 0 if day_time_totals[week_date].nil?
+        day_time_totals[week_date] += timer.tracked_time
+        day_overtime = day_time_totals[week_date] - @working_time_per_day * 3600
+        options = {}
+        if weeks[week_start_date][:overtime] > 0 && day_overtime > 0
+          options[:overtime_type] = @overtime_type[:normal]
+          if (day_time_totals[week_date] - timer.tracked_time) < @working_time_per_day * 3600
+            options[:start_time_overtime] = timer.stop_time - day_overtime
+            if weeks[week_start_date][:overtime] - day_overtime < 0 # Leftover overtime less than period time of adjusted timer
+              options[:stop_time_overtime] = options[:start_time_overtime] + weeks[week_start_date][:overtime] # Adjust the stop_time of timer
+              weeks[week_start_date][:overtime] = 0 # Because there is no overtime left over
+            else
+              weeks[week_start_date][:overtime] -= day_overtime
+            end
+          else
+            if weeks[week_start_date][:overtime] - timer.tracked_time < 0 # Leftover overtime less than period time of adjusted timer
+              options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime] # Adjust the stop_time of timer
+              weeks[week_start_date][:overtime] = 0 # Because there is no overtime left over
+            else
+              weeks[week_start_date][:overtime] -= timer.tracked_time
+            end
+          end
         end
 
         timers.push(TimerSerializer.new(timer, options).as_json) if options[:overtime_type].present?
       end
-
-      # # Calculate overtime for normal days
-      # day_time_totals = {}
-      # normal_timers.each do |timer|
-      #   week_date = timer.start_time.to_date
-      #   week_start_date = week_start_date(week_date, @begin_week)
-      #
-      #   day_time_totals[week_date] = 0 if day_time_totals[week_date].nil?
-      #   day_time_totals[week_date] += timer.tracked_time
-      #   day_overtime = day_time_totals[week_date] - @working_time_per_day * 3600
-      #   options = {}
-      #   if weeks[week_start_date][:overtime_temp] > 0 && day_overtime > 0
-      #     if (day_time_totals[week_date] - timer.tracked_time) < @working_time_per_day * 3600
-      #       options[:overtime_type] = @overtime_type[:normal]
-      #       options[:start_time_overtime] = timer.stop_time - day_overtime
-      #       weeks[week_acked_time > weeks[week_start_date][:overtime_temp]
-      #         options[:stop_time_overtime] = timer.start_time + weeks[week_start_date][:overtime_temp]
-      #       end
-      #       options[:overtime_type] = @overtime_type[:normal]
-      #       weeks[week_start_date][:overtime_temp] -= timer.tracked_time
-      #     end
-      #   end
-      #   next unless options[:overtime_type].present?
-      #   timers.push(TimerSerializer.new(timer, options).as_json)
-      # end
       # Return result order by start_time asc
       timers.sort_by! { |hsh| hsh[:start_time] }
-    end
+    end # End of member_overtime function
 
     # ===================== GET TIMER ===================
     def overtime_timers(member)

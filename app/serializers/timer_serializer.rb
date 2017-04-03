@@ -15,7 +15,7 @@ class TimerSerializer < ActiveModel::Serializer
   end
 
   def overtime
-    object.stop_time - start_time
+    stop_time - start_time
   end
 
   def start_time
