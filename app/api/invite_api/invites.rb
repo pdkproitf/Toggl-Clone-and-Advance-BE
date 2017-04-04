@@ -17,10 +17,10 @@ module InviteApi
                 invite.send_email "#{Settings.front_end}/#/#{link}"
             end
 
-            def create_default_job
+            def create_default_job(member)
                 job = Job.find_or_create_by(name: 'Developper')
-                company_job = @company.company_jobs.find_or_create_by(job_id: job.id)
-                company_job.jobs_members.create!(member_id: @member.id)
+                company_job = @invite.sender.company.company_jobs.find_or_create_by(job_id: job.id)
+                company_job.jobs_members.create!(member_id: member.id)
             end
         end
 
@@ -43,10 +43,9 @@ module InviteApi
                     @invite.update_attributes!(recipient_id: user.id, is_accepted: true, invite_token: nil)
                     member_role = Role.find_or_create_by!(name: 'Member')
                     Member.transaction do
-                        @invite.sender.company.members.create!(user_id: @invite.recipient_id,
-                            role_id: member_role.id)
-                        create_default_job
-                        return return_message I18n.t("success")
+                        member = @invite.sender.company.members.create!(user_id: @invite.recipient_id, role_id: member_role.id)
+                        create_default_job(member)
+                        return_message(I18n.t("success"))
                     end
                 end
             end
@@ -58,7 +57,7 @@ module InviteApi
             desc 'Get all Invite'
             get do
                 error!(I18n.t("access_denied")) unless @current_member.admin? || @current_member.pm?
-                return_message(I18n.t('success'), Invite.all.map { |e|  InviteSerializer.new(e)})
+                return_message(I18n.t('success'), Invite.all.map {|e|  InviteSerializer.new(e)})
             end
 
             desc 'Invite member to company'
