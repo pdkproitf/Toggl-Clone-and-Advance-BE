@@ -33,12 +33,28 @@ module JobApi
                 return_message(I18n.t('success'), JobSerializer.new(job))
             end
 
-            desc 'Destroy Jobs of company'
-            delete ':id' do
+            desc 'edit job in company'
+            params do
+                requires :job, type: Hash do
+                    requires :name, type: String, desc: 'job title'
+                end
+            end
+            put ':id' do # => id of job
                 company_jobs = @current_member.company.company_jobs.find_by_job_id(params[:id])
                 error!(I18n.t('not_found', title: "Company Job"), 404) unless company_jobs
 
-                @current_member.company.company_jobs.where(job_id: job.id).destroy_all
+                job = Job.find_or_create_by!(name: params[:job][:name])
+                company_jobs.update_attributes(job_id: job.id)
+
+                return_message(I18n.t('success'))
+            end
+
+            desc 'Destroy Jobs of company'
+            delete ':id' do
+                company_job = @current_member.company.company_jobs.find_by_job_id(params[:id])
+                error!(I18n.t('not_found', title: "Company Job"), 404) unless company_job
+
+                company_job.destroy!
                 status 200
                 return_message(I18n.t('success'))
             end
