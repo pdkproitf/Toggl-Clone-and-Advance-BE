@@ -5,8 +5,9 @@ class Company < ApplicationRecord
   has_many :invites
   has_many :projects, -> { where(is_archived: false) }, through: :members
   has_many :holidays, dependent: :destroy
-  has_many :jobs_members
-  has_many :jobs, through: :jobs_members
+  has_many :company_jobs
+  has_many :jobs_members, through: :company_jobs
+  has_many :jobs, through: :jobs_members, source: :job
   has_many :timeoffs, through: :members, source: :off_requests
 
   VALID_DOMAIN_REGEX = /\A[\w0-9+\-.]+[a-z0-9]+\z/i
