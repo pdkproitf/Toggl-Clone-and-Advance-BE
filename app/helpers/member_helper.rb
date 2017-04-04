@@ -13,7 +13,9 @@ module MemberHelper
 
     def update_jobs(new_jobs, member)
         job_removed(member.jobs, new_jobs, member)
-        new_jobs.each{|id| member.jobs_members.find_or_create_by!(job_id: Job.find(id).id)}
+        new_jobs.each do |id|
+            member.jobs_members.find_or_create_by!(job_id: Job.find(id).id, company_id: member.company_id)
+        end
     end
 
     # => find job was removed in front end and removed it
