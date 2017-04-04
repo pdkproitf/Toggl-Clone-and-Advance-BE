@@ -8,3 +8,5 @@ domain_min_length: 3
 domain_max_length: 20
 send_later: 2
 role_min_length: 2
+# host: 'https://timecloudbackend.herokuapp.com'
+host: 'https://pdk-timecloud.herokuapp.com'
