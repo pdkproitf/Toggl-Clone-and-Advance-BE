@@ -35,9 +35,9 @@ module JobApi
 
             desc 'Destroy Jobs of company'
             delete ':id' do
-                job = @current_member.company.company_jobs.find_by_job_id(params[:id])
-                error!(I18n.t('not_found', title: "Company Job"), 404)
-                
+                company_jobs = @current_member.company.company_jobs.find_by_job_id(params[:id])
+                error!(I18n.t('not_found', title: "Company Job"), 404) unless company_jobs
+
                 @current_member.company.company_jobs.where(job_id: job.id).destroy_all
                 status 200
                 return_message(I18n.t('success'))
