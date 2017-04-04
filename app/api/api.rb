@@ -23,6 +23,7 @@ module API
     mount ReportApi::Reports
     mount ReportApi::ReportAdvances
     mount JobApi::Jobs
+    mount RoleApi::Roles
 
     add_swagger_documentation(
       api_version: 'v1',
