@@ -95,7 +95,7 @@ module TimeOffHelper
 
     # get all request
     def get_all
-        data = @current_member.company,timeoffs.map { |e| TimeOffSerializer.new(e)}
+        data = @current_member.company.timeoffs.map {|e| TimeOffSerializer.new(e)}
         return_message(I18n.t('success'), data)
     end
 
@@ -104,12 +104,12 @@ module TimeOffHelper
         (params['status'] == 'pending')? without_member_ordinal : member_ordinal
     end
 
-    # using get timeoff of in phase for show person request and manage request
+    # using get timeoff of under current_member role
     # without ordinal member
     def without_member_ordinal
         off_requests = @current_member.off_requests.map {|e| TimeOffSerializer.new(e)}
         pending_requests = []
-        pending_requests = TimeOff
+        pending_requests = @current_member.off_requests
             .where("start_date >= (?) and created_at <= (?) and status = ?" ,
                 params['from_date'], params['to_date'], TimeOff.statuses[:pending])
             .map {|e| TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?

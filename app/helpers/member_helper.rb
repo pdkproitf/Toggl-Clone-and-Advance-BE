@@ -14,14 +14,17 @@ module MemberHelper
     def update_jobs(new_jobs, member)
         job_removed(member.jobs, new_jobs, member)
         new_jobs.each do |id|
-            member.jobs_members.find_or_create_by!(job_id: Job.find(id).id, company_id: member.company_id)
+            company_jobs = member.company.company_jobs.find_or_create_by!(job_id: id)
+            company_jobs.jobs_members.find_or_create_by!(member_id: member.id)
         end
     end
 
     # => find job was removed in front end and removed it
     def job_removed(current_jobs, new_jobs, member)
         current_jobs.reject{|x| new_jobs.include? x.id}
-        member.jobs_members.where(job_id: current_jobs).destroy_all
+
+        company_jobs = member.company.company_jobs.where(job_id: current_jobs)
+        company_jobs.each{|company_job| company_job.jobs_members.where(member_id: member.id).destroy_all}
     end
 
     # archived memberis working in projects

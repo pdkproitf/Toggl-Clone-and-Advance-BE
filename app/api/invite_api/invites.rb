@@ -18,7 +18,9 @@ module InviteApi
             end
 
             def create_default_job
-                @member.jobs_members.create!(job_id: Job.find_or_create_by(name: 'Developper'))
+                job = Job.find_or_create_by(name: 'Developper')
+                company_job = @company.company_jobs.find_or_create_by(job_id: job.id)
+                company_job.jobs_members.create!(member_id: @member.id)
             end
         end
 

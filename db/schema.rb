@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403050821) do
+ActiveRecord::Schema.define(version: 20170404072923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,15 @@ ActiveRecord::Schema.define(version: 20170403050821) do
     t.integer  "working_time_per_week", default: 40
   end
 
+  create_table "company_jobs", force: :cascade do |t|
+    t.integer  "company_id"
+    t.integer  "job_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_jobs_on_company_id", using: :btree
+    t.index ["job_id"], name: "index_company_jobs_on_job_id", using: :btree
+  end
+
   create_table "holidays", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "begin_date", null: false
@@ -82,12 +91,10 @@ ActiveRecord::Schema.define(version: 20170403050821) do
 
   create_table "jobs_members", force: :cascade do |t|
     t.integer  "member_id"
-    t.integer  "job_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "company_id"
-    t.index ["company_id"], name: "index_jobs_members_on_company_id", using: :btree
-    t.index ["job_id"], name: "index_jobs_members_on_job_id", using: :btree
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "company_job_id"
+    t.index ["company_job_id"], name: "index_jobs_members_on_company_job_id", using: :btree
     t.index ["member_id"], name: "index_jobs_members_on_member_id", using: :btree
   end
 
@@ -199,9 +206,10 @@ ActiveRecord::Schema.define(version: 20170403050821) do
   add_foreign_key "category_members", "categories"
   add_foreign_key "category_members", "project_members"
   add_foreign_key "clients", "companies"
+  add_foreign_key "company_jobs", "companies"
+  add_foreign_key "company_jobs", "jobs"
   add_foreign_key "holidays", "companies"
-  add_foreign_key "jobs_members", "companies"
-  add_foreign_key "jobs_members", "jobs"
+  add_foreign_key "jobs_members", "company_jobs"
   add_foreign_key "jobs_members", "members"
   add_foreign_key "members", "companies"
   add_foreign_key "members", "roles"
