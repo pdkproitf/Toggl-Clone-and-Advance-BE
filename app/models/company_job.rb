@@ -1,7 +1,7 @@
 class CompanyJob < ApplicationRecord
     belongs_to :company
     belongs_to :job
-    has_many :jobs_members
+    has_many :jobs_members, dependent: :destroy
 
     validates_presence_of :job_id, :company_id
     validates_uniqueness_of :job_id, scope: [:company_id]

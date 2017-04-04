@@ -17,7 +17,7 @@ module JobApi
                     @current_member.company.jobs.uniq.map {|e| JobSerializer.new(e)})
             end
 
-            desc 'create new job'
+            desc 'create new job for company'
             params do
                 requires :job, type: Hash do
                     requires :name, type: String, desc: 'job title'
@@ -28,9 +28,19 @@ module JobApi
                 error!(I18n.t('already', content: params[:job][:name]), 409) if job
 
                 job = Job.find_or_create_by!(name: params[:job][:name])
-                @current_member.company.jobs_members.create!(job_id: job.id)
+                @current_member.company.company_jobs.find_or_create_by(job_id: job.id)
 
                 return_message(I18n.t('success'), JobSerializer.new(job))
+            end
+
+            desc 'Destroy Jobs of company'
+            delete ':id' do
+                job = @current_member.company.company_jobs.find_by_job_id(params[:id])
+                error!(I18n.t('not_found', title: "Company Job"), 404)
+                
+                @current_member.company.company_jobs.where(job_id: job.id).destroy_all
+                status 200
+                return_message(I18n.t('success'))
             end
         end
     end
