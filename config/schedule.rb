@@ -18,10 +18,6 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 1.day, at: '03:29 pm' do
-  runner 'SendReportJob.perform_later(User.find(6))'
-end
-
-every 1.day, at: '03:32 pm' do
-  runner 'ReportMailer.sample_email(User.find(6)).deliver_later'
+every 1.minutes do
+  rake 'report:mailweek'
 end
