@@ -22,7 +22,7 @@ class Member < ApplicationRecord
 
     has_many :jobs_members
     has_many :jobs, through: :jobs_members
-    
+
     validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
 
     # default_scope ->{ where(is_archived: false) }
@@ -103,5 +103,11 @@ class Member < ApplicationRecord
         project_member = project_members.create!
         category_member = project_member.category_members.create!
         task = category_member.tasks.create!(name: name)
+    end
+
+    def create_job(job_name)
+        job = Job.find_or_create_by(name: job_name)
+        company_job = company.company_jobs.find_or_create_by(job_id: job.id)
+        company_job.jobs_members.create!(member_id: id)
     end
 end

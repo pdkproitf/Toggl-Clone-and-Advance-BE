@@ -18,9 +18,7 @@ module InviteApi
             end
 
             def create_default_job(member)
-                job = Job.find_or_create_by(name: 'Developper')
-                company_job = @invite.sender.company.company_jobs.find_or_create_by(job_id: job.id)
-                company_job.jobs_members.create!(member_id: member.id)
+                member.create_job('Developper')
             end
         end
 
@@ -43,7 +41,8 @@ module InviteApi
                     @invite.update_attributes!(recipient_id: user.id, is_accepted: true, invite_token: nil)
                     member_role = Role.find_or_create_by!(name: 'Member')
                     Member.transaction do
-                        member = @invite.sender.company.members.create!(user_id: @invite.recipient_id, role_id: member_role.id)
+                        member = @invite.sender.company.members
+                            .create!(user_id: @invite.recipient_id, role_id: member_role.id)
                         create_default_job(member)
                         return_message(I18n.t("success"))
                     end
