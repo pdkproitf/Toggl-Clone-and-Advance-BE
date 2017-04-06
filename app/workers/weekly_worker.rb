@@ -10,7 +10,7 @@ class WeeklyWorker
       # Course.all.each do |course|
       #   send_email_when_end_month course
       # end
-      send_email_when_end_month(User.find(6))
+      send_email_when_end_month(User.find(2))
     end
   end
 
