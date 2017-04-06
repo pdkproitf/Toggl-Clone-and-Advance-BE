@@ -40,9 +40,8 @@ module RegistrationsHelper
     end
 
     def create_default_job(company)
-        job = company.blank? ? Job.find_or_create_by(name: 'Developper') : Job.find_or_create_by(name: 'President')
-        company_job = @company.company_jobs.find_or_create_by(job_id: job.id)
-        company_job.jobs_members.create!(member_id: @member.id)
+        job_name = company.blank? ? 'Developper' : 'President'
+        @member.create_job(job_name)
     end
 
     def update_params
