@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170330095156) do
+ActiveRecord::Schema.define(version: 20170407071354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170330095156) do
     t.integer  "working_time_per_day",  default: 8
     t.integer  "begin_week",            default: 1
     t.integer  "working_time_per_week", default: 40
+    t.string   "send_report_schedule"
   end
 
   create_table "holidays", force: :cascade do |t|

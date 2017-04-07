@@ -6,12 +6,12 @@ class WeeklyWorker
     # Course.all.each do |course|
     #   send_email_when_end_month course
     # end
-    send_email_when_end_month(User.find(6))
+    send_email(User.find(6))
   end
 
   private
 
-  def send_email_when_end_month(user)
+  def send_email(user)
     ReportMailer.sample_email(user).deliver_now
   end
 end
