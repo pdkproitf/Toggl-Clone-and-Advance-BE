@@ -66,8 +66,10 @@ gem 'faker' #
 gem 'active_model_serializers'
 gem 'grape-active_model_serializers'
 gem 'rails_best_practices'
-gem 'whenever', require: false
+
 gem 'sidekiq'
+gem 'sidekiq-client-cli'
+gem 'whenever', require: false
 
 # Using config global variable
 gem 'config'

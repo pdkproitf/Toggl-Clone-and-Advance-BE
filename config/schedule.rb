@@ -19,8 +19,21 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :environment, 'development'
+# set :environment, 'development'
+#
+# every 1.minutes do
+#   command "echo 'hello' >> /home/code-engine-studio/output.txt"
+#   runner 'WeeklyWorker.perform_async'
+#   rake 'report:mailweek'
+# end
 
+# Using the runner command loads an extra rails instance
+# If you want to avoid this you can use the sidekiq-client-cli gem which is a commmand line sidekiq client
+# Define a new job_type
+job_type :sidekiq, 'cd :path && RAILS_ENV=:environment bundle exec sidekiq-client :task :output'
+
+# Add the worker to the queue directly
 every 1.minutes do
-  rake 'report:mailweek'
+  command "echo 'hello' >> /home/code-engine-studio/output.txt"
+  sidekiq 'push WeeklyWorker'
 end
