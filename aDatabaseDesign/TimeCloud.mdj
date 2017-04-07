@@ -7499,7 +7499,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "-send_report_at",
+											"text": "-send_report_schedule",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -17290,7 +17290,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFaSv3rgbSNAxI="
 							},
-							"name": "send_report_at",
+							"name": "send_report_schedule",
 							"visibility": "private",
 							"isStatic": false,
 							"isLeaf": false,
