@@ -17,4 +17,8 @@ class Company < ApplicationRecord
   def unarchived_projects
     projects.where(is_archived: false)
   end
+
+  def self.send_mail
+    ReportMailer.sample_email(User.find(6)).deliver_now
+  end
 end
