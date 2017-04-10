@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20170404072923) do
-=======
 ActiveRecord::Schema.define(version: 20170407071354) do
->>>>>>> 40-sending-report
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
