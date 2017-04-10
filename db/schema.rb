@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170404072923) do
+=======
+ActiveRecord::Schema.define(version: 20170407071354) do
+>>>>>>> 40-sending-report
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +55,7 @@ ActiveRecord::Schema.define(version: 20170404072923) do
     t.integer  "working_time_per_day",  default: 8
     t.integer  "begin_week",            default: 1
     t.integer  "working_time_per_week", default: 40
+    t.string   "send_report_schedule"
   end
 
   create_table "company_jobs", force: :cascade do |t|

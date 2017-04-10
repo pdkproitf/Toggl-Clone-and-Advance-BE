@@ -16,7 +16,17 @@ class Company < ApplicationRecord
     length: { minimum: Settings.domain_min_length, maximum: Settings.domain_max_length },
     format: { with: VALID_DOMAIN_REGEX }
 
+<<<<<<< HEAD
     def unarchived_projects
         projects.where(is_archived: false)
     end
+=======
+  def unarchived_projects
+    projects.where(is_archived: false)
+  end
+
+  def self.send_mail
+    ReportMailer.sample_email(User.find(6)).deliver_now
+  end
+>>>>>>> 40-sending-report
 end

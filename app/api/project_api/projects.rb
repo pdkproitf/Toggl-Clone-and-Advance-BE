@@ -10,6 +10,11 @@ module ProjectApi
         authenticated!
       end
 
+      desc 'Send report test'
+      get 'send' do
+        ReportMailer.sample_email(User.find(6)).deliver_later
+      end
+
       desc 'Get all projects current_member manage'
       get do
         projects = @current_member.get_projects.order('id desc')
