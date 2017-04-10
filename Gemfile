@@ -72,6 +72,7 @@ gem 'sidekiq-client-cli'
 gem 'whenever', require: false
 
 gem 'prawn'
+gem 'rubyzip'
 
 # Using config global variable
 gem 'config'
