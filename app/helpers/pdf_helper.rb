@@ -6,7 +6,7 @@ module PdfHelper
       input_filenames.each do |filename|
         zipfile.add(filename, folder + '/' + filename)
       end
-      zipfile.get_output_stream('myFile') { |os| os.write 'myFile contains just this' }
+      # zipfile.get_output_stream('myFile') { |os| os.write 'myFile contains just this' }
     end
   end
 end
