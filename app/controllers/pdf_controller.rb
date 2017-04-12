@@ -10,7 +10,7 @@ class PdfController < ApplicationController
     FileUtils.rm_r folder if File.directory?(folder)
     Dir.mkdir folder
 
-    @projects = Client.all.order(:name)
+    @projects = Project.all.order(:name)
     @projects.each do |project|
       ReportPdf.new(project)
     end

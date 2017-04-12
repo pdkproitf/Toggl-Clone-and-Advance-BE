@@ -24,12 +24,6 @@
 # Define a new job_type
 job_type :sidekiq, 'cd :path && RAILS_ENV=:environment bundle exec sidekiq-client :task :output'
 
-# Add the worker to the queue directly
-# every 1.minutes do
-#   command "echo 'hello' >> /home/code-engine-studio/output.txt"
-#   sidekiq 'push WeeklyWorker'
-# end
-
 require './' + File.dirname(__FILE__) + '/environment.rb'
 set :output, "#{path}/log/cron.log" # logs
 @companies = Company.all
@@ -37,6 +31,5 @@ set :output, "#{path}/log/cron.log" # logs
   next unless company.send_report_schedule.present?
   every company.send_report_schedule do
     sidekiq 'push WeeklyWorker'
-    # runner 'Company.send_mail'
   end
 end
