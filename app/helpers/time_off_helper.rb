@@ -109,8 +109,8 @@ module TimeOffHelper
     def without_member_ordinal
         off_requests = @current_member.off_requests.map {|e| TimeOffSerializer.new(e)}
         pending_requests = []
-        pending_requests = @current_member.off_requests
-            .where("start_date >= (?) and created_at <= (?) and status = ?" ,
+        pending_requests = @current_member.company.timeoffs
+            .where("time_offs.start_date >= (?) and time_offs.created_at <= (?) and time_offs.status = ?" ,
                 params['from_date'], params['to_date'], TimeOff.statuses[:pending])
             .map {|e| TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
 
