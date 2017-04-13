@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413025752) do
+ActiveRecord::Schema.define(version: 20170413030939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,9 +154,11 @@ ActiveRecord::Schema.define(version: 20170413025752) do
     t.string   "at"
     t.integer  "clock_job_id"
     t.jsonb    "clock_job_arguments"
+    t.integer  "company_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.index ["clock_job_id"], name: "index_schedulers_on_clock_job_id", using: :btree
+    t.index ["company_id"], name: "index_schedulers_on_company_id", using: :btree
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -237,6 +239,7 @@ ActiveRecord::Schema.define(version: 20170413025752) do
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "members"
   add_foreign_key "schedulers", "clock_jobs"
+  add_foreign_key "schedulers", "companies"
   add_foreign_key "tasks", "category_members"
   add_foreign_key "timers", "tasks"
 end

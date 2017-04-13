@@ -4,8 +4,9 @@ class CreateSchedulers < ActiveRecord::Migration[5.0]
       t.string :name
       t.integer :frequency
       t.string :at
-      t.references :clock_job, foreign_key: true, index: true
+      t.references :clock_job, foreign_key: true
       t.jsonb :clock_job_arguments
+      t.references :company, foreign_key: true
 
       t.timestamps
     end
