@@ -1,5 +1,5 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :name, :client, :background,
+  attributes :id, :name, :client, :background, :updated_at,
              :is_member_report, :tracked_time
   attr_reader :chart_serialized, :members_serialized, :categories_serialized
   attribute :chart, if: :chart_serialized
