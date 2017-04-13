@@ -24,4 +24,8 @@ class Company < ApplicationRecord
   def active_users
     users.where(members: { is_archived: false })
   end
+
+  def admin
+    members.joins(:role).where(roles: { name: 'Admin' }, is_archived: false).first
+  end
 end

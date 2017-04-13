@@ -4,7 +4,11 @@ class SendReportJob < ApplicationJob
   def perform(args)
     puts 'Send report Oh yeah!'
     company = Company.find(args['company_id'])
-    puts company.name
-    # ReportMailer.sample_email(User.find(6)).deliver_now
+    active_users = company.active_users
+
+    active_users.each do |user|
+      puts user.email
+      ReportMailer.sample_email(user, company).deliver_now
+    end
   end
 end

@@ -1,6 +1,7 @@
 class ReportMailer < ApplicationMailer
-  def sample_email(user)
+  def sample_email(user, company)
     @user = user
-    mail to: @user.email, subject: 'Tracked Time Report'
+    @company = company
+    mail to: @user.email, subject: 'Time Cloud weekly report'
   end
 end
