@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   mount API::Root => '/'
   mount GrapeSwaggerRails::Engine => '/swagger'
   delete 'sig', to: 'welcome#temp'
+
+  mount LetterOpenerWeb::Engine, at: '/devel/emails' if Rails.env.development?
 end

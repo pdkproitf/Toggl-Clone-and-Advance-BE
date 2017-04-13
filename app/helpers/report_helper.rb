@@ -38,7 +38,7 @@ module ReportHelper
     end
 
     def report_member_tasks
-      member_tasks
+      member_tasks.as_json
     end
 
     private

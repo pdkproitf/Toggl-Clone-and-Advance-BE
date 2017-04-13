@@ -1,3 +1,21 @@
-<h1>Hi <%= @user.first_name %></h1>
+<h1 style="color: green; font-weigh: bold;">Hi <%= @user.first_name %></h1>
 <h2>Tasks tracked last week (2017-03-12 - 2017-03-18)</h2>
 <h3><%= @company.name %></h3>
+
+<div class="">
+  <table>
+  <tr>
+    <th>Month</th>
+    <th>Savings</th>
+  </tr>
+  <tr>
+    <td>January</td>
+    <td>$100</td>
+  </tr>
+  <tr>
+    <td>February</td>
+    <td>$80</td>
+  </tr>
+</table>
+    Data: <%= @data %>
+</div>

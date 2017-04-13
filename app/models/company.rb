@@ -21,8 +21,8 @@ class Company < ApplicationRecord
     projects.where(is_archived: false)
   end
 
-  def active_users
-    users.where(members: { is_archived: false })
+  def active_members
+    members.where(is_archived: false)
   end
 
   def admin
