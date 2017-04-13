@@ -20,4 +20,8 @@ class Company < ApplicationRecord
   def unarchived_projects
     projects.where(is_archived: false)
   end
+
+  def active_users
+    users.where(members: { is_archived: false })
+  end
 end
