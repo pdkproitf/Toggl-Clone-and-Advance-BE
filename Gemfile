@@ -67,6 +67,7 @@ gem 'active_model_serializers'
 gem 'grape-active_model_serializers'
 gem 'rails_best_practices'
 
+gem 'clockwork'
 gem 'sidekiq'
 
 gem 'prawn'
