@@ -19,5 +19,8 @@ module Timecloud
     end
 
     config.autoload_paths << Rails.root.join('lib')
+
+    # Configure ActiveJob to use sidekiq
+    config.active_job.queue_adapter = :sidekiq
   end
 end
