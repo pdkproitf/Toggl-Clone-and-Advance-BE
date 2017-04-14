@@ -8,13 +8,16 @@ class SendReportJob < ApplicationJob
 
     company.active_members.each do |member|
       puts member.user.email
-      custom_report_data = custom_report_data(report_data(company.admin, member))
-      # ReportMailer.sample_email(member.user, company, custom_report_data).deliver_now
+      start_date = '2017-03-27'.to_date
+      end_date = start_date + 6
+      report_data = report_data(company.admin, member, start_date, end_date)
+      custom_report_data = custom_report_data(report_data)
+      ReportMailer.sample_email(member.user, company, custom_report_data, start_date, end_date).deliver_now
     end
   end
 
-  def report_data(reporter, member)
-    report = ReportHelper::Report.new(reporter, '2017-03-27'.to_date, '2017-04-01'.to_date, member: member)
+  def report_data(reporter, member, start_date, end_date)
+    report = ReportHelper::Report.new(reporter, start_date, end_date, member: member)
     report.report_member_tasks
   end
 

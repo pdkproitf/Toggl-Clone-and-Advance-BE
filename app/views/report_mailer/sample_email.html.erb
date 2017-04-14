@@ -64,24 +64,38 @@
          border-radius: 2em;
          transition: all .3s ease-out;
          }
+
+         span {
+           float: right;
+         }
+
+         .project {
+           font-size: 17px;
+           font-weight: bold;
+         }
+
+         .category {
+           font-size: 15px;
+           font-weight: bold;
+         }
       </style>
    </head>
    <body>
       <h1 style="color: green; font-weigh: bold;">Hi <%= @user.first_name %></h1>
-      <h2>Tasks tracked last week (2017-03-12 - 2017-03-18)</h2>
-      <h3><%= @company.name %></h3>
+      <h2>Tasks tracked last week (<%= @start_date %> - <%= @end_date %>)</h2>
+      <h2><%= @company.name %><span><%= Time.at(@data[:tracked_time_total]).utc.strftime("%H:%M:%S")%></span></h2>
       <div>
          <ol class="rounded-list">
          <% @data[:projects].each do |project| %>
-         <li>
-            <a href=""><%= project[:name] %></a>
+         <li class="project">
+            <a href=""><%= project[:name] %><span><%= Time.at(project[:tracked_time]).utc.strftime("%H:%M:%S") %></span></a>
             <ol>
                <% project[:categories].each do |category| %>
-               <li>
-                 <a href=""><%= category[:category_name] %></a>
+               <li class="category">
+                 <a href=""><%= category[:category_name] %><span><%= Time.at(category[:tracked_time]).utc.strftime("%H:%M:%S") %></span></a>
                  <ol>
                     <% category[:tasks].each do |task| %>
-                    <li><a href=""><%= task[:name] %></a></li>
+                    <li><a href=""><%= task[:name] %><span><%= Time.at(task[:tracked_time]).utc.strftime("%H:%M:%S") %></span></a></li>
                     <% end %>
                  </ol>
                </li>
