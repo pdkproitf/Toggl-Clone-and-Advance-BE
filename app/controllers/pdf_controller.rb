@@ -10,8 +10,17 @@ class PdfController < ApplicationController
     FileUtils.rm_r folder if File.directory?(folder)
     Dir.mkdir folder
 
-    @projects = Project.all.order(:name)
-    @projects.each do |project|
+    # @projects = Project.all.order(:name)
+    # @projects.each do |project|
+    #   ReportPdf.new(ProjectSerializer.new(project))
+    # end
+
+    start_date = '2017-03-27'.to_date
+    end_date = start_date + 6
+    report = ReportHelper::Report.new(Member.find(1), start_date, end_date)
+    projects = report.report_by_project
+
+    projects.each do |project|
       ReportPdf.new(project)
     end
 
