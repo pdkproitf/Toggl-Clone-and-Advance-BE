@@ -3,6 +3,7 @@ class ReportMailer < ApplicationMailer
     @user = user
     @company = company
     @data = data
+    # puts @data
     mail to: @user.email, subject: 'Time Cloud weekly report'
   end
 end

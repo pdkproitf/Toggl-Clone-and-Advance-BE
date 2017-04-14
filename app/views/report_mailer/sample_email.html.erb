@@ -1,21 +1,95 @@
-<h1 style="color: green; font-weigh: bold;">Hi <%= @user.first_name %></h1>
-<h2>Tasks tracked last week (2017-03-12 - 2017-03-18)</h2>
-<h3><%= @company.name %></h3>
-
-<div class="">
-  <table>
-  <tr>
-    <th>Month</th>
-    <th>Savings</th>
-  </tr>
-  <tr>
-    <td>January</td>
-    <td>$100</td>
-  </tr>
-  <tr>
-    <td>February</td>
-    <td>$80</td>
-  </tr>
-</table>
-    Data: <%= @data %>
-</div>
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Report Mailer Preview</title>
+      <style>
+         table {
+         border-collapse: collapse;
+         width: 100%;
+         }
+         th, td {
+         text-align: left;
+         padding: 8px;
+         }
+         tr:nth-child(even){background-color: #f2f2f2}
+         th {
+         background-color: #4CAF50;
+         color: white;
+         }
+         ol {
+         counter-reset: li; /* Initiate a counter */
+         list-style: none; /* Remove default numbering */
+         *list-style: decimal; /* Keep using default numbering for IE6/7 */
+         font: 15px 'trebuchet MS', 'lucida sans';
+         padding: 0;
+         margin-bottom: 4em;
+         text-shadow: 0 1px 0 rgba(255,255,255,.5);
+         }
+         ol ol {
+         margin: 0 0 0 2em; /* Add some left margin for inner lists */
+         }
+         .rounded-list a{
+         position: relative;
+         display: block;
+         padding: .4em .4em .4em 2em;
+         *padding: .4em;
+         margin: .5em 0;
+         background: #ddd;
+         color: #444;
+         text-decoration: none;
+         border-radius: .3em;
+         transition: all .3s ease-out;
+         }
+         .rounded-list a:hover{
+         background: #eee;
+         }
+         .rounded-list a:hover:before{
+         transform: rotate(360deg);
+         }
+         .rounded-list a:before{
+         content: counter(li);
+         counter-increment: li;
+         position: absolute;
+         left: -1.3em;
+         top: 50%;
+         margin-top: -1.3em;
+         background: #87ceeb;
+         height: 2em;
+         width: 2em;
+         line-height: 2em;
+         border: .3em solid #fff;
+         text-align: center;
+         font-weight: bold;
+         border-radius: 2em;
+         transition: all .3s ease-out;
+         }
+      </style>
+   </head>
+   <body>
+      <h1 style="color: green; font-weigh: bold;">Hi <%= @user.first_name %></h1>
+      <h2>Tasks tracked last week (2017-03-12 - 2017-03-18)</h2>
+      <h3><%= @company.name %></h3>
+      <div>
+         <ol class="rounded-list">
+         <% @data[:projects].each do |project| %>
+         <li>
+            <a href=""><%= project[:name] %></a>
+            <ol>
+               <% project[:categories].each do |category| %>
+               <li>
+                 <a href=""><%= category[:category_name] %></a>
+                 <ol>
+                    <% category[:tasks].each do |task| %>
+                    <li><a href=""><%= task[:name] %></a></li>
+                    <% end %>
+                 </ol>
+               </li>
+               <% end %>
+            </ol>
+         </li>
+         <% end %>
+         <ol>
+      </div>
+   </body>
+</html>
