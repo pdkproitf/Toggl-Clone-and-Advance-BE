@@ -41,6 +41,17 @@ module TimeOffApi
                 return_message(I18n.t("success"), offed_approver(offed_date))
             end
 
+            desc 'Get number pending request in company'
+            params do
+                requires :from_date, type: DateTime, desc: 'start date'
+                requires :to_date, type: DateTime, desc: 'end date'
+                requires :status, type: String, desc: 'status request'
+            end
+            get '/num-pending-request' do
+                error!(I18n.t("access_denied"), 403) unless @current_member.manager?
+                return_message(I18n.t('success'), get_pending_request.size)
+            end
+
             desc 'Get a timeoff request of themself '
             get ':id' do
                 @timeoff = @current_member.company.timeoffs.find_by_id(params['id'])
