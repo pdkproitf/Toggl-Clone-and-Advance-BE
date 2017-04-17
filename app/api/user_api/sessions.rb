@@ -19,6 +19,7 @@ module UserApi
             def data_login
                 data = MembersSerializer.new(@member).as_json
                 data.store(:user, sign_in_token_validation)
+                data.store(:pm_projects, @member.pm_projects.size)
                 data
             end
 
