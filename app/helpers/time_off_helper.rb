@@ -104,22 +104,26 @@ module TimeOffHelper
         (params['status'] == 'pending')? without_member_ordinal : member_ordinal
     end
 
-    # using get timeoff of under current_member role
-    # without ordinal member
+    # => using get timeoff of under current_member role
+    # => without ordinal member
     def without_member_ordinal
         off_requests = @current_member.off_requests.map {|e| TimeOffSerializer.new(e)}
         pending_requests = []
-        pending_requests = @current_member.company.timeoffs
-            .where("time_offs.start_date >= (?) and time_offs.created_at <= (?) and time_offs.status = ?" ,
-                params['from_date'], params['to_date'], TimeOff.statuses[:pending])
-            .map {|e| TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
+        pending_requests = get_pending_request.map {|e| TimeOffSerializer.new(e)} if @current_member.manager?
 
         return_message I18n.t("success"), {off_requests: off_requests, pending_requests: pending_requests}
     end
 
+    # => get pengind request in a company follow phase from_date -> to_date
+    def get_pending_request
+        @current_member.company.timeoffs
+            .where("time_offs.start_date >= (?) and time_offs.created_at <= (?) and time_offs.status = ?" ,
+                params['from_date'], params['to_date'], TimeOff.statuses[:pending])
+    end
+
     # using get timeoff of member in company follow phase and # ordinal member
     def member_ordinal
-        error!(I18n.t("access_denied"), 403) unless (@current_member.admin? || @current_member.pm?)
+        error!(I18n.t("access_denied"), 403) unless @current_member.manager?
         timeoffs = []
         members = []
         @current_member.company.members.each do |member|
