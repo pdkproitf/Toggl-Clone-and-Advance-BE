@@ -50,11 +50,11 @@ module UserApi
                     @resource.send_reset_password_instructions({
                         email: @email,
                         provider: 'email',
-                        redirect_url: @redirect_url,
+                        redirect_url: @redirect_url + "/#{@resource.confirmation_token}",
                         client_config: params[:config_name]
                         })
                     if @resource.errors.empty?
-                        return return_message I18n.t("devise_token_auth.passwords.sended", email: @email), {confirmation_token: @resource.confirmation_token}
+                        return_message(I18n.t("devise_token_auth.passwords.sended", email: @email))
                     else
                         @errors = @resource.errors
                     end
