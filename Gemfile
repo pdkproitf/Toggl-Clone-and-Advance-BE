@@ -74,6 +74,8 @@ gem 'nokogiri'
 
 gem 'prawn'
 gem 'rubyzip'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 # Using config global variable
 gem 'config'
