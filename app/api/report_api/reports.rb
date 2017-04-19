@@ -81,6 +81,12 @@ module ReportApi
         report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date], member: member, view: view)
         { data: report.report_by_member }
       end
+
+      desc 'Export multiple PDFs'
+      get 'export' do
+        export = ExportController.new
+        export.download
+      end
     end
   end
 end
