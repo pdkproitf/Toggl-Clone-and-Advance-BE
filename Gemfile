@@ -72,7 +72,6 @@ gem 'sidekiq'
 gem 'premailer-rails'
 gem 'nokogiri'
 
-gem 'prawn'
 gem 'rubyzip'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
