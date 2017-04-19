@@ -83,9 +83,13 @@ module ReportApi
       end
 
       desc 'Export multiple PDFs'
+      params do
+        requires :begin_date, type: Date, desc: 'Begin date'
+        requires :end_date, type: Date, desc: 'End date'
+      end
       get 'export' do
         export = ExportController.new
-        export.download
+        export.export_pdf(@current_member, params[:begin_date], params[:end_date])
       end
     end
   end

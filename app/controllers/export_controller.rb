@@ -1,7 +1,8 @@
 class ExportController < ApplicationController
   require 'zip'
   include ZipHelper
-  def download
+
+  def export_pdf(member, begin_date, end_date)
     folder = 'tmp/report_pdfs'
     zipfile_name = 'reports.zip'
     zipfile_path = "tmp/#{zipfile_name}"
@@ -10,9 +11,7 @@ class ExportController < ApplicationController
     FileUtils.rm_r folder if File.directory?(folder)
     Dir.mkdir folder
 
-    start_date = '2017-03-27'.to_date
-    end_date = start_date + 6
-    report = ReportHelper::Report.new(Member.find(1), start_date, end_date)
+    report = ReportHelper::Report.new(member, begin_date, end_date)
     @projects = report.report_by_project.as_json
 
     @projects.each do |project|
