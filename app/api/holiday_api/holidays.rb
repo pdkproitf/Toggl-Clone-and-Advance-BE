@@ -24,6 +24,7 @@ module HolidayApi
                     requires :name, type: String, desc: 'Holiday name'
                     requires :begin_date, type: DateTime, desc: 'Begin day'
                     requires :end_date, type: DateTime, desc: 'End day'
+                    requires :kind, type: String, desc: 'type of holiday'
                 end
             end
             post do
@@ -43,6 +44,7 @@ module HolidayApi
                     requires :name, type: String, desc: 'Holiday name'
                     requires :begin_date, type: DateTime, desc: 'Begin day'
                     requires :end_date, type: DateTime, desc: 'End day'
+                    requires :kind, type: String, desc: 'type of holiday'
                 end
             end
             put ':id' do
