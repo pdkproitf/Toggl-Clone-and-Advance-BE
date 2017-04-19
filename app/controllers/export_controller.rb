@@ -1,11 +1,26 @@
 class ExportController < ApplicationController
+  require 'zip'
+  include ZipHelper
   def download
-    @projects = Project.all
+    folder = 'tmp/report_pdfs'
+    zipfile_name = 'reports.zip'
+    zipfile_path = "tmp/#{zipfile_name}"
+
+    FileUtils.rm_r zipfile_path if File.file?(zipfile_path)
+    FileUtils.rm_r folder if File.directory?(folder)
+    Dir.mkdir folder
+
+    start_date = '2017-03-27'.to_date
+    end_date = start_date + 6
+    report = ReportHelper::Report.new(Member.find(1), start_date, end_date)
+    @projects = report.report_by_project.as_json
+
     @projects.each do |project|
       html = render_to_string(layout: 'export_layout.html.erb', template: 'export/export.html.erb', locals: { project: project })
-      save_path = Rails.root.join('pdfs', project[:name] + '.pdf')
+      save_path = "#{folder}/#{project[:name]}.pdf"
       save_pdf(html, save_path)
     end
+    zip_folder(folder, zipfile_path)
   end
 
   def save_pdf(html, save_path)
