@@ -101,7 +101,7 @@ module TimeOffApi
 
                 if params['timeoff']
                     error!(I18n.t("access_denied", 404)) unless (@timeoff.sender_id == @current_member.id) || able_answer_request?
-                    error!(I18n.t("timeoff.request_answed"), 400) unless @timeoff.pending?
+                    error!(I18n.t("timeoff.errors.request_answed"), 400) unless @timeoff.pending?
                     update_timeoff
                 else
                     error!(I18n.t("access_denied"), 403) unless able_answer_request?

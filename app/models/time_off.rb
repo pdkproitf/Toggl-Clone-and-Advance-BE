@@ -10,8 +10,9 @@ class TimeOff < ApplicationRecord
     validate :conflict_timeoff_update, :conflict_holiday_update, on: :update
     validate :constraint_weekend
 
-    after_update :adjust_person_dayoff
-    after_destroy :adjust_person_dayoff
+    after_update :add_person_dayoffed
+    before_update :sub_person_dayoffed
+    before_destroy :sub_person_dayoffed
 
     def send_email send_mail_to, current_member = nil
         send_mail_to.each do |member|
@@ -59,7 +60,7 @@ class TimeOff < ApplicationRecord
         conflict_holiday(id)
     end
 
-    def conflict_holiday(id =0)
+    def conflict_holiday(id = 0)
         records = sender.company.holidays
         conflict_start = conflict_begin_date(id, records, start_date, 'begin_date', end_date, 'end_date')
         errors.add("start_date", I18n.t('timeoff.errors.holiday')) unless conflict_start.blank?
@@ -73,14 +74,27 @@ class TimeOff < ApplicationRecord
         end
     end
 
-    def adjust_person_dayoff
-        if approved?
-            diff = compute_days(start_date, is_start_half_day, end_date, is_end_half_day)
-
-            total_day_off = (changed?)? (sender.total_day_off - diff) : (sender.total_day_off + diff)
-            day_offed = (changed?)? (sender.day_offed + diff) : (sender.day_offed - diff)
-
-            sender.update_attributes(total_day_off: total_day_off, day_offed: day_offed)
+    def sub_person_dayoffed
+        if destroyed?
+            adjust_person_dayoff(false, start_date, is_start_half_day,
+                end_date, is_end_half_day) if approved?
+        else
+            adjust_person_dayoff(false, start_date_was, is_start_half_day_was,
+                end_date_was, is_end_half_day_was) if status_was == "approved"
         end
+    end
+
+    def add_person_dayoffed
+        adjust_person_dayoff(true, start_date, is_start_half_day,
+            end_date, is_end_half_day) if approved?
+    end
+
+    def adjust_person_dayoff(is_plus_dayoff, start_date, is_start_half_day, end_date, is_end_half_day)
+        diff = compute_days(start_date, is_start_half_day, end_date, is_end_half_day)
+
+        total_day_off = (is_plus_dayoff)? (sender.total_day_off - diff) : (sender.total_day_off + diff)
+        day_offed = (is_plus_dayoff)? (sender.day_offed + diff) : (sender.day_offed - diff)
+
+        sender.update_attributes(total_day_off: total_day_off, day_offed: day_offed)
     end
 end

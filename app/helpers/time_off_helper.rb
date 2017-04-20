@@ -190,14 +190,14 @@ module TimeOffHelper
     # compute future day off from today of specify timeoff
     def compute_diff_dayoff(timeoff, today)
         if today < timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/ 1.day
+            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/ 1.day - 1
                 + ((timeoff.is_start_half_day)? Settings.half_day : Settings.all_day)
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         elsif today == timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/1.day
+            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/1.day - 1
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         else today > timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - today)/1.day
+            ((timeoff.end_date.beginning_of_day - today)/1.day - 1
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         end
     end

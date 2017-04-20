@@ -18,6 +18,6 @@ module HolidayHelper
     # => create pdkpro
     def create_params
         ActionController::Parameters.new(params).require(:holiday)
-            .permit(:name, :begin_date, :end_date, :kind)
+            .permit(:name, :begin_date, :end_date, :is_repeat)
     end
 end
