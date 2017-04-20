@@ -88,8 +88,7 @@ module ReportApi
         requires :end_date, type: Date, desc: 'End date'
       end
       get 'export' do
-        export = ExportController.new
-        export.export_pdf(@current_member, params[:begin_date], params[:end_date])
+        PdfGeneratingJob.perform_now(@current_member, params[:begin_date], params[:end_date])
       end
 
       desc 'Get file zip containing PDFs of report'

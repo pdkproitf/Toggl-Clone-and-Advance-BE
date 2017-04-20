@@ -2,6 +2,7 @@ class ExportController < ApplicationController
   require 'zip'
   include ZipHelper
 
+  # For test
   def export(member = Member.find(1), begin_date = '2017-03-27'.to_date, end_date = '2017-04-01'.to_date)
     report = ReportHelper::Report.new(member, begin_date, end_date)
     @project = report.report_by_project_export.first.as_json
