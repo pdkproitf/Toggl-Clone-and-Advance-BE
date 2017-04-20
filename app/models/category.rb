@@ -15,16 +15,6 @@ class Category < ApplicationRecord
     sum
   end
 
-  # Get all tasks of assigned members and having name present
-  def perfect_tasks
-    tasks.where.not(name: '', category_members: { is_archived: true })
-  end
-
-  # def perfect_tasks
-  #   options = { each_serializer: TaskSerializer }
-  #   ActiveModel::Serializer::CollectionSerializer.new(tasks, options)
-  # end
-
   def category_members_except_with(project_member_ids)
     category_members.where.not(is_archived: true, project_member_id: project_member_ids)
   end

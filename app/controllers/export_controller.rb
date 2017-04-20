@@ -12,7 +12,7 @@ class ExportController < ApplicationController
     Dir.mkdir folder
 
     report = ReportHelper::Report.new(member, begin_date, end_date)
-    @projects = report.report_by_project.as_json
+    @projects = report.report_by_project_export.as_json
 
     @projects.each do |project|
       puts project.to_json

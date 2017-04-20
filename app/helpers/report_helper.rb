@@ -26,6 +26,12 @@ module ReportHelper
       ActiveModel::Serializer::CollectionSerializer.new(@reporter.get_projects, project_options)
     end
 
+    def report_by_project_export
+      project_options = { each_serializer: ProjectSerializer, begin_date: @begin_date, end_date: @end_date,
+                          members_serialized: false, categories_serialized: true, perfect_tasks_serialized: true, view: @view }
+      ActiveModel::Serializer::CollectionSerializer.new(@reporter.get_projects, project_options)
+    end
+
     def report_by_member
       return nil if @member.nil?
       member_options = { begin_date: @begin_date, end_date: @end_date, tracked_time_serialized: true }
