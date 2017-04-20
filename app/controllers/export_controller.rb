@@ -20,6 +20,7 @@ class ExportController < ApplicationController
       save_pdf(html, save_path)
     end
     zip_folder(folder, zipfile_path)
+    zipfile_path
   end
 
   def save_pdf(html, save_path)

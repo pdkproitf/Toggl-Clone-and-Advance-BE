@@ -91,6 +91,17 @@ module ReportApi
         export = ExportController.new
         export.export_pdf(@current_member, params[:begin_date], params[:end_date])
       end
+
+      desc 'Get file zip containing PDFs of report'
+      params do
+        requires :path, type: String, desc: 'Path to file zip containing PDFs of report'
+      end
+      get 'zip' do
+        puts params[:path]
+        ApplicationController.new.send_file params[:path], type: 'application/zip',
+                                                           disposition: 'attachment',
+                                                           filename: 'hihi.zip'
+      end
     end
   end
 end
