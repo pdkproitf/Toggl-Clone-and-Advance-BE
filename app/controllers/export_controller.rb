@@ -15,6 +15,7 @@ class ExportController < ApplicationController
     @projects = report.report_by_project.as_json
 
     @projects.each do |project|
+      puts project.to_json
       html = render_to_string(layout: 'export_layout.html.erb', template: 'export/export.html.erb', locals: { project: project })
       save_path = "#{folder}/#{project[:name]}.pdf"
       save_pdf(html, save_path)
