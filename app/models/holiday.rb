@@ -1,4 +1,6 @@
 class Holiday < ApplicationRecord
+    enum kind: [:individual, :traditional, :international]
+
     belongs_to :company
 
     validates :name, length: { minimum: 2 }
