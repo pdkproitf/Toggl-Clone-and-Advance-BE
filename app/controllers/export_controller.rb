@@ -2,6 +2,11 @@ class ExportController < ApplicationController
   require 'zip'
   include ZipHelper
 
+  def export(member = Member.find(1), begin_date = '2017-03-27'.to_date, end_date = '2017-04-01'.to_date)
+    report = ReportHelper::Report.new(member, begin_date, end_date)
+    @project = report.report_by_project_export.first.as_json
+  end
+
   def export_pdf(member, begin_date, end_date)
     folder = 'tmp/report_pdfs'
     zipfile_name = 'reports.zip'
@@ -15,8 +20,8 @@ class ExportController < ApplicationController
     @projects = report.report_by_project_export.as_json
 
     @projects.each do |project|
-      puts project.to_json
-      html = render_to_string(layout: 'export_layout.html.erb', template: 'export/export.html.erb', locals: { project: project })
+      @project = project
+      html = render_to_string(layout: 'export_layout.html.erb', template: 'export/export.html.erb', locals: { project: @project })
       save_path = "#{folder}/#{project[:name]}.pdf"
       save_pdf(html, save_path)
     end

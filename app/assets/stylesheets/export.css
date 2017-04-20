@@ -1,3 +1,7 @@
 body {
-  background-color: green;
+  background-color: #FFFFFF;
+}
+
+span {
+  float: right;
 }

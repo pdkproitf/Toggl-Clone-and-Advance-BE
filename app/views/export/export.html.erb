@@ -1,2 +1,30 @@
-<h1><%= project[:name] %></h1>
-<p><%= project[:background] %></p>
+<div>
+  <h2><%= @project[:name] %></h2>
+  <ul>
+    <% @project[:categories].each do |category| %>
+      <% category = category.as_json %>
+      <% if category[:tracked_time] > 0 %>
+        <li>
+          <%= category[:name] %>
+          <ul>
+            <% category[:members].each do |member| %>
+              <% if(member[:tracked_time] > 0) %>
+                <li>
+                    <%= member[:user][:email] %>
+                    <ul>
+                      <% member[:tasks].each do |task| %>
+                        <% task = task.as_json %>
+                        <% if task[:tracked_time] > 0 %>                        
+                          <li><%= task[:name] %><span><%=Time.at(task[:tracked_time]).utc.strftime("%H:%M:%S")%></span></li>
+                        <% end %>
+                      <% end %>
+                    </ul>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
