@@ -10,6 +10,9 @@ class TimeOff < ApplicationRecord
     validate :conflict_timeoff_update, :conflict_holiday_update, on: :update
     validate :constraint_weekend
 
+    after_update :adjust_person_dayoff
+    after_destroy :adjust_person_dayoff
+
     def send_email send_mail_to, current_member = nil
         send_mail_to.each do |member|
             TimeOffMailer.timeoff_announce(self, member.user.email, current_member)
@@ -67,6 +70,17 @@ class TimeOff < ApplicationRecord
         if conflict_start.blank? && conflict_end.blank?
             conflict_middle = conflict_middle_date(id, records, start_date, 'begin_date', end_date, 'end_date')
             errors.add(:days, I18n.t("timeoff.errors.holiday")) unless conflict_middle.blank?
+        end
+    end
+
+    def adjust_person_dayoff
+        if approved?
+            diff = compute_days(start_date, is_start_half_day, end_date, is_end_half_day)
+
+            total_day_off = (changed?)? (sender.total_day_off - diff) : (sender.total_day_off + diff)
+            day_offed = (changed?)? (sender.day_offed + diff) : (sender.day_offed - diff)
+
+            sender.update_attributes(total_day_off: total_day_off, day_offed: day_offed)
         end
     end
 end
