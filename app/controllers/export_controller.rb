@@ -21,7 +21,7 @@ class ExportController < ApplicationController
 
     @projects.each do |project|
       @project = project
-      html = render_to_string(layout: 'export_layout.html.erb', template: 'export/export.html.erb', locals: { project: @project })
+      html = render_to_string(orientation: 'Landscape', layout: 'export_layout.html.erb', template: 'export/export.html.erb', locals: { project: @project })
       save_path = "#{folder}/#{project[:name]}.pdf"
       save_pdf(html, save_path)
     end
