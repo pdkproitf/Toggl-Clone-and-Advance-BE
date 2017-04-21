@@ -75,6 +75,7 @@ gem 'nokogiri'
 gem 'rubyzip'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+ gem 'redis', '~>3.2'
 
 # Using config global variable
 gem 'config'
