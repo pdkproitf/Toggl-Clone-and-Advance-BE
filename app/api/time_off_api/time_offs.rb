@@ -28,17 +28,29 @@ module TimeOffApi
                 all_or_none_of :id
             end
             get '/num-of-timeoff' do
+                @member = @current_member
                 if params['id']
                     timeoff =  @current_member.company.timeoffs.find_by_id(params['id'])
                     error!(I18n.t('not_found', title: 'Timeoff'), 404) unless timeoff
                     error!(I18n.t('access_denied'), 403) unless @current_member.manager?
-                    @current_member = timeoff.sender
+                    @member = timeoff.sender
                 end
-                offed_date = @current_member
+                offed_date = @member
                     .off_requests
                     .where('created_at >= (?) and status = (?)',
                         Date.today.beginning_of_year, TimeOff.statuses[:approved])
                 return_message(I18n.t("success"), offed_approver(offed_date))
+            end
+
+            desc 'Get number pending request in company'
+            params do
+                requires :from_date, type: DateTime, desc: 'start date'
+                requires :to_date, type: DateTime, desc: 'end date'
+                requires :status, type: String, desc: 'status request'
+            end
+            get '/num-pending-request' do
+                error!(I18n.t("access_denied"), 403) unless @current_member.manager?
+                return_message(I18n.t('success'), get_pending_request.size)
             end
 
             desc 'Get a timeoff request of themself '
@@ -89,7 +101,7 @@ module TimeOffApi
 
                 if params['timeoff']
                     error!(I18n.t("access_denied", 404)) unless (@timeoff.sender_id == @current_member.id) || able_answer_request?
-                    error!(I18n.t("timeoff.request_answed"), 400) unless @timeoff.pending?
+                    error!(I18n.t("timeoff.errors.request_answed"), 400) unless @timeoff.pending?
                     update_timeoff
                 else
                     error!(I18n.t("access_denied"), 403) unless able_answer_request?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413030939) do
+ActiveRecord::Schema.define(version: 20170420080541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,12 +70,13 @@ ActiveRecord::Schema.define(version: 20170413030939) do
   end
 
   create_table "holidays", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "begin_date", null: false
-    t.datetime "end_date",   null: false
+    t.string   "name",                       null: false
+    t.datetime "begin_date",                 null: false
+    t.datetime "end_date",                   null: false
     t.integer  "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "is_repeat",  default: false
     t.index ["company_id"], name: "index_holidays_on_company_id", using: :btree
   end
 
@@ -106,13 +107,14 @@ ActiveRecord::Schema.define(version: 20170413030939) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "company_id"
     t.integer  "user_id"
-    t.integer  "furlough_total"
+    t.float    "total_day_off", default: 0.0
     t.integer  "role_id"
-    t.boolean  "is_archived",    default: false
+    t.boolean  "is_archived",   default: false
+    t.float    "day_offed",     default: 0.0
     t.index ["company_id"], name: "index_members_on_company_id", using: :btree
     t.index ["role_id"], name: "index_members_on_role_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree

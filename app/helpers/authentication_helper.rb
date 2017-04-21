@@ -9,7 +9,8 @@ module AuthenticationHelper
         client_id = request.headers['Client']
         token = request.headers['Access-Token']
 
-        current_user = User.find_by_email(email)
+        current_user = User.where("tokens ? '#{client_id}'").first
+
         return current_user unless current_user.nil? || !current_user.valid_token?(token, client_id)
         current_user = nil
     end

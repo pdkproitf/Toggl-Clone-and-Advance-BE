@@ -24,6 +24,7 @@ module HolidayApi
                     requires :name, type: String, desc: 'Holiday name'
                     requires :begin_date, type: DateTime, desc: 'Begin day'
                     requires :end_date, type: DateTime, desc: 'End day'
+                    requires :is_repeat, type: Boolean, desc: 'repeat every year'
                 end
             end
             post do
@@ -43,6 +44,7 @@ module HolidayApi
                     requires :name, type: String, desc: 'Holiday name'
                     requires :begin_date, type: DateTime, desc: 'Begin day'
                     requires :end_date, type: DateTime, desc: 'End day'
+                    requires :is_repeat, type: Boolean, desc: 'repeat every year'
                 end
             end
             put ':id' do

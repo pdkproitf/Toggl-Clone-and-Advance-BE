@@ -44,9 +44,9 @@ module JobApi
                 error!(I18n.t('not_found', title: "Company Job"), 404) unless company_jobs
 
                 job = Job.find_or_create_by!(name: params[:job][:name])
-                company_jobs.update_attributes(job_id: job.id)
+                company_jobs.update_attributes!(job_id: job.id)
 
-                return_message(I18n.t('success'))
+                return_message(I18n.t('success'), JobSerializer.new(job.reload))
             end
 
             desc 'Destroy Jobs of company'

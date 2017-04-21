@@ -104,22 +104,26 @@ module TimeOffHelper
         (params['status'] == 'pending')? without_member_ordinal : member_ordinal
     end
 
-    # using get timeoff of under current_member role
-    # without ordinal member
+    # => using get timeoff of under current_member role
+    # => without ordinal member
     def without_member_ordinal
         off_requests = @current_member.off_requests.map {|e| TimeOffSerializer.new(e)}
         pending_requests = []
-        pending_requests = @current_member.off_requests
-            .where("start_date >= (?) and created_at <= (?) and status = ?" ,
-                params['from_date'], params['to_date'], TimeOff.statuses[:pending])
-            .map {|e| TimeOffSerializer.new(e)} if @current_member.admin? || @current_member.pm?
+        pending_requests = get_pending_request.map {|e| TimeOffSerializer.new(e)} if @current_member.manager?
 
         return_message I18n.t("success"), {off_requests: off_requests, pending_requests: pending_requests}
     end
 
+    # => get pengind request in a company follow phase from_date -> to_date
+    def get_pending_request
+        @current_member.company.timeoffs
+            .where("time_offs.start_date >= (?) and time_offs.created_at <= (?) and time_offs.status = ?" ,
+                params['from_date'], params['to_date'], TimeOff.statuses[:pending])
+    end
+
     # using get timeoff of member in company follow phase and # ordinal member
     def member_ordinal
-        error!(I18n.t("access_denied"), 403) unless (@current_member.admin? || @current_member.pm?)
+        error!(I18n.t("access_denied"), 403) unless @current_member.manager?
         timeoffs = []
         members = []
         @current_member.company.members.each do |member|
@@ -186,14 +190,14 @@ module TimeOffHelper
     # compute future day off from today of specify timeoff
     def compute_diff_dayoff(timeoff, today)
         if today < timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/ 1.day
+            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/ 1.day - 1
                 + ((timeoff.is_start_half_day)? Settings.half_day : Settings.all_day)
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         elsif today == timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/1.day
+            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/1.day - 1
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         else today > timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - today)/1.day
+            ((timeoff.end_date.beginning_of_day - today)/1.day - 1
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         end
     end
@@ -211,14 +215,11 @@ module TimeOffHelper
 
     # get num offed day, and persons approved
     def offed_approver(off_dates)
-        offed = 0
         approver = []
         off_dates.each do |timeoff|
-            offed   += ((timeoff.end_date -  timeoff.start_date)/ 1.day)
-                    + ((timeoff.is_start_half_day)? Settings.half_day : Settings.all_day)
-                    + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day)
             approver.push("#{timeoff.approver.user.first_name} #{timeoff.approver.user.last_name}")
-        end
-        { total: @current_member.furlough_total ,offed: offed, approver: approver }
+        end if @member.total_day_off > @member.day_offed
+
+        { total: @member.total_day_off ,offed: @member.day_offed, approver: approver }
     end
 end
