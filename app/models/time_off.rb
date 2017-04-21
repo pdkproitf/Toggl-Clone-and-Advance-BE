@@ -27,7 +27,6 @@ class TimeOff < ApplicationRecord
     # begin_date_cannot_be_greater_than_end_date
     def valid_start_end_days
         days_valid?(start_date, 'start_date', end_date)
-        errors.add(:start_date, I18n.t("over_date")) if start_date < Time.now.beginning_of_day
     end
 
     def conflict_timeoff_update
