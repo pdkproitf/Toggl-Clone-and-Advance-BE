@@ -55,6 +55,9 @@ GEM
     byebug (9.0.6)
     case_transform (0.2)
       activesupport
+    clockwork (2.0.2)
+      activesupport
+      tzinfo
     code_analyzer (0.4.7)
       sexp_processor
     coderay (1.1.1)
@@ -71,6 +74,9 @@ GEM
     config (1.3.0)
       activesupport (>= 3.0)
       deep_merge (~> 1.1.1)
+    connection_pool (2.2.1)
+    css_parser (1.4.10)
+      addressable
     debug_inspector (0.0.2)
     deep_merge (1.1.1)
     descendants_tracker (0.0.4)
@@ -140,6 +146,12 @@ GEM
     jsonapi-renderer (0.1.1.beta1)
     launchy (2.4.3)
       addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
+    letter_opener_web (1.3.1)
+      actionmailer (>= 3.2)
+      letter_opener (~> 1.0)
+      railties (>= 3.2)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -167,6 +179,13 @@ GEM
       rack (>= 1.0, < 3)
     orm_adapter (0.5.0)
     pg (0.19.0)
+    premailer (1.10.2)
+      addressable
+      css_parser (>= 1.4.10)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.9.5)
+      actionmailer (>= 3, < 6)
+      premailer (~> 1.7, >= 1.7.9)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -180,6 +199,8 @@ GEM
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-cors (0.4.0)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.1)
@@ -217,6 +238,7 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
+    redis (3.3.3)
     require_all (1.4.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
@@ -240,6 +262,7 @@ GEM
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
     ruby-progressbar (1.8.1)
+    rubyzip (1.2.1)
     sass (3.4.23)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -250,6 +273,11 @@ GEM
     sexp_processor (4.8.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sidekiq (4.2.10)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (~> 3.2, >= 3.2.1)
     slop (3.6.0)
     spring (2.0.1)
       activesupport (>= 4.2)
@@ -289,6 +317,8 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    wicked_pdf (1.1.0)
+    wkhtmltopdf-binary (0.12.3.1)
 
 PLATFORMS
   ruby
@@ -296,6 +326,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   bcrypt (~> 3.1.7)
+  clockwork
   coffee-rails (~> 4.2)
   config
   devise_token_auth
@@ -309,9 +340,13 @@ DEPENDENCIES
   hashie-forbidden_attributes
   jbuilder (~> 2.5)
   jquery-rails
+  letter_opener
+  letter_opener_web
   listen (~> 3.0.5)
+  nokogiri
   omniauth
   pg (~> 0.18)
+  premailer-rails
   pry-byebug
   puma (~> 3.0)
   rack-cors
@@ -319,14 +354,18 @@ DEPENDENCIES
   rails_best_practices
   rspec-collection_matchers
   rspec-rails
+  rubyzip
   sass-rails (~> 5.0)
   shoulda-matchers (~> 3.1)
+  sidekiq
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
+  wicked_pdf
+  wkhtmltopdf-binary
 
 RUBY VERSION
    ruby 2.3.1p112

@@ -12,6 +12,11 @@ class CategoryMember < ApplicationRecord
     sum
   end
 
+  # Get all tasks having name present
+  def perfect_tasks
+    tasks.where.not(name: '')
+  end
+
   def archive
     return if is_archived == true
     update_attributes(is_archived: true)

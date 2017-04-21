@@ -67,6 +67,15 @@ gem 'active_model_serializers'
 gem 'grape-active_model_serializers'
 gem 'rails_best_practices'
 
+gem 'clockwork'
+gem 'sidekiq'
+gem 'premailer-rails'
+gem 'nokogiri'
+
+gem 'rubyzip'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
+
 # Using config global variable
 gem 'config'
 
@@ -86,6 +95,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'letter_opener'
+  gem 'letter_opener_web'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

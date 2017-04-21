@@ -81,6 +81,26 @@ module ReportApi
         report = ReportHelper::Report.new(@current_member, params[:begin_date], params[:end_date], member: member, view: view)
         { data: report.report_by_member }
       end
+
+      desc 'Export multiple PDFs'
+      params do
+        requires :begin_date, type: Date, desc: 'Begin date'
+        requires :end_date, type: Date, desc: 'End date'
+      end
+      get 'export' do
+        PdfGeneratingJob.perform_now(@current_member, params[:begin_date], params[:end_date])
+      end
+
+      desc 'Get file zip containing PDFs of report'
+      params do
+        requires :path, type: String, desc: 'Path to file zip containing PDFs of report'
+      end
+      get 'zip' do
+        puts params[:path]
+        ApplicationController.new.send_file params[:path], type: 'application/zip',
+                                                           disposition: 'attachment',
+                                                           filename: 'hihi.zip'
+      end
     end
   end
 end

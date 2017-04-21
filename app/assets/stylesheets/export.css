@@ -1,0 +1,22 @@
+body {
+  color: #17202A;
+  font-family: "Arial Black", Gadget, sans-serif;
+}
+
+span {
+  float: right;
+}
+
+ul {
+  list-style-type: none;
+}
+
+h3 {
+  margin-bottom: 0;
+}
+
+h4 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 17px;
+}

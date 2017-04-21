@@ -1,0 +1,30 @@
+<div>
+  <h2><%= @project[:name] %><span><%=Time.at(@project[:tracked_time]).utc.strftime("%H:%M:%S")%></span></h2>
+  <ul>
+    <% @project[:categories].each do |category| %>
+      <% category = category.as_json %>
+      <% if category[:tracked_time] > 0 %>
+        <li>
+          <h3><%= category[:name] %><span><%=Time.at(category[:tracked_time]).utc.strftime("%H:%M:%S")%></span></h3>
+          <ul>
+            <% category[:members].each do |member| %>
+              <% if(member[:tracked_time] > 0) %>
+                <li>
+                    <h4><%= member[:user][:email] %><span><%=Time.at(member[:tracked_time]).utc.strftime("%H:%M:%S")%></span></h4>
+                    <ul>
+                      <% member[:tasks].each do |task| %>
+                        <% task = task.as_json %>
+                        <% if task[:tracked_time] > 0 %>
+                          <li><%= task[:name] %><span><%=Time.at(task[:tracked_time]).utc.strftime("%H:%M:%S")%></span></li>
+                        <% end %>
+                      <% end %>
+                    </ul>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

@@ -2,13 +2,18 @@ class Category < ApplicationRecord
   belongs_to :project
   has_many :category_members, dependent: :destroy
   has_many :project_members, through: :category_members
+  has_many :tasks, through: :category_members
 
   validates :name, presence: true, length: { minimum: 1 }
   validates_uniqueness_of :name, scope: :project_id
 
+  def unarchived_category_members
+    category_members.where(is_archived: false)
+  end
+
   def tracked_time(begin_date = nil, end_date = nil)
     sum = 0
-    category_members.each do |category_member|
+    unarchived_category_members.each do |category_member|
       sum += category_member.tracked_time(begin_date, end_date)
     end
     sum

@@ -26,7 +26,11 @@ module ReportHelper
       ActiveModel::Serializer::CollectionSerializer.new(@reporter.get_projects, project_options)
     end
 
-    def report_by_client; end
+    def report_by_project_export
+      project_options = { each_serializer: ProjectSerializer, begin_date: @begin_date, end_date: @end_date,
+                          members_serialized: false, categories_serialized: true, perfect_tasks_serialized: true, view: @view }
+      ActiveModel::Serializer::CollectionSerializer.new(@reporter.get_projects, project_options)
+    end
 
     def report_by_member
       return nil if @member.nil?
@@ -37,6 +41,10 @@ module ReportHelper
       result[:tasks] = member_tasks
       result[:overtime] = member_overtime(@member)
       result
+    end
+
+    def report_member_tasks
+      member_tasks.as_json
     end
 
     private
