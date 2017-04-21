@@ -4,106 +4,71 @@
       <meta charset="utf-8">
       <title>Report Mailer Preview</title>
       <style>
-         table {
-         border-collapse: collapse;
-         width: 100%;
-         }
-         th, td {
-         text-align: left;
-         padding: 8px;
-         }
-         tr:nth-child(even){background-color: #f2f2f2}
-         th {
-         background-color: #4CAF50;
-         color: white;
-         }
-         ol {
-         counter-reset: li; /* Initiate a counter */
-         list-style: none; /* Remove default numbering */
-         *list-style: decimal; /* Keep using default numbering for IE6/7 */
-         font: 15px 'trebuchet MS', 'lucida sans';
-         padding: 0;
-         margin-bottom: 4em;
-         text-shadow: 0 1px 0 rgba(255,255,255,.5);
-         }
-         ol ol {
-         margin: 0 0 0 2em; /* Add some left margin for inner lists */
-         }
-         .rounded-list a{
-         position: relative;
-         display: block;
-         padding: .4em .4em .4em 2em;
-         *padding: .4em;
-         margin: .5em 0;
-         background: #ddd;
-         color: #444;
-         text-decoration: none;
-         border-radius: .3em;
-         transition: all .3s ease-out;
-         }
-         .rounded-list a:hover{
-         background: #eee;
-         }
-         .rounded-list a:hover:before{
-         transform: rotate(360deg);
-         }
-         .rounded-list a:before{
-         content: counter(li);
-         counter-increment: li;
-         position: absolute;
-         left: -1.3em;
-         top: 50%;
-         margin-top: -1.3em;
-         background: #87ceeb;
-         height: 2em;
-         width: 2em;
-         line-height: 2em;
-         border: .3em solid #fff;
-         text-align: center;
-         font-weight: bold;
-         border-radius: 2em;
-         transition: all .3s ease-out;
-         }
+        body {
+          color: #17202A;
+          font-family: "Arial Black", Gadget, sans-serif;
+        }
 
-         span {
-           float: right;
-         }
+        span {
+          float: right;
+        }
+
+        ul {
+          list-style-type: none;
+        }
+
+        h3 {
+          margin-bottom: 0;
+        }
+
+        h4 {
+          margin-top: 0;
+          margin-bottom: 0;
+          font-size: 17px;
+        }
 
          .project {
            font-size: 17px;
-           font-weight: bold;
+           font-weight: buld;
          }
-
          .category {
            font-size: 15px;
-           font-weight: bold;
+           font-weight: buld;
          }
       </style>
    </head>
    <body>
-      <h1 style="color: green; font-weigh: bold;">Hi <%= @user.first_name %></h1>
-      <h2>Tasks tracked last week (<%= @start_date %> - <%= @end_date %>)</h2>
-      <h2><%= @company.name %><span><%= Time.at(@data[:tracked_time_total]).utc.strftime("%H:%M:%S")%></span></h2>
+      <h3 style="culor: green; font-weigh: buld;">Hi <%= @user.first_name %></h3>
+      <h3>Tasks tracked last week (<%= @start_date %> - <%= @end_date %>)</h3>
+      <h3><%= @company.name %><span><%= Time.at(@data[:tracked_time_total]).utc.strftime("%H:%M:%S")%></span></h3>
       <div>
-         <ol class="rounded-list">
+         <ul class="rounded-list">
          <% @data[:projects].each do |project| %>
          <li class="project">
-            <a href=""><%= project[:name] %><span><%= Time.at(project[:tracked_time]).utc.strftime("%H:%M:%S") %></span></a>
-            <ol>
+            <a href="">
+            <%=p project[:name] %><span><%= Time.at(project[:tracked_time]).utc.strftime("%H:%M:%S") %></span>
+            </a>
+            <ul>
                <% project[:categories].each do |category| %>
                <li class="category">
-                 <a href=""><%= category[:category_name] %><span><%= Time.at(category[:tracked_time]).utc.strftime("%H:%M:%S") %></span></a>
-                 <ol>
-                    <% category[:tasks].each do |task| %>
-                    <li><a href=""><%= task[:name] %><span><%= Time.at(task[:tracked_time]).utc.strftime("%H:%M:%S") %></span></a></li>
-                    <% end %>
-                 </ol>
+                  <a href="">
+                  <%=category[:category_name] %><span><%= Time.at(category[:tracked_time]).utc.strftime("%H:%M:%S") %></span>
+                  </a>
+                  <ul>
+                     <% category[:tasks].each do |task| %>
+                     <li>
+                        <a href="">
+                        <%=task[:name] %><span><%= Time.at(task[:tracked_time]).utc.strftime("%H:%M:%S") %></span>
+                        </a>
+                     </li>
+                     <% end %>
+                  </ul>
                </li>
                <% end %>
-            </ol>
+            </ul>
          </li>
          <% end %>
-         <ol>
+         <ul>
       </div>
    </body>
 </html>

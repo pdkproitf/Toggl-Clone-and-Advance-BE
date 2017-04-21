@@ -1,18 +1,22 @@
 class SendReportJob < ApplicationJob
   queue_as :default
 
-  def perform(args)
+  def perform
     puts 'Send report Oh yeah!'
-    company = Company.find(args['company_id'])
-    # active_users = company.active_users
+    today_wday = Date.today.wday
+    today_wday = 1 # For test
+    companies = Company.where(begin_week: today_wday)
+    puts companies
 
-    company.active_members.each do |member|
-      puts member.user.email
-      start_date = '2017-03-27'.to_date
-      end_date = start_date + 6
-      report_data = report_data(company.admin, member, start_date, end_date)
-      custom_report_data = custom_report_data(report_data)
-      ReportMailer.sample_email(member.user, company, custom_report_data, start_date, end_date).deliver_now
+    companies.each do |company|
+      company.active_members.each do |member|
+        puts member.user.email
+        start_date = '2017-03-27'.to_date
+        end_date = start_date + 6
+        report_data = report_data(company.admin, member, start_date, end_date)
+        custom_report_data = custom_report_data(report_data)
+        ReportMailer.sample_email(member.user, company, custom_report_data, start_date, end_date).deliver_now
+      end
     end
   end
 
