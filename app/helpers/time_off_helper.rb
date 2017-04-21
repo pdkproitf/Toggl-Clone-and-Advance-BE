@@ -190,14 +190,14 @@ module TimeOffHelper
     # compute future day off from today of specify timeoff
     def compute_diff_dayoff(timeoff, today)
         if today < timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/ 1.day
+            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/ 1.day - 1
                 + ((timeoff.is_start_half_day)? Settings.half_day : Settings.all_day)
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         elsif today == timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/1.day
+            ((timeoff.end_date.beginning_of_day - timeoff.start_date.beginning_of_day)/1.day - 1
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         else today > timeoff.start_date
-            ((timeoff.end_date.beginning_of_day - today)/1.day
+            ((timeoff.end_date.beginning_of_day - today)/1.day - 1
                 + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day))
         end
     end
@@ -215,14 +215,11 @@ module TimeOffHelper
 
     # get num offed day, and persons approved
     def offed_approver(off_dates)
-        offed = 0
         approver = []
         off_dates.each do |timeoff|
-            offed   += ((timeoff.end_date -  timeoff.start_date)/ 1.day)
-                    + ((timeoff.is_start_half_day)? Settings.half_day : Settings.all_day)
-                    + ((timeoff.is_end_half_day)? Settings.half_day : Settings.all_day)
             approver.push("#{timeoff.approver.user.first_name} #{timeoff.approver.user.last_name}")
-        end
-        { total: @current_member.furlough_total ,offed: offed, approver: approver }
+        end if @member.total_day_off > @member.day_offed
+
+        { total: @member.total_day_off ,offed: @member.day_offed, approver: approver }
     end
 end

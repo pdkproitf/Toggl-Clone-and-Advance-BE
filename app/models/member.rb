@@ -32,7 +32,7 @@ class Member < ApplicationRecord
 
     def set_default_values # Only set if attribute IS NOT set
         self.role ||= 3 # 1: Admin, 2: PM, 3: Member
-        self.furlough_total ||= 10
+        self.total_day_off ||= 10
     end
 
     # Get all unarchived projects that member manage
