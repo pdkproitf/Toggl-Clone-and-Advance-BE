@@ -14,14 +14,14 @@ class EmployDayoffJob < ApplicationJob
     def begin_year(company)
         company.members.each do |member|
             previous_dayoff = member.total_day_off
-            new_dayoff = Settings.begin_year_dayoff + (company.incre_dayoff)? previous_dayoff : 0
+            new_dayoff = company.year_dayoffs + (company.incre_dayoff)? previous_dayoff : 0
             member.update_attributes!(total_day_off: new_dayoff, day_offed: Settings.reset_dayoffed)
         end
     end
 
     def middle_year(company)
         company.members.each do |member|
-            limit_dayoff = Settings.begin_year_dayoff + Settings.limit_dayoff_old
+            limit_dayoff = company.year_dayoffs + Settings.limit_dayoff_old
             member.update_attributes!(total_day_off: limit_dayoff) if member.total_day_off > limit_dayoff
         end
     end

@@ -25,6 +25,7 @@ module CompanyApi
                     optional :overtime_max, type: Integer, desc: 'Overtime maximum'
                     optional :begin_week, type: Integer, values: 0..6, desc: 'Begin day of week'
                     optional :incre_dayoff, type: Boolean, desc: 'choose mode manage employee dayoff'
+                    optional :year_dayoffs, type: Integer, desc: 'default num of employee dayoff in year'
                 end
             end
             put 'own' do
@@ -34,6 +35,7 @@ module CompanyApi
                 company[:overtime_max] = params[:company][:overtime_max] if params[:company][:overtime_max].present?
                 company[:begin_week] = params[:company][:begin_week] if params[:company][:begin_week].present?
                 company[:incre_dayoff] = params[:company][:incre_dayoff] if params[:company][:incre_dayoff].present?
+                company[:year_dayoffs] = params[:company][:year_dayoffs] if params[:company][:year_dayoffs].present?
                 company.save!
             end
         end
