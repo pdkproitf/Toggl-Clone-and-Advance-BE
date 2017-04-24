@@ -8,7 +8,7 @@ class TimeOff < ApplicationRecord
     validate :valid_start_end_days
     validate :conflict_timeoff, :conflict_holiday, on: :create
     validate :conflict_timeoff_update, :conflict_holiday_update, on: :update
-    validate :constraint_weekend
+    validate :is_weekends
 
     after_update :add_person_dayoffed
     before_update :sub_person_dayoffed
@@ -51,8 +51,8 @@ class TimeOff < ApplicationRecord
         end
     end
 
-    def constraint_weekend
-        errors.add(:days, I18n.t("timeoff.errors.weekend")) if constraint_weekend?(start_date, end_date)
+    def is_weekends
+        errors.add(:days, I18n.t("timeoff.errors.weekend")) if on_weekend?(start_date, end_date)
     end
 
     def conflict_holiday_update
@@ -90,7 +90,6 @@ class TimeOff < ApplicationRecord
 
     def adjust_person_dayoff(is_plus_dayoff, start_date, is_start_half_day, end_date, is_end_half_day)
         diff = compute_days(start_date, is_start_half_day, end_date, is_end_half_day)
-
         total_day_off = (is_plus_dayoff)? (sender.total_day_off - diff) : (sender.total_day_off + diff)
         day_offed = (is_plus_dayoff)? (sender.day_offed + diff) : (sender.day_offed - diff)
 

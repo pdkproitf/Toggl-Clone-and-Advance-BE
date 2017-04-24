@@ -20,18 +20,37 @@ module DaysValidates extend ActiveSupport::Concern
             begin_date, end_date, begin_date, end_date, id)
     end
 
-    def constraint_weekend?(begin_date, end_date)
+    # => return true if at least one day from begin_date to end_date do not weekend
+    def on_weekend?(begin_date, end_date)
         (begin_date.to_i .. end_date.to_i).step(1.day).each do |day|
-            if Time.at(day).on_weekend?
-                return true
-            end
+            return false unless Time.at(day).on_weekend?
         end
-        false;
+        true
     end
 
+    # => return how many days on weekend bettween tow days
+    def days_weekends?(begin_date, is_start_half_day, end_date, is_end_half_day)
+        days = 0
+        (begin_date.to_i .. end_date.to_i).step(1.day).each do |day|
+            if Time.at(day).on_weekend?
+                days +=   case day
+                when begin_date.to_i
+                    ((is_start_half_day)? Settings.half_day : Settings.all_day)
+                when end_date.to_i
+                    ((is_start_half_day)? Settings.half_day : Settings.all_day)
+                else
+                    1
+                end
+            end
+        end
+        days
+    end
+
+    # => return diff bettween two days include is_start_half_day and is_end_half_day
     def compute_days(begin_date, is_start_half_day, end_date, is_end_half_day)
         (end_date - begin_date) / 1.day - 1 +
             ((is_start_half_day)? Settings.half_day : Settings.all_day) +
-            ((is_end_half_day)? Settings.half_day : Settings.all_day)
-     end
+            ((is_end_half_day)? Settings.half_day : Settings.all_day) -
+            days_weekends?(begin_date, is_start_half_day, end_date, is_end_half_day)
+    end
 end

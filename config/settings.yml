@@ -14,5 +14,5 @@ begin_year_dayoff: 12
 reset_dayoffed: 0
 # max_dayoff_bring_from_old_year
 limit_dayoff_old: 5
-host: 'https://timecloudbackend.herokuapp.com'
-# host: 'https://pdk-timecloud.herokuapp.com'
+# host: 'https://timecloudbackend.herokuapp.com'
+host: 'https://pdk-timecloud.herokuapp.com'

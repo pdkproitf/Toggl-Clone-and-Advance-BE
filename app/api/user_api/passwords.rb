@@ -32,7 +32,7 @@ module UserApi
                 error!(I18n.t("devise_token_auth.passwords.missing_email"), 401) unless params[:user][:email]
 
                 # give redirect value from params priority
-                @redirect_url = params[:user][:redirect_url]
+                @redirect_url = params[:user][:redirect_url] + "/#{@resource.confirmation_token}"
 
                 # fall back to default value if provided
                 @redirect_url ||= DeviseTokenAuth.default_password_reset_url
@@ -50,7 +50,7 @@ module UserApi
                     @resource.send_reset_password_instructions({
                         email: @email,
                         provider: 'email',
-                        redirect_url: @redirect_url + "/#{@resource.confirmation_token}",
+                        redirect_url: @redirect_url,
                         client_config: params[:config_name]
                         })
                     if @resource.errors.empty?

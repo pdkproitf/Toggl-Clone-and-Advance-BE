@@ -48,14 +48,15 @@ module UserApi
             end
             post '/sign-in' do
                 @resource = sign_in_params
-                if @resource and @resource.valid_password?(params['user']['password']) and (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
-                    @company = @resource.companies.find_by_domain(params['user']['company_domain'])
-                    error!(I18n.t("not_found", title: params['user']['company_domain']), 404) unless @company
+                if @resource and @resource.valid_password?(params['user']['password']) and
+                    (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
+                        @company = @resource.companies.find_by_domain(params['user']['company_domain'])
+                        error!(I18n.t("not_found", title: params['user']['company_domain']), 404) unless @company
 
-                    @member =  @resource.members.find_by_company_id(@company.id)
+                        @member =  @resource.members.find_by_company_id(@company.id)
 
-                    create_client_id_and_token
-                    return_message(I18n.t("devise_token_auth.sessions.signed_in"), data_login)
+                        create_client_id_and_token
+                        return_message(I18n.t("devise_token_auth.sessions.signed_in"), data_login)
                 elsif @resource and not (!@resource.respond_to?(:active_for_authentication?) or @resource.active_for_authentication?)
                     error!(I18n.t("devise_token_auth.sessions.not_confirmed", email: @resource.email), 500)
                 else
