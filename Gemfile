@@ -72,6 +72,11 @@ gem 'sidekiq'
 gem 'premailer-rails'
 gem 'nokogiri'
 
+# => generate diagram
+gem "rails-erd"
+gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
+# => end generate diagram
+
 gem 'rubyzip'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'

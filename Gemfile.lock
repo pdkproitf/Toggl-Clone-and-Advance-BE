@@ -55,6 +55,7 @@ GEM
     byebug (9.0.6)
     case_transform (0.2)
       activesupport
+    choice (0.2.0)
     clockwork (2.0.2)
       activesupport
       tzinfo
@@ -218,6 +219,11 @@ GEM
     rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6)
+    rails-erd (1.5.0)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     rails_best_practices (1.18.0)
@@ -261,6 +267,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    ruby-graphviz (1.2.3)
     ruby-progressbar (1.8.1)
     rubyzip (1.2.1)
     sass (3.4.23)
@@ -351,10 +358,12 @@ DEPENDENCIES
   puma (~> 3.0)
   rack-cors
   rails (~> 5.0.1)
+  rails-erd
   rails_best_practices
   redis (~> 3.2)
   rspec-collection_matchers
   rspec-rails
+  ruby-graphviz (~> 1.2, >= 1.2.2)
   rubyzip
   sass-rails (~> 5.0)
   shoulda-matchers (~> 3.1)
