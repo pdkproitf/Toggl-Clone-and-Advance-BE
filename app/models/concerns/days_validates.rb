@@ -62,11 +62,12 @@ module DaysValidates extend ActiveSupport::Concern
                 end
             end
         end
-        # bindin
         days
     end
 
     # => check case holiday repeat
+    # => this case have yet done because we have to create report so I'll do it later
+    # create by: phuc
     def holiday_repeat(begin_date, is_start_half_day, end_date, is_end_half_day, holidays)
         0
     end

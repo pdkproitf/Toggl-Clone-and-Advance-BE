@@ -1,0 +1,264 @@
+digraph Timecloud {
+rankdir = "LR";
+ranksep = "0.5";
+nodesep = "0.4";
+pad = "0.4,0.4";
+margin = "0,0";
+concentrate = "true";
+labelloc = "t";
+fontsize = "13";
+fontname = "Arial Bold";
+node[ shape  =  "Mrecord" , fontsize  =  "10" , fontname  =  "Arial" , margin  =  "0.07,0.05" , penwidth  =  "1.0"];
+edge[ fontname  =  "Arial" , fontsize  =  "7" , dir  =  "both" , arrowsize  =  "0.9" , penwidth  =  "1.0" , labelangle  =  "32" , labeldistance  =  "1.8"];
+rankdir = "TB";
+label = "Timecloud domain model\n\n";
+m_Category [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Category</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="is_archived">is_archived <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="is_billable">is_billable <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string ∗ U</font></td></tr>
+  <tr><td align="left" width="130" port="project_id">project_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+</table>
+>];
+m_CategoryMember [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">CategoryMember</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="category_id">category_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+  <tr><td align="left" width="130" port="is_archived">is_archived <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="project_member_id">project_member_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+</table>
+>];
+m_Client [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Client</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="company_id">company_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string ∗ U</font></td></tr>
+</table>
+>];
+m_ClockJob [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">ClockJob</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+</table>
+>];
+m_Company [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Company</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="begin_week">begin_week <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="domain">domain <font face="Arial Italic" color="grey60">string ∗ U</font></td></tr>
+  <tr><td align="left" width="130" port="incre_dayoff">incre_dayoff <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="send_report_schedule">send_report_schedule <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="working_time_per_day">working_time_per_day <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="working_time_per_week">working_time_per_week <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="year_dayoffs">year_dayoffs <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_CompanyJob [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">CompanyJob</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="company_id">company_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="job_id">job_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+</table>
+>];
+m_Holiday [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Holiday</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="begin_date">begin_date <font face="Arial Italic" color="grey60">datetime ∗</font></td></tr>
+  <tr><td align="left" width="130" port="company_id">company_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="end_date">end_date <font face="Arial Italic" color="grey60">datetime ∗</font></td></tr>
+  <tr><td align="left" width="130" port="is_repeat">is_repeat <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+</table>
+>];
+m_Invite [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Invite</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="email">email <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="expiry">expiry <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="is_accepted">is_accepted <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="recipient_id">recipient_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+  <tr><td align="left" width="130" port="sender_id">sender_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="token">token <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+>];
+m_Job [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Job</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string ∗ U</font></td></tr>
+</table>
+>];
+m_JobsMember [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">JobsMember</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="company_job_id">company_job_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="member_id">member_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+</table>
+>];
+m_Member [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Member</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="company_id">company_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+  <tr><td align="left" width="130" port="day_offed">day_offed <font face="Arial Italic" color="grey60">float</font></td></tr>
+  <tr><td align="left" width="130" port="is_archived">is_archived <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="role_id">role_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+  <tr><td align="left" width="130" port="total_day_off">total_day_off <font face="Arial Italic" color="grey60">float</font></td></tr>
+  <tr><td align="left" width="130" port="user_id">user_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+</table>
+>];
+m_Project [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Project</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="background">background <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="client_id">client_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="is_archived">is_archived <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="is_member_report">is_member_report <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="member_id">member_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string ∗ U</font></td></tr>
+</table>
+>];
+m_ProjectMember [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">ProjectMember</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="is_archived">is_archived <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="is_pm">is_pm <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="member_id">member_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+  <tr><td align="left" width="130" port="project_id">project_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+</table>
+>];
+m_Role [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Role</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string ∗ U</font></td></tr>
+</table>
+>];
+m_Scheduler [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Scheduler</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="at">at <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="clock_job_arguments">clock_job_arguments <font face="Arial Italic" color="grey60">jsonb</font></td></tr>
+  <tr><td align="left" width="130" port="clock_job_id">clock_job_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="company_id">company_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+  <tr><td align="left" width="130" port="frequency">frequency <font face="Arial Italic" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+</table>
+>];
+m_Task [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Task</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="category_member_id">category_member_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string U</font></td></tr>
+</table>
+>];
+m_TimeOff [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">TimeOff</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="approver_id">approver_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+  <tr><td align="left" width="130" port="approver_messages">approver_messages <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text ∗</font></td></tr>
+  <tr><td align="left" width="130" port="end_date">end_date <font face="Arial Italic" color="grey60">datetime ∗</font></td></tr>
+  <tr><td align="left" width="130" port="is_end_half_day">is_end_half_day <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="is_start_half_day">is_start_half_day <font face="Arial Italic" color="grey60">boolean</font></td></tr>
+  <tr><td align="left" width="130" port="sender_id">sender_id <font face="Arial Italic" color="grey60">integer ∗ FK</font></td></tr>
+  <tr><td align="left" width="130" port="start_date">start_date <font face="Arial Italic" color="grey60">datetime ∗</font></td></tr>
+  <tr><td align="left" width="130" port="status">status <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_Timer [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Timer</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="start_time">start_time <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="stop_time">stop_time <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="task_id">task_id <font face="Arial Italic" color="grey60">integer FK</font></td></tr>
+</table>
+>];
+m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">User</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="confirmation_sent_at">confirmation_sent_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="confirmation_token">confirmation_token <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="confirmed_at">confirmed_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="current_sign_in_at">current_sign_in_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="current_sign_in_ip">current_sign_in_ip <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="email">email <font face="Arial Italic" color="grey60">string ∗ U</font></td></tr>
+  <tr><td align="left" width="130" port="encrypted_password">encrypted_password <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="first_name">first_name <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="image">image <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="last_name">last_name <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="last_sign_in_at">last_sign_in_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="last_sign_in_ip">last_sign_in_ip <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="provider">provider <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="remember_created_at">remember_created_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="reset_password_sent_at">reset_password_sent_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="reset_password_token">reset_password_token <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="sign_in_count">sign_in_count <font face="Arial Italic" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="tokens">tokens <font face="Arial Italic" color="grey60">jsonb</font></td></tr>
+  <tr><td align="left" width="130" port="uid">uid <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="unconfirmed_email">unconfirmed_email <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+>];
+  m_User -> m_Member [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_User -> m_Invite [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Project -> m_Category [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Category -> m_CategoryMember [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_ProjectMember -> m_CategoryMember [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_CategoryMember -> m_Task [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Client -> m_Project [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Company -> m_Client [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_ClockJob -> m_Scheduler [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Company -> m_Member [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Company -> m_Invite [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Company -> m_Holiday [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Company -> m_CompanyJob [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Company -> m_Scheduler [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Job -> m_CompanyJob [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_CompanyJob -> m_JobsMember [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Member -> m_Invite [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Member -> m_JobsMember [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Role -> m_Member [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Member -> m_Project [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Member -> m_ProjectMember [arrowhead = "normal", arrowtail = "none", weight = "3"];
+  m_Member -> m_TimeOff [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Member -> m_TimeOff [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Project -> m_ProjectMember [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Task -> m_Timer [arrowhead = "normal", arrowtail = "none", weight = "2"];
+}
