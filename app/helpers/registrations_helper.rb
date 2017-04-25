@@ -27,7 +27,7 @@ module RegistrationsHelper
             else
                 # user will require email authentication
                 @resource.send_confirmation_instructions(client_config: params[:config_name],
-                redirect_url: "#{Settings.front_end}/verify-email/#{@company.domain}/#{@resource.email}")
+                redirect_url: "#{Settings.front_end}/#/verify-email/#{@company.domain}/#{@resource.email}")
             end
             @member = create_member
             Member.transaction do
