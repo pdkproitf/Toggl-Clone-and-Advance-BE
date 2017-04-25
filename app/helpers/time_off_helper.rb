@@ -220,6 +220,6 @@ module TimeOffHelper
             approver.push("#{timeoff.approver.user.first_name} #{timeoff.approver.user.last_name}")
         end if @member.total_day_off > @member.day_offed
 
-        { total: @member.total_day_off ,offed: @member.day_offed, approver: approver }
+        { total: @member.total_day_off ,offed: @member.day_offed, approver: approver.uniq }
     end
 end
