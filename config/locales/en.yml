@@ -71,8 +71,8 @@ en:
         created: "Your time off created. The email will be send to your bosses after few minutes"
         errors:
             request_answed: "Not Allow!  Your request was answered."
-            weekend: 'Your request constraint weekend'
-            holiday: 'Your request constraint holiday'
+            weekend: 'already able to off in weekend'
+            holiday: 'already able to off in holiday'
 
     invite:
         success: 'Success, The email confirm will be send to %{email} after few minutes'

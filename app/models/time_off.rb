@@ -5,10 +5,11 @@ class TimeOff < ApplicationRecord
     belongs_to :approver, class_name: 'Member'
 
     validates_presence_of :start_date, :end_date, :description, :sender_id
+    validate :is_weekends
+    validate :conflict_holiday
     validate :valid_start_end_days
-    validate :conflict_timeoff, :conflict_holiday, on: :create
-    validate :conflict_timeoff_update, :conflict_holiday_update, on: :update
-    validate :constraint_weekend
+    validate :conflict_timeoff, on: :create
+    validate :conflict_timeoff_update, on: :update
 
     after_update :add_person_dayoffed
     before_update :sub_person_dayoffed
@@ -27,7 +28,6 @@ class TimeOff < ApplicationRecord
     # begin_date_cannot_be_greater_than_end_date
     def valid_start_end_days
         days_valid?(start_date, 'start_date', end_date)
-        errors.add(:start_date, I18n.t("over_date")) if start_date < Time.now.beginning_of_day
     end
 
     def conflict_timeoff_update
@@ -52,26 +52,14 @@ class TimeOff < ApplicationRecord
         end
     end
 
-    def constraint_weekend
-        errors.add(:days, I18n.t("timeoff.errors.weekend")) if constraint_weekend?(start_date, end_date)
+    def is_weekends
+        errors.add(:days, I18n.t("timeoff.errors.weekend")) if on_weekend?(start_date, end_date)
     end
 
-    def conflict_holiday_update
-        conflict_holiday(id)
-    end
-
-    def conflict_holiday(id = 0)
+    def conflict_holiday
         records = sender.company.holidays
-        conflict_start = conflict_begin_date(id, records, start_date, 'begin_date', end_date, 'end_date')
-        errors.add("start_date", I18n.t('timeoff.errors.holiday')) unless conflict_start.blank?
-
-        conflict_end = conflict_end_date(id, records, start_date, 'begin_date', end_date, 'end_date')
-        errors.add("end_date", I18n.t("timeoff.errors.holiday")) unless conflict_end.blank?
-
-        if conflict_start.blank? && conflict_end.blank?
-            conflict_middle = conflict_middle_date(id, records, start_date, 'begin_date', end_date, 'end_date')
-            errors.add(:days, I18n.t("timeoff.errors.holiday")) unless conflict_middle.blank?
-        end
+            .where("holidays.begin_date <= ? and holidays.end_date >= ?",self.start_date, self.end_date)
+        errors.add("days", I18n.t('timeoff.errors.holiday')) unless records.blank?
     end
 
     def sub_person_dayoffed
@@ -90,8 +78,7 @@ class TimeOff < ApplicationRecord
     end
 
     def adjust_person_dayoff(is_plus_dayoff, start_date, is_start_half_day, end_date, is_end_half_day)
-        diff = compute_days(start_date, is_start_half_day, end_date, is_end_half_day)
-
+        diff = compute_days(start_date, is_start_half_day, end_date, is_end_half_day, sender.company.holidays)
         total_day_off = (is_plus_dayoff)? (sender.total_day_off - diff) : (sender.total_day_off + diff)
         day_offed = (is_plus_dayoff)? (sender.day_offed + diff) : (sender.day_offed - diff)
 

@@ -8,5 +8,11 @@ domain_min_length: 3
 domain_max_length: 20
 send_later: 2
 role_min_length: 2
-host: 'https://timecloudbackend.herokuapp.com'
-# host: 'https://pdk-timecloud.herokuapp.com'
+# dayoff of each member when start of year
+begin_year_dayoff: 12
+# reset dayoffed to 0
+reset_dayoffed: 0
+# max_dayoff_bring_from_old_year
+limit_dayoff_old: 5
+# host: 'https://timecloudbackend.herokuapp.com'
+host: 'https://pdk-timecloud.herokuapp.com'

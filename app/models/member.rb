@@ -24,16 +24,11 @@ class Member < ApplicationRecord
   has_many :jobs, through: :jobs_members
 
   validates_uniqueness_of :company_id, scope: [:user_id, :role_id]
+  validates :day_offed, :numericality => { :greater_than_or_eq => 0 }
+  validates :total_day_off, :numericality => { :greater_than_or_eq => 0 }
 
-  # default_scope ->{ where(is_archived: false) }
-
-  # After initialization, set default values
-  after_initialize :set_default_values
-
-  def set_default_values # Only set if attribute IS NOT set
-    self.role ||= 3 # 1: Admin, 2: PM, 3: Member
-    self.total_day_off ||= 10
-  end
+  before_save :validate_dayoff
+  before_create :set_default_values
 
   # Get all unarchived projects that member manage
   def get_projects
@@ -110,4 +105,15 @@ class Member < ApplicationRecord
     company_job = company.company_jobs.find_or_create_by(job_id: job.id)
     company_job.jobs_members.create!(member_id: id)
   end
+
+    private
+    def set_default_values # Only set if attribute IS NOT set
+        self.role ||= 3 # 1: Admin, 2: PM, 3: Member
+        self.total_day_off = ((Date.today.end_of_year.to_time - Date.today.to_time) / 1.month).to_i
+    end
+
+    def validate_dayoff
+        self.total_day_off = 0 if self.total_day_off < 0
+        self.day_offed = 0 if self.day_offed < 0
+    end
 end
