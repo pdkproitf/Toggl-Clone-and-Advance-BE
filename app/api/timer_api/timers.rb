@@ -125,6 +125,18 @@ module TimerApi
         timer.approve
       end
 
+      desc 'Unapprove timer of a member by id'
+      params do
+        requires :member_id, type: Integer, desc: 'Member ID'
+        requires :timer_id, type: Integer, desc: 'Timer ID'
+      end
+      post 'unapprove/by_id' do
+        return error!(I18n.t('access_denied'), 403) unless @current_member.manager?
+        member = @current_member.company.members.find(params[:member_id])
+        timer = member.timers.find(params[:timer_id])
+        timer.unapprove
+      end
+
       desc 'Approve timer by period of time'
       params do
         requires :id, type: Integer, desc: 'Timer ID'
