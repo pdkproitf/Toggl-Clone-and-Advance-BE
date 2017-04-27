@@ -139,12 +139,16 @@ module TimerApi
 
       desc 'Approve timer by period of time'
       params do
-        requires :id, type: Integer, desc: 'Timer ID'
-        requires :begin_time, type: DateTime, desc: 'Begin time'
-        requires :end_time, type: DateTime, desc: 'End time'
+        requires :member_id, type: Integer, desc: 'Member ID'
+        requires :timer_id, type: Integer, desc: 'Timer ID'
+        requires :begin_date, type: Date, desc: 'Begin date'
+        requires :end_date, type: Date, desc: 'End date'
       end
       post 'approve/by_period' do
-        timers = @current_member.get_timers(from_day, to_day)
+        return error!(I18n.t('access_denied'), 403) unless @current_member.manager?
+        member = @current_member.company.members.find(params[:member_id])
+        timers = member.get_timers(params[:begin_date], params[:end_date])
+        timers.each(&:approve)
       end
     end
   end
