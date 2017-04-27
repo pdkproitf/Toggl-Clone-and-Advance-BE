@@ -78,6 +78,7 @@ class Member < ApplicationRecord
     tasks.where(project_members: { is_archived: false })
          .where.not(category_members: { category_id: nil })
          .where(category_members: { is_archived: false })
+         .where.not(name: [nil, ""])
   end
 
   def get_timers(from_day, to_day)
