@@ -6,17 +6,22 @@ class SendReportJob < ApplicationJob
     today_wday = Date.today.wday
     today_wday = 1 # For test
     companies = Company.where(begin_week: today_wday)
-    puts companies
+    start_date = '2017-03-27'.to_date
+    end_date = start_date + 6
 
-    companies.each do |company|
-      company.active_members.each do |member|
-        puts member.user.email
-        start_date = '2017-03-27'.to_date
-        end_date = start_date + 6
-        report_data = report_data(company.admin, member, start_date, end_date)
+    users = User.all
+    users.each do |user|
+      members = user.members.where(company_id: companies.ids)
+      data = []
+      members.each do |member|
+        company = member.company
+        reporter = company.admin
+        report_data = report_data(reporter, member, start_date, end_date)
         custom_report_data = custom_report_data(report_data)
-        ReportMailer.sample_email(member.user, company, custom_report_data, start_date, end_date).deliver_now
+        custom_report_data[:company] = company
+        data.push(custom_report_data)
       end
+      ReportMailer.sample_email(user, data, start_date, end_date).deliver_now
     end
   end
 
