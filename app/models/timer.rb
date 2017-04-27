@@ -8,7 +8,12 @@ class Timer < ApplicationRecord
   end
 
   def approve
-    self.is_approved = true
+    self.is_approved = true unless is_approved
+    save!
+  end
+
+  def unapprove
+    self.is_approved = false if is_approved
     save!
   end
 
