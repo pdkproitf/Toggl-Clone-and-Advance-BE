@@ -112,6 +112,15 @@ module TimerApi
         detelte_timer # destroy timer with_relationship_self
         return_message I18n.t('success')
       end
+
+      desc 'Approve timer by id'
+      params do
+        requires :id, type: Integer, desc: 'Timer ID'
+      end
+      post 'approve' do
+        timer = @current_member.timers.find(params[:id])
+        timer.approve
+      end
     end
   end
 end
