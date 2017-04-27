@@ -78,12 +78,17 @@ class Member < ApplicationRecord
     tasks.where(project_members: { is_archived: false })
          .where.not(category_members: { category_id: nil })
          .where(category_members: { is_archived: false })
+         .where.not(name: [nil, ""])
   end
 
   def get_timers(from_day, to_day)
     timers.where(category_members: { is_archived: false })
           .where('timers.start_time >= ? AND timers.start_time < ?', from_day, to_day + 1)
           .order('start_time desc')
+  end
+
+  def get_perfect_timers(from_day, to_day)
+    get_timers(from_day, to_day).where.not(tasks: {name: [nil, ""]}, category_members: { category_id: nil })
   end
 
   def tracked_time(begin_date = nil, end_date = nil)

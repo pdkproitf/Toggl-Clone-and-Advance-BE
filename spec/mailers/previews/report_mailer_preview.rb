@@ -1,14 +1,31 @@
 # Preview all emails at http://localhost:3000/rails/mailers/report_mailer
 class ReportMailerPreview < ActionMailer::Preview
   def sample_mail_preview
-    company = Company.find(4)
-    member = Member.first
-    custom_report_data = custom_report_data(report_data(company.admin, member))
-    ReportMailer.sample_email(User.find(1), company, custom_report_data)
+    puts 'Send report Oh yeah!'
+    today_wday = Date.today.wday
+    today_wday = 1 # For test
+    companies = Company.where(begin_week: today_wday)
+    start_date = '2017-03-27'.to_date
+    end_date = start_date + 6
+
+    users = User.all.where(id: 1)
+    users.each do |user|
+      members = user.members.where(company_id: companies.ids)
+      data = []
+      members.each do |member|
+        company = member.company
+        reporter = company.admin
+        report_data = report_data(reporter, member, start_date, end_date)
+        custom_report_data = custom_report_data(report_data)
+        custom_report_data[:company] = company
+        data.push(custom_report_data)
+      end
+      ReportMailer.sample_email(user, data, start_date, end_date).deliver_now
+    end
   end
 
-  def report_data(reporter, member)
-    report = ReportHelper::Report.new(reporter, '2017-03-27'.to_date, '2017-04-01'.to_date, member: member)
+  def report_data(reporter, member, start_date, end_date)
+    report = ReportHelper::Report.new(reporter, start_date, end_date, member: member)
     report.report_member_tasks
   end
 

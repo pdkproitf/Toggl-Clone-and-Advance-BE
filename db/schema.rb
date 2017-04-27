@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424083339) do
+ActiveRecord::Schema.define(version: 20170427033431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,8 +193,9 @@ ActiveRecord::Schema.define(version: 20170424083339) do
     t.integer  "task_id"
     t.datetime "start_time"
     t.datetime "stop_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "is_approved", default: false
     t.index ["task_id"], name: "index_timers_on_task_id", using: :btree
   end
 

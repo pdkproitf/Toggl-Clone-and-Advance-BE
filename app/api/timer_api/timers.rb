@@ -112,6 +112,64 @@ module TimerApi
         detelte_timer # destroy timer with_relationship_self
         return_message I18n.t('success')
       end
+
+      desc 'Approve timer of a member by id'
+      params do
+        requires :member_id, type: Integer, desc: 'Member ID'
+        requires :timer_id, type: Integer, desc: 'Timer ID'
+      end
+      post 'approve/by_id' do
+        return error!(I18n.t('access_denied'), 403) unless @current_member.manager?
+        member = @current_member.company.members.find(params[:member_id])
+        timer = member.timers.find(params[:timer_id])
+        timer.approve
+      end
+
+      desc 'Unapprove timer of a member by id'
+      params do
+        requires :member_id, type: Integer, desc: 'Member ID'
+        requires :timer_id, type: Integer, desc: 'Timer ID'
+      end
+      post 'unapprove/by_id' do
+        return error!(I18n.t('access_denied'), 403) unless @current_member.manager?
+        member = @current_member.company.members.find(params[:member_id])
+        timer = member.timers.find(params[:timer_id])
+        timer.unapprove
+      end
+
+      desc 'Approve timer by period of time'
+      params do
+        requires :member_id, type: Integer, desc: 'Member ID'
+        requires :timer_id, type: Integer, desc: 'Timer ID'
+        requires :begin_date, type: Date, desc: 'Begin date'
+        requires :end_date, type: Date, desc: 'End date'
+      end
+      post 'approve/by_period' do
+        return error!(I18n.t('access_denied'), 403) unless @current_member.manager?
+        member = @current_member.company.members.find(params[:member_id])
+        timers = member.get_timers(params[:begin_date], params[:end_date])
+        Timer.transaction do
+          timers.each(&:approve)
+        end
+        { message: 'success' }
+      end
+
+      desc 'Unapprove timer by period of time'
+      params do
+        requires :member_id, type: Integer, desc: 'Member ID'
+        requires :timer_id, type: Integer, desc: 'Timer ID'
+        requires :begin_date, type: Date, desc: 'Begin date'
+        requires :end_date, type: Date, desc: 'End date'
+      end
+      post 'unapprove/by_period' do
+        return error!(I18n.t('access_denied'), 403) unless @current_member.manager?
+        member = @current_member.company.members.find(params[:member_id])
+        timers = member.get_timers(params[:begin_date], params[:end_date])
+        Timer.transaction do
+          timers.each(&:unapprove)
+        end
+        { message: 'success' }
+      end
     end
   end
 end

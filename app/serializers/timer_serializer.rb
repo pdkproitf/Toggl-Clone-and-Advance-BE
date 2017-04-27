@@ -1,5 +1,5 @@
 class TimerSerializer < ActiveModel::Serializer
-  attributes :id, :task, :start_time, :stop_time, :category_member_id,
+  attributes :id, :task, :start_time, :stop_time, :is_approved, :category_member_id,
              :project_id, :project_name, :category_name, :background
   belongs_to :task, serializer: TaskSerializer
 

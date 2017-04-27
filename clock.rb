@@ -15,8 +15,9 @@ module Clockwork
     puts "Running #{job}"
   end
 
-  every(30.seconds, 'Report sending') { SendReportJob.perform_later }
-  every(1.day, 'Update dayoff', :at => '00:00') { EmployDayoffJob.perform_later }
+  # every(30.seconds, 'Report sending') { SendReportJob.perform_later }
+  every(1.day, 'Report sending', at: '12:39') { SendReportJob.perform_later }
+  every(1.day, 'Update dayoff', at: '00:00') { EmployDayoffJob.perform_later }
   #
   # # every(1.day, 'midnight.job', :at => '00:00')
 end
