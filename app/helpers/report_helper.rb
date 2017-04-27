@@ -40,6 +40,7 @@ module ReportHelper
       result[:projects] = member_projects
       result[:tasks] = member_tasks
       result[:overtime] = member_overtime(@member)
+      result[:timer] = member_timer(@member)
       result
     end
 
@@ -274,6 +275,11 @@ module ReportHelper
       member.assigned_categories.where(projects: { id: reporter_projects.ids })
     end
     # ==================== GET TIMER END ================
+
+    def member_timer(member)
+      timers = @member.get_perfect_timers(@begin_date, @end_date)
+      ActiveModelSerializers::SerializableResource.new(timers, each_serializer: TimerSerializer)
+    end
     # =================== Report by Member helper methods ends =================
 
     def week_working_time(week_start_date, member)

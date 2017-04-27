@@ -86,6 +86,10 @@ class Member < ApplicationRecord
           .order('start_time desc')
   end
 
+  def get_perfect_timers(from_day, to_day)
+    get_timers(from_day, to_day).where.not(tasks: {name: [nil, ""]}, category_members: { category_id: nil })
+  end
+
   def tracked_time(begin_date = nil, end_date = nil)
     sum = 0
     assigned_categories.each do |category_member|
