@@ -148,7 +148,25 @@ module TimerApi
         return error!(I18n.t('access_denied'), 403) unless @current_member.manager?
         member = @current_member.company.members.find(params[:member_id])
         timers = member.get_timers(params[:begin_date], params[:end_date])
-        timers.each(&:approve)
+        Timer.transaction do
+          timers.each(&:approve)
+        end
+      end
+
+      desc 'Unapprove timer by period of time'
+      params do
+        requires :member_id, type: Integer, desc: 'Member ID'
+        requires :timer_id, type: Integer, desc: 'Timer ID'
+        requires :begin_date, type: Date, desc: 'Begin date'
+        requires :end_date, type: Date, desc: 'End date'
+      end
+      post 'unapprove/by_period' do
+        return error!(I18n.t('access_denied'), 403) unless @current_member.manager?
+        member = @current_member.company.members.find(params[:member_id])
+        timers = member.get_timers(params[:begin_date], params[:end_date])
+        Timer.transaction do
+          timers.each(&:unapprove)
+        end
       end
     end
   end
