@@ -151,6 +151,7 @@ module TimerApi
         Timer.transaction do
           timers.each(&:approve)
         end
+        { message: 'success' }
       end
 
       desc 'Unapprove timer by period of time'
@@ -167,6 +168,7 @@ module TimerApi
         Timer.transaction do
           timers.each(&:unapprove)
         end
+        { message: 'success' }
       end
     end
   end
