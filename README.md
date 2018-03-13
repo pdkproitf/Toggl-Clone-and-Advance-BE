@@ -8,10 +8,12 @@ FrontEnd: Angulajs 2
 [UI link](https://pdk-tracking-time.herokuapp.com/)
 
 Admin Account: 
-  Email:     hancockun@mailinator.com
-  Password:  hancockun@mailinator.com
-  Company:   Gateway
+- Email:     hancockun@mailinator.com
+- Password:  hancockun@mailinator.com
+- Company:   Gateway
+
+
 Member Account: 
-  Email:    hinatasama@mailinator.com
-  Password: hinatasama@mailinator.com
-  Company:   Gateway
+- Email:    hinatasama@mailinator.com
+- Password: hinatasama@mailinator.com
+- Company:   Gateway
