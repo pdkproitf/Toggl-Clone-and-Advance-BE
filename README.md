@@ -1,24 +1,17 @@
 # README
+# toggl clone and improvement
+Built a project: Tracking time in office system.
+BackEnd: rails5, grape api.
+FrontEnd: Angulajs 2
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[API link](https://pdk-timecloud.herokuapp.com/)
+[UI link](https://pdk-tracking-time.herokuapp.com/)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Admin Account: 
+  Email:     hancockun@mailinator.com
+  Password:  hancockun@mailinator.com
+  Company:   Gateway
+Member Account: 
+  Email:    hinatasama@mailinator.com
+  Password: hinatasama@mailinator.com
+  Company:   Gateway
